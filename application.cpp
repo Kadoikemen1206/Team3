@@ -62,6 +62,9 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	//インプットクラスの生成
 	m_pInputKeyboard = new CInput;
 
+	//カメラの生成
+	m_pCamera = new CCamera;
+
 	//レンダリングの初期化処理
 	if (FAILED(m_pRenderer->Init(hWnd, bWindow)))
 	{ //初期化処理が失敗した場合
@@ -74,8 +77,8 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 		return -1;
 	}
 
-	//カメラの生成
-	m_pCamera = CCamera::Create();
+	//カメラの初期化
+	m_pCamera->Init();
 
 	//ライトの生成
 	m_pLight = CLight::Create();
@@ -177,7 +180,6 @@ void CApplication::Draw(void)
 	if (m_pRenderer != nullptr)
 	{
 		m_pRenderer->Draw();
-		m_pCamera->SetCamera();
 	}
 }
 
