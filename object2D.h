@@ -64,6 +64,7 @@ public:
 	D3DXVECTOR3 GetRot(void) override { return m_rot; }			// 向き取得処理
 	D3DXCOLOR GetCol(void) override { return m_col; }			// 色取得処理
 	static CObject2D *Create(D3DXVECTOR3 pos, int nPriority);	// 生成処理
+	void LoadTexture(const char *aFileName);					// テクスチャの読み込み
 
 private:
 	//-------------------------------------------------------------------------
