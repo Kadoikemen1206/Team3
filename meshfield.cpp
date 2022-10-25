@@ -43,7 +43,7 @@ CMeshfield::~CMeshfield()
 HRESULT CMeshfield::Init()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//テクスチャの読み込み
 	LoadTexture("Data\\TEXTURE\\yuka002.jpg");
@@ -242,7 +242,7 @@ void CMeshfield::Update()
 void CMeshfield::Draw()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//計算用マトリックス
 	D3DXMATRIX mtxRot, mtxTrans;
@@ -367,7 +367,7 @@ void CMeshfield::BindTexture(LPDIRECT3DTEXTURE9 pTexture)
 void CMeshfield::LoadTexture(const char * aFileName)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(

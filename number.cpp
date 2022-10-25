@@ -74,7 +74,7 @@ CNumber *CNumber::Create(const D3DXVECTOR3 pos, D3DXVECTOR3 size)
 HRESULT CNumber::Load()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//テクスチャの読み込み*
 	D3DXCreateTextureFromFile(pDevice,

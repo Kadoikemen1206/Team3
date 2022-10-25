@@ -26,7 +26,7 @@ public:
 	void Uninit();									// 終了処理
 	void Update();									// 更新処理
 	void Draw();									// 描画処理
-	LPDIRECT3DDEVICE9 GetDivice();					// デバイスの取得
+	LPDIRECT3DDEVICE9 GetDevice();					// デバイスの取得
 
 private:
 	//-------------------------------------------------------------------------
