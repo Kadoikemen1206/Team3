@@ -39,7 +39,7 @@ private:
 	//-------------------------------------------------------------------------
 	LPDIRECT3D9 m_pD3D;								// Direct3Dオブジェクト
 	LPDIRECT3DDEVICE9 m_pD3DDevice;					// Deviceオブジェクト
-	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;				// 頂点バッファへのポインタ											
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;				// 頂点バッファへのポインタ
 	LPD3DXFONT m_pFont = nullptr;					// フォント
 };
 

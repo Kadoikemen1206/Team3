@@ -21,6 +21,7 @@
 #include "meshfield.h"
 #include "time.h"
 #include "number.h"
+#include "texture.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -32,6 +33,7 @@ CCamera *CApplication::m_pCamera = nullptr;
 CLight *CApplication::m_pLight = nullptr;
 CMeshfield *CApplication::m_pMeshField = nullptr;
 CTime *CApplication::m_pTime = nullptr;
+CTexture *CApplication::m_pTexture = nullptr;
 CApplication::MODE CApplication::m_mode = MODE_TITLE;
 CObjectX *CApplication::m_apObject3D[4] = {};
 
@@ -61,28 +63,27 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	//レンダリングクラスの生成
 	m_pRenderer = new CRenderer;
-
-	//インプットクラスの生成
-	m_pInputKeyboard = new CInput;
-
-	//カメラの生成
-	m_pCamera = new CCamera;
-
 	//レンダリングの初期化処理
 	if (FAILED(m_pRenderer->Init(hWnd, bWindow)))
 	{ //初期化処理が失敗した場合
 		return -1;
 	}
 
+	//インプットクラスの生成
+	m_pInputKeyboard = new CInput;
 	//インプットの初期化処理
 	if (FAILED(m_pInputKeyboard->Init(hInstance, hWnd)))
 	{ //初期化処理が失敗した場合
 		return -1;
 	}
 
-	//カメラの初期化
-	m_pCamera->Init();
-	CNumber::Load();
+	// テクスチャの生成
+	m_pTexture = new CTexture;
+	m_pTexture->LoadAll();
+
+	// カメラ
+	m_pCamera = new CCamera;	// 生成
+	m_pCamera->Init();			// 初期化
 
 	//ライトの生成
 	m_pLight = CLight::Create();
@@ -117,6 +118,9 @@ void CApplication::Uninit(void)
 	//ナンバーの削除
 	CNumber::Unload();
 
+	// テクスチャの削除
+	m_pTexture->UnloadAll();
+	
 	//レンダリングの解放・削除
 	if (m_pRenderer != nullptr)
 	{

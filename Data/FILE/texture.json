@@ -1,0 +1,7 @@
+{
+  "TEXTURE": [
+    [ "NUMBER", "Data\/TEXTURE\/number000.png" ],
+    [ "VS_MODE", "Data\/TEXTURE\/vs.png" ],
+    [ "MENU_TITLE", "data\/TEXTURE\/title.png" ]
+  ]
+}
