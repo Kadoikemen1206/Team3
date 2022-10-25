@@ -55,6 +55,9 @@ void CTexture::Load(std::string inKey, std::string inFileName)
 	// テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice, &fileName.front(), &texture);
 
+	assert(texture != nullptr);	// テクスチャのURLがないかキーが間違ってる。
+
+
 	if (!ExistsKey(inKey))
 	{
 		m_texture.insert(std::make_pair(inKey, texture));
@@ -76,6 +79,8 @@ void CTexture::Load(std::vector<std::string> inTexture)
 
 	// テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice, &fileName.front(), &texture);
+
+	assert(texture != nullptr);	// テクスチャのURLがないかキーが間違ってる。
 
 	if (!ExistsKey(inTexture[0]))
 	{

@@ -12,6 +12,7 @@
 #include "renderer.h"
 #include "application.h"
 #include "main.h"
+#include "texture.h"
 
 //=============================================================================
 // コンストラクタ
@@ -251,9 +252,9 @@ void CObject2D::SetRot(D3DXVECTOR3 rot)
 //=============================================================================
 // 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 //=============================================================================
-void CObject2D::BindTexture(LPDIRECT3DTEXTURE9 pTexture)
+void CObject2D::BindTexture(std::string inPath)
 {
-	m_pTexture = pTexture;		//テクスチャのポインタ
+	m_pTexture = CApplication::GetTexture()->GetTexture(inPath);		//テクスチャのポインタ
 }
 
 //=============================================================================
@@ -302,19 +303,4 @@ CObject2D * CObject2D::Create(D3DXVECTOR3 pos, int nPriority)
 
 	//ポインタを返す
 	return pObject2D;
-}
-
-//=============================================================================
-// テクスチャの読み込み
-//=============================================================================
-void CObject2D::LoadTexture(const char * aFileName)
-{
-	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(
-		pDevice,
-		aFileName,
-		&m_pTexture);
 }

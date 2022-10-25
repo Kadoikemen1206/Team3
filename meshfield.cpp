@@ -13,6 +13,7 @@
 #include "renderer.h"
 #include "application.h"
 #include "main.h"
+#include "texture.h"
 
 //=============================================================================
 // コンストラクタ
@@ -46,7 +47,7 @@ HRESULT CMeshfield::Init()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//テクスチャの読み込み
-	LoadTexture("Data\\TEXTURE\\yuka002.jpg");
+	BindTexture("FLOOR2");
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4 * MESHFIELD_VERTEX_NUM,
@@ -356,24 +357,9 @@ void CMeshfield::SetRot(D3DXVECTOR3 rot)
 //=============================================================================
 // 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 //=============================================================================
-void CMeshfield::BindTexture(LPDIRECT3DTEXTURE9 pTexture)
+void CMeshfield::BindTexture(std::string inPath)
 {
-	m_pTexture = pTexture;		//テクスチャのポインタ
-}
-
-//=============================================================================
-// テクスチャロード処理
-//=============================================================================
-void CMeshfield::LoadTexture(const char * aFileName)
-{
-	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(
-		pDevice,
-		aFileName,
-		&m_pTexture);
+	m_pTexture = CApplication::GetTexture()->GetTexture(inPath);		//テクスチャのポインタ
 }
 
 //=============================================================================

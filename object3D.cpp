@@ -12,6 +12,7 @@
 #include "renderer.h"
 #include "application.h"
 #include "main.h"
+#include "texture.h"
 
 //=============================================================================
 // コンストラクタ
@@ -58,7 +59,7 @@ HRESULT CObject3D::Init()
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//テクスチャの読み込み
-	LoadTexture("Data\\TEXTURE\\yuka000.jpg");
+	BindTexture("FLOOR0");
 
 	//対角線の長さ算出
 	m_fLength = sqrtf(((m_size.x * m_size.x) + (m_size.y * m_size.y)));
@@ -133,10 +134,10 @@ void CObject3D::Draw()
 	D3DXMATRIX mtxRot, mtxTrans;
 
 	//ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&m_mtxWorld);                                    //行列初期化関数(第一引数の行列を単位行列に初期化)
+	D3DXMatrixIdentity(&m_mtxWorld);									//行列初期化関数(第一引数の行列を単位行列に初期化)
 
 	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z); //行列回転関数(第一引数にヨー(y)ピッチ(x)ロール(z)方向の回転行列を作成)
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);	//行列回転関数(第一引数にヨー(y)ピッチ(x)ロール(z)方向の回転行列を作成)
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);				//行列掛け算関数(第2引数 * 第三引数を第一引数に格納)
 
 	//位置を反映
@@ -238,9 +239,9 @@ void CObject3D::SetRot(D3DXVECTOR3 rot)
 //=============================================================================
 // 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 //=============================================================================
-void CObject3D::BindTexture(LPDIRECT3DTEXTURE9 pTexture)
+void CObject3D::BindTexture(std::string inPath)
 {
-	m_pTexture = pTexture;		//テクスチャのポインタ
+	m_pTexture = CApplication::GetTexture()->GetTexture(inPath);		//テクスチャのポインタ
 }
 
 //=============================================================================

@@ -3,7 +3,6 @@
 #include "renderer.h"
 #include "application.h"
 #include <assert.h>
-#include "texture.h"
 
 CNumber::CNumber()
 {
@@ -26,7 +25,7 @@ HRESULT CNumber::Init()
 	CObject2D::SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	//派生のテクスチャポインタを親のテクスチャポインタに代入する処理
-	BindTexture(CApplication::GetTexture()->GetTexture("NUMBER"));
+	BindTexture("NUMBER");
 	return S_OK;
 }
 
