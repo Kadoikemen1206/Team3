@@ -62,7 +62,7 @@ public:
 	// メンバー関数
 	//-------------------------------------------------------------------------
 	virtual HRESULT Init() = 0;							// 初期化処理
-	virtual void Uninit() = 0;							// 終了処理						
+	virtual void Uninit() = 0;							// 終了処理
 	virtual void Update() = 0;							// 更新処理
 	virtual void Draw() = 0;							// 描画処理
 	virtual void VtxUpdate() = 0;						// 頂点座標更新処理
