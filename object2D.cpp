@@ -303,3 +303,18 @@ CObject2D * CObject2D::Create(D3DXVECTOR3 pos, int nPriority)
 	//ポインタを返す
 	return pObject2D;
 }
+
+//=============================================================================
+// テクスチャの読み込み
+//=============================================================================
+void CObject2D::LoadTexture(const char * aFileName)
+{
+	//デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(
+		pDevice,
+		aFileName,
+		&m_pTexture);
+}

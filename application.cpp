@@ -19,6 +19,8 @@
 #include "light.h"
 #include "player.h"
 #include "meshfield.h"
+#include "time.h"
+#include "number.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -29,6 +31,7 @@ CObject *CApplication::m_pMode = nullptr;
 CCamera *CApplication::m_pCamera = nullptr;
 CLight *CApplication::m_pLight = nullptr;
 CMeshfield *CApplication::m_pMeshField = nullptr;
+CTime *CApplication::m_pTime = nullptr;
 CApplication::MODE CApplication::m_mode = MODE_TITLE;
 CObjectX *CApplication::m_apObject3D[4] = {};
 
@@ -62,6 +65,9 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	//インプットクラスの生成
 	m_pInputKeyboard = new CInput;
 
+	//カメラの生成
+	m_pCamera = new CCamera;
+
 	//レンダリングの初期化処理
 	if (FAILED(m_pRenderer->Init(hWnd, bWindow)))
 	{ //初期化処理が失敗した場合
@@ -73,6 +79,12 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	{ //初期化処理が失敗した場合
 		return -1;
 	}
+
+	//カメラの初期化
+	m_pCamera->Init();
+	CNumber::Load();
+
+	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL5);
 
 	//カメラの生成
 	m_pCamera = CCamera::Create();
@@ -104,6 +116,9 @@ void CApplication::Uninit(void)
 {
 	//オブジェクトの全開放
 	CObject::UninitAll();
+
+	//ナンバーの削除
+	CNumber::Unload();
 
 	//レンダリングの解放・削除
 	if (m_pRenderer != nullptr)
@@ -177,7 +192,6 @@ void CApplication::Draw(void)
 	if (m_pRenderer != nullptr)
 	{
 		m_pRenderer->Draw();
-		m_pCamera->SetCamera();
 	}
 }
 

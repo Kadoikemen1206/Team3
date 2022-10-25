@@ -20,6 +20,7 @@ class CCamera;
 class CLight;
 class CObjectX;
 class CMeshfield;
+class CTime;
 
 //=============================================================================
 // ƒNƒ‰ƒX‚Ì’è‹`
@@ -70,6 +71,7 @@ private:
 	static CCamera *m_pCamera;
 	static CLight *m_pLight;
 	static CMeshfield *m_pMeshField;
+	static CTime *m_pTime;
 
 	static CObjectX *m_apObject3D[4];
 };

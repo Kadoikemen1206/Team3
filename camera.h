@@ -16,6 +16,7 @@
 //マクロ定義
 //=============================================================================
 #define CAMERA_SPEED	(5.0f)		//カメラの移動速度
+#define MAX_CAMERA		(2)			//カメラの最大数
 
 //=============================================================================
 // クラスの定義
@@ -23,6 +24,13 @@
 class CCamera
 {
 public:
+	enum CAMERATYPE
+	{
+		CAMERATYPE_NONE = 0,
+		CAMERATYPE_ONE,			// カメラ1つ(ソロモード)
+		CAMERATYPE_TWO,			// カメラ2つ(対戦)
+		CAMERATYPE_MAX
+	};
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
@@ -35,24 +43,29 @@ public:
 	HRESULT Init(void);					// 初期化処理
 	void Uninit(void);					// 終了処理
 	void Update(void);					// 更新処理
-	void SetCamera(void);				// 設定処理
-	static CCamera *Create(void);		// 生成処理
+	void SetCamera(int nCntCamera);		// 設定処理
+	void SetCameraType(CAMERATYPE type);							// カメラの種類の設定
+	static CAMERATYPE GetCameraType(void) { return m_nCameraType; }	// カメラの種類の取得
+	static CCamera *Create(CAMERATYPE type, int nCntCamera);		// 生成処理
 	static D3DXVECTOR3 GetRot() { return m_rot; }
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	D3DXVECTOR3	m_posV;				//視点
-	D3DXVECTOR3	m_posR;				//注視点
-	D3DXVECTOR3	m_vecU;				//上方向ベクトル
-	D3DXVECTOR3	m_posVDest;			//目的の視点
-	D3DXVECTOR3	m_posRDest;			//目的の注視点
-	D3DXMATRIX	m_mtxProjection;	//プロジェクションマトリックス
-	D3DXMATRIX	m_mtxView;			//ビューマトリックス
-	float		m_fDistance;		//視点から注視点の距離
+	D3DVIEWPORT9 m_Viewport[2];			//ビューポート
+	D3DXVECTOR3	m_posV[2];				//視点
+	D3DXVECTOR3	m_posR[2];				//注視点
+	D3DXVECTOR3	m_vecU[2];				//上方向ベクトル
+	D3DXMATRIX	m_mtxProjection[2];		//プロジェクションマトリックス
+	D3DXMATRIX	m_mtxView[2];			//ビューマトリックス
+	D3DXVECTOR3	m_posVDest;				//目的の視点
+	D3DXVECTOR3	m_posRDest;				//目的の注視点
 
-	static D3DXVECTOR3 m_rot;		//向き
+	float		m_fDistance;			//視点から注視点の距離
+
+	static D3DXVECTOR3 m_rot;			//向き
+	static CAMERATYPE m_nCameraType;	//カメラのタイプ
 };
 
 #endif
