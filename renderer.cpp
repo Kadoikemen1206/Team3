@@ -13,6 +13,7 @@
 #include "object.h"
 #include "object2D.h"
 #include "application.h"
+#include "camera.h"
 
 //=============================================================================
 // コンストラクタ
@@ -150,24 +151,71 @@ void CRenderer::Update()
 //=============================================================================
 void CRenderer::Draw()
 {
-	// バックバッファ＆Ｚバッファのクリア
-	m_pD3DDevice->Clear(0, NULL,
-		(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
-		D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
+	//デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	//ビューポートの設定
+	D3DVIEWPORT9 viewport;		//ビューポート
+	pDevice->GetViewport(&viewport);
 
-	// Direct3Dによる描画の開始
-	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
+	//**************************************************
+	//	ソロモード
+	//**************************************************
+	//	//カメラの設定処理
+	//	CApplication::GetCamera()->Create(CCamera::CAMERATYPE_ONE, 1);
+	//
+	//	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_ONE)
+	//	{
+	//		// バックバッファ＆Ｚバッファのクリア
+	//		m_pD3DDevice->Clear(0, NULL,
+	//			(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
+	//			D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
+	//
+	//		// Direct3Dによる描画の開始
+	//		if (SUCCEEDED(m_pD3DDevice->BeginScene()))
+	//		{
+	//			//全てのオブジェクトの描画処理
+	//			CObject::DrawAll();
+	//
+	//#ifdef _DEBUG
+	//			// FPS表示
+	//			DrawFPS();
+	//#endif // _DEBUG
+	//
+	//			// Direct3Dによる描画の終了
+	//			m_pD3DDevice->EndScene();
+	//		}
+	//	}
+
+	//**************************************************
+	//	vsモード
+	//**************************************************
+	for (int nCnt = 0; nCnt < 2; nCnt++)
 	{
-		//全てのオブジェクトの描画処理
-		CObject::DrawAll();
+		//カメラの設定処理
+		CApplication::GetCamera()->Create(CCamera::CAMERATYPE_TWO, nCnt);
+
+		if (CCamera::GetCameraType() == CCamera::CAMERATYPE_TWO)
+		{
+			// バックバッファ＆Ｚバッファのクリア
+			m_pD3DDevice->Clear(0, NULL,
+				(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
+				D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
+
+			// Direct3Dによる描画の開始
+			if (SUCCEEDED(m_pD3DDevice->BeginScene()))
+			{
+				//全てのオブジェクトの描画処理
+				CObject::DrawAll();
 
 #ifdef _DEBUG
-		// FPS表示
-		DrawFPS();
+				// FPS表示
+				DrawFPS();
 #endif // _DEBUG
 
-		// Direct3Dによる描画の終了
-		m_pD3DDevice->EndScene();
+				// Direct3Dによる描画の終了
+				m_pD3DDevice->EndScene();
+			}
+		}
 	}
 
 	// バックバッファとフロントバッファの入れ替え

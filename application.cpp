@@ -65,6 +65,9 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	//インプットクラスの生成
 	m_pInputKeyboard = new CInput;
 
+	//カメラの生成
+	m_pCamera = new CCamera;
+
 	//レンダリングの初期化処理
 	if (FAILED(m_pRenderer->Init(hWnd, bWindow)))
 	{ //初期化処理が失敗した場合
@@ -77,6 +80,8 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 		return -1;
 	}
 
+	//カメラの初期化
+	m_pCamera->Init();
 	CNumber::Load();
 
 	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL5);
@@ -187,7 +192,6 @@ void CApplication::Draw(void)
 	if (m_pRenderer != nullptr)
 	{
 		m_pRenderer->Draw();
-		m_pCamera->SetCamera();
 	}
 }
 
