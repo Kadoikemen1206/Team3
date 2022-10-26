@@ -23,6 +23,7 @@
 #include "number.h"
 #include "texture.h"
 #include "model.h"
+#include "obstacle.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -81,6 +82,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pTexture = new CTexture;
 	m_pTexture->LoadAll();
 	//カメラの初期化
+	m_pCamera = new CCamera;
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
 	m_pCamera->Init();
@@ -105,8 +107,10 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	for (int nCnt = 0; nCnt < 10; nCnt++)
 	{
 		//モデルの生成(壁)
-		CModel::Create(D3DXVECTOR3(-150.0f, 0.0f , 200.0f + (380.0f * nCnt)), CObject::PRIORITY_LEVEL1);
+		CModel::Create(D3DXVECTOR3(-150.0f, 0.0f , 200.0f + (380.0f * nCnt)), CObject::PRIORITY_LEVEL3);
 	}
+
+	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
