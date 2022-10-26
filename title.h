@@ -1,48 +1,53 @@
 //=============================================================================
 //
-// 障害物処理 [obstacle.h]
-// Author : saito shian
+// タイトル処理 [title.h]
+// Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _OBSTACLE_H_
-#define _OBSTACLE_H_
+#ifndef _TITLE_H_
+#define _TITLE_H_
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
-#include "gimmick.h"
+#include "main.h"
+#include "object2D.h"
+#include "mode.h"
 
 //=============================================================================
 // 前方定義
 //=============================================================================
+class CFade;
 
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CObstacle : public CGimmick
+class CTitle : public CMode
 {
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	explicit CObstacle(int nPriority = PRIORITY_LEVEL3);
-	~CObstacle() override;
+	CTitle();
+	~CTitle() override;
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init() override;			// 初期化処理
-	void Uninit() override;				// 終了処理
-	void Update() override;				// 更新処理
-	void Draw() override;				// 描画処理
-
-	void ConstOperate(int barrage, int rotate) override;			// 一定の操作(連打、回転)
-
-	static CObstacle *Create(const D3DXVECTOR3 pos, int nPriority); // 生成処理
+	HRESULT Init(void) override;	// 初期化処理
+	void Uninit(void) override;		// 終了処理
+	void Update(void) override;		// 更新処理
+	void Draw(void) override;		// 描画処理
+	static CTitle *Create();		// 生成処理
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
+	static LPDIRECT3DTEXTURE9 m_pTexture;	// テクスチャのポインタ
+	CObject2D *m_pObject2D;					// オブジェクト2Dのポインタ
+	static bool m_bTitleEnter;				// Enterを押したかのフラグ
+	CFade *m_pFade;
 };
+
 #endif

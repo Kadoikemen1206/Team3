@@ -195,7 +195,7 @@ void CPlayer::Update()
 
 	// メッシュフィールドのポインタを取得
 	CMeshfield *pMeshField = CApplication::GetMeshfield();
-	pMeshField->Collision(&pos);
+	//pMeshField->Collision(&pos);
 
 	// プレイヤーのposとrotの設定
 	CObjectX::SetPos(pos);

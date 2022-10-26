@@ -1,110 +1,104 @@
 //=============================================================================
 //
-// 障害物処理 [obstacle.cpp]
-// Author : saito shian
+// タイトル処理 [title.cpp]
+// Author : KADO TAKUMA
 //
 //=============================================================================
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
-#include "obstacle.h"
-#include "player.h"
+#include "main.h"
+#include "title.h"
+#include "renderer.h"
+#include "application.h"
+#include "input.h"
+#include "fade.h"
+
+//=============================================================================
+// 静的メンバ変数宣言
+//=============================================================================
+LPDIRECT3DTEXTURE9 CTitle::m_pTexture = nullptr;
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CObstacle::CObstacle(int nPriority)
+CTitle::CTitle()
 {
+
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CObstacle::~CObstacle()
+CTitle::~CTitle()
 {
+
 }
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CObstacle::Init()
+HRESULT CTitle::Init(void)
 {
-	CGimmick::Init();
-
-	//モデルのロード
-	LoadModel("Data\\MODEL\\バギー.x");
-
 	return S_OK;
 }
 
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CObstacle::Uninit()
+void CTitle::Uninit(void)
 {
-	CGimmick::Uninit();
+	//インスタンスの解放処理
+	CObject::Release();
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CObstacle::Update()
+void CTitle::Update(void)
 {
-	//ギミックの更新
-	CGimmick::Update();
-	D3DXVECTOR3 ObstacleMove = GetMove();
-	D3DXVECTOR3 ObstaclePos = GetPos();
-	D3DXVECTOR3 PlayerPos = CPlayer::GetPlayerPos();		//プレイヤーPOS情報の取得
+	// 入力処理用のポインタ宣言
+	CInput *pInput = CInput::GetKey();
 
-	//if(PlayerPos >= )
-	ObstacleMove = D3DXVECTOR3(0.0f, 5.0f, 0.0f);
-
-	//位置更新
-	ObstaclePos.x += ObstacleMove.x;
-	ObstaclePos.y += ObstacleMove.y;
-	ObstaclePos.z += ObstacleMove.z;
-
-	//移動量減衰
-	ObstaclePos.x += (0.0f - ObstacleMove.x) * 0.1f;
-	ObstaclePos.y += (0.0f - ObstacleMove.y) * 0.1f;
-	ObstaclePos.z += (0.0f - ObstacleMove.z) * 0.1f;
-
-	SetMove(ObstacleMove);
-	SetPos(ObstaclePos);
+	if (m_pFade->GetFade() == CFade::FADE_NONE)
+	{
+		if (pInput->Trigger(DIK_RETURN))
+		{
+			// 遷移
+			CFade::SetFade(CApplication::MODE_GAME);
+		}
+	}
 }
 
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CObstacle::Draw()
+void CTitle::Draw(void)
 {
-	CGimmick::Draw();
+
 }
 
 //=============================================================================
 // 生成処理
 //=============================================================================
-void CObstacle::ConstOperate(int barrage, int rotate)
+CTitle * CTitle::Create()
 {
-}
+	//ポインタ宣言
+	CTitle *pTitle = nullptr;
 
-//=============================================================================
-// 操作処理
-//=============================================================================
-CObstacle * CObstacle::Create(const D3DXVECTOR3 pos, int nPriority)
-{
-	CObstacle *pObstacle = new CObstacle(nPriority);
+	//インスタンス生成
+	pTitle = new CTitle;
 
-	if (pObstacle != nullptr)
-	{
-		pObstacle->Init();
-		pObstacle->SetPos(pos);
+	if (pTitle != nullptr)
+	{//ポインタが存在したら実行
+		pTitle->Init();
 	}
 	else
-	{
+	{//ポインタが虚無だったら実行
 		assert(false);
 	}
 
-	return pObstacle;
+	//ポインタを返す
+	return pTitle;
 }

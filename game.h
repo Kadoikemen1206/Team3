@@ -1,48 +1,64 @@
 //=============================================================================
 //
-// 障害物処理 [obstacle.h]
-// Author : saito shian
+// ゲーム処理 [game.h]
+// Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _OBSTACLE_H_
-#define _OBSTACLE_H_
+#ifndef _GAME_H_
+#define _GAME_H_
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
-#include "gimmick.h"
+#include "main.h"
+#include "object2D.h"
+#include "mode.h"
 
 //=============================================================================
 // 前方定義
 //=============================================================================
+class CPlayer;
+class CCamera;
+class CMeshfield;
+class CTime;
 
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CObstacle : public CGimmick
+class CGame : public CMode
 {
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	explicit CObstacle(int nPriority = PRIORITY_LEVEL3);
-	~CObstacle() override;
+	CGame();
+	~CGame() override;
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init() override;			// 初期化処理
-	void Uninit() override;				// 終了処理
-	void Update() override;				// 更新処理
-	void Draw() override;				// 描画処理
+	HRESULT Init(void) override;	// 初期化処理
+	void Uninit(void) override;		// 終了処理
+	void Update(void) override;		// 更新処理
+	void Draw(void) override;		// 描画処理
+	static CGame *Create();			// 生成処理
 
-	void ConstOperate(int barrage, int rotate) override;			// 一定の操作(連打、回転)
-
-	static CObstacle *Create(const D3DXVECTOR3 pos, int nPriority); // 生成処理
+	static CPlayer *GetPlayer() { return m_pPlayer; }
+	static CCamera *GetCamera() { return m_pCamera; }
+	static CMeshfield *GetMeshfield() { return m_pMeshField; }
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
+	CObject2D *m_pObject2D;					// オブジェクト2Dのポインタ
+	static LPDIRECT3DTEXTURE9 m_pTexture;	// テクスチャのポインタ
+	static CPlayer *m_pPlayer;				// プレイヤーのポインタ
+	static CCamera *m_pCamera;				// カメラのポインタ
+	static CLight *m_pLight;				// ライトのポインタ
+	static CMeshfield *m_pMeshField;		// メッシュフィールドのポインタ	
+	static CTime *m_pTime;					// タイムのポインタ
+	CFade *m_pFade;							// フェードのポインタ
 };
+
 #endif
