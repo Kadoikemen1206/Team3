@@ -172,12 +172,12 @@ void CApplication::Update(void)
 	//キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInputKeyboard();
 
-	if (pInputKeyboard->GetTrigger(DIK_C))
+	if (pInputKeyboard->Trigger(DIK_C))
 	{
 		m_apObject3D[3] = CObjectX::Create(D3DXVECTOR3(-200.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
 	}
 
-	if (pInputKeyboard->GetTrigger(DIK_V) && m_apObject3D[0] != nullptr)
+	if (pInputKeyboard->Trigger(DIK_V) && m_apObject3D[0] != nullptr)
 	{
 		m_apObject3D[0]->Uninit();
 		m_apObject3D[0] = nullptr;
