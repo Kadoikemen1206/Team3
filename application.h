@@ -58,6 +58,7 @@ public:
 	static CInput *GetInputKeyboard();
 	static CCamera *GetCamera() { return m_pCamera; }
 	static CMeshfield *GetMeshfield() { return m_pMeshField; }
+	//static CObjectX *GetObjectX() { return m_pObject3D[0]; }
 
 private:
 	//-------------------------------------------------------------------------
@@ -70,8 +71,7 @@ private:
 	static CCamera *m_pCamera;
 	static CLight *m_pLight;
 	static CMeshfield *m_pMeshField;
-
-	static CObjectX *m_apObject3D[4];
+	//static CObjectX *m_pObject3D[10];
 };
 
 #endif

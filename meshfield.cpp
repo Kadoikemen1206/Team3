@@ -424,6 +424,9 @@ CMeshfield * CMeshfield::Create(const D3DXVECTOR3 pos, int nPriority)
 	return pMeshfield;
 }
 
+//=============================================================================
+// 当たり判定
+//=============================================================================
 void CMeshfield::Collision(D3DXVECTOR3 *PlayerPos)
 {
 	//頂点情報へのポインタ
@@ -460,9 +463,9 @@ void CMeshfield::Collision(D3DXVECTOR3 *PlayerPos)
 		VecB[2] = *PlayerPos - (IdxPos[2] + m_pos);
 
 		//2次元外積の計算結果
-		Calculation2D[0] = VecA[0].x *VecB[0].z - VecB[0].x * VecA[0].z;
-		Calculation2D[1] = VecA[1].x *VecB[1].z - VecB[1].x * VecA[1].z;
-		Calculation2D[2] = VecA[2].x *VecB[2].z - VecB[2].x * VecA[2].z;
+		Calculation2D[0] = VecA[0].x * VecB[0].z - VecB[0].x * VecA[0].z;
+		Calculation2D[1] = VecA[1].x * VecB[1].z - VecB[1].x * VecA[1].z;
+		Calculation2D[2] = VecA[2].x * VecB[2].z - VecB[2].x * VecA[2].z;
 
 		//プレイヤーの位置が全部-か+
 		if ((Calculation2D[0] >= 0 && Calculation2D[1] >= 0 && Calculation2D[2] >= 0) || (Calculation2D[0] <= 0 && Calculation2D[1] <= 0 && Calculation2D[2] <= 0))

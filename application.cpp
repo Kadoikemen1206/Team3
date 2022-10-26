@@ -30,7 +30,6 @@ CCamera *CApplication::m_pCamera = nullptr;
 CLight *CApplication::m_pLight = nullptr;
 CMeshfield *CApplication::m_pMeshField = nullptr;
 CApplication::MODE CApplication::m_mode = MODE_TITLE;
-CObjectX *CApplication::m_apObject3D[4] = {};
 
 //=============================================================================
 // コンストラクタ
@@ -87,12 +86,11 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-300.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
 
 	//モデルの生成
-	m_apObject3D[0] = CObjectX::Create(D3DXVECTOR3(0.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	m_apObject3D[1] = CObjectX::Create(D3DXVECTOR3(-100.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	m_apObject3D[2] = CObjectX::Create(D3DXVECTOR3(100.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
+	CObjectX::Create(D3DXVECTOR3(100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
+	CObjectX::Create(D3DXVECTOR3(-100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
 
 	//プレイヤーの生成
-	CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+	CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
@@ -151,20 +149,6 @@ void CApplication::Update(void)
 	if (m_pCamera != nullptr)
 	{
 		m_pCamera->Update();
-	}
-
-	//キーボードの情報取得
-	CInput *pInputKeyboard = CApplication::GetInputKeyboard();
-
-	if (pInputKeyboard->GetTrigger(DIK_C))
-	{
-		m_apObject3D[3] = CObjectX::Create(D3DXVECTOR3(-200.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	}
-
-	if (pInputKeyboard->GetTrigger(DIK_V) && m_apObject3D[0] != nullptr)
-	{
-		m_apObject3D[0]->Uninit();
-		m_apObject3D[0] = nullptr;
 	}
 }
 
