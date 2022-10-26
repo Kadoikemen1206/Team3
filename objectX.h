@@ -29,7 +29,7 @@ public:
 	// メンバー関数
 	//-------------------------------------------------------------------------
 	HRESULT Init() override;									// 初期化処理
-	void Uninit() override;										// 終了処理						
+	void Uninit() override;										// 終了処理
 	void Update() override;										// 更新処理
 	void Draw() override;										// 描画処理
 	void VtxUpdate() override {};								// 頂点座標更新処理
@@ -45,23 +45,30 @@ public:
 	D3DXCOLOR GetCol(void) override { return m_col; }			// 色取得処理
 
 	static CObjectX *Create(D3DXVECTOR3 pos, int nPriority);	// 生成処理
-	void LoadModel(const char *aFileName);						// モデルの読み込み
+	void LoadModel(const char *aFileName);						// モデルの読み込み処理
 	void Projection(void);										// 平行投影処理
+	void Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pSize);	// 当たり判定
+	//void Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 PosOld);	// 当たり判定
+	void SetMaxVtx(D3DXVECTOR3 Maxvtx);							// 頂点最大値設定処理
+	void SetMinVtx(D3DXVECTOR3 Minvtx);							// 頂点最小値設定処理
+	D3DXVECTOR3 GetMaxVtx(void) { return m_MaxVtx; }			// 頂点最大値取得処理
+	D3DXVECTOR3 GetMinVtx(void) { return m_MinVtx; }			// 頂点最小値取得処理
+
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	D3DXVECTOR3 m_pos;					//座標
-	D3DXVECTOR3 m_rot;					//角度
-	D3DXVECTOR3 m_size;					//座標
-	D3DXVECTOR3 m_move;					//角度
-	D3DXVECTOR3 m_Minvtx;				//モデルの頂点最小値
-	D3DXVECTOR3 m_Maxvtx;				//モデルの頂点最大値
-	D3DXCOLOR m_col;					//色
-	D3DXMATRIX m_mtxWorld;				//ワールドマトリックス
-	LPD3DXMESH m_pMesh;					//メッシュ情報へのポインタ
-	LPD3DXBUFFER m_pBuffMat;			//マテリアル情報へのポインタ
-	DWORD m_NumMat;						//マテリアル情報の数
+	D3DXVECTOR3 m_pos;					// 座標
+	D3DXVECTOR3 m_rot;					// 角度
+	D3DXVECTOR3 m_size;					// 座標
+	D3DXVECTOR3 m_move;					// 角度
+	D3DXVECTOR3 m_MinVtx;				// モデルの頂点最小値
+	D3DXVECTOR3 m_MaxVtx;				// モデルの頂点最大値
+	D3DXCOLOR m_col;					// 色
+	D3DXMATRIX m_mtxWorld;				// ワールドマトリックス
+	LPD3DXMESH m_pMesh;					// メッシュ情報へのポインタ
+	LPD3DXBUFFER m_pBuffMat;			// マテリアル情報へのポインタ
+	DWORD m_NumMat;						// マテリアル情報の数
 };
 
 #endif

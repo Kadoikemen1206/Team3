@@ -180,7 +180,7 @@ void CCamera::Update(void)
 void CCamera::SetCamera(int nCntCamera)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//**************************************************
 	//	ソロモード

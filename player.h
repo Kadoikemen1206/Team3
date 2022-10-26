@@ -43,6 +43,7 @@ private:
 	//-------------------------------------------------------------------------
 	CShadow *m_shadow;					// 影のポインタ
 	D3DXVECTOR3 m_rotDest;				// 目的の角度
+	D3DXVECTOR3 m_posOld;				// 前回の位置
 	float m_nSpeed;						// スピード
 };
 #endif

@@ -13,6 +13,7 @@
 #include "renderer.h"
 #include "application.h"
 #include "main.h"
+#include "texture.h"
 
 //=============================================================================
 // コンストラクタ
@@ -43,10 +44,10 @@ CMeshfield::~CMeshfield()
 HRESULT CMeshfield::Init()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//テクスチャの読み込み
-	LoadTexture("Data\\TEXTURE\\yuka002.jpg");
+	BindTexture("FLOOR2");
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4 * MESHFIELD_VERTEX_NUM,
@@ -242,7 +243,7 @@ void CMeshfield::Update()
 void CMeshfield::Draw()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//計算用マトリックス
 	D3DXMATRIX mtxRot, mtxTrans;
@@ -356,24 +357,9 @@ void CMeshfield::SetRot(D3DXVECTOR3 rot)
 //=============================================================================
 // 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 //=============================================================================
-void CMeshfield::BindTexture(LPDIRECT3DTEXTURE9 pTexture)
+void CMeshfield::BindTexture(std::string inPath)
 {
-	m_pTexture = pTexture;		//テクスチャのポインタ
-}
-
-//=============================================================================
-// テクスチャロード処理
-//=============================================================================
-void CMeshfield::LoadTexture(const char * aFileName)
-{
-	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(
-		pDevice,
-		aFileName,
-		&m_pTexture);
+	m_pTexture = CApplication::GetTexture()->GetTexture(inPath);		//テクスチャのポインタ
 }
 
 //=============================================================================
@@ -424,6 +410,9 @@ CMeshfield * CMeshfield::Create(const D3DXVECTOR3 pos, int nPriority)
 	return pMeshfield;
 }
 
+//=============================================================================
+// 当たり判定
+//=============================================================================
 void CMeshfield::Collision(D3DXVECTOR3 *PlayerPos)
 {
 	//頂点情報へのポインタ
@@ -460,9 +449,9 @@ void CMeshfield::Collision(D3DXVECTOR3 *PlayerPos)
 		VecB[2] = *PlayerPos - (IdxPos[2] + m_pos);
 
 		//2次元外積の計算結果
-		Calculation2D[0] = VecA[0].x *VecB[0].z - VecB[0].x * VecA[0].z;
-		Calculation2D[1] = VecA[1].x *VecB[1].z - VecB[1].x * VecA[1].z;
-		Calculation2D[2] = VecA[2].x *VecB[2].z - VecB[2].x * VecA[2].z;
+		Calculation2D[0] = VecA[0].x * VecB[0].z - VecB[0].x * VecA[0].z;
+		Calculation2D[1] = VecA[1].x * VecB[1].z - VecB[1].x * VecA[1].z;
+		Calculation2D[2] = VecA[2].x * VecB[2].z - VecB[2].x * VecA[2].z;
 
 		//プレイヤーの位置が全部-か+
 		if ((Calculation2D[0] >= 0 && Calculation2D[1] >= 0 && Calculation2D[2] >= 0) || (Calculation2D[0] <= 0 && Calculation2D[1] <= 0 && Calculation2D[2] <= 0))
