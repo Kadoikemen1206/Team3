@@ -9,13 +9,13 @@
 // インクルードファイル
 //=============================================================================
 #include "obstacle.h"
+#include "player.h"
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CObstacle::CObstacle(int nPriority)
 {
-	m_Move = {};
 }
 
 //=============================================================================
@@ -51,11 +51,27 @@ void CObstacle::Uninit()
 //=============================================================================
 void CObstacle::Update()
 {
+	//ギミックの更新
 	CGimmick::Update();
-	
-	m_Move.z = 0.5f;
+	D3DXVECTOR3 ObstacleMove = GetMove();
+	D3DXVECTOR3 ObstaclePos = GetPos();
+	D3DXVECTOR3 PlayerPos = CPlayer::GetPlayerPos();		//プレイヤーPOS情報の取得
 
-	SetMove(m_Move);
+	//if(PlayerPos >= )
+	ObstacleMove = D3DXVECTOR3(0.0f, 5.0f, 0.0f);
+
+	//位置更新
+	ObstaclePos.x += ObstacleMove.x;
+	ObstaclePos.y += ObstacleMove.y;
+	ObstaclePos.z += ObstacleMove.z;
+
+	//移動量減衰
+	ObstaclePos.x += (0.0f - ObstacleMove.x) * 0.1f;
+	ObstaclePos.y += (0.0f - ObstacleMove.y) * 0.1f;
+	ObstaclePos.z += (0.0f - ObstacleMove.z) * 0.1f;
+
+	SetMove(ObstacleMove);
+	SetPos(ObstaclePos);
 }
 
 //=============================================================================
