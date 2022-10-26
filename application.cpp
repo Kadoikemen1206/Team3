@@ -22,6 +22,8 @@
 #include "time.h"
 #include "number.h"
 #include "texture.h"
+#include "model.h"
+#include "obstacle.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -35,7 +37,6 @@ CMeshfield *CApplication::m_pMeshField = nullptr;
 CTime *CApplication::m_pTime = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
 CApplication::MODE CApplication::m_mode = MODE_TITLE;
-CObjectX *CApplication::m_apObject3D[4] = {};
 
 //=============================================================================
 // コンストラクタ
@@ -80,11 +81,11 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	// テクスチャの生成
 	m_pTexture = new CTexture;
 	m_pTexture->LoadAll();
-
-	// カメラ
-	m_pCamera = new CCamera;	// 生成
-	m_pCamera->Init();			// 初期化
-
+	//カメラの初期化
+	m_pCamera = new CCamera;
+	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
+	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
+	m_pCamera->Init();
 	//ライトの生成
 	m_pLight = CLight::Create();
 
@@ -94,15 +95,22 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	//CObject3D::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
 
 	//メッシュフィールドの生成
-	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-300.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
+	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-500.0f, 0.0f, 14500.0f), CObject::PRIORITY_LEVEL2);
 
 	//モデルの生成
-	m_apObject3D[0] = CObjectX::Create(D3DXVECTOR3(0.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	m_apObject3D[1] = CObjectX::Create(D3DXVECTOR3(-100.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	m_apObject3D[2] = CObjectX::Create(D3DXVECTOR3(100.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
+	CObjectX::Create(D3DXVECTOR3(100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
+	CObjectX::Create(D3DXVECTOR3(-100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
 
 	//プレイヤーの生成
-	CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+	CPlayer::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+
+	for (int nCnt = 0; nCnt < 10; nCnt++)
+	{
+		//モデルの生成(壁)
+		CModel::Create(D3DXVECTOR3(-150.0f, 0.0f , 200.0f + (380.0f * nCnt)), CObject::PRIORITY_LEVEL3);
+	}
+
+	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
@@ -167,20 +175,6 @@ void CApplication::Update(void)
 	if (m_pCamera != nullptr)
 	{
 		m_pCamera->Update();
-	}
-
-	//キーボードの情報取得
-	CInput *pInputKeyboard = CApplication::GetInputKeyboard();
-
-	if (pInputKeyboard->GetTrigger(DIK_C))
-	{
-		m_apObject3D[3] = CObjectX::Create(D3DXVECTOR3(-200.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	}
-
-	if (pInputKeyboard->GetTrigger(DIK_V) && m_apObject3D[0] != nullptr)
-	{
-		m_apObject3D[0]->Uninit();
-		m_apObject3D[0] = nullptr;
 	}
 }
 

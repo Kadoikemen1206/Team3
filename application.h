@@ -61,6 +61,7 @@ public:
 	static CCamera *GetCamera() { return m_pCamera; }
 	static CMeshfield *GetMeshfield() { return m_pMeshField; }
 	static CTexture *GetTexture() { return m_pTexture; }
+	//static CObjectX *GetObjectX() { return m_pObject3D[0]; }
 
 private:
 	//-------------------------------------------------------------------------
@@ -76,7 +77,7 @@ private:
 	static CTime *m_pTime;
 	static CTexture *m_pTexture;
 
-	static CObjectX *m_apObject3D[4];
+	//static CObjectX *m_pObject3D[10];
 };
 
 #endif
