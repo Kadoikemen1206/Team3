@@ -152,7 +152,7 @@ void CRenderer::Update()
 void CRenderer::Draw()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 	//ビューポートの設定
 	D3DVIEWPORT9 viewport;		//ビューポート
 	pDevice->GetViewport(&viewport);
@@ -225,7 +225,7 @@ void CRenderer::Draw()
 //=============================================================================
 // デバイスを取得
 //=============================================================================
-LPDIRECT3DDEVICE9 CRenderer::GetDivice(void)
+LPDIRECT3DDEVICE9 CRenderer::GetDevice(void)
 {
 	return m_pD3DDevice;
 }

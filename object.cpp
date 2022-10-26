@@ -18,8 +18,8 @@
 // 静的メンバ変数宣言
 //=============================================================================
 int CObject::m_nNumAll = 0;
-CObject *CObject::m_pTop = nullptr;
-CObject *CObject::m_pCurrent = nullptr;
+CObject *CObject::m_pTop[PRIORITY_LEVELMAX] = {};
+CObject *CObject::m_pCurrent[PRIORITY_LEVELMAX] = {};
 
 //=============================================================================
 // コンストラクタ
@@ -29,18 +29,21 @@ CObject::CObject(int nPriority /* = PRIORITY_LEVEL0 */) :
 	m_pPrev(nullptr),
 	m_bDeath(false)
 {
+	//プライオリティの保存
+	m_nPriority = nPriority;
+
 	//オブジェクト(自分自身)を、リストに追加
-	if (m_pTop == nullptr)
+	if (m_pTop[nPriority] == nullptr)
 	{
-		m_pTop = this;
+		m_pTop[nPriority] = this;
 	}
-	else if (m_pTop != nullptr)
+	else if (m_pTop[nPriority] != nullptr)
 	{
-		m_pCurrent->m_pNext = this;
-		this->m_pPrev = m_pCurrent;
+		m_pCurrent[nPriority]->m_pNext = this;
+		this->m_pPrev = m_pCurrent[nPriority];
 	}
 
-	m_pCurrent = this;
+	m_pCurrent[nPriority] = this;
 }
 
 //=============================================================================
@@ -56,27 +59,30 @@ CObject::~CObject()
 //=============================================================================
 void CObject::UninitAll(void)
 {
-	CObject *pObject = m_pTop;
-
-	while (pObject)
+	for (int nPriority = 0; nPriority < PRIORITY_LEVELMAX; nPriority++)
 	{
-		pObject->Release();
-	}
+		CObject *pObject = m_pTop[nPriority];
 
-	pObject = m_pTop;
-
-	while (pObject != nullptr)
-	{
-		//pNextの保存
-		CObject *pObjectNext = pObject->m_pNext;	//Update()で削除されると、pNextも消えるので事前に保存しておく
-
-		if (pObject->m_bDeath == true)
+		while (pObject)
 		{
-			pObject->Death();
+			pObject->Release();
 		}
 
-		//pObjectにpObjectのpNextを代入
-		pObject = pObjectNext;
+		pObject = m_pTop[nPriority];
+
+		while (pObject != nullptr)
+		{
+			//pNextの保存
+			CObject *pObjectNext = pObject->m_pNext;	//Update()で削除されると、pNextも消えるので事前に保存しておく
+
+			if (pObject->m_bDeath == true)
+			{
+				pObject->Death();
+			}
+
+			//pObjectにpObjectのpNextを代入
+			pObject = pObjectNext;
+		}
 	}
 }
 
@@ -85,35 +91,38 @@ void CObject::UninitAll(void)
 //=============================================================================
 void CObject::UpdateAll(void)
 {
-	CObject *pObject = m_pTop;
-
-	while (pObject != nullptr)
+	for (int nPriority = 0; nPriority < PRIORITY_LEVELMAX; nPriority++)
 	{
-		//pNextの保存
-		CObject *pObjectNext = pObject->m_pNext;
+		CObject *pObject = m_pTop[nPriority];
 
-		if (pObject->m_bDeath == false)
+		while (pObject != nullptr)
 		{
-			pObject->Update();
+			//pNextの保存
+			CObject *pObjectNext = pObject->m_pNext;
+
+			if (pObject->m_bDeath == false)
+			{
+				pObject->Update();
+			}
+
+			//pObjectにpObjectのpNextを代入
+			pObject = pObjectNext;
 		}
 
-		//pObjectにpObjectのpNextを代入
-		pObject = pObjectNext;
-	}
+		pObject = m_pTop[nPriority];
 
-	pObject = m_pTop;
-
-	while (pObject != nullptr)
-	{
-		//pNextの保存
-		CObject *pObjectNext = pObject->m_pNext;
-
-		if (pObject->m_bDeath == true)
+		while (pObject != nullptr)
 		{
-			pObject->Death();
+			//pNextの保存
+			CObject *pObjectNext = pObject->m_pNext;
+
+			if (pObject->m_bDeath == true)
+			{
+				pObject->Death();
+			}
+			//pObjectにpObjectのpNextを代入
+			pObject = pObjectNext;
 		}
-		//pObjectにpObjectのpNextを代入
-		pObject = pObjectNext;
 	}
 }
 
@@ -122,21 +131,24 @@ void CObject::UpdateAll(void)
 //=============================================================================
 void CObject::DrawAll(void)
 {
-	CObject *pObject = m_pTop;
-
-	while (pObject != nullptr)
+	for (int nPriority = 0; nPriority < PRIORITY_LEVELMAX; nPriority++)
 	{
-		//pNextの保存
-		CObject *pObjectNext = pObject->m_pNext;	//Update()で削除されると、pNextも消えるので事前に保存しておく
+		CObject *pObject = m_pTop[nPriority];
 
-		if (pObject->m_bDeath == false)
+		while (pObject != nullptr)
 		{
-			//描画処理の関数呼び出し
-			pObject->Draw();
-		}
+			//pNextの保存
+			CObject *pObjectNext = pObject->m_pNext;	//Update()で削除されると、pNextも消えるので事前に保存しておく
 
-		//pObjectにpObjectのpNextを代入
-		pObject = pObjectNext;
+			if (pObject->m_bDeath == false)
+			{
+				//描画処理の関数呼び出し
+				pObject->Draw();
+			}
+
+			//pObjectにpObjectのpNextを代入
+			pObject = pObjectNext;
+		}
 	}
 }
 
@@ -145,56 +157,56 @@ void CObject::DrawAll(void)
 //=============================================================================
 void CObject::Death(void)
 {
-	//オブジェクトの次に情報が入っているとき
-	if (m_pNext != nullptr)
-	{
-		//オブジェクトの前に情報が入っているとき
-		if (m_pPrev != nullptr)
+		//オブジェクトの次に情報が入っているとき
+		if (m_pNext != nullptr)
 		{
-			//自分自身のm_pNextを前のオブジェクトのm_pNextに代入
-			m_pPrev->m_pNext = this->m_pNext;
+			//オブジェクトの前に情報が入っているとき
+			if (m_pPrev != nullptr)
+			{
+				//自分自身のm_pNextを前のオブジェクトのm_pNextに代入
+				m_pPrev->m_pNext = this->m_pNext;
 
-			//自分自身のm_pPrevを後ろのm_pPrevに代入
-			m_pNext->m_pPrev = this->m_pPrev;
+				//自分自身のm_pPrevを後ろのm_pPrevに代入
+				m_pNext->m_pPrev = this->m_pPrev;
+			}
+
+			//オブジェクトの前に情報が入っていないとき
+			else
+			{
+				//自分自身のm_pNextを先頭に代入
+				m_pTop[m_nPriority] = this->m_pNext;
+
+				//自分自身のm_pPrevを次のオブジェクトのm_pPrevに代入
+				m_pNext->m_pPrev = this->m_pPrev;
+			}
 		}
 
-		//オブジェクトの前に情報が入っていないとき
+		//オブジェクトの次に情報が入っていないとき
 		else
 		{
-			//自分自身のm_pNextを先頭に代入
-			m_pTop = this->m_pNext;
+			//オブジェクトの前に情報が入っているとき
+			if (m_pPrev != nullptr)
+			{
+				//後ろのm_pPrevにnullptrを代入
+				m_pCurrent[m_nPriority] = this->m_pPrev;
 
-			//自分自身のm_pPrevを次のオブジェクトのm_pPrevに代入
-			m_pNext->m_pPrev = this->m_pPrev;
+				//後ろのm_pNextを前のオブジェクトのm_pNextに代入
+				m_pPrev->m_pNext = this->m_pNext;
+			}
+
+			//オブジェクトの前に情報が入っていないとき
+			else
+			{
+				//先頭のオブジェクトにnullptrを代入
+				m_pTop[m_nPriority] = nullptr;
+
+				//後ろのオブジェクトにnullptrを代入
+				m_pCurrent[m_nPriority] = nullptr;
+			}
 		}
-	}
 
-	//オブジェクトの次に情報が入っていないとき
-	else
-	{
-		//オブジェクトの前に情報が入っているとき
-		if (m_pPrev != nullptr)
-		{
-			//後ろのm_pPrevにnullptrを代入
-			m_pCurrent = this->m_pPrev;
-
-			//後ろのm_pNextを前のオブジェクトのm_pNextに代入
-			m_pPrev->m_pNext = this->m_pNext;
-		}
-
-		//オブジェクトの前に情報が入っていないとき
-		else
-		{
-			//先頭のオブジェクトにnullptrを代入
-			m_pTop = nullptr;
-
-			//後ろのオブジェクトにnullptrを代入
-			m_pCurrent = nullptr;
-		}
-	}
-
-	//オブジェクト(自分自身)を、破棄
-	delete this;
+		//オブジェクト(自分自身)を、破棄
+		delete this;
 }
 
 //=============================================================================

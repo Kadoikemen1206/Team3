@@ -224,7 +224,7 @@ void CCamera::Update(void)
 void CCamera::SetCamera(int nCntCamera, CAMERATYPE type)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	SetCameraType(type);
 

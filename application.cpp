@@ -19,6 +19,9 @@
 #include "light.h"
 #include "player.h"
 #include "meshfield.h"
+#include "time.h"
+#include "number.h"
+#include "texture.h"
 #include "model.h"
 
 //=============================================================================
@@ -30,8 +33,9 @@ CObject *CApplication::m_pMode = nullptr;
 CCamera *CApplication::m_pCamera = nullptr;
 CLight *CApplication::m_pLight = nullptr;
 CMeshfield *CApplication::m_pMeshField = nullptr;
+CTime *CApplication::m_pTime = nullptr;
+CTexture *CApplication::m_pTexture = nullptr;
 CApplication::MODE CApplication::m_mode = MODE_TITLE;
-CObjectX *CApplication::m_apObject3D[4] = {};
 
 //=============================================================================
 // コンストラクタ
@@ -59,32 +63,31 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	//レンダリングクラスの生成
 	m_pRenderer = new CRenderer;
-
-	//インプットクラスの生成
-	m_pInputKeyboard = new CInput;
-
-	//カメラの生成
-	m_pCamera = new CCamera;
-
 	//レンダリングの初期化処理
 	if (FAILED(m_pRenderer->Init(hWnd, bWindow)))
 	{ //初期化処理が失敗した場合
 		return -1;
 	}
 
+	//インプットクラスの生成
+	m_pInputKeyboard = new CInput;
 	//インプットの初期化処理
 	if (FAILED(m_pInputKeyboard->Init(hInstance, hWnd)))
 	{ //初期化処理が失敗した場合
 		return -1;
 	}
 
+	// テクスチャの生成
+	m_pTexture = new CTexture;
+	m_pTexture->LoadAll();
 	//カメラの初期化
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
 	m_pCamera->Init();
-
 	//ライトの生成
 	m_pLight = CLight::Create();
+
+	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL5);
 
 	//ポリゴンの生成
 	//CObject3D::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
@@ -93,9 +96,8 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-500.0f, 0.0f, 14500.0f), CObject::PRIORITY_LEVEL2);
 
 	//モデルの生成
-	m_apObject3D[0] = CObjectX::Create(D3DXVECTOR3(0.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	m_apObject3D[1] = CObjectX::Create(D3DXVECTOR3(-100.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	m_apObject3D[2] = CObjectX::Create(D3DXVECTOR3(100.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
+	CObjectX::Create(D3DXVECTOR3(100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
+	CObjectX::Create(D3DXVECTOR3(-100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
 
 	//プレイヤーの生成
 	CPlayer::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
@@ -117,6 +119,12 @@ void CApplication::Uninit(void)
 	//オブジェクトの全開放
 	CObject::UninitAll();
 
+	//ナンバーの削除
+	CNumber::Unload();
+
+	// テクスチャの削除
+	m_pTexture->UnloadAll();
+	
 	//レンダリングの解放・削除
 	if (m_pRenderer != nullptr)
 	{
@@ -163,20 +171,6 @@ void CApplication::Update(void)
 	if (m_pCamera != nullptr)
 	{
 		m_pCamera->Update();
-	}
-
-	//キーボードの情報取得
-	CInput *pInputKeyboard = CApplication::GetInputKeyboard();
-
-	if (pInputKeyboard->GetTrigger(DIK_C))
-	{
-		m_apObject3D[3] = CObjectX::Create(D3DXVECTOR3(-200.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	}
-
-	if (pInputKeyboard->GetTrigger(DIK_V) && m_apObject3D[0] != nullptr)
-	{
-		m_apObject3D[0]->Uninit();
-		m_apObject3D[0] = nullptr;
 	}
 }
 
