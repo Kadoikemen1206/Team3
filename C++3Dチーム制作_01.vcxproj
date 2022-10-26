@@ -156,10 +156,12 @@
   <ItemGroup>
     <ClCompile Include="application.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="gimmick.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="meshfield.cpp" />
+    <ClCompile Include="model.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object2D.cpp" />
     <ClCompile Include="object3D.cpp" />
@@ -171,10 +173,12 @@
   <ItemGroup>
     <ClInclude Include="application.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="gimmick.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="meshfield.h" />
+    <ClInclude Include="model.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="object2D.h" />
     <ClInclude Include="object3D.h" />

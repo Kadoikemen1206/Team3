@@ -98,7 +98,7 @@ void CObjectX::Draw()
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);		//(※行列移動関数(第1引数にx,y,z方向の移動行列を作成))
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-	Projection();
+	//Projection();
 
 	//ワールドマトリックスの設定（ワールド座標行列の設定）
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
