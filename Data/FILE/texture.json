@@ -1,8 +1,20 @@
 {
   "TEXTURE": [
-    [ "NUMBER", "Data\/TEXTURE\/number000.png" ],
-    [ "FLOOR0", "Data\/TEXTURE\/yuka000.jpg"],
-    [ "FLOOR2", "Data\/TEXTURE\/yuka002.jpg"],
-    [ "VS_MODE", "Data\/TEXTURE\/vs.png" ]
+    [
+      "NUMBER",
+      "Data\/TEXTURE\/number01.png"
+    ],
+    [
+      "FLOOR0",
+      "Data\/TEXTURE\/yuka000.jpg"
+    ],
+    [
+      "FLOOR2",
+      "Data\/TEXTURE\/yuka002.jpg"
+    ],
+    [
+      "VS_MODE",
+      "Data\/TEXTURE\/vs.png"
+    ]
   ]
 }
