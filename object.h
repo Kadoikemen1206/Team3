@@ -28,6 +28,7 @@ public:
 		OBJTYPE_TITLEROGO,	//タイトルロゴ
 		OBJTYPE_COUNTDOWN,	//カウントダウン
 		OBJTYPE_MODEL,		//モデル
+		OBJTYPE_GIMMICK,	//ギミック
 		OBJTYPE_MAX,
 		OBJTYPE_INVALID
 	};

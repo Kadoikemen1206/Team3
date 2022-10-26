@@ -299,29 +299,3 @@ void CCamera::SetCameraType(CAMERATYPE type)
 {
 	m_nCameraType = type;
 }
-
-//=============================================================================
-// 生成処理
-//=============================================================================
-//CCamera * CCamera::Create(CAMERATYPE type, int nCntCamera)
-//{
-//	//ポインタ宣言
-//	CCamera *pCamera = nullptr;
-//
-//	//インスタンス生成
-//	pCamera = new CCamera;
-//
-//	if (pCamera != nullptr)
-//	{//ポインタが存在したら実行
-//		pCamera->SetCameraType(type);
-//		pCamera->Init();
-//		pCamera->SetCamera(nCntCamera);
-//	}
-//	else
-//	{//ポインタが虚無だったら実行
-//		assert(false);
-//	}
-//
-//	//ポインタを返す
-//	return pCamera;
-//}

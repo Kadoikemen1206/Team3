@@ -23,6 +23,7 @@
 #include "number.h"
 #include "texture.h"
 #include "model.h"
+#include "obstacle.h"
 #include "title.h"
 #include "game.h"
 #include "ranking.h"
@@ -83,6 +84,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	// ÉJÉÅÉâÇÃèâä˙âª
 	m_pCamera = new CCamera;
+	m_pCamera = new CCamera;
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
 	m_pCamera->Init();
@@ -93,6 +95,8 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	//ÉÇÅ[Éhê∂ê¨
 	CFade::Create(m_mode);
+
+	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }

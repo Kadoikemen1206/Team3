@@ -84,6 +84,9 @@
     <ClCompile Include="gimmick.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="obstacle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="fade.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -170,8 +173,11 @@
     <ClInclude Include="gimmick.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="obstacle.h">
+      <Filter>ヘッダー ファイル</Filter>
     <ClInclude Include="fade.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
     </ClInclude>
     <ClInclude Include="game.h">
       <Filter>ソース ファイル</Filter>
