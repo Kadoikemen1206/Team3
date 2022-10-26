@@ -80,7 +80,7 @@ void CObjectX::Update()
 void CObjectX::Draw()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	D3DXMATRIX mtxRot, mtxTrans;		//計算用マトリックス
 	D3DMATERIAL9 matDef;				//現在のマテリアル保存用
@@ -193,7 +193,7 @@ CObjectX * CObjectX::Create(D3DXVECTOR3 pos, int nPriority)
 void CObjectX::LoadModel(const char *aFileName)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//Xファイルの読み込み
 	D3DXLoadMeshFromX(aFileName,
@@ -271,7 +271,7 @@ void CObjectX::LoadModel(const char *aFileName)
 void CObjectX::Projection(void)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	D3DXMATRIX mtxRot, mtxTrans;		//計算用マトリックス
 	D3DMATERIAL9 matDef;				//現在のマテリアル保存用

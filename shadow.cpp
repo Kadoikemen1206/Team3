@@ -59,7 +59,7 @@ void CShadow::Update(void)
 void CShadow::Draw(void)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//減算合成
 	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_REVSUBTRACT);

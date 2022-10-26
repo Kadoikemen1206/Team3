@@ -81,15 +81,15 @@ void CPlayer::Update()
 	// ‘O‰ñ‚ÌˆÊ’u‚ð•Û‘¶
 	m_posOld = pos;
 
-	if (pInputKeyboard->GetPress(DIK_W))
+	if (pInputKeyboard->Press(DIK_W))
 	{// ã‚ÉˆÚ“®
-		if (pInputKeyboard->GetPress(DIK_A))
+		if (pInputKeyboard->Press(DIK_A))
 		{
 			pos.x += sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 			pos.z += cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.75f;
 		}
-		else if (pInputKeyboard->GetPress(DIK_D))
+		else if (pInputKeyboard->Press(DIK_D))
 		{
 			pos.x += sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
 			pos.z += cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
@@ -103,15 +103,15 @@ void CPlayer::Update()
 		}
 	}
 
-	else if (pInputKeyboard->GetPress(DIK_S))
+	else if (pInputKeyboard->Press(DIK_S))
 	{// ‰º‚ÉˆÚ“®
-		if (pInputKeyboard->GetPress(DIK_A))
+		if (pInputKeyboard->Press(DIK_A))
 		{
 			pos.x += sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 			pos.z += cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.25f;
 		}
-		else if (pInputKeyboard->GetPress(DIK_D))
+		else if (pInputKeyboard->Press(DIK_D))
 		{
 			pos.x += sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
 			pos.z += cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
@@ -125,13 +125,13 @@ void CPlayer::Update()
 		}
 
 	}
-	else if (pInputKeyboard->GetPress(DIK_A))
+	else if (pInputKeyboard->Press(DIK_A))
 	{// ¶‚ÉˆÚ“®
 		pos.x -= sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 		pos.z -= cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 		m_rotDest.y = pCameraRot.y + D3DX_PI * 0.5f;
 	}
-	else if (pInputKeyboard->GetPress(DIK_D))
+	else if (pInputKeyboard->Press(DIK_D))
 	{// ‰E‚ÉˆÚ“®
 		pos.x += sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 		pos.z += cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;

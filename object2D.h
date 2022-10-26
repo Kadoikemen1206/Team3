@@ -12,6 +12,7 @@
 //=============================================================================
 #include "main.h"
 #include "object.h"
+#include <string>
 
 //=============================================================================
 // マクロ定義
@@ -47,7 +48,7 @@ public:
 	// メンバー関数
 	//-------------------------------------------------------------------------
 	HRESULT Init() override;									// 初期化処理
-	void Uninit() override;										// 終了処理						
+	void Uninit() override;										// 終了処理
 	void Update() override;										// 更新処理
 	void Draw() override;										// 描画処理
 	void VtxUpdate() override;									// 頂点座標更新処理
@@ -56,7 +57,7 @@ public:
 	void SetMove(D3DXVECTOR3 move) override;					// 移動量設定処理
 	void SetCol(D3DXCOLOR col) override;						// 色設定処理
 	void SetRot(D3DXVECTOR3 rot) override;						// 向き設定処理
-	void BindTexture(LPDIRECT3DTEXTURE9 pTexture);				// 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
+	void BindTexture(std::string inPath);						// 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 	void SetUV(float x_1, float x_2, float y_1, float y_2);		// テクスチャ座標更新処理
 	D3DXVECTOR3 GetPos(void) override { return m_pos; }			// 座標取得処理
 	D3DXVECTOR3 GetSize(void) override { return m_size; }		// サイズ取得処理

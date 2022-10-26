@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{7ac7a8e5-ea43-45bf-a30a-46c7bf7489c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,9 +39,6 @@
     <ClCompile Include="renderer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="object3D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -54,46 +54,94 @@
     <ClCompile Include="meshfield.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="number.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="time.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="file.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectInput.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputjoypad.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputkeyboard.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="object.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="object2D.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="application.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="light.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="object3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectX.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="shadow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="main.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="meshfield.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="number.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="object2D.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="object3D.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="objectX.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="shadow.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="time.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectInput.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputjoypad.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputkeyboard.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputkeydata.h">
+      <Filter>ソース ファイル\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
