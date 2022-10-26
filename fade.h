@@ -1,82 +1,61 @@
 //=============================================================================
 //
-// マネージャ処理 [application.h]
+// フェード処理 [fade.h]
 // Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _APPLICATION_H_
-#define _APPLICATION_H_
+#ifndef _FADE_H_ 
+#define _FADE_H_
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
 #include "main.h"
-
-//=============================================================================
-// クラスの前方定義
-//=============================================================================
-class CInput;
-class CCamera;
-class CLight;
-class CObjectX;
-class CMeshfield;
-class CTime;
-class CTexture;
+#include "mode.h"
+#include "object2D.h"
+#include "application.h"
 
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CApplication
+class CFade : public CObject2D
 {
 public:
-
 	//=============================================================================
 	// 列挙型
 	//=============================================================================
-	enum MODE
+	enum FADE
 	{
-		MODE_TITLE = 0,
-		MODE_GAME,
-		MODE_RESULT,
-		MODE_RANKING,
-		MODE_TUTORIAL,
-		MODE_MAX
+		FADE_NONE = 0,  //何もしてない状態
+		FADE_IN,		//フェードイン状態
+		FADE_OUT,       //フェードアウト状態
+		FADE_MAX
 	};
 
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	CApplication();
-	~CApplication();
+	explicit CFade(int nPriority = PRIORITY_LEVEL5);
+	~CFade();
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init(HINSTANCE hInstance, HWND hWnd, bool bWindow);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
-	static void SetMode(MODE mode);
-	static MODE GetMode();
-	static CRenderer *GetRenderer();
-	static CInput *GetInputKeyboard();
-	static CCamera *GetCamera() { return m_pCamera; }
-	static CMeshfield *GetMeshfield() { return m_pMeshField; }
-	static CTexture *GetTexture() { return m_pTexture; }
+	void Init(CApplication::MODE modeNext);        //フェードの初期化処理
+	void Uninit(void) override;                    //フェードの終了処理
+	void Update(void) override;                    //フェードの更新処理
+
+	static void SetFade(CApplication::MODE modeNext);    //フェードの設定処理
+	FADE GetFade(void);
+
+	static CFade *Create(CApplication::MODE modeNext);
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	static CRenderer *m_pRenderer;
-	static CInput *m_pInputKeyboard;
-	static MODE m_mode;
-	static CObject *m_pMode;
-	static CCamera *m_pCamera;
-	static CLight *m_pLight;
-	static CMeshfield *m_pMeshField;
-	static CTime *m_pTime;
-	static CTexture *m_pTexture;	
+	static CApplication::MODE m_ModeNext;    //次の画面(モード)
+	static FADE m_pfade;                    //フェードの状態
+	static D3DXCOLOR m_color;                //カラー
 };
-
 #endif

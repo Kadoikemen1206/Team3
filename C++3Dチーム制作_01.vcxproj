@@ -94,7 +94,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -157,7 +157,9 @@
     <ClCompile Include="application.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="DirectInput.cpp" />
+    <ClCompile Include="fade.cpp" />
     <ClCompile Include="file.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="gimmick.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="inputjoypad.cpp" />
@@ -165,6 +167,7 @@
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="meshfield.cpp" />
+    <ClCompile Include="mode.cpp" />
     <ClCompile Include="number.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="object.cpp" />
@@ -172,16 +175,20 @@
     <ClCompile Include="object3D.cpp" />
     <ClCompile Include="objectX.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="ranking.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="shadow.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="time.cpp" />
+    <ClCompile Include="title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="DirectInput.h" />
+    <ClInclude Include="fade.h" />
     <ClInclude Include="file.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="gimmick.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="inputjoypad.h" />
@@ -190,6 +197,7 @@
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="meshfield.h" />
+    <ClInclude Include="mode.h" />
     <ClInclude Include="number.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="object.h" />
@@ -197,10 +205,12 @@
     <ClInclude Include="object3D.h" />
     <ClInclude Include="objectX.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="ranking.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="shadow.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="time.h" />
+    <ClInclude Include="title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
