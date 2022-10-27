@@ -4,7 +4,7 @@
 #include "application.h"
 #include <assert.h>
 
-CNumber::CNumber()
+CNumber::CNumber() : CObject2D(5)
 {
 
 }

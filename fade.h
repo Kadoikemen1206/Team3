@@ -1,54 +1,61 @@
 //=============================================================================
 //
-// プレイヤー処理 [player.h]
+// フェード処理 [fade.h]
 // Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _PLAYER_H_
-#define _PLAYER_H_
+#ifndef _FADE_H_ 
+#define _FADE_H_
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
-#include "objectX.h"
-
-//=============================================================================
-// 前方定義
-//=============================================================================
-class CShadow;
+#include "main.h"
+#include "mode.h"
+#include "object2D.h"
+#include "application.h"
 
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CPlayer : public CObjectX
+class CFade : public CObject2D
 {
 public:
+	//=============================================================================
+	// 列挙型
+	//=============================================================================
+	enum FADE
+	{
+		FADE_NONE = 0,  //何もしてない状態
+		FADE_IN,		//フェードイン状態
+		FADE_OUT,       //フェードアウト状態
+		FADE_MAX
+	};
+
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	explicit CPlayer(int nPriority = PRIORITY_LEVEL3);
-	~CPlayer() override;
+	explicit CFade(int nPriority = PRIORITY_LEVEL5);
+	~CFade();
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init() override;			// 初期化処理
-	void Update() override;				// 更新処理
+	void Init(CApplication::MODE modeNext);        //フェードの初期化処理
+	void Uninit(void) override;                    //フェードの終了処理
+	void Update(void) override;                    //フェードの更新処理
 
-	static D3DXVECTOR3 GetPlayerPos(void) { return m_pos; }
-	static D3DXVECTOR3 GetPlayerRot(void) { return m_rot; }
-	static CPlayer *Create(const D3DXVECTOR3 pos, int nPriority);    // 生成処理
+	static void SetFade(CApplication::MODE modeNext);    //フェードの設定処理
+	FADE GetFade(void);
+
+	static CFade *Create(CApplication::MODE modeNext);
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	CShadow *m_shadow;					// 影のポインタ
-	D3DXVECTOR3 m_rotDest;				// 目的の角度
-	D3DXVECTOR3 m_posOld;				// 前回の位置
-	float m_nSpeed;						// スピード
-
-	static D3DXVECTOR3 m_pos;			// 位置
-	static D3DXVECTOR3 m_rot;			// 向き
+	static CApplication::MODE m_ModeNext;    //次の画面(モード)
+	static FADE m_pfade;                    //フェードの状態
+	static D3DXCOLOR m_color;                //カラー
 };
 #endif

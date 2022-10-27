@@ -56,12 +56,13 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+	static void SetMode(MODE mode);
+	static MODE GetMode();
 	static CRenderer *GetRenderer();
 	static CInput *GetInputKeyboard();
 	static CCamera *GetCamera() { return m_pCamera; }
 	static CMeshfield *GetMeshfield() { return m_pMeshField; }
 	static CTexture *GetTexture() { return m_pTexture; }
-	//static CObjectX *GetObjectX() { return m_pObject3D[0]; }
 
 private:
 	//-------------------------------------------------------------------------
@@ -75,9 +76,7 @@ private:
 	static CLight *m_pLight;
 	static CMeshfield *m_pMeshField;
 	static CTime *m_pTime;
-	static CTexture *m_pTexture;
-
-	//static CObjectX *m_pObject3D[10];
+	static CTexture *m_pTexture;	
 };
 
 #endif

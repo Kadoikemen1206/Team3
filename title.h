@@ -1,54 +1,53 @@
 //=============================================================================
 //
-// プレイヤー処理 [player.h]
+// タイトル処理 [title.h]
 // Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _PLAYER_H_
-#define _PLAYER_H_
+#ifndef _TITLE_H_
+#define _TITLE_H_
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
-#include "objectX.h"
+#include "main.h"
+#include "object2D.h"
+#include "mode.h"
 
 //=============================================================================
 // 前方定義
 //=============================================================================
-class CShadow;
+class CFade;
 
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CPlayer : public CObjectX
+class CTitle : public CMode
 {
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	explicit CPlayer(int nPriority = PRIORITY_LEVEL3);
-	~CPlayer() override;
+	CTitle();
+	~CTitle() override;
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init() override;			// 初期化処理
-	void Update() override;				// 更新処理
-
-	static D3DXVECTOR3 GetPlayerPos(void) { return m_pos; }
-	static D3DXVECTOR3 GetPlayerRot(void) { return m_rot; }
-	static CPlayer *Create(const D3DXVECTOR3 pos, int nPriority);    // 生成処理
+	HRESULT Init(void) override;	// 初期化処理
+	void Uninit(void) override;		// 終了処理
+	void Update(void) override;		// 更新処理
+	void Draw(void) override;		// 描画処理
+	static CTitle *Create();		// 生成処理
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	CShadow *m_shadow;					// 影のポインタ
-	D3DXVECTOR3 m_rotDest;				// 目的の角度
-	D3DXVECTOR3 m_posOld;				// 前回の位置
-	float m_nSpeed;						// スピード
-
-	static D3DXVECTOR3 m_pos;			// 位置
-	static D3DXVECTOR3 m_rot;			// 向き
+	static LPDIRECT3DTEXTURE9 m_pTexture;	// テクスチャのポインタ
+	CObject2D *m_pObject2D;					// オブジェクト2Dのポインタ
+	static bool m_bTitleEnter;				// Enterを押したかのフラグ
+	CFade *m_pFade;
 };
+
 #endif

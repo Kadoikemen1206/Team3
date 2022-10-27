@@ -1,54 +1,48 @@
 //=============================================================================
 //
-// プレイヤー処理 [player.h]
-// Author : KADO TAKUMA
+// 障害物処理 [obstacle.h]
+// Author : saito shian
 //
 //=============================================================================
-#ifndef _PLAYER_H_
-#define _PLAYER_H_
+#ifndef _OBSTACLE_H_
+#define _OBSTACLE_H_
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
-#include "objectX.h"
+#include "gimmick.h"
 
 //=============================================================================
 // 前方定義
 //=============================================================================
-class CShadow;
 
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CPlayer : public CObjectX
+class CObstacle : public CGimmick
 {
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	explicit CPlayer(int nPriority = PRIORITY_LEVEL3);
-	~CPlayer() override;
+	explicit CObstacle(int nPriority = PRIORITY_LEVEL3);
+	~CObstacle() override;
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
 	HRESULT Init() override;			// 初期化処理
+	void Uninit() override;				// 終了処理
 	void Update() override;				// 更新処理
+	void Draw() override;				// 描画処理
 
-	static D3DXVECTOR3 GetPlayerPos(void) { return m_pos; }
-	static D3DXVECTOR3 GetPlayerRot(void) { return m_rot; }
-	static CPlayer *Create(const D3DXVECTOR3 pos, int nPriority);    // 生成処理
+	void ConstOperate(int barrage, int rotate) override;			// 一定の操作(連打、回転)
+
+	static CObstacle *Create(const D3DXVECTOR3 pos, int nPriority); // 生成処理
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	CShadow *m_shadow;					// 影のポインタ
-	D3DXVECTOR3 m_rotDest;				// 目的の角度
-	D3DXVECTOR3 m_posOld;				// 前回の位置
-	float m_nSpeed;						// スピード
-
-	static D3DXVECTOR3 m_pos;			// 位置
-	static D3DXVECTOR3 m_rot;			// 向き
 };
 #endif
