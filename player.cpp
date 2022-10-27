@@ -73,7 +73,7 @@ HRESULT CPlayer::Init()
 void CPlayer::Update()
 {
 	// キーボードの情報取得
-	CInput *pInputKeyboard = CApplication::GetInputKeyboard();
+	CInput *pInputKeyboard = CApplication::GetInput();
 
 	// カメラの情報取得
 	D3DXVECTOR3 pCameraRot = CCamera::GetRot();
@@ -190,6 +190,7 @@ void CPlayer::Update()
 			pObjectX->Collision(&pos, &m_posOld, &CObjectX::GetSize());
 		}
 
+		//ポインタを次に進める
 		pObject = pObject->GetNext();
 	}
 
@@ -204,10 +205,9 @@ void CPlayer::Update()
 	// CObjectXの更新処理
 	CObjectX::Update();
 
+	// 座標と向き設定
 	m_pos = pos;
 	m_rot = rot;
-
-	//CDebugProc::Print("モデルの現在の角度:%f\nモデルの目的の角度:%f", rot.y, m_rotDest.y);
 }
 
 //=============================================================================
