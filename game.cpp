@@ -29,7 +29,8 @@
 //=============================================================================
 // 静的メンバ変数宣言
 //=============================================================================
-CPlayer *CGame::m_pPlayer = nullptr;
+CPlayer *CGame::m_pPlayer1P = nullptr;
+CPlayer *CGame::m_pPlayer2P = nullptr;
 CCamera *CGame::m_pCamera = nullptr;
 CMeshfield *CGame::m_pMeshField = nullptr;
 CLight *CGame::m_pLight = nullptr;
@@ -82,7 +83,8 @@ HRESULT CGame::Init(void)
 	}
 
 	//プレイヤーの生成
-	m_pPlayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-50.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+	m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(50.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }

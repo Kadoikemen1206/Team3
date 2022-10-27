@@ -200,7 +200,6 @@ void CCamera::Update(void)
 	//}
 
 	D3DXVECTOR3 PlayerPos = CPlayer::GetPlayerPos();		//プレイヤーPOS情報の取得
-	D3DXVECTOR3 PlayerRot = CPlayer::GetPlayerRot();		//プレイヤーROT情報の取得
 
 	//************************
 	// カメラの追従処理
