@@ -20,11 +20,19 @@
 #include "meshfield.h"
 
 //=============================================================================
+// 静的メンバ変数宣言
+//=============================================================================
+D3DXVECTOR3 CPlayer::m_pos = {};
+D3DXVECTOR3 CPlayer::m_rot = {};
+
+//=============================================================================
 // コンストラクタ
 //=============================================================================
 CPlayer::CPlayer(int nPriority) : 
 	m_nSpeed(5.0f)
 {
+	//オブジェクトのタイプセット処理
+	CObject::SetType(OBJTYPE_PLAYER);
 }
 
 //=============================================================================
@@ -64,28 +72,30 @@ HRESULT CPlayer::Init()
 //=============================================================================
 void CPlayer::Update()
 {
-	//キーボードの情報取得
+	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInputKeyboard();
 
-	//カメラの情報取得
+	// カメラの情報取得
 	D3DXVECTOR3 pCameraRot = CCamera::GetRot();
 
-	//objectxのposとrot
+	// 座標取得
 	D3DXVECTOR3 pos = CObjectX::GetPos();
+
+	// 向き取得
 	D3DXVECTOR3 rot = CObjectX::GetRot();
 
-	//影のpos
-	D3DXVECTOR3 ShadowPos = m_shadow->GetPos();
+	// 前回の位置を保存
+	m_posOld = pos;
 
-	if (pInputKeyboard->GetPress(DIK_W))
-	{//上に移動
-		if (pInputKeyboard->GetPress(DIK_A))
+	if (pInputKeyboard->Press(DIK_W))
+	{// 上に移動
+		if (pInputKeyboard->Press(DIK_A))
 		{
 			pos.x += sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 			pos.z += cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.75f;
 		}
-		else if (pInputKeyboard->GetPress(DIK_D))
+		else if (pInputKeyboard->Press(DIK_D))
 		{
 			pos.x += sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
 			pos.z += cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
@@ -99,15 +109,15 @@ void CPlayer::Update()
 		}
 	}
 
-	else if (pInputKeyboard->GetPress(DIK_S))
-	{//下に移動
-		if (pInputKeyboard->GetPress(DIK_A))
+	else if (pInputKeyboard->Press(DIK_S))
+	{// 下に移動
+		if (pInputKeyboard->Press(DIK_A))
 		{
 			pos.x += sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 			pos.z += cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.25f;
 		}
-		else if (pInputKeyboard->GetPress(DIK_D))
+		else if (pInputKeyboard->Press(DIK_D))
 		{
 			pos.x += sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
 			pos.z += cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
@@ -121,14 +131,14 @@ void CPlayer::Update()
 		}
 
 	}
-	else if (pInputKeyboard->GetPress(DIK_A))
-	{//左に移動
+	else if (pInputKeyboard->Press(DIK_A))
+	{// 左に移動
 		pos.x -= sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 		pos.z -= cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 		m_rotDest.y = pCameraRot.y + D3DX_PI * 0.5f;
 	}
-	else if (pInputKeyboard->GetPress(DIK_D))
-	{//右に移動
+	else if (pInputKeyboard->Press(DIK_D))
+	{// 右に移動
 		pos.x += sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 		pos.z += cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 		m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
@@ -144,10 +154,10 @@ void CPlayer::Update()
 		m_rotDest.y = m_rotDest.y + D3DX_PI * 2;
 	}
 
-	//少しずつ向く
+	// 少しずつ向く
 	rot.y += (m_rotDest.y - rot.y) * 0.08f;
 
-	//角度の正規化(現在の角度)
+	// 角度の正規化(現在の角度)
 	if (rot.y > D3DX_PI)
 	{
 		rot.y = rot.y - D3DX_PI * 2;
@@ -157,19 +167,45 @@ void CPlayer::Update()
 		rot.y = rot.y + D3DX_PI * 2;
 	}
 
-	//メッシュフィールドのポインタを取得
-	CMeshfield *pMeshField = CApplication::GetMeshfield();
-	pMeshField->Collision(&pos);
+	//ポインタ宣言
+	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
 
-	//プレイヤーのposとrotの設定
+	while (pObject != nullptr)
+	{
+		if (pObject == this)
+		{
+			pObject = pObject->GetNext();
+			continue;
+		}
+
+		//変数宣言
+		CObject::EObjType objType;
+
+		//オブジェクトのタイプを取得
+		objType = pObject->GetObjType();
+
+		if (objType == OBJTYPE_MODEL)
+		{//プレイヤーとモデルの当たり判定
+			CObjectX *pObjectX = (CObjectX*)pObject;
+			pObjectX->Collision(&pos, &m_posOld, &CObjectX::GetSize());
+		}
+
+		pObject = pObject->GetNext();
+	}
+
+	// メッシュフィールドのポインタを取得
+	CMeshfield *pMeshField = CApplication::GetMeshfield();
+	//pMeshField->Collision(&pos);
+
+	// プレイヤーのposとrotの設定
 	CObjectX::SetPos(pos);
 	CObjectX::SetRot(rot);
 
-	//影のposの設定
-	m_shadow->SetPos(D3DXVECTOR3(pos.x, pos.y + 2.0f, pos.z));
-
-	//CObjectXの更新処理
+	// CObjectXの更新処理
 	CObjectX::Update();
+
+	m_pos = pos;
+	m_rot = rot;
 
 	//CDebugProc::Print("モデルの現在の角度:%f\nモデルの目的の角度:%f", rot.y, m_rotDest.y);
 }
@@ -195,3 +231,9 @@ CPlayer * CPlayer::Create(const D3DXVECTOR3 pos, int nPriority)
 
 	return pPlayer;
 }
+
+////位置の設定
+//void CPlayer::SetPosPlayer(D3DXVECTOR3 pos)
+//{
+//	pos = pos;
+//}

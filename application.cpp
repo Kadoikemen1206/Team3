@@ -21,6 +21,13 @@
 #include "meshfield.h"
 #include "time.h"
 #include "number.h"
+#include "texture.h"
+#include "model.h"
+#include "obstacle.h"
+#include "title.h"
+#include "game.h"
+#include "ranking.h"
+#include "fade.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -32,8 +39,8 @@ CCamera *CApplication::m_pCamera = nullptr;
 CLight *CApplication::m_pLight = nullptr;
 CMeshfield *CApplication::m_pMeshField = nullptr;
 CTime *CApplication::m_pTime = nullptr;
-CApplication::MODE CApplication::m_mode = MODE_TITLE;
-CObjectX *CApplication::m_apObject3D[4] = {};
+CTexture *CApplication::m_pTexture = nullptr;
+CApplication::MODE CApplication::m_mode = MODE_GAME;
 
 //=============================================================================
 // コンストラクタ
@@ -61,50 +68,35 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	//レンダリングクラスの生成
 	m_pRenderer = new CRenderer;
-
-	//インプットクラスの生成
-	m_pInputKeyboard = new CInput;
-
-	//カメラの生成
-	m_pCamera = new CCamera;
-
 	//レンダリングの初期化処理
 	if (FAILED(m_pRenderer->Init(hWnd, bWindow)))
 	{ //初期化処理が失敗した場合
 		return -1;
 	}
 
+	//インプットクラスの生成
+	m_pInputKeyboard = new CInput;
 	//インプットの初期化処理
 	if (FAILED(m_pInputKeyboard->Init(hInstance, hWnd)))
 	{ //初期化処理が失敗した場合
 		return -1;
 	}
 
-	//カメラの初期化
+	// カメラの初期化
+	m_pCamera = new CCamera;
+	m_pCamera = new CCamera;
+	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
+	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
 	m_pCamera->Init();
-	CNumber::Load();
 
-	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL5);
+	// テクスチャの生成
+	m_pTexture = new CTexture;
+	m_pTexture->LoadAll();
 
-	//カメラの生成
-	m_pCamera = CCamera::Create();
+	//モード生成
+	CFade::Create(m_mode);
 
-	//ライトの生成
-	m_pLight = CLight::Create();
-
-	//ポリゴンの生成
-	//CObject3D::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
-
-	//メッシュフィールドの生成
-	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-300.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
-
-	//モデルの生成
-	m_apObject3D[0] = CObjectX::Create(D3DXVECTOR3(0.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	m_apObject3D[1] = CObjectX::Create(D3DXVECTOR3(-100.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	m_apObject3D[2] = CObjectX::Create(D3DXVECTOR3(100.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-
-	//プレイヤーの生成
-	CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
@@ -117,9 +109,9 @@ void CApplication::Uninit(void)
 	//オブジェクトの全開放
 	CObject::UninitAll();
 
-	//ナンバーの削除
-	CNumber::Unload();
-
+	// テクスチャの削除
+	m_pTexture->UnloadAll();
+	
 	//レンダリングの解放・削除
 	if (m_pRenderer != nullptr)
 	{
@@ -134,14 +126,6 @@ void CApplication::Uninit(void)
 		m_pInputKeyboard->Uninit();
 		delete m_pInputKeyboard;
 		m_pInputKeyboard = nullptr;
-	}
-
-	//カメラの解放・削除
-	if (m_pCamera != nullptr)
-	{
-		m_pCamera->Uninit();
-		delete m_pCamera;
-		m_pCamera = nullptr;
 	}
 }
 
@@ -160,26 +144,6 @@ void CApplication::Update(void)
 	if (m_pRenderer != nullptr)
 	{
 		m_pRenderer->Update();
-	}
-
-	//カメラの更新処理
-	if (m_pCamera != nullptr)
-	{
-		m_pCamera->Update();
-	}
-
-	//キーボードの情報取得
-	CInput *pInputKeyboard = CApplication::GetInputKeyboard();
-
-	if (pInputKeyboard->GetTrigger(DIK_C))
-	{
-		m_apObject3D[3] = CObjectX::Create(D3DXVECTOR3(-200.0f, 100.0f, 0.0f), CObject::PRIORITY_LEVEL1);
-	}
-
-	if (pInputKeyboard->GetTrigger(DIK_V) && m_apObject3D[0] != nullptr)
-	{
-		m_apObject3D[0]->Uninit();
-		m_apObject3D[0] = nullptr;
 	}
 }
 
@@ -209,4 +173,40 @@ CRenderer * CApplication::GetRenderer()
 CInput * CApplication::GetInputKeyboard()
 {
 	return m_pInputKeyboard;
+}
+
+//=============================================================================
+// モードセット処理
+//=============================================================================
+void CApplication::SetMode(MODE mode)
+{
+	if (m_pMode != nullptr)
+	{
+		m_pMode->Uninit();
+		m_pMode = nullptr;
+	}
+
+	m_mode = mode;
+
+	switch (m_mode)
+	{
+	case MODE_TITLE:
+		m_pMode = CTitle::Create();
+		break;
+	case MODE_GAME:
+		m_pMode = CGame::Create();
+		break;
+	case MODE_RANKING:
+		m_pMode = CRanking::Create();
+		CRanking::SetRankingScore();
+		break;
+	}
+}
+
+//=============================================================================
+// モードを取得する処理
+//=============================================================================
+CApplication::MODE CApplication::GetMode()
+{
+	return m_mode;
 }

@@ -35,6 +35,8 @@ public:
 	HRESULT Init() override;			// 初期化処理
 	void Update() override;				// 更新処理
 
+	static D3DXVECTOR3 GetPlayerPos(void) { return m_pos; }
+	static D3DXVECTOR3 GetPlayerRot(void) { return m_rot; }
 	static CPlayer *Create(const D3DXVECTOR3 pos, int nPriority);    // 生成処理
 
 private:
@@ -43,6 +45,10 @@ private:
 	//-------------------------------------------------------------------------
 	CShadow *m_shadow;					// 影のポインタ
 	D3DXVECTOR3 m_rotDest;				// 目的の角度
+	D3DXVECTOR3 m_posOld;				// 前回の位置
 	float m_nSpeed;						// スピード
+
+	static D3DXVECTOR3 m_pos;			// 位置
+	static D3DXVECTOR3 m_rot;			// 向き
 };
 #endif

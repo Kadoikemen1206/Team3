@@ -12,6 +12,7 @@
 #include "renderer.h"
 #include "application.h"
 #include "main.h"
+#include "texture.h"
 
 //=============================================================================
 // コンストラクタ
@@ -44,7 +45,7 @@ CObject2D::~CObject2D()
 HRESULT CObject2D::Init()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer((sizeof(VERTEX_2D) * 4),
@@ -141,7 +142,7 @@ void CObject2D::Update()
 void CObject2D::Draw()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
@@ -251,9 +252,9 @@ void CObject2D::SetRot(D3DXVECTOR3 rot)
 //=============================================================================
 // 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 //=============================================================================
-void CObject2D::BindTexture(LPDIRECT3DTEXTURE9 pTexture)
+void CObject2D::BindTexture(std::string inPath)
 {
-	m_pTexture = pTexture;		//テクスチャのポインタ
+	m_pTexture = CApplication::GetTexture()->GetTexture(inPath);		//テクスチャのポインタ
 }
 
 //=============================================================================
@@ -302,19 +303,4 @@ CObject2D * CObject2D::Create(D3DXVECTOR3 pos, int nPriority)
 
 	//ポインタを返す
 	return pObject2D;
-}
-
-//=============================================================================
-// テクスチャの読み込み
-//=============================================================================
-void CObject2D::LoadTexture(const char * aFileName)
-{
-	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(
-		pDevice,
-		aFileName,
-		&m_pTexture);
 }

@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // カメラ処理 [camera.cpp]
-// Author : KADO TAKUMA
+// Author : saito shian
 //
 //=============================================================================
 
@@ -12,6 +12,7 @@
 #include "application.h"
 #include "renderer.h"
 #include "input.h"
+#include "player.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -38,11 +39,13 @@ CCamera::~CCamera()
 //=============================================================================
 HRESULT CCamera::Init(void)
 {
+	m_posRDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_posVDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	if (m_nCameraType == CAMERATYPE_ONE)
 	{
 		//視点・注視点・上方向を設定する（構造体の初期化）
 		m_posV[0] = D3DXVECTOR3(0.0f, 200.0f, -400.0f);							//視点
-		m_posR[0] = D3DXVECTOR3(0.0f, 20.0f, -1.0f);							//注視点
+		m_posR[0] = D3DXVECTOR3(0.0f, 0.0f, .0f);							//注視点
 		m_vecU[0] = D3DXVECTOR3(0.0f, 1.0f, 0.0f);								//上方向ベクトル ←固定でOK!!
 		m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);									//向き
 		float fLength1 = (m_posV[0].x - m_posR[0].x);							//視点から注視点のX軸の距離
@@ -114,73 +117,116 @@ void CCamera::Update(void)
 {
 	////キーボードの情報取得
 	//CInput *pInputKeyboard = CApplication::GetInputKeyboard();
+	//if (m_nCameraType == CAMERATYPE_ONE)
+	//{
+	//	//*********************
+	//	// 注視点の旋回
+	//	//*********************
+	//	if (pInputKeyboard->GetPress(DIK_Q) == true)
+	//	{//Qキーが押された
+	//		m_rot.y -= 0.005f * D3DX_PI;		//右の回転量
+	//		m_posR[0].x = m_posV[0].x + sinf(m_rot.y) * m_fDistance;		//注視点と視点のxの長さ
+	//		m_posR[0].z = m_posV[0].z + cosf(m_rot.y) * m_fDistance;		//注視点と視点のzの長さ
+	//	}
+	//	if (pInputKeyboard->GetPress(DIK_E) == true)
+	//	{//Eキーが押された
 	//
-	////カメラの移動
-	//if (pInputKeyboard->GetPress(DIK_DOWN))
-	//{//上に移動
-	//	m_posV.x -= sinf(m_rot.y) * CAMERA_SPEED;
-	//	m_posV.z -= cosf(m_rot.y) * CAMERA_SPEED;
-	//	m_posR.x = m_posV.x + sinf(m_rot.y) * m_fDistance;
-	//	m_posR.z = m_posV.z + cosf(m_rot.y) * m_fDistance;
-	//}
-	//if (pInputKeyboard->GetPress(DIK_UP))
-	//{//下に移動
-	//	m_posV.x += sinf(m_rot.y) * CAMERA_SPEED;
-	//	m_posV.z += cosf(m_rot.y) * CAMERA_SPEED;
-	//	m_posR.x = m_posV.x + sinf(m_rot.y) * m_fDistance;
-	//	m_posR.z = m_posV.z + cosf(m_rot.y) * m_fDistance;
-	//}
-	//if (pInputKeyboard->GetPress(DIK_RIGHT))
-	//{//左に移動
-	//	m_posV.x += sinf(D3DX_PI * 0.5f + m_rot.y) * CAMERA_SPEED;
-	//	m_posV.z += cosf(D3DX_PI * 0.5f + m_rot.y) * CAMERA_SPEED;
-	//	m_posR.x = m_posV.x + sinf(m_rot.y) * m_fDistance;
-	//	m_posR.z = m_posV.z + cosf(m_rot.y) * m_fDistance;
-	//}
-	//if (pInputKeyboard->GetPress(DIK_LEFT))
-	//{//右に移動
-	//	m_posV.x -= sinf(D3DX_PI * 0.5f + m_rot.y) * CAMERA_SPEED;
-	//	m_posV.z -= cosf(D3DX_PI * 0.5f + m_rot.y) * CAMERA_SPEED;
-	//	m_posR.x = m_posV.x + sinf(m_rot.y) * m_fDistance;
-	//	m_posR.z = m_posV.z + cosf(m_rot.y) * m_fDistance;
+	//		m_rot.y += 0.005f * D3DX_PI;		//左の回転量
+	//		m_posR[0].x = m_posV[0].x + sinf(m_rot.y) * m_fDistance;		//注視点と視点のxの長さ
+	//		m_posR[0].z = m_posV[0].z + cosf(m_rot.y) * m_fDistance;		//注視点と視点のzの長さ
+	//	}
+	//	//*********************
+	//	// 視点の旋回
+	//	//*********************
+	//	if (pInputKeyboard->GetPress(DIK_T) == true)
+	//	{//Tキーが押された
+	//		m_rot.y -= 0.005f * D3DX_PI;		//右の回転量
+	//		m_posV[0].x = m_posR[0].x - sinf(m_rot.y) * m_fDistance;		//視点と注視点のxの長さ
+	//		m_posV[0].z = m_posR[0].z - cosf(m_rot.y) * m_fDistance;		//視点と注視点のzの長さ
+	//	}
+	//	if (pInputKeyboard->GetPress(DIK_U) == true)
+	//	{//Uキーが押された
+	//		m_rot.y += 0.005f * D3DX_PI;		//左の回転量
+	//		m_posV[0].x = m_posR[0].x - sinf(m_rot.y) * m_fDistance;		//視点と注視点のxの長さ
+	//		m_posV[0].z = m_posR[0].z - cosf(m_rot.y) * m_fDistance;		//視点と注視点のzの長さ
+	//	}
+	//	//*********************
+	//	// カメラの移動
+	//	//*********************
+	//	//前移動
+	//	if (pInputKeyboard->GetPress(DIK_Y) == true)
+	//	{//Yキーが押された
+	//		m_posV[0].x += sinf(m_rot.y) * CAMERA_SPEED;
+	//		m_posV[0].z += cosf(m_rot.y) * CAMERA_SPEED;
+	//		m_posR[0].x = m_posV[0].x + sinf(m_rot.y) * m_fDistance;		//視点と注視点のxの長さ
+	//		m_posR[0].z = m_posV[0].z + cosf(m_rot.y) * m_fDistance;		//視点と注視点のzの長さ
+	//	}
+	//	//後ろ移動
+	//	if (pInputKeyboard->GetPress(DIK_H) == true)
+	//	{//Hキーが押された
+	//		m_posV[0].x -= sinf(m_rot.y) * CAMERA_SPEED;
+	//		m_posV[0].z -= cosf(m_rot.y) * CAMERA_SPEED;
+	//		m_posR[0].x = m_posV[0].x + sinf(m_rot.y) * m_fDistance;		 //視点と注視点のxの長さ
+	//		m_posR[0].z = m_posV[0].z + cosf(m_rot.y) * m_fDistance;		 //視点と注視点のzの長さ
+	//	}
+	//	//左移動
+	//	if (pInputKeyboard->GetPress(DIK_G) == true)
+	//	{//Gキーが押された
+	//		m_posV[0].x -= sinf(m_rot.y + D3DX_PI / 2) * CAMERA_SPEED;
+	//		m_posV[0].z += cosf(m_rot.y + D3DX_PI / 2) * CAMERA_SPEED;
+	//		m_posR[0].x = m_posV[0].x + sinf(m_rot.y) * m_fDistance;		//視点と注視点のxの長さ
+	//		m_posR[0].z = m_posV[0].z + cosf(m_rot.y) * m_fDistance;		//視点と注視点のzの長さ
+	//	}
+	//	//右移動
+	//	if (pInputKeyboard->GetPress(DIK_J) == true)
+	//	{//Jキーが押された
+	//		m_posV[0].x -= sinf(m_rot.y - D3DX_PI / 2) * CAMERA_SPEED;
+	//		m_posV[0].z += cosf(m_rot.y - D3DX_PI / 2) * CAMERA_SPEED;
+	//		m_posR[0].x = m_posV[0].x + sinf(m_rot.y) * m_fDistance;		//視点と注視点のxの長さ
+	//		m_posR[0].z = m_posV[0].z + cosf(m_rot.y) * m_fDistance;		//視点と注視点のzの長さ
+	//	}
 	//}
 	//
-	////注視点の旋回
-	//if (pInputKeyboard->GetPress(DIK_C))
-	//{//左に旋回
-	//	m_rot.y += 0.05f;
-	//	m_posR.x = m_posV.x + sinf(m_rot.y) * m_fDistance;
-	//	m_posR.z = m_posV.z + cosf(m_rot.y) * m_fDistance;
+	////*********************
+	//// 角度の正規化
+	////*********************
+	//if (m_rot.y < -D3DX_PI)				//角度が-180度より小さくなったら
+	//{
+	//	m_rot.y = D3DX_PI;				//角度に180度を代入する
 	//}
-	//else if (pInputKeyboard->GetPress(DIK_Z))
-	//{//右に旋回
-	//	m_rot.y -= 0.05f;
-	//	m_posR.x = m_posV.x + sinf(m_rot.y) * m_fDistance;
-	//	m_posR.z = m_posV.z + cosf(m_rot.y) * m_fDistance;
+	//else if (m_rot.y > D3DX_PI)			//角度が180度より大きくなったら
+	//{
+	//	m_rot.y = -D3DX_PI;				//角度に-180度を代入する
 	//}
-	//
-	////視点の旋回
-	//if (pInputKeyboard->GetPress(DIK_E))
-	//{//左に旋回
-	//	m_rot.y += 0.05f;
-	//	m_posV.x = m_posR.x - sinf(m_rot.y) * m_fDistance;
-	//	m_posV.z = m_posR.z - cosf(m_rot.y) * m_fDistance;
-	//}
-	//else if (pInputKeyboard->GetPress(DIK_Q))
-	//{//右に旋回
-	//	m_rot.y -= 0.05f;
-	//	m_posV.x = m_posR.x - sinf(m_rot.y) * m_fDistance;
-	//	m_posV.z = m_posR.z - cosf(m_rot.y) * m_fDistance;
-	//}
+
+	D3DXVECTOR3 PlayerPos = CPlayer::GetPlayerPos();		//プレイヤーPOS情報の取得
+	D3DXVECTOR3 PlayerRot = CPlayer::GetPlayerRot();		//プレイヤーROT情報の取得
+
+	//************************
+	// カメラの追従処理
+	//************************
+	//目的の注視点の設定							  
+	m_posRDest.z = PlayerPos.z;
+	//目的の視点の設定																				
+	m_posVDest.z = PlayerPos.z - cosf(m_rot.y) * 250.0f;
+
+	//視点の減衰処理
+	for (int nCnt = 0; nCnt < 2; nCnt++)
+	{
+		m_posR[nCnt].z += (m_posRDest.z - m_posR[nCnt].z) * 0.1f;
+		m_posV[nCnt].z += (m_posVDest.z - m_posV[nCnt].z) * 0.1f;
+	}
 }
 
 //=============================================================================
 // 設定処理
 //=============================================================================
-void CCamera::SetCamera(int nCntCamera)
+void CCamera::SetCamera(int nCntCamera, CAMERATYPE type)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
+
+	SetCameraType(type);
 
 	//**************************************************
 	//	ソロモード
@@ -252,30 +298,4 @@ void CCamera::SetCamera(int nCntCamera)
 void CCamera::SetCameraType(CAMERATYPE type)
 {
 	m_nCameraType = type;
-}
-
-//=============================================================================
-// 生成処理
-//=============================================================================
-CCamera * CCamera::Create(CAMERATYPE type, int nCntCamera)
-{
-	//ポインタ宣言
-	CCamera *pCamera = nullptr;
-
-	//インスタンス生成
-	pCamera = new CCamera;
-
-	if (pCamera != nullptr)
-	{//ポインタが存在したら実行
-		pCamera->SetCameraType(type);
-		pCamera->Init();
-		pCamera->SetCamera(nCntCamera);
-	}
-	else
-	{//ポインタが虚無だったら実行
-		assert(false);
-	}
-
-	//ポインタを返す
-	return pCamera;
 }

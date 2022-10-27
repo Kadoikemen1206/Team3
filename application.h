@@ -21,6 +21,7 @@ class CLight;
 class CObjectX;
 class CMeshfield;
 class CTime;
+class CTexture;
 
 //=============================================================================
 // ƒNƒ‰ƒX‚Ì’è‹`
@@ -55,10 +56,13 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+	static void SetMode(MODE mode);
+	static MODE GetMode();
 	static CRenderer *GetRenderer();
 	static CInput *GetInputKeyboard();
 	static CCamera *GetCamera() { return m_pCamera; }
 	static CMeshfield *GetMeshfield() { return m_pMeshField; }
+	static CTexture *GetTexture() { return m_pTexture; }
 
 private:
 	//-------------------------------------------------------------------------
@@ -72,8 +76,7 @@ private:
 	static CLight *m_pLight;
 	static CMeshfield *m_pMeshField;
 	static CTime *m_pTime;
-
-	static CObjectX *m_apObject3D[4];
+	static CTexture *m_pTexture;	
 };
 
 #endif

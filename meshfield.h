@@ -12,6 +12,7 @@
 //=============================================================================
 #include "main.h"
 #include "object.h"
+#include <string>
 
 //=============================================================================
 // クラスの定義
@@ -21,9 +22,9 @@ class CMeshfield : CObject
 	//-------------------------------------------------------------------------
 	// マクロ定義
 	//-------------------------------------------------------------------------
-	#define POLYGON_DEPTH	(50.0f)			//ポリゴンの奥行き
-	#define POLYGON_HEIGHT	(50.0f)			//ポリゴンの高さ
-	#define POLYGON_WIDTH	(50.0f)			//ポリゴンの幅
+	#define POLYGON_DEPTH	(500.0f)			//ポリゴンの奥行き
+	#define POLYGON_HEIGHT	(50.0f)				//ポリゴンの高さ
+	#define POLYGON_WIDTH	(25.0f)				//ポリゴンの幅
 	#define MESHFIELD_X_BLOCK	(30)			//X方向のブロック数
 	#define MESHFIELD_Z_BLOCK	(30)			//Z方向のブロック数
 	#define MESHFIELD_VERTEX_NUM	((MESHFIELD_X_BLOCK + 1) * (MESHFIELD_Z_BLOCK + 1))									//頂点数
@@ -50,14 +51,13 @@ public:
 	void SetMove(D3DXVECTOR3 move) override;					// 移動量設定処理
 	void SetCol(D3DXCOLOR col) override;						// 色設定処理
 	void SetRot(D3DXVECTOR3 rot) override;						// 向き設定処理
-	void BindTexture(LPDIRECT3DTEXTURE9 pTexture);				// 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
+	void BindTexture(std::string inPath);						// 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 	void SetUV(float x_1, float x_2, float y_1, float y_2);		// テクスチャ座標更新処理
 	D3DXVECTOR3 GetPos(void) override { return m_pos; }			// 座標取得処理
 	D3DXVECTOR3 GetSize(void) override { return m_size; }		// サイズ取得処理
 	D3DXVECTOR3 GetMove(void) override { return m_move; }		// 移動量取得処理
 	D3DXVECTOR3 GetRot(void) override { return m_rot; }			// 向き取得処理
 	D3DXCOLOR GetCol(void) override { return m_col; }			// 色取得処理
-	void LoadTexture(const char *aFileName);					// テクスチャの読み込み
 
 	static CMeshfield *Create(const D3DXVECTOR3 pos, int nPriority);    // 生成処理
 	void Collision(D3DXVECTOR3 *PlayerPos);

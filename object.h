@@ -20,23 +20,15 @@ public:
 	{
 		OBJTYPE_NONE = 0,
 		OBJTYPE_PLAYER,		//プレイヤー
-		OBJTYPE_BULLET,		//弾
-		OBJTYPE_NEONBALL,	//ネオンボール
-		OBJTYPE_ITEM,		//アイテム
-		OBJTYPE_ITEMBOX,	//アイテムボックス
-		OBJTYPE_ITEMHAVE,	//所持しているアイテム
 		OBJTYPE_BG,			//背景
 		OBJTYPE_EFFECT,		//エフェクト
-		OBJTYPE_SPLIT,		//分割画面
-		OBJTYPE_LIFE,		//ライフ
-		OBJTYPE_LIFEBOX,	//ライフボックス
-		OBJTYPE_ENEMY,		//敵
 		OBJTYPE_NUMBER,		//番号
 		OBJTYPE_SCORE,		//スコア
-		OBJTYPE_SCOREBOX,	//スコアボックス
 		OBJTYPE_MODE,		//モード
 		OBJTYPE_TITLEROGO,	//タイトルロゴ
 		OBJTYPE_COUNTDOWN,	//カウントダウン
+		OBJTYPE_MODEL,		//モデル
+		OBJTYPE_GIMMICK,	//ギミック
 		OBJTYPE_MAX,
 		OBJTYPE_INVALID
 	};
@@ -62,7 +54,7 @@ public:
 	// メンバー関数
 	//-------------------------------------------------------------------------
 	virtual HRESULT Init() = 0;							// 初期化処理
-	virtual void Uninit() = 0;							// 終了処理						
+	virtual void Uninit() = 0;							// 終了処理
 	virtual void Update() = 0;							// 更新処理
 	virtual void Draw() = 0;							// 描画処理
 	virtual void VtxUpdate() = 0;						// 頂点座標更新処理
@@ -79,18 +71,23 @@ public:
 	virtual D3DXVECTOR3 GetRot(void) = 0;				// 向き取得処理
 	virtual D3DXCOLOR GetCol(void) = 0;					// 色取得処理
 	virtual int GetID(void) { return m_nID; }			// 接続先の番号のゲッター
-																			   
+
+
 	static  void UninitAll(void);						// 全てのインスタンスの終了処理
 	static  void UpdateAll(void);						// 全てのインスタンスの更新処理
 	static  void DrawAll(void);							// 全てのインスタンスの描画処理
 	static  void ModeRelease();							// モード以外だったら破棄処理
 	void	Death(void);								// オブジェクト破棄処理
 
+	static CObject* GetTop(int nPriority) { return m_pTop[nPriority]; }
+	static CObject* GetCurrent(int nPriority) { return m_pCurrent[nPriority]; }
+	CObject* GetNext() { return m_pNext; }
+
 protected:
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	void Release();									// インスタンスの解放処理
+	void Release();										// インスタンスの解放処理
 
 private:
 	//-------------------------------------------------------------------------
@@ -101,8 +98,8 @@ private:
 	int m_nPriority;											// プライオリティの保存
 	EObjType m_objType;											// オブジェクトの種類
 
-	static CObject *m_pTop;										// 先頭のオブジェクトへのポインタ
-	static CObject *m_pCurrent;									// 現在(一番後ろ)のオブジェクトへのポインタ
+	static CObject *m_pTop[PRIORITY_LEVELMAX];					// 先頭のオブジェクトへのポインタ
+	static CObject *m_pCurrent[PRIORITY_LEVELMAX];				// 現在(一番後ろ)のオブジェクトへのポインタ
 	CObject *m_pPrev;											// 前のオブジェクトへのポインタ
 	CObject *m_pNext;											// 次のオブジェクトへのポインタ
 	bool m_bDeath;												// 死フラグ
