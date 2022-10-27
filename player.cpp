@@ -18,18 +18,17 @@
 #include "shadow.h"
 #include "renderer.h"
 #include "meshfield.h"
+#include "obstacle.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
 //=============================================================================
 D3DXVECTOR3 CPlayer::m_pos = {};
-D3DXVECTOR3 CPlayer::m_rot = {};
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CPlayer::CPlayer(int nPriority) : 
-	m_nSpeed(5.0f)
+CPlayer::CPlayer(int nPriority) : m_nSpeed(5.0f)
 {
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_PLAYER);
@@ -205,7 +204,6 @@ void CPlayer::Update()
 	CObjectX::Update();
 
 	m_pos = pos;
-	m_rot = rot;
 
 	//CDebugProc::Print("モデルの現在の角度:%f\nモデルの目的の角度:%f", rot.y, m_rotDest.y);
 }
@@ -232,8 +230,10 @@ CPlayer * CPlayer::Create(const D3DXVECTOR3 pos, int nPriority)
 	return pPlayer;
 }
 
-////位置の設定
-//void CPlayer::SetPosPlayer(D3DXVECTOR3 pos)
-//{
-//	pos = pos;
-//}
+//=============================================================================
+// スピードの設定
+//=============================================================================
+void CPlayer::SetSpeed(float speed)
+{
+	m_nSpeed = speed;
+}

@@ -21,6 +21,7 @@ class CPlayer;
 class CCamera;
 class CMeshfield;
 class CTime;
+class CFade;
 
 //=============================================================================
 // ƒNƒ‰ƒX‚Ì’è‹`

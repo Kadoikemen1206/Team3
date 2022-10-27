@@ -82,7 +82,7 @@ HRESULT CGame::Init(void)
 	}
 
 	//ÉvÉåÉCÉÑÅ[ÇÃê∂ê¨
-	m_pPlayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+	m_pPlayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 200.0f), CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
