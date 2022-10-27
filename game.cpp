@@ -118,17 +118,17 @@ void CGame::Update(void)
 		m_pCamera->Update();
 	}
 
-	//// 入力処理用のポインタ宣言
-	//CInput *pInput = CInput::GetKey();
+	// キーボードの情報取得
+	CInput *pInputKeyboard = CApplication::GetInput();
 
-	//if (m_pFade->GetFade() == CFade::FADE_NONE)
-	//{
-	//	if (pInput->Trigger(DIK_RETURN))
-	//	{
-	//		// 遷移
-	//		CFade::SetFade(CApplication::MODE_TITLE);
-	//	}
-	//}
+	if (m_pFade->GetFade() == CFade::FADE_NONE)
+	{
+		if (pInputKeyboard->Trigger(DIK_RETURN))
+		{
+			// 遷移
+			CFade::SetFade(CApplication::MODE_TITLE);
+		}
+	}
 }
 
 //=============================================================================

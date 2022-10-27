@@ -34,7 +34,7 @@ public:
 	//-------------------------------------------------------------------------
 	HRESULT Init() override;			// ‰Šú‰»ˆ—
 	void Update() override;				// XVˆ—
-
+	
 	static D3DXVECTOR3 GetPlayerPos(void) { return m_pos; }
 	static D3DXVECTOR3 GetPlayerRot(void) { return m_rot; }
 	static CPlayer *Create(const D3DXVECTOR3 pos, int nPriority);    // ¶¬ˆ—
