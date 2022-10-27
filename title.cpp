@@ -58,8 +58,8 @@ void CTitle::Uninit(void)
 //=============================================================================
 void CTitle::Update(void)
 {
-	// 入力処理用のポインタ宣言
-	CInput *pInput = CInput::GetKey();
+	// キーボードの情報取得
+	CInput *pInput = CApplication::GetInput();
 
 	if (m_pFade->GetFade() == CFade::FADE_NONE)
 	{

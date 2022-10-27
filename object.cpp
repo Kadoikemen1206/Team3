@@ -220,22 +220,28 @@ void CObject::Release()
 //=============================================================================
 // モード以外だったら破棄処理
 //=============================================================================
-//void CObject::ModeRelease()
-//{
-//	for (int nPriority = 0; nPriority < PRIORITY_LEVELMAX; nPriority++)
-//	{
-//		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
-//		{
-//			if (m_apObject[nPriority][nCnt] != nullptr)
-//			{
-//				if (m_apObject[nPriority][nCnt]->GetObjType() != OBJTYPE_MODE)
-//				{
-//					m_apObject[nPriority][nCnt]->Uninit();
-//				}
-//			}
-//		}
-//	}
-//}
+void CObject::ModeRelease()
+{
+	for (int nPriority = 0; nPriority < PRIORITY_LEVELMAX; nPriority++)
+	{
+		CObject *pObject = m_pTop[nPriority];
+
+		while (pObject != nullptr)
+		{
+			//pNextの保存
+			CObject *pObjectNext = pObject->m_pNext;
+
+			if (pObject->GetObjType() != OBJTYPE_MODE)
+			{
+				//終了処理の関数呼び出し
+				pObject->Release();
+			}
+
+			//pObjectにpObjectのpNextを代入
+			pObject = pObjectNext;
+		}
+	}
+}
 
 //=============================================================================
 // オブジェクトの種類
