@@ -59,7 +59,7 @@ public:
 	static void SetMode(MODE mode);
 	static MODE GetMode();
 	static CRenderer *GetRenderer();
-	static CInput *GetInputKeyboard();
+	static CInput *GetInput();
 	static CCamera *GetCamera() { return m_pCamera; }
 	static CMeshfield *GetMeshfield() { return m_pMeshField; }
 	static CTexture *GetTexture() { return m_pTexture; }
@@ -69,7 +69,7 @@ private:
 	// ƒƒ“ƒo[•Ï”
 	//-------------------------------------------------------------------------
 	static CRenderer *m_pRenderer;
-	static CInput *m_pInputKeyboard;
+	static CInput *m_pInput;
 	static MODE m_mode;
 	static CObject *m_pMode;
 	static CCamera *m_pCamera;
