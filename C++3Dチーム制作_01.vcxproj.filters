@@ -1,195 +1,215 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="ソース ファイル\Input">
-      <UniqueIdentifier>{7ac7a8e5-ea43-45bf-a30a-46c7bf7489c6}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="object.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="object2D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="light.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="object3D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="objectX.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="shadow.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="meshfield.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="number.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="time.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="file.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectInput.cpp">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="inputjoypad.cpp">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="inputkeyboard.cpp">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="model.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="gimmick.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="obstacle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="fade.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>00_Code</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>00_Code</Filter>
     </ClCompile>
     <ClCompile Include="mode.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="number.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>00_Code</Filter>
     </ClCompile>
     <ClCompile Include="ranking.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="shadow.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="time.cpp">
+      <Filter>00_Code</Filter>
     </ClCompile>
     <ClCompile Include="title.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectInput.cpp">
+      <Filter>00_Code\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>00_Code\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputjoypad.cpp">
+      <Filter>00_Code\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputkeyboard.cpp">
+      <Filter>00_Code\01_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="gimmick.cpp">
+      <Filter>00_Code\02_Object\01_Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="object.cpp">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClCompile>
+    <ClCompile Include="object2D.cpp">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClCompile>
+    <ClCompile Include="object3D.cpp">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClCompile>
+    <ClCompile Include="objectX.cpp">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClCompile>
+    <ClCompile Include="obstacle.cpp">
+      <Filter>00_Code\02_Object\01_Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="meshfield.cpp">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>00_Code\02_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="file.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="objectX_group.cpp">
+      <Filter>00_Code\00_Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="file.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="light.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="meshfield.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="number.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="object.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="object2D.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="object3D.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectX.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="shadow.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="texture.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="time.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectInput.h">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="inputjoypad.h">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="inputkeyboard.h">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="inputkeydata.h">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="gimmick.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="obstacle.h">
-      <Filter>ヘッダー ファイル</Filter>
     <ClInclude Include="fade.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
+      <Filter>00_Code</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>00_Code</Filter>
     </ClInclude>
     <ClInclude Include="mode.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="number.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>00_Code</Filter>
     </ClInclude>
     <ClInclude Include="ranking.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="shadow.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="time.h">
+      <Filter>00_Code</Filter>
     </ClInclude>
     <ClInclude Include="title.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>00_Code</Filter>
     </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectInput.h">
+      <Filter>00_Code\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>00_Code\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputjoypad.h">
+      <Filter>00_Code\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputkeyboard.h">
+      <Filter>00_Code\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputkeydata.h">
+      <Filter>00_Code\01_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="gimmick.h">
+      <Filter>00_Code\02_Object\01_Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClInclude>
+    <ClInclude Include="object2D.h">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClInclude>
+    <ClInclude Include="object3D.h">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClInclude>
+    <ClInclude Include="objectX.h">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClInclude>
+    <ClInclude Include="obstacle.h">
+      <Filter>00_Code\02_Object\01_Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="meshfield.h">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>00_Code\02_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="objectX_group.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="00_Code">
+      <UniqueIdentifier>{f1f87acd-9818-4c99-97d5-54ae54c1c6c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Code\00_Main">
+      <UniqueIdentifier>{388a96ed-7995-4cde-bf47-a56b5ad7da09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Code\01_Input">
+      <UniqueIdentifier>{b3005089-dc57-4a61-b48f-04d188ed6f85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Code\02_Object">
+      <UniqueIdentifier>{dc2400f5-5992-4521-9008-4d2fbbe57262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Code\02_Object\01_Gimmick">
+      <UniqueIdentifier>{09bc6039-398b-4b2e-8d42-dc4ee5570a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Code\02_Object\00_Root">
+      <UniqueIdentifier>{a37bc2d8-87db-4bcf-bae0-fa1604e89141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_File">
+      <UniqueIdentifier>{a7e1dd13-f950-449e-a754-4dc60f575870}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\FILE\texture.json">
+      <Filter>01_File</Filter>
+    </None>
+    <None Include="Data\FILE\model.json">
+      <Filter>01_File</Filter>
+    </None>
   </ItemGroup>
 </Project>

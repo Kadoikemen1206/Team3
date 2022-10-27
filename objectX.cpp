@@ -206,6 +206,9 @@ void CObjectX::LoadModel(const char *aFileName)
 		&m_NumMat,
 		&m_pMesh);
 
+	int nNumVtx;		// 頂点数保存用変数
+	DWORD sizeFVF;		// 頂点フォーマットのサイズ
+	BYTE *pVtxBuff;		// 頂点バッファへのポインタ
 
 	int nNumVtx;		//頂点数保存用変数
 	DWORD sizeFVF;		//頂点フォーマットのサイズ
