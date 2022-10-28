@@ -46,7 +46,7 @@ HRESULT CParticle::Init()
 void CParticle::Update()
 {
 	// キーボードの情報取得
-	CInput *pInputKeyboard = CApplication::GetInputKeyboard();
+	CInput *pInputKeyboard = CApplication::GetInput();
 	CBillboard::Update();
 
 	// 前回の位置を保存
