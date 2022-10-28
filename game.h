@@ -21,6 +21,7 @@ class CPlayer;
 class CCamera;
 class CMeshfield;
 class CTime;
+class CFade;
 
 //=============================================================================
 // クラスの定義
@@ -43,7 +44,8 @@ public:
 	void Draw(void) override;		// 描画処理
 	static CGame *Create();			// 生成処理
 
-	static CPlayer *GetPlayer() { return m_pPlayer; }
+	static CPlayer *GetPlayer1P() { return m_pPlayer1P; }
+	static CPlayer *GetPlayer2P() { return m_pPlayer2P; }
 	static CCamera *GetCamera() { return m_pCamera; }
 	static CMeshfield *GetMeshfield() { return m_pMeshField; }
 
@@ -53,7 +55,8 @@ private:
 	//-------------------------------------------------------------------------
 	CObject2D *m_pObject2D;					// オブジェクト2Dのポインタ
 	static LPDIRECT3DTEXTURE9 m_pTexture;	// テクスチャのポインタ
-	static CPlayer *m_pPlayer;				// プレイヤーのポインタ
+	static CPlayer *m_pPlayer1P;			// 1Pプレイヤーのポインタ
+	static CPlayer *m_pPlayer2P;			// 2Pプレイヤーのポインタ
 	static CCamera *m_pCamera;				// カメラのポインタ
 	static CLight *m_pLight;				// ライトのポインタ
 	static CMeshfield *m_pMeshField;		// メッシュフィールドのポインタ	

@@ -8,6 +8,7 @@
 //=============================================================================
 // インクルードファイル
 //=============================================================================
+#include <time.h>
 #include "application.h"
 #include "renderer.h"
 #include "object2D.h"
@@ -33,7 +34,7 @@
 // 静的メンバ変数宣言
 //=============================================================================
 CRenderer *CApplication::m_pRenderer = nullptr;
-CInput *CApplication::m_pInputKeyboard = nullptr;
+CInput *CApplication::m_pInput = nullptr;
 CObject *CApplication::m_pMode = nullptr;
 CCamera *CApplication::m_pCamera = nullptr;
 CLight *CApplication::m_pLight = nullptr;
@@ -75,9 +76,9 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	}
 
 	//インプットクラスの生成
-	m_pInputKeyboard = new CInput;
+	m_pInput = new CInput;
 	//インプットの初期化処理
-	if (FAILED(m_pInputKeyboard->Init(hInstance, hWnd)))
+	if (FAILED(m_pInput->Init(hInstance, hWnd)))
 	{ //初期化処理が失敗した場合
 		return -1;
 	}
@@ -96,7 +97,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	//モード生成
 	CFade::Create(m_mode);
 
-	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), CObject::PRIORITY_LEVEL3);
+	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,500.0f), CGimmick::GIMMICKTYPE_SHAPE,CGimmick::SHAPETYPE_AQUARE, CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
@@ -121,11 +122,11 @@ void CApplication::Uninit(void)
 	}
 
 	//インプットの解放・削除
-	if (m_pInputKeyboard != nullptr)
+	if (m_pInput != nullptr)
 	{
-		m_pInputKeyboard->Uninit();
-		delete m_pInputKeyboard;
-		m_pInputKeyboard = nullptr;
+		m_pInput->Uninit();
+		delete m_pInput;
+		m_pInput = nullptr;
 	}
 }
 
@@ -135,9 +136,9 @@ void CApplication::Uninit(void)
 void CApplication::Update(void)
 {
 	//インプットの更新処理
-	if (m_pInputKeyboard != nullptr)
+	if (m_pInput != nullptr)
 	{
-		m_pInputKeyboard->Update();
+		m_pInput->Update();
 	}
 
 	//レンダリングの更新処理
@@ -170,9 +171,9 @@ CRenderer * CApplication::GetRenderer()
 //=============================================================================
 // インプットのポインタを返す処理
 //=============================================================================
-CInput * CApplication::GetInputKeyboard()
+CInput * CApplication::GetInput()
 {
-	return m_pInputKeyboard;
+	return m_pInput;
 }
 
 //=============================================================================
@@ -185,6 +186,8 @@ void CApplication::SetMode(MODE mode)
 		m_pMode->Uninit();
 		m_pMode = nullptr;
 	}
+
+	CObject::ModeRelease();
 
 	m_mode = mode;
 

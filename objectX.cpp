@@ -97,7 +97,8 @@ void CObjectX::Draw()
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);		//(※行列移動関数(第1引数にx,y,z方向の移動行列を作成))
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-	//Projection();
+	//平行投影処理
+	Projection();
 
 	//ワールドマトリックスの設定（ワールド座標行列の設定）
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
@@ -205,12 +206,15 @@ void CObjectX::LoadModel(const char *aFileName)
 		&m_NumMat,
 		&m_pMesh);
 
+	int nNumVtx;		// 頂点数保存用変数
+	DWORD sizeFVF;		// 頂点フォーマットのサイズ
+	BYTE *pVtxBuff;		// 頂点バッファへのポインタ
 
 	int nNumVtx;		//頂点数保存用変数
 	DWORD sizeFVF;		//頂点フォーマットのサイズ
 	BYTE *pVtxBuff;		//頂点バッファへのポインタ
 
-						//頂点数の取得
+	//頂点数の取得
 	nNumVtx = m_pMesh->GetNumVertices();
 
 	//頂点フォーマットのサイズを取得
