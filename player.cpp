@@ -19,6 +19,8 @@
 #include "renderer.h"
 #include "meshfield.h"
 
+#include "particle.h"
+
 //=============================================================================
 // 静的メンバ変数宣言
 //=============================================================================
@@ -143,6 +145,10 @@ void CPlayer::Update()
 		pos.z += cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 		m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
 	}
+
+	//テスト用
+	if (pInputKeyboard->Press(DIK_PERIOD))
+	m_pParticle = CParticle::Create(pos, PRIORITY_LEVEL3);
 
 	//角度の正規化(目的の角度)
 	if (m_rotDest.y - rot.y > D3DX_PI)
