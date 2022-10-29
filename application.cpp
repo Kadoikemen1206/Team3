@@ -8,6 +8,7 @@
 //=============================================================================
 // インクルードファイル
 //=============================================================================
+#include <time.h>
 #include "application.h"
 #include "renderer.h"
 #include "object2D.h"
@@ -102,7 +103,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	//モード生成
 	CFade::Create(m_mode);
 
-	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), CObject::PRIORITY_LEVEL3);
+	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,500.0f), CGimmick::GIMMICKTYPE_SHAPE,CGimmick::SHAPETYPE_AQUARE, CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
