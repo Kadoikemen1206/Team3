@@ -1,7 +1,7 @@
 {
   "MODEL": [
     [ "PLAYER", "Data\/MODEL\/AstroBot.x" ],
-    [ "GIMMICWALL", "Data\/MODEL\/buggy.x"],
+    [ "GIMMICWALL", "Data\/MODEL\/aquare.x"],
     [ "BOX", "Data\/MODEL\/box.x"],
     [ "VARTICALBIGWALL", "Data\/MODEL\/varticalbigwall.x" ]
   ]

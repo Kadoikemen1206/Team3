@@ -48,11 +48,9 @@ public:
 	HRESULT Init() override;			// 初期化処理
 	void Update() override;				// 更新処理
 	void SetType(EPLAYER type);			// タイプ設定処理
-	static D3DXVECTOR3 GetPlayerPos(void) { return m_pos; }						// 座標取得処理
 	static CPlayer *Create(EPLAYER type, const D3DXVECTOR3 pos, int nPriority);	// 生成処理
 
 	void SetSpeed(float speed);
-	static D3DXVECTOR3 GetPlayerPos(void) { return m_pos; }
 
 private:
 	//-------------------------------------------------------------------------
@@ -65,7 +63,5 @@ private:
 	float m_nSpeed;						// スピード
 
 	CParticle *m_pParticle;
-
-	static D3DXVECTOR3 m_pos;			// 位置
 };
 #endif

@@ -13,6 +13,7 @@
 #include "renderer.h"
 #include "input.h"
 #include "player.h"
+#include "game.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -199,7 +200,7 @@ void CCamera::Update(void)
 	//	m_rot.y = -D3DX_PI;				//角度に-180度を代入する
 	//}
 
-	D3DXVECTOR3 PlayerPos = CPlayer::GetPlayerPos();		//プレイヤーPOS情報の取得
+	D3DXVECTOR3 PlayerPos = CGame::GetPlayer1P()->GetPos();		//プレイヤーPOS情報の取得
 
 	//************************
 	// カメラの追従処理
