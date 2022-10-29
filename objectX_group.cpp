@@ -167,6 +167,10 @@ void CObjectXGroup::Load(std::vector<std::string> inModel)
 	//頂点バッファのロック
 	model.pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
 
+	// モデルの端を格納する変数のリセット
+	model.MinVtx = D3DXVECTOR3(FLT_MAX, FLT_MAX, FLT_MAX);
+	model.MaxVtx = D3DXVECTOR3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+
 	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
 	{
 		//頂点座標の代入
