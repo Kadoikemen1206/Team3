@@ -56,7 +56,7 @@ HRESULT CPlayer::Init()
 	CObjectX::Init();
 
 	//モデルのロード
-	LoadModel("Data\\MODEL\\AstroBot.x");
+	LoadModel("PLAYER");
 
 	//目的の角度の初期化
 	m_rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		

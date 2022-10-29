@@ -35,9 +35,12 @@ void CObjectXGroup::LoadAll()
 {
 	nlohmann::json list = LoadJsonStage(L"Data/FILE/model.json");
 
-	for (int i = 0; i < (int)list["TEXTURE"].size(); ++i)
+	int size = (int)list["MODEL"].size();
+
+	std::string test = list["MODEL"][0][0];
+	for (int i = 0; i < size; ++i)
 	{
-		Load(list["TEXTURE"].at(i));
+		Load(list["MODEL"].at(i));
 	}
 }
 

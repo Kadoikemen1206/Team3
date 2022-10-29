@@ -33,7 +33,7 @@ HRESULT CObstacle::Init()
 	CGimmick::Init();
 
 	//モデルのロード
-	LoadModel("Data\\MODEL\\バギー.x");
+	LoadModel("GIMMICWALL");
 
 	return S_OK;
 }

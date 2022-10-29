@@ -47,7 +47,7 @@ HRESULT CModel::Init()
 	CObjectX::Init();
 
 	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
-	LoadModel("Data\\MODEL\\varticalbigwall.x");
+	LoadModel("VARTICALBIGWALL");
 
 	return S_OK;
 }

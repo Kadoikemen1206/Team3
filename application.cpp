@@ -28,6 +28,7 @@
 #include "game.h"
 #include "ranking.h"
 #include "fade.h"
+#include "objectX_group.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -40,6 +41,7 @@ CLight *CApplication::m_pLight = nullptr;
 CMeshfield *CApplication::m_pMeshField = nullptr;
 CTime *CApplication::m_pTime = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
+CObjectXGroup *CApplication::m_pObjectXGroup = nullptr;
 CApplication::MODE CApplication::m_mode = MODE_GAME;
 
 //=============================================================================
@@ -92,6 +94,10 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	// テクスチャの生成
 	m_pTexture = new CTexture;
 	m_pTexture->LoadAll();
+
+	// モデルの生成
+	m_pObjectXGroup = new CObjectXGroup;
+	m_pObjectXGroup->LoadAll();
 
 	//モード生成
 	CFade::Create(m_mode);

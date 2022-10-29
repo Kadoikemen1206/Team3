@@ -205,10 +205,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\FILE\texture.json">
+    <None Include="Data\FILE\model.json">
       <Filter>01_File</Filter>
     </None>
-    <None Include="Data\FILE\model.json">
+    <None Include="Data\FILE\texture.json">
       <Filter>01_File</Filter>
     </None>
   </ItemGroup>
