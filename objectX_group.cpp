@@ -231,25 +231,6 @@ void CObjectXGroup::Load(std::vector<std::string> inModel)
 //--------------------------------------------------
 void CObjectXGroup::UnloadAll()
 {
-	auto begin = m_model.begin(), end = m_model.end();
-	for (auto iter = begin; iter != end; iter++)
-	{
-		SModelData* date = &iter->second;
-
-		//	メッシュの破棄
-		if (date->pMesh != NULL)
-		{
-			date->pMesh->Release();
-			date->pMesh = NULL;
-		}
-
-		//	マテリアルの破棄
-		if (date->pBuffMat != NULL)
-		{
-			date->pBuffMat->Release();
-			date->pBuffMat = NULL;
-		}
-	}
 	m_model.clear();
 }
 
