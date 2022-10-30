@@ -50,20 +50,6 @@ HRESULT CObjectX::Init()
 //=============================================================================
 void CObjectX::Uninit()
 {
-	//	メッシュの破棄
-	if (m_pMesh != NULL)
-	{
-		m_pMesh->Release();
-		m_pMesh = NULL;
-	}
-
-	//	マテリアルの破棄
-	if (m_pBuffMat != NULL)
-	{
-		m_pBuffMat->Release();
-		m_pBuffMat = NULL;
-	}
-
 	//インスタンスの解放処理
 	Release();
 }

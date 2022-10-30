@@ -60,7 +60,6 @@ HRESULT CGame::Init(void)
 {
 	// カメラの初期化
 	m_pCamera = new CCamera;
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
 	m_pCamera->Init();
 
@@ -107,6 +106,14 @@ void CGame::Uninit(void)
 		m_pCamera->Uninit();
 		delete m_pCamera;
 		m_pCamera = nullptr;
+	}
+
+	//ライトの解放・削除
+	if (m_pLight != nullptr)
+	{
+		m_pLight->Uninit();
+		delete m_pLight;
+		m_pLight = nullptr;
 	}
 
 	//インスタンスの解放処理

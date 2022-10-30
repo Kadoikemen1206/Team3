@@ -33,7 +33,7 @@ HRESULT CParticle::Init()
 
 	//オブジェクトの初期化
 	CBillboard::Init();
-	CBillboard::SetMove(D3DXVECTOR3(rand() % 5, 1.5f, rand() % 5));
+	CBillboard::SetMove(D3DXVECTOR3((float)(rand() % 5), 1.5f, (float)(rand() % 5)));
 	CBillboard::SetSize(D3DXVECTOR3(10.0f, 10.0f, 0.0f));
 	CBillboard::SetBlend(BLEND_ADDITIVE);
 
