@@ -17,6 +17,8 @@
 //=============================================================================
 class CShadow;
 
+class CParticle;
+
 //=============================================================================
 // クラスの定義
 //=============================================================================
@@ -46,8 +48,9 @@ public:
 	HRESULT Init() override;			// 初期化処理
 	void Update() override;				// 更新処理
 	void SetType(EPLAYER type);			// タイプ設定処理
-	static D3DXVECTOR3 GetPlayerPos(void) { return m_pos; }						// 座標取得処理
 	static CPlayer *Create(EPLAYER type, const D3DXVECTOR3 pos, int nPriority);	// 生成処理
+
+	void SetSpeed(float speed);
 
 private:
 	//-------------------------------------------------------------------------
@@ -59,6 +62,6 @@ private:
 	EPLAYER m_nType;					// 1Pと2Pのタイプ分け
 	float m_nSpeed;						// スピード
 
-	static D3DXVECTOR3 m_pos;			// 位置
+	CParticle *m_pParticle;
 };
 #endif

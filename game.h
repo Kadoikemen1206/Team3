@@ -21,6 +21,7 @@ class CPlayer;
 class CCamera;
 class CMeshfield;
 class CTime;
+class CFade;
 
 //=============================================================================
 // クラスの定義
@@ -53,7 +54,6 @@ private:
 	// メンバー変数
 	//-------------------------------------------------------------------------
 	CObject2D *m_pObject2D;					// オブジェクト2Dのポインタ
-	static LPDIRECT3DTEXTURE9 m_pTexture;	// テクスチャのポインタ
 	static CPlayer *m_pPlayer1P;			// 1Pプレイヤーのポインタ
 	static CPlayer *m_pPlayer2P;			// 2Pプレイヤーのポインタ
 	static CCamera *m_pCamera;				// カメラのポインタ
