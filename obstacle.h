@@ -38,12 +38,13 @@ public:
 
 	void ConstOperate(int barrage, int rotate) override;			// 一定の操作(連打、回転)
 
-	static CObstacle *Create(const D3DXVECTOR3 pos, int nPriority); // 生成処理
+	static CObstacle *Create(const D3DXVECTOR3 pos, GIMMICKTYPE gimmicktype,SHAPETYPE shapetype, int nPriority); // 生成処理
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	D3DXVECTOR3 m_Move;	//障害物の移動
+	int m_nTriggerCount;			// キーを押した回数
+	bool m_nAlternateFlag;			// 交互にキーを押しているか
 };
 #endif

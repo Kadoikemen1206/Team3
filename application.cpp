@@ -8,6 +8,7 @@
 //=============================================================================
 // インクルードファイル
 //=============================================================================
+#include <time.h>
 #include "application.h"
 #include "renderer.h"
 #include "object2D.h"
@@ -23,20 +24,25 @@
 #include "number.h"
 #include "texture.h"
 #include "model.h"
-#include "obstacle.h"
+#include "title.h"
+#include "game.h"
+#include "ranking.h"
+#include "fade.h"
+#include "objectX_group.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
 //=============================================================================
 CRenderer *CApplication::m_pRenderer = nullptr;
-CInput *CApplication::m_pInputKeyboard = nullptr;
+CInput *CApplication::m_pInput = nullptr;
 CObject *CApplication::m_pMode = nullptr;
 CCamera *CApplication::m_pCamera = nullptr;
 CLight *CApplication::m_pLight = nullptr;
 CMeshfield *CApplication::m_pMeshField = nullptr;
 CTime *CApplication::m_pTime = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
-CApplication::MODE CApplication::m_mode = MODE_TITLE;
+CObjectXGroup *CApplication::m_pObjectXGroup = nullptr;
+CApplication::MODE CApplication::m_mode = MODE_GAME;
 
 //=============================================================================
 // コンストラクタ
@@ -71,46 +77,32 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	}
 
 	//インプットクラスの生成
-	m_pInputKeyboard = new CInput;
+	m_pInput = new CInput;
 	//インプットの初期化処理
-	if (FAILED(m_pInputKeyboard->Init(hInstance, hWnd)))
+	if (FAILED(m_pInput->Init(hInstance, hWnd)))
 	{ //初期化処理が失敗した場合
 		return -1;
 	}
 
+	// カメラの初期化
+	m_pCamera = new CCamera;
+	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);	// ソロ
+	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);		// VS
+	m_pCamera->Init();
+
 	// テクスチャの生成
 	m_pTexture = new CTexture;
 	m_pTexture->LoadAll();
-	//カメラの初期化
-	m_pCamera = new CCamera;
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
-	m_pCamera->Init();
-	//ライトの生成
-	m_pLight = CLight::Create();
 
-	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL5);
+	// モデルの生成
+	m_pObjectXGroup = new CObjectXGroup;
+	m_pObjectXGroup->LoadAll();
 
-	//ポリゴンの生成
-	//CObject3D::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
+	//モード生成
+	CFade::Create(m_mode);
 
-	//メッシュフィールドの生成
-	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-500.0f, 0.0f, 14500.0f), CObject::PRIORITY_LEVEL2);
-
-	//モデルの生成
-	CObjectX::Create(D3DXVECTOR3(100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
-	CObjectX::Create(D3DXVECTOR3(-100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
-
-	//プレイヤーの生成
-	CPlayer::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
-
-	for (int nCnt = 0; nCnt < 10; nCnt++)
-	{
-		//モデルの生成(壁)
-		CModel::Create(D3DXVECTOR3(-150.0f, 0.0f , 200.0f + (380.0f * nCnt)), CObject::PRIORITY_LEVEL3);
-	}
-
-	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), CObject::PRIORITY_LEVEL3);
+	// ギミックの生成
+	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL,CGimmick::SHAPETYPE_NONE, CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
@@ -123,12 +115,22 @@ void CApplication::Uninit(void)
 	//オブジェクトの全開放
 	CObject::UninitAll();
 
-	//ナンバーの削除
-	CNumber::Unload();
-
 	// テクスチャの削除
-	m_pTexture->UnloadAll();
-	
+	if (m_pTexture != nullptr)
+	{
+		m_pTexture->UnloadAll();
+		delete m_pTexture;
+		m_pTexture = nullptr;
+	}
+
+	// Xモデルの削除
+	if (m_pObjectXGroup != nullptr)
+	{
+		m_pObjectXGroup->UnloadAll();
+		delete m_pObjectXGroup;
+		m_pObjectXGroup = nullptr;
+	}
+
 	//レンダリングの解放・削除
 	if (m_pRenderer != nullptr)
 	{
@@ -138,11 +140,11 @@ void CApplication::Uninit(void)
 	}
 
 	//インプットの解放・削除
-	if (m_pInputKeyboard != nullptr)
+	if (m_pInput != nullptr)
 	{
-		m_pInputKeyboard->Uninit();
-		delete m_pInputKeyboard;
-		m_pInputKeyboard = nullptr;
+		m_pInput->Uninit();
+		delete m_pInput;
+		m_pInput = nullptr;
 	}
 
 	//カメラの解放・削除
@@ -160,21 +162,15 @@ void CApplication::Uninit(void)
 void CApplication::Update(void)
 {
 	//インプットの更新処理
-	if (m_pInputKeyboard != nullptr)
+	if (m_pInput != nullptr)
 	{
-		m_pInputKeyboard->Update();
+		m_pInput->Update();
 	}
 
 	//レンダリングの更新処理
 	if (m_pRenderer != nullptr)
 	{
 		m_pRenderer->Update();
-	}
-
-	//カメラの更新処理
-	if (m_pCamera != nullptr)
-	{
-		m_pCamera->Update();
 	}
 }
 
@@ -201,7 +197,45 @@ CRenderer * CApplication::GetRenderer()
 //=============================================================================
 // インプットのポインタを返す処理
 //=============================================================================
-CInput * CApplication::GetInputKeyboard()
+CInput * CApplication::GetInput()
 {
-	return m_pInputKeyboard;
+	return m_pInput;
+}
+
+//=============================================================================
+// モードセット処理
+//=============================================================================
+void CApplication::SetMode(MODE mode)
+{
+	if (m_pMode != nullptr)
+	{
+		m_pMode->Uninit();
+		m_pMode = nullptr;
+	}
+
+	CObject::ModeRelease();
+
+	m_mode = mode;
+
+	switch (m_mode)
+	{
+	case MODE_TITLE:
+		m_pMode = CTitle::Create();
+		break;
+	case MODE_GAME:
+		m_pMode = CGame::Create();
+		break;
+	case MODE_RANKING:
+		m_pMode = CRanking::Create();
+		CRanking::SetRankingScore();
+		break;
+	}
+}
+
+//=============================================================================
+// モードを取得する処理
+//=============================================================================
+CApplication::MODE CApplication::GetMode()
+{
+	return m_mode;
 }
