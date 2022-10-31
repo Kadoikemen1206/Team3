@@ -13,6 +13,7 @@
 #include "renderer.h"
 #include "input.h"
 #include "player.h"
+#include "game.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -41,11 +42,12 @@ HRESULT CCamera::Init(void)
 {
 	m_posRDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_posVDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 	if (m_nCameraType == CAMERATYPE_ONE)
 	{
 		//視点・注視点・上方向を設定する（構造体の初期化）
 		m_posV[0] = D3DXVECTOR3(0.0f, 200.0f, -400.0f);							//視点
-		m_posR[0] = D3DXVECTOR3(0.0f, 0.0f, .0f);							//注視点
+		m_posR[0] = D3DXVECTOR3(0.0f, 0.0f, .0f);								//注視点
 		m_vecU[0] = D3DXVECTOR3(0.0f, 1.0f, 0.0f);								//上方向ベクトル ←固定でOK!!
 		m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);									//向き
 		float fLength1 = (m_posV[0].x - m_posR[0].x);							//視点から注視点のX軸の距離
@@ -199,22 +201,54 @@ void CCamera::Update(void)
 	//	m_rot.y = -D3DX_PI;				//角度に-180度を代入する
 	//}
 
-	D3DXVECTOR3 PlayerPos = CPlayer::GetPlayerPos();		//プレイヤーPOS情報の取得
+	D3DXVECTOR3 PlayerPos1P = CGame::GetPlayer1P()->GetPos();		//プレイヤーPOS情報の取得
+	D3DXVECTOR3 PlayerPos2P = CGame::GetPlayer2P()->GetPos();		//プレイヤーPOS情報の取得
 
 	//************************
 	// カメラの追従処理
 	//************************
-	//目的の注視点の設定							  
-	m_posRDest.z = PlayerPos.z;
-	//目的の視点の設定																				
-	m_posVDest.z = PlayerPos.z - cosf(m_rot.y) * 250.0f;
+	if (m_nCameraType == CAMERATYPE_ONE)
+	{ // ソロモードの場合実行
+		if (CGame::GetPlayer1P()->GetPlayerType() == CPlayer::EPLAYER_1P)
+		{ //1Pの場合実行
+			//目的の注視点の設定							  
+			m_posRDest.z = PlayerPos1P.z;
+			//目的の視点の設定																				
+			m_posVDest.z = PlayerPos1P.z - cosf(m_rot.y) * 250.0f;
+		}
 
-	//視点の減衰処理
-	for (int nCnt = 0; nCnt < 2; nCnt++)
-	{
-		m_posR[nCnt].z += (m_posRDest.z - m_posR[nCnt].z) * 0.1f;
-		m_posV[nCnt].z += (m_posVDest.z - m_posV[nCnt].z) * 0.1f;
+		//視点の減衰処理
+		for (int nCnt = 0; nCnt < m_nCameraType; nCnt++)
+		{
+			m_posR[nCnt].z += (m_posRDest.z - m_posR[nCnt].z) * 0.1f;
+			m_posV[nCnt].z += (m_posVDest.z - m_posV[nCnt].z) * 0.1f;
+		}
 	}
+
+	//if (m_nCameraType == CAMERATYPE_TWO)
+	//{ // VSモードの場合実行
+	//	if (CGame::GetPlayer1P()->GetPlayerType() == CPlayer::EPLAYER_1P)
+	//	{ //1Pの場合実行
+	//		//目的の注視点の設定							  
+	//		m_posRDest.z = PlayerPos1P.z;
+	//		//目的の視点の設定																				
+	//		m_posVDest.z = PlayerPos1P.z - cosf(m_rot.y) * 250.0f;
+	//	}
+	//	//if (CGame::GetPlayer2P()->GetPlayerType() == CPlayer::EPLAYER_2P)
+	//	//{ //2Pの場合実行
+	//	//	//目的の注視点の設定							  
+	//	//	m_posRDest.z = PlayerPos2P.z;
+	//	//	//目的の視点の設定																				
+	//	//	m_posVDest.z = PlayerPos2P.z - cosf(m_rot.y) * 250.0f;
+	//	//}
+
+	//	//視点の減衰処理
+	//	for (int nCnt = 0; nCnt < m_nCameraType; nCnt++)
+	//	{
+	//		m_posR[nCnt].z += (m_posRDest.z - m_posR[nCnt].z) * 0.1f;
+	//		m_posV[nCnt].z += (m_posVDest.z - m_posV[nCnt].z) * 0.1f;
+	//	}
+	//}
 }
 
 //=============================================================================
@@ -222,17 +256,18 @@ void CCamera::Update(void)
 //=============================================================================
 void CCamera::SetCamera(int nCntCamera, CAMERATYPE type)
 {
-	//デバイスの取得
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
+	// タイプ設定
 	SetCameraType(type);
 
 	//**************************************************
 	//	ソロモード
 	//**************************************************
-	if (m_nCameraType == CAMERATYPE_ONE)
+	if (type == CAMERATYPE_ONE)
 	{
-		//ビューマトリックスの初期化
+		//ビューマトリックスの初期化 
 		D3DXMatrixIdentity(&m_mtxView[0]);
 
 		//ビューマトリックスの作成
@@ -258,41 +293,40 @@ void CCamera::SetCamera(int nCntCamera, CAMERATYPE type)
 		pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection[0]);
 	}
 
-	//**************************************************
-	//	vsモード
-	//**************************************************
-	if(m_nCameraType == CAMERATYPE_TWO)
-	{
-		//ビューポートの設定
-		pDevice->SetViewport(&m_Viewport[nCntCamera]);
+	////**************************************************
+	////	vsモード
+	////**************************************************
+	//if (type == CAMERATYPE_TWO)
+	//{
+	//	//ビューポートの設定
+	//	pDevice->SetViewport(&m_Viewport[nCntCamera]);
 
-		//ビューマトリックスの初期化
-		D3DXMatrixIdentity(&m_mtxView[nCntCamera]);
+	//	//ビューマトリックスの初期化
+	//	D3DXMatrixIdentity(&m_mtxView[nCntCamera]);
 
-		//ビューマトリックスの作成
-		D3DXMatrixLookAtLH(&m_mtxView[nCntCamera],
-			&m_posV[nCntCamera],
-			&m_posR[nCntCamera],
-			&m_vecU[nCntCamera]);
+	//	//ビューマトリックスの作成
+	//	D3DXMatrixLookAtLH(&m_mtxView[nCntCamera],
+	//		&m_posV[nCntCamera],
+	//		&m_posR[nCntCamera],
+	//		&m_vecU[nCntCamera]);
 
-		//ビューマトリックスの設定
-		pDevice->SetTransform(D3DTS_VIEW, &m_mtxView[nCntCamera]);
+	//	//ビューマトリックスの設定
+	//	pDevice->SetTransform(D3DTS_VIEW, &m_mtxView[nCntCamera]);
 
-		//プロジェクションマトリックスの初期化
-		D3DXMatrixIdentity(&m_mtxProjection[nCntCamera]);
+	//	//プロジェクションマトリックスの初期化
+	//	D3DXMatrixIdentity(&m_mtxProjection[nCntCamera]);
 
-		//プロジェクションマトリックスの作成
-		D3DXMatrixPerspectiveFovLH(&m_mtxProjection[nCntCamera],
-			D3DXToRadian(45.0f),																//視野角
-			(float)m_Viewport[nCntCamera].Width / (float)m_Viewport[nCntCamera].Height,			//アスペクト比
-			1.0f,																				//どこから(ニア)どこまで(ファー)をカメラで
-			1000.0f);																			//表示するか設定
+	//	//プロジェクションマトリックスの作成
+	//	D3DXMatrixPerspectiveFovLH(&m_mtxProjection[nCntCamera],
+	//		D3DXToRadian(45.0f),																//視野角
+	//		(float)m_Viewport[nCntCamera].Width / (float)m_Viewport[nCntCamera].Height,			//アスペクト比
+	//		10.0f,																				//どこから(ニア)どこまで(ファー)をカメラで
+	//		3000.0f);																			//表示するか設定
 
-		//プロジェクションマトリックスの設定
-		pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection[nCntCamera]);
-	}
+	//	//プロジェクションマトリックスの設定
+	//	pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection[nCntCamera]);
+	//}
 }
-
 // カメラの種類の設定
 void CCamera::SetCameraType(CAMERATYPE type)
 {

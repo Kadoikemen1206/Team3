@@ -65,9 +65,9 @@ void CObstacle::Update()
 	CGimmick::Update();
 	D3DXVECTOR3 ObstacleMove = GetMove();
 	D3DXVECTOR3 ObstaclePos = CGimmick::GetPos();
-	D3DXVECTOR3 PlayerPos = CPlayer::GetPlayerPos();		//プレイヤーPOS情報の取得
+	D3DXVECTOR3 PlayerPos = CGame::GetPlayer1P()->GetPos();		//プレイヤーPOS情報の取得
 	// キーボードの情報取得
-	CInput *pInputKeyboard = CApplication::GetInputKeyboard();
+	CInput *pInputKeyboard = CApplication::GetInput();
 
 	if (ObstaclePos.x + 150.0f >= PlayerPos.x && ObstaclePos.z + 150.0f >= PlayerPos.z
 		&&ObstaclePos.x - 150.0f <= PlayerPos.x && ObstaclePos.z - 150.0f <= PlayerPos.z
@@ -75,7 +75,7 @@ void CObstacle::Update()
 	{// ギミックの範囲&&操作を完了していない時実行
 
 		// プレイヤーを動かさないようにする
-		CGame::GetPlayer()->SetSpeed(0.0f);
+		CGame::GetPlayer1P()->SetSpeed(0.0f);
 
 		if (CGimmick::GetGimmickType() == GIMMICKTYPE_BARRAGEMOVEWALL)
 		{// ギミックのタイプが連打で動く壁だった時実行
@@ -132,7 +132,7 @@ void CObstacle::Update()
 	{// 操作が完了した時に実行
 
 		// プレイヤーのスピードを元に戻す
-		CGame::GetPlayer()->SetSpeed(5.0f);
+		CGame::GetPlayer1P()->SetSpeed(5.0f);
 	}
 
 	//位置更新

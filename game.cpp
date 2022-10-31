@@ -59,7 +59,7 @@ HRESULT CGame::Init(void)
 {
 	// カメラの初期化
 	m_pCamera = new CCamera;
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
+	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
 	m_pCamera->Init();
 
@@ -85,6 +85,7 @@ HRESULT CGame::Init(void)
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-50.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 	m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(50.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+
 	return S_OK;
 }
 
@@ -137,11 +138,7 @@ void CGame::Update(void)
 //=============================================================================
 void CGame::Draw(void)
 {
-	//カメラのセット処理
-	if (m_pCamera != nullptr)
-	{
-		m_pCamera->SetCamera(0, CCamera::CAMERATYPE_ONE);
-	}
+
 }
 
 //=============================================================================

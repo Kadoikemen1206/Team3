@@ -210,10 +210,6 @@ void CObjectX::LoadModel(const char *aFileName)
 	DWORD sizeFVF;		// 頂点フォーマットのサイズ
 	BYTE *pVtxBuff;		// 頂点バッファへのポインタ
 
-	int nNumVtx;		//頂点数保存用変数
-	DWORD sizeFVF;		//頂点フォーマットのサイズ
-	BYTE *pVtxBuff;		//頂点バッファへのポインタ
-
 	//頂点数の取得
 	nNumVtx = m_pMesh->GetNumVertices();
 

@@ -153,6 +153,7 @@ void CRenderer::Draw()
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
+
 	//ビューポートの設定
 	D3DVIEWPORT9 viewport;		//ビューポート
 	pDevice->GetViewport(&viewport);
@@ -186,9 +187,9 @@ void CRenderer::Draw()
 		}
 	}
 
-	//**************************************************
-	//	vsモード
-	//**************************************************
+//	//**************************************************
+//	//	vsモード
+//	//**************************************************
 //	for (int nCnt = 0; nCnt < 2; nCnt++)
 //	{
 //		//カメラの設定処理

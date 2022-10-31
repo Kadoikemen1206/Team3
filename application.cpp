@@ -85,19 +85,19 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	// カメラの初期化
 	m_pCamera = new CCamera;
-	m_pCamera = new CCamera;
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
+	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);	// ソロ
+	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);		// VS
 	m_pCamera->Init();
 
 	// テクスチャの生成
 	m_pTexture = new CTexture;
 	m_pTexture->LoadAll();
 
-	//モード生成
+	// モード生成
 	CFade::Create(m_mode);
 
-	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,500.0f), CGimmick::GIMMICKTYPE_SHAPE,CGimmick::SHAPETYPE_AQUARE, CObject::PRIORITY_LEVEL3);
+	// ギミックの生成
+	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL,CGimmick::SHAPETYPE_NONE, CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
