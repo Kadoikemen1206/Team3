@@ -84,7 +84,6 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	// ƒJƒƒ‰‚Ì‰Šú‰»
 	m_pCamera = new CCamera;
-	m_pCamera = new CCamera;
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
 	m_pCamera->Init();
