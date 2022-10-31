@@ -17,6 +17,8 @@
 //=============================================================================
 class CShadow;
 
+class CParticle;
+
 //=============================================================================
 // クラスの定義
 //=============================================================================
@@ -43,13 +45,15 @@ public:
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init() override;							// 初期化処理
-	void Update() override;								// 更新処理
-	void SetType(EPLAYER type);							// タイプ設定処理
+	HRESULT Init() override;			// 初期化処理
+	void Update() override;				// 更新処理
+	void SetType(EPLAYER type);			// タイプ設定処理
 	void SetSpeed(float speed);							// プレイヤー移動スピード設定処理
 	EPLAYER GetPlayerType(void) { return m_nType; }		// プレイヤータイプ取得処理
 
 	static CPlayer *Create(EPLAYER type, const D3DXVECTOR3 pos, int nPriority);	// 生成処理
+
+	void SetSpeed(float speed);
 
 private:
 	//-------------------------------------------------------------------------
@@ -60,5 +64,7 @@ private:
 	D3DXVECTOR3 m_posOld;				// 前回の位置
 	EPLAYER m_nType;					// 1Pと2Pのタイプ分け
 	float m_nSpeed;						// スピード
+
+	CParticle *m_pParticle;
 };
 #endif

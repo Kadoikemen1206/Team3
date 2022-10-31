@@ -1,8 +1,8 @@
 {
   "MODEL": [
     [ "PLAYER", "Data\/MODEL\/AstroBot.x" ],
-    [ "GIMMIC0", "Data\/MODEL\/varticalbigwall.x"],
-    [ "FLOOR2", "Data\/MODEL\/yuka002.jpg"],
-    [ "VS_MODE", "Data\/MODEL\/vs.png" ]
+    [ "GIMMICWALL", "Data\/MODEL\/aquare.x"],
+    [ "BOX", "Data\/MODEL\/box.x"],
+    [ "VARTICALBIGWALL", "Data\/MODEL\/varticalbigwall.x" ]
   ]
 }

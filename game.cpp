@@ -25,6 +25,7 @@
 #include "model.h"
 #include "time.h"
 #include "number.h"
+#include "obstacle.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -59,7 +60,6 @@ HRESULT CGame::Init(void)
 {
 	// カメラの初期化
 	m_pCamera = new CCamera;
-	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
 	m_pCamera->Init();
 
@@ -86,6 +86,9 @@ HRESULT CGame::Init(void)
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-50.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 	m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(50.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 
+	// 障害物を作成
+	CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL, CGimmick::SHAPETYPE_AQUARE, CObject::PRIORITY_LEVEL3);
+
 	return S_OK;
 }
 
@@ -103,6 +106,14 @@ void CGame::Uninit(void)
 		m_pCamera->Uninit();
 		delete m_pCamera;
 		m_pCamera = nullptr;
+	}
+
+	//ライトの解放・削除
+	if (m_pLight != nullptr)
+	{
+		m_pLight->Uninit();
+		delete m_pLight;
+		m_pLight = nullptr;
 	}
 
 	//インスタンスの解放処理

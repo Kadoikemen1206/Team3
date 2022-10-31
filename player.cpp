@@ -20,6 +20,8 @@
 #include "meshfield.h"
 #include "obstacle.h"
 
+#include "particle.h"
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -47,7 +49,7 @@ HRESULT CPlayer::Init()
 	CObjectX::Init();
 
 	//モデルのロード
-	LoadModel("Data\\MODEL\\AstroBot.x");
+	LoadModel("PLAYER");
 
 	return S_OK;
 }
@@ -193,6 +195,13 @@ void CPlayer::Update()
 			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
 		}
 	}
+
+	//テスト用
+	if (pInputKeyboard->Press(DIK_PERIOD))
+	m_pParticle = CParticle::Create(pos, 
+		D3DXVECTOR3(sinf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180)))), 1.0f, cosf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180))))), 
+		D3DXCOLOR(rand() % 100 * 0.01f, rand() % 100 * 0.01f, rand() % 100 * 0.01f, 1.0f),
+		PRIORITY_LEVEL3);
 
 	//角度の正規化(目的の角度)
 	if (m_rotDest.y - rot.y > D3DX_PI)

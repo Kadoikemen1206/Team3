@@ -35,9 +35,12 @@ void CObjectXGroup::LoadAll()
 {
 	nlohmann::json list = LoadJsonStage(L"Data/FILE/model.json");
 
-	for (int i = 0; i < (int)list["TEXTURE"].size(); ++i)
+	int size = (int)list["MODEL"].size();
+
+	std::string test = list["MODEL"][0][0];
+	for (int i = 0; i < size; ++i)
 	{
-		Load(list["TEXTURE"].at(i));
+		Load(list["MODEL"].at(i));
 	}
 }
 
@@ -163,6 +166,10 @@ void CObjectXGroup::Load(std::vector<std::string> inModel)
 
 	//頂点バッファのロック
 	model.pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
+
+	// モデルの端を格納する変数のリセット
+	model.MinVtx = D3DXVECTOR3(FLT_MAX, FLT_MAX, FLT_MAX);
+	model.MaxVtx = D3DXVECTOR3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
 	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
 	{

@@ -24,11 +24,11 @@
 #include "number.h"
 #include "texture.h"
 #include "model.h"
-#include "obstacle.h"
 #include "title.h"
 #include "game.h"
 #include "ranking.h"
 #include "fade.h"
+#include "objectX_group.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -41,6 +41,7 @@ CLight *CApplication::m_pLight = nullptr;
 CMeshfield *CApplication::m_pMeshField = nullptr;
 CTime *CApplication::m_pTime = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
+CObjectXGroup *CApplication::m_pObjectXGroup = nullptr;
 CApplication::MODE CApplication::m_mode = MODE_GAME;
 
 //=============================================================================
@@ -93,7 +94,11 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pTexture = new CTexture;
 	m_pTexture->LoadAll();
 
-	// モード生成
+	// モデルの生成
+	m_pObjectXGroup = new CObjectXGroup;
+	m_pObjectXGroup->LoadAll();
+
+	//モード生成
 	CFade::Create(m_mode);
 
 	// ギミックの生成
@@ -111,8 +116,21 @@ void CApplication::Uninit(void)
 	CObject::UninitAll();
 
 	// テクスチャの削除
-	m_pTexture->UnloadAll();
-	
+	if (m_pTexture != nullptr)
+	{
+		m_pTexture->UnloadAll();
+		delete m_pTexture;
+		m_pTexture = nullptr;
+	}
+
+	// Xモデルの削除
+	if (m_pObjectXGroup != nullptr)
+	{
+		m_pObjectXGroup->UnloadAll();
+		delete m_pObjectXGroup;
+		m_pObjectXGroup = nullptr;
+	}
+
 	//レンダリングの解放・削除
 	if (m_pRenderer != nullptr)
 	{
@@ -127,6 +145,14 @@ void CApplication::Uninit(void)
 		m_pInput->Uninit();
 		delete m_pInput;
 		m_pInput = nullptr;
+	}
+
+	//カメラの解放・削除
+	if (m_pCamera != nullptr)
+	{
+		m_pCamera->Uninit();
+		delete m_pCamera;
+		m_pCamera = nullptr;
 	}
 }
 
