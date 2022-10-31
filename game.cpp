@@ -58,11 +58,6 @@ CGame::~CGame()
 //=============================================================================
 HRESULT CGame::Init(void)
 {
-	// カメラの初期化
-	m_pCamera = new CCamera;
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
-	m_pCamera->Init();
-
 	//ライトの生成
 	m_pLight = CLight::Create();
 
@@ -100,14 +95,6 @@ void CGame::Uninit(void)
 	//ナンバーの削除
 	CNumber::Unload();
 
-	//カメラの解放・削除
-	if (m_pCamera != nullptr)
-	{
-		m_pCamera->Uninit();
-		delete m_pCamera;
-		m_pCamera = nullptr;
-	}
-
 	//ライトの解放・削除
 	if (m_pLight != nullptr)
 	{
@@ -125,12 +112,6 @@ void CGame::Uninit(void)
 //=============================================================================
 void CGame::Update(void)
 {
-	//カメラの更新処理
-	if (m_pCamera != nullptr)
-	{
-		m_pCamera->Update();
-	}
-
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 

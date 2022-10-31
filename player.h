@@ -53,8 +53,6 @@ public:
 
 	static CPlayer *Create(EPLAYER type, const D3DXVECTOR3 pos, int nPriority);	// ¶¬ˆ—
 
-	void SetSpeed(float speed);
-
 private:
 	//-------------------------------------------------------------------------
 	// ƒƒ“ƒo[•Ï”
