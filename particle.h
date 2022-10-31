@@ -27,8 +27,11 @@ public:
 	void SetGravity(bool set) { m_bGravity = set; }
 	void SetGravity(bool set, float value) { m_bGravity = set, m_fFallSpeed = value; }
 	void SetFade(bool set) { m_bFade = set; }
+	void SetFade(bool set, float value) { m_bFade = set, m_fFadeValue = value; }
 	void SetRotation(bool set, float value) { m_bRotate = set, m_fRotateSpeed = value; }
 	void SetScaling(bool set) { m_bScaling = set; }
+	void SetLocus(bool set) { m_bLocus = set; }
+	void SetPosSpecify(bool set) { m_bPosSpecify = set; }
 	void SetTransitionColor(bool set, D3DXCOLOR col) { m_bTransition = set, m_destCol = col; }
 
 	//ゲッター
@@ -45,6 +48,7 @@ private:
 	D3DXVECTOR3 m_destPos;				// 目的の位置
 	D3DXCOLOR m_col;					// 色
 	D3DXCOLOR m_destCol;				// 目的の色
+	CParticle *m_pParticle;
 	std::vector<SEffectData> m_data;
 	SEffectData m_effect;
 	int m_nTime;						// 時間
@@ -62,6 +66,7 @@ private:
 	bool m_bFade;						// エフェクトのフェードを使用するかどうか
 	bool m_bRotate;						// 回転をするかどうか
 	bool m_bScaling;					// 拡縮を行うかどうか
+	bool m_bLocus;						// パーティクルに軌跡をつけるかどうか
 	bool m_bTransition;					// 色の変化をつけるかどうか
 	bool m_bPosSpecify;					// 位置の指定をするかどうか
 	bool m_bPosOperate = false;			// 位置の操作用

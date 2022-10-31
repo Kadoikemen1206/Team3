@@ -16,12 +16,13 @@ CParticle::CParticle(int nPriority) :
 	m_fRadius(0.0f),
 	m_fAttenuation(0.05f),
 	m_fSpeed(5.0f),
-	m_bGravity(false),		// 重力
-	m_bFade(false),			// アルファ値増減
-	m_bRotate(true),		// ビルボードの回転
-	m_bScaling(true),		// 拡縮
-	m_bTransition(true),	// 色の変化
-	m_bPosSpecify(true)		// 位置の指定
+	m_bGravity(true),			// 重力
+	m_bFade(true),				// アルファ値増減
+	m_bRotate(true),			// ビルボードの回転
+	m_bScaling(true),			// 拡縮
+	m_bLocus(true),				// パーティクルに軌跡をつける（激重です）
+	m_bTransition(true),		// 色の変化
+	m_bPosSpecify(false)		// 位置の指定
 {
 }
 
@@ -204,6 +205,15 @@ void CParticle::DetailSetting()
 		m_col.r += (m_destCol.r - m_col.r) / m_nDestroyTime;
 		m_col.g += (m_destCol.g - m_col.g) / m_nDestroyTime;
 		m_col.b += (m_destCol.b - m_col.b) / m_nDestroyTime;
+	}
+
+	if (m_bLocus && (m_nTime % 2) == 0)
+	{// パーティクルに軌跡をつける場合
+		m_pParticle = CParticle::Create(m_pos, D3DXVECTOR3(0.0f,0.0f,0.0f), m_col, PRIORITY_LEVEL3);
+		m_pParticle->SetFade(true, -0.1f);
+		m_pParticle->SetGravity(false);
+		m_pParticle->SetLocus(false);
+		m_pParticle->SetPosSpecify(false);
 	}
 
 	CBillboard::SetMove(move);
