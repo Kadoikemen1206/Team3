@@ -8,6 +8,7 @@
 //=============================================================================
 // インクルードファイル
 //=============================================================================
+#include <time.h>
 #include "application.h"
 #include "renderer.h"
 #include "object2D.h"
@@ -23,11 +24,12 @@
 #include "number.h"
 #include "texture.h"
 #include "model.h"
-#include "obstacle.h"
 #include "title.h"
 #include "game.h"
 #include "ranking.h"
 #include "fade.h"
+#include "objectX_group.h"
+#include "obstacle.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -40,6 +42,7 @@ CLight *CApplication::m_pLight = nullptr;
 CMeshfield *CApplication::m_pMeshField = nullptr;
 CTime *CApplication::m_pTime = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
+CObjectXGroup *CApplication::m_pObjectXGroup = nullptr;
 CApplication::MODE CApplication::m_mode = MODE_GAME;
 
 //=============================================================================
@@ -84,19 +87,23 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	// カメラの初期化
 	m_pCamera = new CCamera;
-	m_pCamera = new CCamera;
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
+	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);	// ソロ
+	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);		// VS
 	m_pCamera->Init();
 
 	// テクスチャの生成
 	m_pTexture = new CTexture;
 	m_pTexture->LoadAll();
 
+	// モデルの生成
+	m_pObjectXGroup = new CObjectXGroup;
+	m_pObjectXGroup->LoadAll();
+
 	//モード生成
 	CFade::Create(m_mode);
 
-	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), CObject::PRIORITY_LEVEL3);
+	// ギミックの生成
+	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL,CGimmick::SHAPETYPE_NONE, CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
@@ -110,8 +117,21 @@ void CApplication::Uninit(void)
 	CObject::UninitAll();
 
 	// テクスチャの削除
-	m_pTexture->UnloadAll();
-	
+	if (m_pTexture != nullptr)
+	{
+		m_pTexture->UnloadAll();
+		delete m_pTexture;
+		m_pTexture = nullptr;
+	}
+
+	// Xモデルの削除
+	if (m_pObjectXGroup != nullptr)
+	{
+		m_pObjectXGroup->UnloadAll();
+		delete m_pObjectXGroup;
+		m_pObjectXGroup = nullptr;
+	}
+
 	//レンダリングの解放・削除
 	if (m_pRenderer != nullptr)
 	{
@@ -127,6 +147,14 @@ void CApplication::Uninit(void)
 		delete m_pInput;
 		m_pInput = nullptr;
 	}
+
+	//カメラの解放・削除
+	if (m_pCamera != nullptr)
+	{
+		m_pCamera->Uninit();
+		delete m_pCamera;
+		m_pCamera = nullptr;
+	}
 }
 
 //=============================================================================
@@ -138,6 +166,12 @@ void CApplication::Update(void)
 	if (m_pInput != nullptr)
 	{
 		m_pInput->Update();
+	}
+
+	//カメラの更新処理
+	if (m_pCamera != nullptr)
+	{
+		m_pCamera->Update();
 	}
 
 	//レンダリングの更新処理

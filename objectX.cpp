@@ -12,6 +12,7 @@
 #include "renderer.h"
 #include "application.h"
 #include "main.h"
+#include "objectX_group.h"
 
 //=============================================================================
 // コンストラクタ
@@ -39,7 +40,7 @@ CObjectX::~CObjectX()
 HRESULT CObjectX::Init()
 {
 	//モデルの読み込み
-	LoadModel("Data\\MODEL\\Box.x");
+	LoadModel("BOX");
 
 	return S_OK;
 }
@@ -49,20 +50,6 @@ HRESULT CObjectX::Init()
 //=============================================================================
 void CObjectX::Uninit()
 {
-	//	メッシュの破棄
-	if (m_pMesh != NULL)
-	{
-		m_pMesh->Release();
-		m_pMesh = NULL;
-	}
-
-	//	マテリアルの破棄
-	if (m_pBuffMat != NULL)
-	{
-		m_pBuffMat->Release();
-		m_pBuffMat = NULL;
-	}
-
 	//インスタンスの解放処理
 	Release();
 }
@@ -98,6 +85,7 @@ void CObjectX::Draw()
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
 	//Projection();
+	Projection();
 
 	//ワールドマトリックスの設定（ワールド座標行列の設定）
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
@@ -192,76 +180,13 @@ CObjectX * CObjectX::Create(D3DXVECTOR3 pos, int nPriority)
 //=============================================================================
 void CObjectX::LoadModel(const char *aFileName)
 {
-	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX(aFileName,
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&m_pBuffMat,
-		NULL,
-		&m_NumMat,
-		&m_pMesh);
-
-	int nNumVtx;		// 頂点数保存用変数
-	DWORD sizeFVF;		// 頂点フォーマットのサイズ
-	BYTE *pVtxBuff;		// 頂点バッファへのポインタ
-
-	//頂点数の取得
-	nNumVtx = m_pMesh->GetNumVertices();
-
-	//頂点フォーマットのサイズを取得
-	sizeFVF = D3DXGetFVFVertexSize(m_pMesh->GetFVF());
-
-	//頂点バッファのロック
-	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
-
-	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
-	{
-		//頂点座標の代入
-		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;
-
-		//X
-		if (vtx.x < m_MinVtx.x)
-		{//最小値
-			m_MinVtx.x = vtx.x;
-		}
-		if (vtx.x > m_MaxVtx.x)
-		{//最大値
-			m_MaxVtx.x = vtx.x;
-		}
-
-		//Y
-		if (vtx.y < m_MinVtx.y)
-		{//最小値
-			m_MinVtx.y = vtx.y;
-		}
-		if (vtx.y > m_MaxVtx.y)
-		{//最大値
-			m_MaxVtx.y = vtx.y;
-		}
-
-		//Z
-		if (vtx.z < m_MinVtx.z)
-		{//最小値
-			m_MinVtx.z = vtx.z;
-		}
-		if (vtx.z > m_MaxVtx.z)
-		{//最大値
-			m_MaxVtx.z = vtx.z;
-		}
-
-		//頂点フォーマットのサイズ分ポインタ進める
-		pVtxBuff += sizeFVF;
-	}
-
-	// サイズ設定
-	m_size = D3DXVECTOR3((m_MaxVtx.x - m_MinVtx.x), (m_MaxVtx.y - m_MinVtx.y), (m_MaxVtx.z - m_MinVtx.z));
-
-	//頂点バッファのアンロック
-	m_pMesh->UnlockVertexBuffer();
+	CObjectXGroup *xGroup = CApplication::GetObjectXGroup();
+	m_pBuffMat = xGroup->GetBuffMat(aFileName);
+	m_MaxVtx = xGroup->GetMaxVtx(aFileName);
+	m_pMesh = xGroup->GetMesh(aFileName);
+	m_MinVtx = xGroup->GetMinVtx(aFileName);
+	m_NumMat = xGroup->GetNumMat(aFileName);
+	m_size = xGroup->GetSize(aFileName);
 }
 
 //=============================================================================
