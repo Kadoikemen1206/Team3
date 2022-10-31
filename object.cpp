@@ -68,7 +68,8 @@ void CObject::UninitAll(void)
 			//pNext‚Ì•Û‘¶
 			CObject *pObjectNext = pObject->m_pNext;	//Update()‚Åíœ‚³‚ê‚é‚ÆApNext‚àÁ‚¦‚é‚Ì‚Å–‘O‚É•Û‘¶‚µ‚Ä‚¨‚­
 
-			pObject->Release();
+			pObject->Uninit();		// I—¹ˆ—
+			pObject->Release();		// €–Só‘Ô‚É‚·‚é
 
 			//pObject‚ÉpObject‚ÌpNext‚ğ‘ã“ü
 			pObject = pObjectNext;

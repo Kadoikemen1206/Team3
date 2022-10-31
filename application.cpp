@@ -86,8 +86,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	// カメラの初期化
 	m_pCamera = new CCamera;
-	m_pCamera = new CCamera;
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
+	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
 	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
 	m_pCamera->Init();
 
@@ -114,8 +113,21 @@ void CApplication::Uninit(void)
 	CObject::UninitAll();
 
 	// テクスチャの削除
-	m_pTexture->UnloadAll();
-	
+	if (m_pTexture != nullptr)
+	{
+		m_pTexture->UnloadAll();
+		delete m_pTexture;
+		m_pTexture = nullptr;
+	}
+
+	// Xモデルの削除
+	if (m_pObjectXGroup != nullptr)
+	{
+		m_pObjectXGroup->UnloadAll();
+		delete m_pObjectXGroup;
+		m_pObjectXGroup = nullptr;
+	}
+
 	//レンダリングの解放・削除
 	if (m_pRenderer != nullptr)
 	{
@@ -130,6 +142,14 @@ void CApplication::Uninit(void)
 		m_pInput->Uninit();
 		delete m_pInput;
 		m_pInput = nullptr;
+	}
+
+	//カメラの解放・削除
+	if (m_pCamera != nullptr)
+	{
+		m_pCamera->Uninit();
+		delete m_pCamera;
+		m_pCamera = nullptr;
 	}
 }
 
