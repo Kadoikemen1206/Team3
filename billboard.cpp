@@ -50,9 +50,6 @@ HRESULT CBillboard::Init()
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-	//テクスチャの読み込み
-	BindTexture("FLOOR0");
-
 	//対角線の長さ算出
 	m_fLength = sqrtf(((m_size.x * m_size.x) + (m_size.y * m_size.y)));
 
@@ -125,7 +122,7 @@ void CBillboard::Draw()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//計算用マトリックス
-	D3DXMATRIX mtxTrans, mtxView;
+	D3DXMATRIX mtxTrans, mtxRot, mtxView;
 
 	switch (m_blend)
 	{
@@ -151,15 +148,32 @@ void CBillboard::Draw()
 	pDevice->GetTransform(D3DTS_VIEW, &mtxView);
 
 	//カメラの逆行列を設定
-	m_mtxWorld._11 = mtxView._11;
-	m_mtxWorld._12 = mtxView._21;
-	m_mtxWorld._13 = mtxView._31;
-	m_mtxWorld._21 = mtxView._12;
-	m_mtxWorld._22 = mtxView._22;
-	m_mtxWorld._23 = mtxView._32;
-	m_mtxWorld._31 = mtxView._13;
-	m_mtxWorld._32 = mtxView._23;
-	m_mtxWorld._33 = mtxView._33;
+	if (m_bIsRotate)
+	{
+		m_mtxWorld._11 = mtxView._11;
+		m_mtxWorld._12 = mtxView._21;
+		m_mtxWorld._13 = mtxView._31;
+		m_mtxWorld._31 = mtxView._13;
+		m_mtxWorld._32 = mtxView._23;
+		m_mtxWorld._33 = mtxView._33;
+	}
+
+	else
+	{
+		m_mtxWorld._11 = mtxView._11;
+		m_mtxWorld._12 = mtxView._21;
+		m_mtxWorld._13 = mtxView._31;
+		m_mtxWorld._21 = mtxView._12;
+		m_mtxWorld._22 = mtxView._22;
+		m_mtxWorld._23 = mtxView._32;
+		m_mtxWorld._31 = mtxView._13;
+		m_mtxWorld._32 = mtxView._23;
+		m_mtxWorld._33 = mtxView._33;
+	}
+
+	//向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);	//行列回転関数(第一引数にヨー(y)ピッチ(x)ロール(z)方向の回転行列を作成)
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);				//行列掛け算関数(第2引数 * 第三引数を第一引数に格納)
 
 	//位置を反映
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);		//行列移動関数(第一引数にx,y,z方向の移動行列を作成)
@@ -170,6 +184,10 @@ void CBillboard::Draw()
 
 	//カメラから見て近い部分を上書き
 	pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+
+	//Zテスト
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESS);
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	//アルファテスト
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
@@ -194,13 +212,17 @@ void CBillboard::Draw()
 	//ライトを有効にする
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-	//アルファテストを無効
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-
 	//設定を元に戻す
 	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	//Zバッファの設定を元に戻す
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
+	//アルファテストを無効
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
 	//テクスチャの解除
 	pDevice->SetTexture(0, NULL);

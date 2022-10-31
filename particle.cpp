@@ -9,7 +9,15 @@
 // コンストラクタ
 //=============================================================================
 CParticle::CParticle(int nPriority) :
-	m_nSpeed(5.0f)
+	m_nTime(0),
+	m_nDelay(60),
+	m_nDestroyTime(200),
+	m_fSpeed(5.0f),
+	m_bGravity(true),
+	m_bFade(false),
+	m_bRotate(true),
+	m_bScaling(true),
+	m_bTransition(true)
 {
 }
 
@@ -26,14 +34,19 @@ CParticle::~CParticle()
 HRESULT CParticle::Init()
 {
 	//テクスチャの読み込み
-	BindTexture("FLOOR2");
+	BindTexture("PARTICLE_STAR");
 
-	//objectxのposとrot
-	m_pos = CBillboard::GetPos();
+	m_beginPos = CBillboard::GetPos();
+
+	//テスト用
+	m_fFadeValue = -0.01f;
+	m_fFallSpeed = 0.05f;
+	m_fRotateSpeed = 0.1f;
+	m_fScalingValue = 0.3f;
+	m_destCol = D3DXCOLOR(0.0f,0.0f,1.0f,1.0f);
 
 	//オブジェクトの初期化
 	CBillboard::Init();
-	CBillboard::SetMove(D3DXVECTOR3(rand() % 5, 1.5f, rand() % 5));
 	CBillboard::SetSize(D3DXVECTOR3(10.0f, 10.0f, 0.0f));
 	CBillboard::SetBlend(BLEND_ADDITIVE);
 
@@ -45,29 +58,38 @@ HRESULT CParticle::Init()
 //=============================================================================
 void CParticle::Update()
 {
-	// キーボードの情報取得
-	CInput *pInputKeyboard = CApplication::GetInput();
 	CBillboard::Update();
 
 	// 前回の位置を保存
 	m_posOld = m_pos;
 
 	m_pos = CBillboard::GetPos();
+	m_col = CBillboard::GetCol();
+
+	DetailSetting();
 
 	CBillboard::SetPos(m_pos);
-	CBillboard::SetCol(D3DXCOLOR(0.0f,1.0f,1.0f,0.6f));
+	m_nTime++;
+
+	if (m_nTime >= m_nDestroyTime || m_col.a <= 0.0f)
+	{
+		CBillboard::Uninit();
+		return;
+	}
 }
 
 //=============================================================================
 // 生成処理
 //=============================================================================
-CParticle * CParticle::Create(const D3DXVECTOR3 pos, int nPriority)
+CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, int nPriority)
 {
 	CParticle *pParticle = new CParticle(nPriority);
 
 	if (pParticle != nullptr)
 	{
 		pParticle->SetPos(pos);
+		pParticle->SetMove(move);
+		pParticle->SetCol(col);
 		pParticle->Init();
 	}
 	else
@@ -76,4 +98,60 @@ CParticle * CParticle::Create(const D3DXVECTOR3 pos, int nPriority)
 	}
 
 	return pParticle;
+}
+
+//詳細設定
+void CParticle::DetailSetting()
+{
+	D3DXVECTOR3 move = CBillboard::GetMove();
+	D3DXVECTOR3 scale = CBillboard::GetSize();
+
+	if (m_bGravity)
+	{// 重力を使用する場合
+		if (m_nTime >= m_nDelay)
+		{
+			move.y -= m_fFallSpeed;
+		}
+	}
+
+	if (m_bFade)
+	{// エフェクトのフェードを使用する場合
+		m_col.a += m_fFadeValue;
+	}
+
+	if (m_bRotate)
+	{// ビルボードの回転をする場合
+		D3DXVECTOR3 rot = CBillboard::GetRot();
+		D3DXVECTOR3 vec = m_pos - m_beginPos;
+
+		if (vec.x <= 0)
+		{// 現在の位置が開始地点から左にある場合
+			rot.z += m_fRotateSpeed;
+		}
+
+		else
+		{// 右にある場合
+			rot.z -= m_fRotateSpeed;
+		}
+
+		CBillboard::SetRotate(true);
+		CBillboard::SetRot(rot);
+	}
+
+	if (m_bScaling)
+	{// 拡大・縮小を行う場合
+		scale.x += m_fScalingValue;
+		scale.y += m_fScalingValue;
+	}
+
+	if (m_bTransition)
+	{// 色の変化をつける場合
+		m_col.r += (m_destCol.r - m_col.r) / m_nDestroyTime;
+		m_col.g += (m_destCol.g - m_col.g) / m_nDestroyTime;
+		m_col.b += (m_destCol.b - m_col.b) / m_nDestroyTime;
+	}
+
+	CBillboard::SetMove(move);
+	CBillboard::SetSize(scale);
+	CBillboard::SetCol(m_col);
 }

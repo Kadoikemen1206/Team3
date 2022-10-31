@@ -8,7 +8,7 @@
 class CBillboard : public CObject
 {
 public:
-	enum ALPHABLEND
+	enum EAlphaBlend
 	{
 		BLEND_NONE = 0,
 		BLEND_ADDITIVE,
@@ -37,7 +37,8 @@ public:
 	void SetRot(D3DXVECTOR3 rot) override { m_rot = rot; }		// 向き設定処理
 	void BindTexture(std::string inPath);						// 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 	void SetUV(float x_1, float x_2, float y_1, float y_2);		// テクスチャ座標更新処理
-	void SetBlend(ALPHABLEND blend) { m_blend = blend; }
+	void SetRotate(bool set) { m_bIsRotate = set; }
+	void SetBlend(EAlphaBlend blend) { m_blend = blend; }
 
 	D3DXVECTOR3 GetPos(void) override { return m_pos; }			// 座標取得処理
 	D3DXVECTOR3 GetSize(void) override { return m_size; }		// サイズ取得処理
@@ -58,8 +59,9 @@ private:
 	D3DXCOLOR m_col;						// 色
 	float m_fLength;						// 対角線の長さ
 	float m_fAngle;							// 角度
+	bool m_bIsRotate;
 	EObjType m_type;						// オブジェクトのタイプ
-	ALPHABLEND m_blend;
+	EAlphaBlend m_blend;
 	D3DXMATRIX m_mtxWorld;					// ワールドマトリックス
 };
 
