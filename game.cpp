@@ -58,11 +58,13 @@ CGame::~CGame()
 //=============================================================================
 HRESULT CGame::Init(void)
 {
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TWO);		// ゲーム
+
 	//ライトの生成
 	m_pLight = CLight::Create();
 
 	// タイマーの生成
-	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL5);
+	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL4);
 
 	//メッシュフィールドの生成
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-300.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
@@ -74,7 +76,7 @@ HRESULT CGame::Init(void)
 	for (int nCnt = 0; nCnt < 10; nCnt++)
 	{
 		//モデルの生成(壁)
-		CModel::Create(D3DXVECTOR3(-150.0f, 0.0f, 200.0f + (380.0f * nCnt)), CObject::PRIORITY_LEVEL1);
+		//CModel::Create(D3DXVECTOR3(-150.0f, 0.0f, 200.0f + (380.0f * nCnt)), CObject::PRIORITY_LEVEL1);
 	}
 
 	//プレイヤーの生成
@@ -97,6 +99,8 @@ void CGame::Uninit(void)
 {
 	//ナンバーの削除
 	CNumber::Unload();
+
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);		// カメラ
 
 	//ライトの解放・削除
 	if (m_pLight != nullptr)

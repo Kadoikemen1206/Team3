@@ -29,8 +29,10 @@ public:
 	enum CAMERATYPE
 	{
 		CAMERATYPE_NONE = 0,
+		CAMERATYPE_TITLE,		// タイトル時
 		CAMERATYPE_ONE,			// カメラ1つ(ソロモード)
 		CAMERATYPE_TWO,			// カメラ2つ(対戦)
+		CAMERATYPE_RANKING,		// ランキング時
 		CAMERATYPE_MAX
 	};
 	//-------------------------------------------------------------------------
@@ -45,7 +47,7 @@ public:
 	HRESULT Init(void);					// 初期化処理
 	void Uninit(void);					// 終了処理
 	void Update(void);					// 更新処理
-	void SetCamera(int nCntCamera, CAMERATYPE type);		// 設定処理
+	void SetCamera(int nCntCamera = 0);	// 設定処理
 	void SetCameraType(CAMERATYPE type);							// カメラの種類の設定
 	static CAMERATYPE GetCameraType(void) { return m_nCameraType; }	// カメラの種類の取得
 	static D3DXVECTOR3 GetRot() { return m_rot; }

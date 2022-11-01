@@ -8,7 +8,7 @@ public:
 	CNumber();
 	~CNumber()override;
 
-	HRESULT Init()override;
+	HRESULT Init() override;
 	void Draw() override;									// •`‰æˆ—
 	static void Unload();
 

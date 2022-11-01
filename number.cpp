@@ -4,7 +4,7 @@
 #include "application.h"
 #include <assert.h>
 
-CNumber::CNumber() : CObject2D(5)
+CNumber::CNumber() : CObject2D(CObject::PRIORITY_LEVEL4)
 {
 
 }
