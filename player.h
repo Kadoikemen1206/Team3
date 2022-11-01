@@ -16,7 +16,6 @@
 // 前方定義
 //=============================================================================
 class CShadow;
-
 class CParticle;
 
 //=============================================================================
@@ -62,7 +61,8 @@ private:
 	D3DXVECTOR3 m_posOld;				// 前回の位置
 	EPLAYER m_nType;					// 1Pと2Pのタイプ分け
 	float m_nSpeed;						// スピード
+	bool m_bJumpFlag;					// ジャンプしたかどうかのフラグ
 
-	CParticle *m_pParticle;
+	CParticle *m_pParticle;				// パーティクルのポインタ
 };
 #endif
