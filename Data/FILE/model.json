@@ -73,6 +73,10 @@
       "Data\/MODEL\/Table02.x"
     ],
     [
+      "TABLE03",
+      "Data\/MODEL\/Table03.x"
+    ],
+    [
       "TEAPOT",
       "Data\/MODEL\/teapot.x"
     ],
