@@ -29,6 +29,7 @@
 #include "ranking.h"
 #include "fade.h"
 #include "objectX_group.h"
+#include "obstacle.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -86,8 +87,8 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	// カメラの初期化
 	m_pCamera = new CCamera;
-	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
+	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);	// ソロ
+	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);		// VS
 	m_pCamera->Init();
 
 	// テクスチャの生成
@@ -162,6 +163,12 @@ void CApplication::Update(void)
 	if (m_pInput != nullptr)
 	{
 		m_pInput->Update();
+	}
+
+	//カメラの更新処理
+	if (m_pCamera != nullptr)
+	{
+		m_pCamera->Update();
 	}
 
 	//レンダリングの更新処理

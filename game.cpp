@@ -58,16 +58,13 @@ CGame::~CGame()
 //=============================================================================
 HRESULT CGame::Init(void)
 {
-	// カメラの初期化
-	m_pCamera = new CCamera;
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);
-	m_pCamera->Init();
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TWO);		// ゲーム
 
 	//ライトの生成
 	m_pLight = CLight::Create();
 
 	// タイマーの生成
-	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL5);
+	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL4);
 
 	//メッシュフィールドの生成
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-300.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
@@ -89,6 +86,9 @@ HRESULT CGame::Init(void)
 	// 障害物を作成
 	//CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL, CGimmick::SHAPETYPE_AQUARE, CObject::PRIORITY_LEVEL3);
 
+	// ギミックの生成
+	CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_GOAL, CGimmick::SHAPETYPE_NONE, CObject::PRIORITY_LEVEL3);
+
 	return S_OK;
 }
 
@@ -100,13 +100,7 @@ void CGame::Uninit(void)
 	//ナンバーの削除
 	CNumber::Unload();
 
-	//カメラの解放・削除
-	if (m_pCamera != nullptr)
-	{
-		m_pCamera->Uninit();
-		delete m_pCamera;
-		m_pCamera = nullptr;
-	}
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);		// カメラ
 
 	//ライトの解放・削除
 	if (m_pLight != nullptr)
@@ -125,12 +119,6 @@ void CGame::Uninit(void)
 //=============================================================================
 void CGame::Update(void)
 {
-	//カメラの更新処理
-	if (m_pCamera != nullptr)
-	{
-		m_pCamera->Update();
-	}
-
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 
@@ -149,11 +137,7 @@ void CGame::Update(void)
 //=============================================================================
 void CGame::Draw(void)
 {
-	//カメラのセット処理
-	if (m_pCamera != nullptr)
-	{
-		m_pCamera->SetCamera(0, CCamera::CAMERATYPE_ONE);
-	}
+
 }
 
 //=============================================================================

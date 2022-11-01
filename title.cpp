@@ -14,6 +14,7 @@
 #include "application.h"
 #include "input.h"
 #include "fade.h"
+#include "camera.h"
 
 //=============================================================================
 // Ã“Iƒƒ“ƒo•Ï”éŒ¾
@@ -41,6 +42,7 @@ CTitle::~CTitle()
 //=============================================================================
 HRESULT CTitle::Init(void)
 {
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TITLE);
 	return S_OK;
 }
 
