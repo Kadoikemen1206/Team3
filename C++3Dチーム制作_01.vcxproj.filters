@@ -34,12 +34,6 @@
     <ClCompile Include="meshfield.cpp">
       <Filter>00_Code\02_Object\00_Root</Filter>
     </ClCompile>
-    <ClCompile Include="model.cpp">
-      <Filter>00_Code\02_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="billboard.cpp">
-      <Filter>00_Code\02_Object</Filter>
-    </ClCompile>
     <ClCompile Include="application.cpp">
       <Filter>00_Code\00_Main\00_Main</Filter>
     </ClCompile>
@@ -94,6 +88,12 @@
     <ClCompile Include="time.cpp">
       <Filter>00_Code\02_Object</Filter>
     </ClCompile>
+    <ClCompile Include="billboard.cpp">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -131,12 +131,6 @@
     </ClInclude>
     <ClInclude Include="meshfield.h">
       <Filter>00_Code\02_Object\00_Root</Filter>
-    </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>00_Code\02_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="billboard.h">
-      <Filter>00_Code\02_Object</Filter>
     </ClInclude>
     <ClInclude Include="application.h">
       <Filter>00_Code\00_Main\00_Main</Filter>
@@ -191,6 +185,12 @@
     </ClInclude>
     <ClInclude Include="time.h">
       <Filter>00_Code\02_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>00_Code\02_Object\00_Root</Filter>
+    </ClInclude>
+    <ClInclude Include="billboard.h">
+      <Filter>00_Code\02_Object\00_Root</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -189,13 +189,6 @@ HRESULT CMeshfield::Init()
 //=============================================================================
 void CMeshfield::Uninit()
 {
-	//テクスチャの破棄
-	if (m_pTexture != NULL)
-	{
-		m_pTexture->Release();
-		m_pTexture = NULL;
-	}
-
 	//頂点バッファの破棄
 	if (m_pVtxBuff != NULL)
 	{
@@ -261,9 +254,6 @@ void CMeshfield::Draw()
 
 	//メッシュフィールドの描画
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, MESHFIELD_VERTEX_NUM, 0, MESHFIELD_PRIMITIVE_NUM);
-
-	//ポリゴンの描画
-	//pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 12);
 
 	//テクスチャの設定	(テクスチャがモデルにかぶらないようにする)
 	pDevice->SetTexture(0, NULL);
