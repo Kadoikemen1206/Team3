@@ -13,16 +13,18 @@
 #include "main.h"
 
 //=============================================================================
-//マクロ定義
-//=============================================================================
-#define CAMERA_SPEED	(5.0f)		//カメラの移動速度
-#define MAX_CAMERA		(2)			//カメラの最大数
-
-//=============================================================================
 // クラスの定義
 //=============================================================================
 class CCamera
 {
+public:
+	static const float MOVE_SPEED;			// 移動速度
+	static const unsigned int MAX_NUMBER;	// 最大数
+	static const D3DXVECTOR3 INIT_POSV;		// 視点の初期値
+	static const D3DXVECTOR3 INIT_POSR;		// 注視点の初期値
+	static const float Z_DEPTH;				// 注視点のZを持ってきた位置より奥深い位置にする
+	static const float Z_SEPARATE;			// 視点のZを持ってきた位置から離す
+
 public:
 	enum CAMERATYPE
 	{
