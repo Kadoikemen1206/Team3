@@ -66,6 +66,7 @@ void CObstacle::Update()
 	D3DXVECTOR3 ObstacleMove = GetMove();
 	D3DXVECTOR3 ObstaclePos = CGimmick::GetPos();
 	D3DXVECTOR3 PlayerPos = CGame::GetPlayer1P()->GetPos();		//プレイヤーPOS情報の取得
+
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 
