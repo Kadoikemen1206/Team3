@@ -38,12 +38,9 @@ CRenderer *CApplication::m_pRenderer = nullptr;
 CInput *CApplication::m_pInput = nullptr;
 CObject *CApplication::m_pMode = nullptr;
 CCamera *CApplication::m_pCamera = nullptr;
-CLight *CApplication::m_pLight = nullptr;
-CMeshfield *CApplication::m_pMeshField = nullptr;
-CTime *CApplication::m_pTime = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
 CObjectXGroup *CApplication::m_pObjectXGroup = nullptr;
-CApplication::MODE CApplication::m_mode = MODE_GAME;
+CApplication::MODE CApplication::m_mode = MODE_TITLE;
 
 //=============================================================================
 // コンストラクタ
@@ -101,9 +98,6 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	//モード生成
 	CFade::Create(m_mode);
-
-	// ギミックの生成
-	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL,CGimmick::SHAPETYPE_NONE, CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }

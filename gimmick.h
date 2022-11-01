@@ -31,6 +31,7 @@ public:
 		GIMMICKTYPE_BARRAGEMOVEWALL,		// 連打で動く壁
 		GIMMICKTYPE_ALTERNATEMOVEWALL,		// 交互に連打で動く壁
 		GIMMICKTYPE_SHAPE,					// 図形当てギミック
+		GIMMICKTYPE_GOAL,					// ゴール
 		GIMMICKTYPE_MAX
 	};
 	//-------------------------------------------------------------------------
@@ -68,8 +69,10 @@ public:
 
 	virtual void ConstOperate(int barrage,int rotate) = 0;		// 一定の操作(連打、回転)
 
-	static bool GetCompletion();			// 完了したかを知らせる
-	static void SetCompletion(bool flag);	// 完了したかを設定
+	static bool GetCompletion1P();			// 完了したかを知らせる
+	static bool GetCompletion2P();			// 完了したかを知らせる
+	static void SetCompletion1P(bool flag);	// 1Pが完了したかを設定
+	static void SetCompletion2P(bool flag);	// 2Pが完了したかを設定
 
 private:
 	//-------------------------------------------------------------------------
@@ -78,7 +81,8 @@ private:
 	D3DXVECTOR3 m_Pos;				// ギミックの位置
 	GIMMICKTYPE m_GimmickType;		// ギミックの種類
 	SHAPETYPE m_ShapeType;			// 図形の種類
-	static bool m_Completion;		// 完了したか否かフラグ
+	static bool m_Completion1P;		// 1Pが完了したか否かフラグ
+	static bool m_Completion2P;		// 2Pが完了したか否かフラグ
 	static D3DXVECTOR3 m_Area;		// ギミックの範囲
 };
 #endif

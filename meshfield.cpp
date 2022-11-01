@@ -77,8 +77,8 @@ HRESULT CMeshfield::Init()
 	{
 		for (int nCntX = 0; nCntX < MESHFIELD_X_BLOCK + 1; nCntX++)
 		{
-			//m_RandHeight = (float)(rand() % 70 + 1);
-			m_RandHeight = sinf(nCntX * 0.5f) * 120;
+			//m_RandHeight = (float)(rand() % 40 + 1);
+			m_RandHeight = sinf(nCntX * 0.5f) * 30;
 
 			//頂点座標の設定
 			pVtx[nCntX + (nCntZ * (MESHFIELD_X_BLOCK + 1))].pos = D3DXVECTOR3(-POLYGON_WIDTH + (POLYGON_WIDTH * nCntX), 0.0f, POLYGON_DEPTH - (POLYGON_DEPTH * nCntZ));
@@ -191,13 +191,6 @@ HRESULT CMeshfield::Init()
 //=============================================================================
 void CMeshfield::Uninit()
 {
-	//テクスチャの破棄
-	if (m_pTexture != NULL)
-	{
-		m_pTexture->Release();
-		m_pTexture = NULL;
-	}
-
 	//頂点バッファの破棄
 	if (m_pVtxBuff != NULL)
 	{
@@ -221,22 +214,7 @@ void CMeshfield::Uninit()
 //=============================================================================
 void CMeshfield::Update()
 {
-	//m_fRotMove += 0.1f;
 
-	//if (m_fRotMove >= D3DX_PI)
-	//{// 移動方向の正規化
-	//	m_fRotMove -= D3DX_PI * 2;
-	//}
-	//else if (m_fRotMove <= -D3DX_PI)
-	//{// 移動方向の正規化
-	//	m_fRotMove += D3DX_PI * 2;
-	//}
-
-	////高さ更新
-	//m_pos.y += sinf(m_fRotMove) * 4.0f;
-
-	////座標設定
-	//SetPos(m_pos);
 }
 
 //=============================================================================
@@ -278,9 +256,6 @@ void CMeshfield::Draw()
 
 	//メッシュフィールドの描画
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, MESHFIELD_VERTEX_NUM, 0, MESHFIELD_PRIMITIVE_NUM);
-
-	//ポリゴンの描画
-	//pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 12);
 
 	//テクスチャの設定	(テクスチャがモデルにかぶらないようにする)
 	pDevice->SetTexture(0, NULL);
@@ -419,13 +394,9 @@ void CMeshfield::Collision(D3DXVECTOR3 *PlayerPos)
 {
 	//頂点情報へのポインタ
 	VERTEX_3D * pVtx = nullptr;
-	WORD * pIdx;
-	D3DXVECTOR3 IdxPos[3];				//Idxのpos
-	D3DXVECTOR3 VecA[3];				//VecA
-	D3DXVECTOR3 VecB[3];				//VecB
-	D3DXVECTOR3 Calculation3D[2];		//3次元外積の計算結果
-	float Calculation2D[3];				//2次元外積の計算結果
-	D3DXVECTOR3 Answer;					//外積の計算結果
+
+	//インデックス情報へのポインタ
+	WORD * pIdx = nullptr;
 
 	//頂点バッファをロック
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -436,38 +407,41 @@ void CMeshfield::Collision(D3DXVECTOR3 *PlayerPos)
 	for (int nCnt = 0; nCnt < MESHFIELD_PRIMITIVE_NUM; nCnt++)
 	{
 		//Idxのpos
-		IdxPos[0] = pVtx[pIdx[nCnt]].pos;
-		IdxPos[1] = pVtx[pIdx[nCnt + 1]].pos;
-		IdxPos[2] = pVtx[pIdx[nCnt + 2]].pos;
+		m_IdxPos[0] = pVtx[pIdx[nCnt]].pos;
+		m_IdxPos[1] = pVtx[pIdx[nCnt + 1]].pos;
+		m_IdxPos[2] = pVtx[pIdx[nCnt + 2]].pos;
 
 		//VecA
-		VecA[0] = IdxPos[1] - IdxPos[0];
-		VecA[1] = IdxPos[2] - IdxPos[1];
-		VecA[2] = IdxPos[0] - IdxPos[2];
+		m_VecA[0] = m_IdxPos[1] - m_IdxPos[0];
+		m_VecA[1] = m_IdxPos[2] - m_IdxPos[1];
+		m_VecA[2] = m_IdxPos[0] - m_IdxPos[2];
 
 		//VecB
-		VecB[0] = *PlayerPos - (IdxPos[0] + m_pos);
-		VecB[1] = *PlayerPos - (IdxPos[1] + m_pos);
-		VecB[2] = *PlayerPos - (IdxPos[2] + m_pos);
+		m_VecB[0] = *PlayerPos - (m_IdxPos[0] + m_pos);
+		m_VecB[1] = *PlayerPos - (m_IdxPos[1] + m_pos);
+		m_VecB[2] = *PlayerPos - (m_IdxPos[2] + m_pos);
 
 		//2次元外積の計算結果
-		Calculation2D[0] = VecA[0].x * VecB[0].z - VecB[0].x * VecA[0].z;
-		Calculation2D[1] = VecA[1].x * VecB[1].z - VecB[1].x * VecA[1].z;
-		Calculation2D[2] = VecA[2].x * VecB[2].z - VecB[2].x * VecA[2].z;
+		m_Calculation2D[0] = m_VecA[0].x * m_VecB[0].z - m_VecB[0].x * m_VecA[0].z;
+		m_Calculation2D[1] = m_VecA[1].x * m_VecB[1].z - m_VecB[1].x * m_VecA[1].z;
+		m_Calculation2D[2] = m_VecA[2].x * m_VecB[2].z - m_VecB[2].x * m_VecA[2].z;
 
 		//プレイヤーの位置が全部-か+
-		if ((Calculation2D[0] >= 0 && Calculation2D[1] >= 0 && Calculation2D[2] >= 0) || (Calculation2D[0] <= 0 && Calculation2D[1] <= 0 && Calculation2D[2] <= 0))
+		if ((m_Calculation2D[0] >= 0 && m_Calculation2D[1] >= 0 && m_Calculation2D[2] >= 0) || (m_Calculation2D[0] <= 0 && m_Calculation2D[1] <= 0 && m_Calculation2D[2] <= 0))
 		{
 			//3次元外積の計算
-			Calculation3D[0] = IdxPos[1] - IdxPos[0];
-			Calculation3D[1] = IdxPos[2] - IdxPos[0];
-			D3DXVec3Cross(&Answer, &Calculation3D[0], &Calculation3D[1]);
+			m_Calculation3D[0] = m_IdxPos[1] - m_IdxPos[0];
+			m_Calculation3D[1] = m_IdxPos[2] - m_IdxPos[0];
+			D3DXVec3Cross(&m_Answer, &m_Calculation3D[0], &m_Calculation3D[1]);
 
 			//正規化
-			D3DXVec3Normalize(&Answer, &Answer);
+			D3DXVec3Normalize(&m_Answer, &m_Answer);
 
 			//内積の計算
-			PlayerPos->y = (IdxPos[0].y + m_pos.y) - ((PlayerPos->x - (IdxPos[0].x + m_pos.x)) * Answer.x + (PlayerPos->z - (IdxPos[0].z + m_pos.z)) * Answer.z) / Answer.y;
+			PlayerPos->y = (m_IdxPos[0].y + m_pos.y) - ((PlayerPos->x - (m_IdxPos[0].x + m_pos.x)) * m_Answer.x + (PlayerPos->z - (m_IdxPos[0].z + m_pos.z)) * m_Answer.z) / m_Answer.y;
+
+			//内積の計算結果保存
+			m_AnswerKeep = (m_IdxPos[0].y + m_pos.y) - ((PlayerPos->x - (m_IdxPos[0].x + m_pos.x)) * m_Answer.x + (PlayerPos->z - (m_IdxPos[0].z + m_pos.z)) * m_Answer.z) / m_Answer.y;
 		}
 	}
 
