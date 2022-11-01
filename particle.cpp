@@ -25,10 +25,9 @@ CParticle::CParticle(int nPriority) :
 	m_bScaling(false),				// 拡縮
 	m_bLocus(false),				// パーティクルに軌跡をつける（激重です）
 	m_bBounce(false),				// バウンドさせる
-	m_bUseMesh(false),
 	m_bTransition(false),			// 色の変化
 	m_bPosSpecify(false),			// 位置の指定
-	m_type(BEHAVIOR_FLY)
+	m_behavior(BEHAVIOR_FLY)
 {
 }
 
@@ -44,23 +43,14 @@ CParticle::~CParticle()
 //=============================================================================
 HRESULT CParticle::Init()
 {
-	if (m_bUseMesh)
-	{
-		m_pModel = CModel::Create(CBillboard::GetPos(), PRIORITY_LEVEL3);
-		m_pModel->SetMove(m_moveTransition);
-		m_pModel->LoadModel("TRIANGLE");
-
-		return S_OK;
-	}
-
 	//テクスチャの読み込み
-	BindTexture("PARTICLE_FLARE");
+	BindTexture(m_path);
 
 	m_beginPos = CBillboard::GetPos();
 	m_destPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_destCol = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 
-	if (m_type != BEHAVIOR_INVALID || m_type != BEHAVIOR_NONE)
+	if (m_behavior != BEHAVIOR_INVALID || m_behavior != BEHAVIOR_NONE)
 	{
 		Preset();
 	}
@@ -147,11 +137,6 @@ void CParticle::Update()
 
 	CBillboard::SetPos(m_pos);
 
-	if (m_bUseMesh)
-	{
-		m_pModel->SetPos(m_pos);
-	}
-
 	m_nTime++;
 
 	// ======================
@@ -178,11 +163,6 @@ void CParticle::Update()
 	if (m_nTime >= m_nDestroyTime || m_col.a <= 0.0f)
 	{
 		CBillboard::Uninit();
-
-		if (m_bUseMesh)
-		{
-			m_pModel->Uninit();
-		}
 		return;
 	}
 }
@@ -190,7 +170,7 @@ void CParticle::Update()
 //=============================================================================
 // 生成処理
 //=============================================================================
-CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, int nPriority)
+CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, const std::string url, int nPriority)
 {
 	CParticle *pParticle = new CParticle(nPriority);
 
@@ -199,6 +179,7 @@ CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, con
 		pParticle->SetPos(pos);
 		pParticle->SetMove(move);
 		pParticle->SetCol(col);
+		pParticle->SetPath(url);
 		pParticle->Init();
 	}
 	else
@@ -212,7 +193,6 @@ CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, con
 //詳細設定
 void CParticle::DetailSetting()
 {
-	CMeshfield *pMeshField = CApplication::GetMeshfield();
 	D3DXVECTOR3 move = CBillboard::GetMove();
 	D3DXVECTOR3 scale = CBillboard::GetSize();
 
@@ -271,7 +251,7 @@ void CParticle::DetailSetting()
 
 	if (m_bLocus && (m_nTime % 3) == 0 && m_col.a >= 0.2f)
 	{// パーティクルに軌跡をつける場合
-		m_pParticle = CParticle::Create(m_pos, D3DXVECTOR3(0.0f,0.0f,0.0f), m_col, PRIORITY_LEVEL3);
+		m_pParticle = CParticle::Create(m_pos, D3DXVECTOR3(0.0f,0.0f,0.0f), m_col, "PARTICLE_FLARE", PRIORITY_LEVEL3);
 		m_pParticle->SetSize(D3DXVECTOR3(20.0f,20.0f,0.0f));
 		m_pParticle->SetScaling(true, -0.2f);
 		m_pParticle->SetFade(true, -0.09f);
@@ -285,10 +265,49 @@ void CParticle::DetailSetting()
 	CBillboard::SetCol(m_col);
 }
 
+void CParticle::SetBounce(bool set)
+{
+	m_bBounce = set;
+
+	// ポインタ宣言
+	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
+
+	if (m_bBounce)
+	{
+		// メッシュのY位置を調べるためのもの（適当にやってる
+		if (m_bBounce)
+		{
+			while (pObject != nullptr)
+			{
+				if (pObject == this)
+				{
+					pObject = pObject->GetNext();
+					continue;
+				}
+
+				//変数宣言
+				CObject::EObjType objType;
+
+				//オブジェクトのタイプを取得
+				objType = pObject->GetObjType();
+
+				if (objType == OBJTYPE_MESH)
+				{
+					CObjectX *pObjectX = (CObjectX*)pObject;
+					m_lowerPos = pObjectX->GetPos();
+				}
+
+				//ポインタを次に進める
+				pObject = pObject->GetNext();
+			}
+		}
+	}
+}
+
 //挙動の設定
 void CParticle::Preset()
 {
-	switch (m_type)
+	switch (m_behavior)
 	{
 	case BEHAVIOR_NONE:
 		break;
@@ -297,7 +316,7 @@ void CParticle::Preset()
 		m_bGravity = true;
 		m_bFade = true;
 		m_bScaling = true;
-		m_bLocus = true;
+		m_bLocus = false;
 		m_bBounce = true;
 		m_bTransition = true;
 		m_fFadeValue = -0.005f;

@@ -4,6 +4,7 @@
 #include "application.h"
 #include "main.h"
 #include "texture.h"
+#include "particle.h"
 
 //=============================================================================
 // コンストラクタ
@@ -12,6 +13,8 @@ CBillboard::CBillboard(int nPriority) :
 	CObject(nPriority),
 	m_pTexture(nullptr),
 	m_pVtxBuff(nullptr),
+	m_PatternAnimX(1),
+	m_PatternAnimY(1),
 	m_fLength(0.0f),
 	m_fAngle(0.0f),
 	m_pos(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
@@ -111,6 +114,44 @@ void CBillboard::Update()
 
 	//頂点座標更新処理
 	VtxUpdate();
+	
+	if (m_bAnimation)
+	{// テクスチャアニメーションをする場合
+		m_CntTime++;
+
+		if (m_CntTime >= m_Timer)
+		{
+			m_AnimationSpdCnt++;
+			if (m_AnimationSpdCnt >= m_AnimationSpeed)
+			{
+				m_AnimationSpdCnt = 0;
+				m_PatternAnimX++;
+
+				if (m_PatternAnimX > m_DivisionX)
+				{//アニメーション
+					m_PatternAnimX = 0;
+					m_PatternAnimY++;
+					if (m_PatternAnimY >= m_DivisionY)
+					{
+						m_PatternAnimY = 0;
+						if (!m_bLoop)
+						{
+							Uninit();
+						}
+						return;
+					}
+				}
+
+				float U = 1.0f / (m_DivisionX);
+				float V = 1.0f / (m_DivisionY);
+
+				SetUV(U * (m_PatternAnimX)
+					, U *(m_PatternAnimX) + U
+					, V * (m_PatternAnimY)
+					, V * (m_PatternAnimY) + V);
+			}
+		}
+	}
 }
 
 //=============================================================================
@@ -296,6 +337,29 @@ void CBillboard::SetUV(float x_1, float x_2, float y_1, float y_2)
 
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();
+}
+
+//=============================================================================
+// Animationの枚数設定関数
+//=============================================================================
+void CBillboard::SetAnimation(const int U, const int V, const int Speed, const int Drawtimer, const bool loop)
+{
+	m_DivisionX = U;
+	m_DivisionY = V;
+	m_DivisionMAX = m_DivisionY*m_DivisionX;
+
+	m_PatternAnimX = 0;
+	m_PatternAnimY = 0;
+	m_AnimationSpeed = Speed;
+	m_Timer = Drawtimer;
+	m_bAnimation = true;
+	m_bLoop = loop;
+
+	//表示座標を更新
+	SetUV(1.0f / m_DivisionX * (m_PatternAnimX / (m_DivisionX))
+		, 1.0f / m_DivisionX *(m_PatternAnimX / (m_DivisionX)) + 1.0f / m_DivisionX
+		, 1.0f / m_DivisionY * (m_PatternAnimY % (m_DivisionY))
+		, 1.0f / m_DivisionY * (m_PatternAnimY % (m_DivisionY)+1.0f / m_DivisionY* m_DivisionY));
 }
 
 //=============================================================================

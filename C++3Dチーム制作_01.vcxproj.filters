@@ -1,6 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="fade.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="mode.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="number.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="ranking.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="shadow.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="time.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
     <ClCompile Include="DirectInput.cpp">
       <Filter>00_Code\01_Input</Filter>
     </ClCompile>
@@ -34,68 +67,64 @@
     <ClCompile Include="meshfield.cpp">
       <Filter>00_Code\02_Object\00_Root</Filter>
     </ClCompile>
-    <ClCompile Include="application.cpp">
-      <Filter>00_Code\00_Main\00_Main</Filter>
-    </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>00_Code\00_Main\03_3D</Filter>
-    </ClCompile>
-    <ClCompile Include="fade.cpp">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClCompile>
-    <ClCompile Include="file.cpp">
-      <Filter>00_Code\00_Main\02_OutSide</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>00_Code\00_Main\00_Main</Filter>
-    </ClCompile>
-    <ClCompile Include="objectX_group.cpp">
-      <Filter>00_Code\00_Main\02_OutSide</Filter>
+      <Filter>00_Code\00_Main</Filter>
     </ClCompile>
     <ClCompile Include="renderer.cpp">
-      <Filter>00_Code\00_Main\00_Main</Filter>
-    </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>00_Code\00_Main\02_OutSide</Filter>
-    </ClCompile>
-    <ClCompile Include="title.cpp">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClCompile>
-    <ClCompile Include="mode.cpp">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClCompile>
-    <ClCompile Include="light.cpp">
-      <Filter>00_Code\00_Main\03_3D</Filter>
-    </ClCompile>
-    <ClCompile Include="particle.cpp">
-      <Filter>00_Code\02_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="number.cpp">
-      <Filter>00_Code\02_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>00_Code\02_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="ranking.cpp">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClCompile>
-    <ClCompile Include="shadow.cpp">
-      <Filter>00_Code\02_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="time.cpp">
-      <Filter>00_Code\02_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="billboard.cpp">
-      <Filter>00_Code\02_Object\00_Root</Filter>
+      <Filter>00_Code\00_Main</Filter>
     </ClCompile>
     <ClCompile Include="model.cpp">
-      <Filter>00_Code\02_Object\00_Root</Filter>
+      <Filter>00_Code\02_Object</Filter>
     </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="file.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="objectX_group.cpp">
+      <Filter>00_Code\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="billboard.cpp" />
+    <ClCompile Include="particle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="fade.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="mode.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="number.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="ranking.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="shadow.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="time.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="title.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
     <ClInclude Include="DirectInput.h">
       <Filter>00_Code\01_Input</Filter>
     </ClInclude>
@@ -132,66 +161,29 @@
     <ClInclude Include="meshfield.h">
       <Filter>00_Code\02_Object\00_Root</Filter>
     </ClInclude>
-    <ClInclude Include="application.h">
-      <Filter>00_Code\00_Main\00_Main</Filter>
-    </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>00_Code\00_Main\03_3D</Filter>
-    </ClInclude>
-    <ClInclude Include="fade.h">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClInclude>
-    <ClInclude Include="file.h">
-      <Filter>00_Code\00_Main\02_OutSide</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
-      <Filter>00_Code\00_Main\00_Main</Filter>
-    </ClInclude>
-    <ClInclude Include="objectX_group.h">
-      <Filter>00_Code\00_Main\02_OutSide</Filter>
+      <Filter>00_Code\00_Main</Filter>
     </ClInclude>
     <ClInclude Include="renderer.h">
-      <Filter>00_Code\00_Main\00_Main</Filter>
-    </ClInclude>
-    <ClInclude Include="texture.h">
-      <Filter>00_Code\00_Main\02_OutSide</Filter>
-    </ClInclude>
-    <ClInclude Include="title.h">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClInclude>
-    <ClInclude Include="mode.h">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClInclude>
-    <ClInclude Include="light.h">
-      <Filter>00_Code\00_Main\03_3D</Filter>
-    </ClInclude>
-    <ClInclude Include="number.h">
-      <Filter>00_Code\02_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="particle.h">
-      <Filter>00_Code\02_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>00_Code\02_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="ranking.h">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClInclude>
-    <ClInclude Include="shadow.h">
-      <Filter>00_Code\02_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="time.h">
-      <Filter>00_Code\02_Object</Filter>
+      <Filter>00_Code\00_Main</Filter>
     </ClInclude>
     <ClInclude Include="model.h">
-      <Filter>00_Code\02_Object\00_Root</Filter>
+      <Filter>00_Code\02_Object</Filter>
     </ClInclude>
-    <ClInclude Include="billboard.h">
-      <Filter>00_Code\02_Object\00_Root</Filter>
+    <ClInclude Include="camera.h">
+      <Filter>00_Code\00_Main</Filter>
     </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="objectX_group.h">
+      <Filter>00_Code\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="billboard.h" />
+    <ClInclude Include="particle.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00_Code">
@@ -214,18 +206,6 @@
     </Filter>
     <Filter Include="01_File">
       <UniqueIdentifier>{a7e1dd13-f950-449e-a754-4dc60f575870}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00_Code\00_Main\00_Main">
-      <UniqueIdentifier>{d7d71559-c9ec-488f-b4cc-145b2829bf9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00_Code\00_Main\01_Mode">
-      <UniqueIdentifier>{c0acd2e7-3167-43d8-b7ea-01969de3d64f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00_Code\00_Main\02_OutSide">
-      <UniqueIdentifier>{e03cd5eb-5223-4f11-b203-423adf78acc0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00_Code\00_Main\03_3D">
-      <UniqueIdentifier>{0694f25f-bbe7-415f-8386-fcc1e4791d10}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

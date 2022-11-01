@@ -7,8 +7,6 @@
 #include "billboard.h"
 #include <vector>
 
-class CModel;
-
 class CParticle : public CBillboard
 {
 public:
@@ -18,7 +16,7 @@ public:
 		int frame;
 	};
 
-	enum EType
+	enum EBehaviorType
 	{
 		BEHAVIOR_NONE = 0,
 		BEHAVIOR_FLY,
@@ -34,6 +32,8 @@ public:
 	void Update() override;				// 更新処理
 
 	//セッター
+	void SetPath(std::string url) { m_path = url; }
+	void SetBehavior(EBehaviorType behavior) { m_behavior = behavior; }
 	void SetDelay(int time) { m_nDelay = time; }
 	void SetGravity(bool set) { m_bGravity = set; }
 	void SetGravity(bool set, float value) { m_bGravity = set, m_fFallSpeed = value; }
@@ -43,13 +43,14 @@ public:
 	void SetScaling(bool set) { m_bScaling = set; }
 	void SetScaling(bool set, float value) { m_bScaling = set, m_fScalingValue = value; }
 	void SetLocus(bool set) { m_bLocus = set; }
+	void SetBounce(bool set);
 	void SetPosSpecify(bool set) { m_bPosSpecify = set; }
 	void SetTransitionColor(bool set, D3DXCOLOR col) { m_bTransition = set, m_destCol = col; }
 
 	//ゲッター
 	D3DXVECTOR3 GetPos(void) { return m_pos; }
 
-	static CParticle *Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, int nPriority);    // 生成処理
+	static CParticle *Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, const std::string url, int nPriority);    // 生成処理
 
 private:
 	void DetailSetting();
@@ -64,10 +65,10 @@ private:
 	D3DXCOLOR m_col;					// 色
 	D3DXCOLOR m_destCol;				// 目的の色
 	CParticle *m_pParticle;
-	CModel *m_pModel;
 	std::vector<SData> m_data;
+	std::string m_path;
 	SData m_effect;
-	EType m_type;
+	EBehaviorType m_behavior;
 	int m_nTime;						// 時間
 	int m_nDelay;						// 遅延
 	int m_nDestroyTime;					// エフェクトを消す時間
@@ -86,7 +87,6 @@ private:
 	bool m_bScaling;					// 拡縮を行うかどうか
 	bool m_bLocus;						// パーティクルに軌跡をつけるかどうか
 	bool m_bBounce;						// バウンドをさせるかどうか
-	bool m_bUseMesh;
 	bool m_bTransition;					// 色の変化をつけるかどうか
 	bool m_bPosSpecify;					// 位置の指定をするかどうか
 	bool m_bPosOperate = false;			// 位置の操作用
