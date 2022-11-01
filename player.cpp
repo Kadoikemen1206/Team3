@@ -197,11 +197,14 @@ void CPlayer::Update()
 	}
 
 	//テスト用
-	if (pInputKeyboard->Press(DIK_PERIOD))
-		m_pParticle = CParticle::Create(pos,
-			D3DXVECTOR3(sinf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180)))), 1.0f, cosf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180))))),
-			D3DXCOLOR(rand() % 100 * 0.01f, rand() % 100 * 0.01f, rand() % 100 * 0.01f, 1.0f),
-			PRIORITY_LEVEL3);
+	if (pInputKeyboard->Trigger(DIK_PERIOD))
+		for (int i = 0; i < 50; i++)
+		{
+			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 20.0f, pos.z),
+				D3DXVECTOR3(sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))))),
+				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
+				PRIORITY_LEVEL3);
+		}
 
 	//角度の正規化(目的の角度)
 	if (m_rotDest.y - rot.y > D3DX_PI)
