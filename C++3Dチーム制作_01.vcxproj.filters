@@ -34,6 +34,12 @@
     <ClCompile Include="meshfield.cpp">
       <Filter>00_Code\02_Object\00_Root</Filter>
     </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>00_Code\02_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="billboard.cpp">
+      <Filter>00_Code\02_Object</Filter>
+    </ClCompile>
     <ClCompile Include="application.cpp">
       <Filter>00_Code\00_Main\00_Main</Filter>
     </ClCompile>
@@ -57,9 +63,6 @@
     </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
-    </ClCompile>
-    <ClCompile Include="title.cpp">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
     </ClCompile>
     <ClCompile Include="mode.cpp">
       <Filter>00_Code\00_Main\01_Mode</Filter>
@@ -88,11 +91,11 @@
     <ClCompile Include="time.cpp">
       <Filter>00_Code\02_Object</Filter>
     </ClCompile>
-    <ClCompile Include="billboard.cpp">
-      <Filter>00_Code\02_Object\00_Root</Filter>
+    <ClCompile Include="title.cpp">
+      <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
     </ClCompile>
-    <ClCompile Include="model.cpp">
-      <Filter>00_Code\02_Object\00_Root</Filter>
+    <ClCompile Include="title_rogo.cpp">
+      <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +135,12 @@
     <ClInclude Include="meshfield.h">
       <Filter>00_Code\02_Object\00_Root</Filter>
     </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>00_Code\02_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="billboard.h">
+      <Filter>00_Code\02_Object</Filter>
+    </ClInclude>
     <ClInclude Include="application.h">
       <Filter>00_Code\00_Main\00_Main</Filter>
     </ClInclude>
@@ -155,9 +164,6 @@
     </ClInclude>
     <ClInclude Include="texture.h">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
-    </ClInclude>
-    <ClInclude Include="title.h">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
     </ClInclude>
     <ClInclude Include="mode.h">
       <Filter>00_Code\00_Main\01_Mode</Filter>
@@ -186,11 +192,11 @@
     <ClInclude Include="time.h">
       <Filter>00_Code\02_Object</Filter>
     </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>00_Code\02_Object\00_Root</Filter>
+    <ClInclude Include="title.h">
+      <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
     </ClInclude>
-    <ClInclude Include="billboard.h">
-      <Filter>00_Code\02_Object\00_Root</Filter>
+    <ClInclude Include="title_rogo.h">
+      <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +232,9 @@
     </Filter>
     <Filter Include="00_Code\00_Main\03_3D">
       <UniqueIdentifier>{0694f25f-bbe7-415f-8386-fcc1e4791d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Code\00_Main\01_Mode\TITLE">
+      <UniqueIdentifier>{0909a915-ca1d-48b0-a674-139b622055ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

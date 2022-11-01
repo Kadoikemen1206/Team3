@@ -85,7 +85,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	// カメラの初期化
 	m_pCamera = new CCamera;
 	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);	// ソロ
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);		// VS
+	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);	// VS
 	m_pCamera->Init();
 
 	// テクスチャの生成

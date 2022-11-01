@@ -17,6 +17,7 @@
 #include "camera.h"
 #include "meshfield.h"
 #include "light.h"
+#include "title_rogo.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -44,7 +45,7 @@ CTitle::~CTitle()
 //=============================================================================
 HRESULT CTitle::Init(void)
 {
-	// カメラのタイプ取得
+	// カメラの設定
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TITLE);
 	CApplication::GetCamera()->Init();
 
@@ -52,7 +53,10 @@ HRESULT CTitle::Init(void)
 	m_pLight = CLight::Create();
 
 	// メッシュフィールドの生成
-	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-350.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
+	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-350.0f, 0.0f, -500.0f), CObject::PRIORITY_LEVEL2);
+
+	//タイトルロゴの生成
+	CTitleRogo::Create();
 
 	return S_OK;
 }
@@ -62,7 +66,8 @@ HRESULT CTitle::Init(void)
 //=============================================================================
 void CTitle::Uninit(void)
 {
-	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);		// カメラ
+	// カメラの設定
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
 
 	// ライトの解放・削除
 	if (m_pLight != nullptr)
