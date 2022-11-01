@@ -60,7 +60,8 @@ public:
 	D3DXCOLOR GetCol(void) override { return m_col; }			// 色取得処理
 
 	static CMeshfield *Create(const D3DXVECTOR3 pos, int nPriority);    // 生成処理
-	void Collision(D3DXVECTOR3 *PlayerPos);
+	void Collision(D3DXVECTOR3 *PlayerPos);								// 当たり判定
+	float GetAnswer(void) { return m_AnswerKeep; }						// 内積の計算結果取得
 
 private:
 	//-------------------------------------------------------------------------
@@ -81,6 +82,14 @@ private:
 	float m_fRot;							// sin波の角度
 	EObjType m_type;						// オブジェクトのタイプ
 	D3DXMATRIX m_mtxWorldMeshField;			// 
+
+	D3DXVECTOR3 m_IdxPos[3];			// Idxのpos
+	D3DXVECTOR3 m_VecA[3];				// VecA
+	D3DXVECTOR3 m_VecB[3];				// VecB
+	D3DXVECTOR3 m_Calculation3D[2];		// 3次元外積の計算結果
+	float		m_Calculation2D[3];		// 2次元外積の計算結果
+	D3DXVECTOR3 m_Answer;				// 外積の計算結果
+	float		m_AnswerKeep;			// 内積の計算結果保存
 };
 
 #endif

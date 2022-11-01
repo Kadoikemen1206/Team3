@@ -19,6 +19,7 @@
 #include "renderer.h"
 #include "meshfield.h"
 #include "obstacle.h"
+#include "game.h"
 
 #include "particle.h"
 
@@ -30,8 +31,9 @@
 // コンストラクタ
 //=============================================================================
 CPlayer::CPlayer(int nPriority) : 
-	m_nSpeed(5.0f),					//移動スピード
-	m_rotDest(0.0f, 0.0f, 0.0f)		//目的の角度
+	m_nSpeed(5.0f),					// 移動スピード
+	m_rotDest(0.0f, 0.0f, 0.0f),	// 目的の角度
+	m_bJumpFlag(false)				// ジャンプしたかどうかのフラグ
 {
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_PLAYER);
@@ -74,6 +76,12 @@ void CPlayer::Update()
 
 	// 向き取得
 	D3DXVECTOR3 rot = CObjectX::GetRot();
+
+	// 移動量取得
+	D3DXVECTOR3 move = CObjectX::GetMove();
+
+	// 重力設定
+	move.y -= 1.0f;
 
 	// 前回の位置を保存
 	m_posOld = pos;
@@ -136,6 +144,13 @@ void CPlayer::Update()
 			pos.x += sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			pos.z += cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
+		}
+
+		if (pInputKeyboard->Trigger(DIK_J))
+		{// ジャンプ
+			m_bJumpFlag = true;
+			move.y = 0.0f;
+			move.y += 15.0f;
 		}
 	}
 	
@@ -258,13 +273,30 @@ void CPlayer::Update()
 		pObject = pObject->GetNext();
 	}
 
+	// 移動量加算
+	pos += move;
+
 	// メッシュフィールドのポインタを取得
-	CMeshfield *pMeshField = CApplication::GetMeshfield();
-	//pMeshField->Collision(&pos);
+	CMeshfield *pMeshField = CGame::GetMeshfield();
+
+	float i = pMeshField->GetAnswer();
+
+	// ジャンプ後のメッシュフィールドとの当たり判定
+	if (pos.y < pMeshField->GetAnswer())
+	{
+		m_bJumpFlag = false;
+	}
+
+	// メッシュフィールドとの当たり判定
+	if (m_bJumpFlag == false)
+	{
+		pMeshField->Collision(&pos);
+	}
 
 	// プレイヤーのposとrotの設定
 	CObjectX::SetPos(pos);
 	CObjectX::SetRot(rot);
+	CObjectX::SetMove(move);
 
 	// CObjectXの更新処理
 	CObjectX::Update();

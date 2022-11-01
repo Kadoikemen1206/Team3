@@ -59,6 +59,8 @@ void CObjectX::Uninit()
 //=============================================================================
 void CObjectX::Update()
 {
+	//// ˆÚ“®—Ê‰ÁŽZ
+	//m_pos += m_move;
 }
 
 //=============================================================================
@@ -259,7 +261,9 @@ void CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 	if ((pPos->z - pSize->z / 2.0f < m_pos.z + m_MaxVtx.z) &&
 		(pPos->z + pSize->z / 2.0f > m_pos.z + m_MinVtx.z) &&
 		(pPosOld->x + pSize->x / 2.0f <= m_pos.x + m_MinVtx.x / 2.0f) &&
-		(pPos->x + pSize->x / 2.0f > m_pos.x + m_MinVtx.x / 2.0f))
+		(pPos->x + pSize->x / 2.0f > m_pos.x + m_MinVtx.x / 2.0f) && 
+		(pPos->y + pSize->y / 2.0f > m_pos.y - m_MaxVtx.y / 2.0f) &&
+		(pPos->y - pSize->y / 2.0f < m_pos.y + m_MaxVtx.y / 2.0f))
 	{
 		pPos->x = m_pos.x + m_MinVtx.x / 2.0f - pSize->x / 2.0f;
 	}
@@ -267,7 +271,9 @@ void CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 	if ((pPos->z - pSize->z / 2.0f < m_pos.z + m_MaxVtx.z) &&
 		(pPos->z + pSize->z / 2.0f > m_pos.z + m_MinVtx.z) &&
 		(pPosOld->x - pSize->x / 2.0f >= m_pos.x + m_MaxVtx.x / 2.0f) &&
-		(pPos->x - pSize->x / 2.0f < m_pos.x + m_MaxVtx.x / 2.0f))
+		(pPos->x - pSize->x / 2.0f < m_pos.x + m_MaxVtx.x / 2.0f) &&
+		(pPos->y + pSize->y / 2.0f > m_pos.y - m_MaxVtx.y / 2.0f) && 
+		(pPos->y - pSize->y / 2.0f < m_pos.y + m_MaxVtx.y / 2.0f))
 	{
 		pPos->x = m_pos.x + m_MaxVtx.x / 2.0f + pSize->x / 2.0f;
 	}
@@ -275,7 +281,9 @@ void CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 	if ((pPos->x - pSize->x / 2.0f < m_pos.x + m_MaxVtx.x) &&
 		(pPos->x + pSize->x / 2.0f > m_pos.x + m_MinVtx.x) &&
 		(pPosOld->z - pSize->z / 2.0f >= m_pos.z + m_MaxVtx.z / 2.0f) &&
-		(pPos->z - pSize->z / 2.0f < m_pos.z + m_MaxVtx.z / 2.0f))
+		(pPos->z - pSize->z / 2.0f < m_pos.z + m_MaxVtx.z / 2.0f) &&
+		(pPos->y + pSize->y / 2.0f > m_pos.y - m_MaxVtx.y / 2.0f) && 
+		(pPos->y - pSize->y / 2.0f < m_pos.y + m_MaxVtx.y / 2.0f))
 	{
 		pPos->z = m_pos.z + m_MaxVtx.z / 2.0f + pSize->z / 2.0f;
 	}
@@ -283,7 +291,9 @@ void CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 	if ((pPos->x - pSize->x / 2.0f < m_pos.x + m_MaxVtx.x) &&
 		(pPos->x + pSize->x / 2.0f > m_pos.x + m_MinVtx.x) &&
 		(pPosOld->z + pSize->z / 2.0f <= m_pos.z + m_MinVtx.z / 2.0f) &&
-		(pPos->z + pSize->z / 2.0f > m_pos.z + m_MinVtx.z / 2.0f))
+		(pPos->z + pSize->z / 2.0f > m_pos.z + m_MinVtx.z / 2.0f) &&
+		(pPos->y + pSize->y / 2.0f > m_pos.y - m_MaxVtx.y / 2.0f) && 
+		(pPos->y - pSize->y / 2.0f < m_pos.y + m_MaxVtx.y / 2.0f))
 	{
 		pPos->z = m_pos.z + m_MinVtx.z / 2.0f - pSize->z / 2.0f;
 	}
