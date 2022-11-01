@@ -144,7 +144,6 @@ void CPlayer::Update()
 		if (pInputKeyboard->Trigger(DIK_J))
 		{// ジャンプ
 			m_bJumpFlag = true;
-			move.y = 0.0f;
 			move.y += 15.0f;
 		}
 	}
@@ -286,6 +285,12 @@ void CPlayer::Update()
 	if (m_bJumpFlag == false)
 	{
 		pMeshField->Collision(&pos);
+	}
+
+	// y軸が移動してなかった場合
+	if (pos.y == m_posOld.y)
+	{
+		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	}
 
 	// プレイヤーのposとrotの設定
