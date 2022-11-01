@@ -22,7 +22,7 @@ D3DXVECTOR3 CCamera::m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 CCamera::CAMERATYPE CCamera::m_nCameraType = CAMERATYPE_NONE;
 const float CCamera::MOVE_SPEED = 5.0f;										// 移動速度
 const unsigned int CCamera::MAX_NUMBER = 2;									// 最大数
-const D3DXVECTOR3 CCamera::INIT_POSV = D3DXVECTOR3(0.0f, 200, -400.0f);		// 視点の初期値
+const D3DXVECTOR3 CCamera::INIT_POSV = D3DXVECTOR3(0.0f, 200.0f, -400.0f);	// 視点の初期値
 const D3DXVECTOR3 CCamera::INIT_POSR = D3DXVECTOR3(0.0f, 20.0f, -1.0f);		// 注視点の初期値
 const float CCamera::Z_DEPTH = 120.0f;										// 注視点のZを持ってきた位置より奥深い位置にする
 const float CCamera::Z_SEPARATE = 250.0f;									// 視点のZを持ってきた位置から離す
@@ -48,6 +48,17 @@ HRESULT CCamera::Init(void)
 {
 	m_posRDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_posVDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	if (m_nCameraType == CAMERATYPE_TITLE)
+	{
+		// 視点・注視点・上方向を設定する（構造体の初期化）
+		m_posV[0] = D3DXVECTOR3(0.0f, 200.0f, -400.0f);	// 視点
+		m_posR[0] = D3DXVECTOR3(0.0f, 0.0f, .0f);		// 注視点
+		m_vecU[0] = D3DXVECTOR3(0.0f, 1.0f, 0.0f);		// 上方向ベクトル ←固定でOK!!
+		m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			// 向き
+		D3DXVECTOR3 length = m_posV[0] - m_posR[0];		// 差分
+		m_fDistance = sqrtf((length.x * length.x) + (length.z * length.z));	// 視点から注視点までの距離
+	}
 
 	if (m_nCameraType == CAMERATYPE_ONE)
 	{
@@ -130,6 +141,8 @@ void CCamera::Update(void)
 	switch (m_nCameraType)
 	{
 	case CCamera::CAMERATYPE_NONE:
+		break;
+	case CCamera::CAMERATYPE_TITLE:
 		break;
 	case CCamera::CAMERATYPE_ONE:	// ソロモードの場合実行
 	{
@@ -255,10 +268,53 @@ void CCamera::SetCamera(int nCntCamera)
 		//プロジェクションマトリックスの設定
 		pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection[nCntCamera]);
 	}
+
+	//**************************************************
+	//	タイトル
+	//**************************************************
+	if (m_nCameraType == CAMERATYPE_TITLE)
+	{
+		//ビューマトリックスの初期化 
+		D3DXMatrixIdentity(&m_mtxView[0]);
+
+		//ビューマトリックスの作成
+		D3DXMatrixLookAtLH(&m_mtxView[0],
+			&m_posV[0],
+			&m_posR[0],
+			&m_vecU[0]);
+
+		//ビューマトリックスの設定
+		pDevice->SetTransform(D3DTS_VIEW, &m_mtxView[0]);
+
+		//プロジェクションマトリックスの初期化
+		D3DXMatrixIdentity(&m_mtxProjection[0]);
+
+		//プロジェクションマトリックスの作成
+		D3DXMatrixPerspectiveFovLH(&m_mtxProjection[0],
+			D3DXToRadian(45.0f),						//視野角
+			(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,	//アスペクト比
+			10.0f,										//ニア（どこからどこまでカメラで表示するか設定）
+			3000.0f);									//ファー
+
+		//プロジェクションマトリックスの設定
+		pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection[0]);
+	}
 }
 // カメラの種類の設定
 void CCamera::SetCameraType(CAMERATYPE type)
 {
 	m_nCameraType = type;
+}
+
+// カメラの視点の設定
+void CCamera::SetPosV(D3DXVECTOR3 posV)
+{
+	m_posV[0] = posV;
+}
+
+// カメラの注視点の設定
+void CCamera::SetPosR(D3DXVECTOR3 posR)
+{
+	m_posR[0] = posR;
 }
 

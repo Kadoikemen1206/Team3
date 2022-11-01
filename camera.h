@@ -51,6 +51,10 @@ public:
 	void SetCameraType(CAMERATYPE type);							// ƒJƒƒ‰‚Ìí—Ş‚Ìİ’è
 	static CAMERATYPE GetCameraType(void) { return m_nCameraType; }	// ƒJƒƒ‰‚Ìí—Ş‚Ìæ“¾
 	static D3DXVECTOR3 GetRot() { return m_rot; }
+	D3DXVECTOR3 GetPosV() { return m_posV[0]; }
+	D3DXVECTOR3 GetPosR() { return m_posR[0]; }
+	void SetPosV(D3DXVECTOR3 posV);
+	void SetPosR(D3DXVECTOR3 posR);
 
 private:
 	//-------------------------------------------------------------------------
