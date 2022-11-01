@@ -45,7 +45,7 @@ HRESULT CObstacle::Init()
 	CGimmick::Init();
 
 	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
-	LoadModel("GIMMICWALL");
+	LoadModel("BOX");
 
 	return S_OK;
 }
