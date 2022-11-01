@@ -19,7 +19,7 @@
 #include "renderer.h"
 #include "meshfield.h"
 #include "obstacle.h"
-
+#include "game.h"
 #include "particle.h"
 
 //=============================================================================
@@ -27,7 +27,8 @@
 //=============================================================================
 CPlayer::CPlayer(int nPriority) : 
 	m_nSpeed(5.0f),					//移動スピード
-	m_rotDest(0.0f, 0.0f, 0.0f)		//目的の角度
+	m_rotDest(0.0f, 0.0f, 0.0f),	// 目的の角度
+	m_bJumpFlag(false)				// ジャンプしたかどうかのフラグ
 {
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_PLAYER);
@@ -70,6 +71,12 @@ void CPlayer::Update()
 
 	// 向き取得
 	D3DXVECTOR3 rot = CObjectX::GetRot();
+
+	// 前回の位置を保存
+	D3DXVECTOR3 move = CObjectX::GetMove();
+
+	// 重力設定
+	move.y -= 1.0f;
 
 	// 前回の位置を保存
 	m_posOld = pos;
@@ -132,6 +139,12 @@ void CPlayer::Update()
 			pos.x += sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			pos.z += cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
+		}
+
+		if (pInputKeyboard->Trigger(DIK_J))
+		{// ジャンプ
+			m_bJumpFlag = true;
+			move.y += 15.0f;
 		}
 	}
 	
@@ -198,10 +211,10 @@ void CPlayer::Update()
 
 	//テスト用
 	if (pInputKeyboard->Press(DIK_PERIOD))
-	m_pParticle = CParticle::Create(pos, 
-		D3DXVECTOR3(sinf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180)))), 1.0f, cosf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180))))), 
-		D3DXCOLOR(rand() % 100 * 0.01f, rand() % 100 * 0.01f, rand() % 100 * 0.01f, 1.0f),
-		PRIORITY_LEVEL3);
+		m_pParticle = CParticle::Create(pos,
+			D3DXVECTOR3(sinf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180)))), 1.0f, cosf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180))))),
+			D3DXCOLOR(rand() % 100 * 0.01f, rand() % 100 * 0.01f, rand() % 100 * 0.01f, 1.0f),
+			PRIORITY_LEVEL3);
 
 	//角度の正規化(目的の角度)
 	if (m_rotDest.y - rot.y > D3DX_PI)
@@ -255,12 +268,35 @@ void CPlayer::Update()
 	}
 
 	// メッシュフィールドのポインタを取得
-	CMeshfield *pMeshField = CApplication::GetMeshfield();
+	pos += move;
+
 	//pMeshField->Collision(&pos);
+	CMeshfield *pMeshField = CGame::GetMeshfield();
+
+	float i = pMeshField->GetAnswer();
+
+	// プレイヤーのposとrotの設定
+	if (pos.y < pMeshField->GetAnswer())
+	{
+		m_bJumpFlag = false;
+	}
+
+	// メッシュフィールドとの当たり判定
+	if (m_bJumpFlag == false)
+	{
+		pMeshField->Collision(&pos);
+	}
+
+	// y軸が移動してなかった場合
+	if (pos.y == m_posOld.y)
+	{
+		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	}
 
 	// プレイヤーのposとrotの設定
 	CObjectX::SetPos(pos);
 	CObjectX::SetRot(rot);
+	CObjectX::SetMove(move);
 
 	// CObjectXの更新処理
 	CObjectX::Update();

@@ -68,7 +68,6 @@ void CObject::UninitAll(void)
 			//pNextの保存
 			CObject *pObjectNext = pObject->m_pNext;	//Update()で削除されると、pNextも消えるので事前に保存しておく
 
-			pObject->Uninit();		// 終了処理
 			pObject->Release();		// 死亡状態にする
 
 			//pObjectにpObjectのpNextを代入
@@ -164,56 +163,57 @@ void CObject::DrawAll(void)
 //=============================================================================
 void CObject::Death(void)
 {
-		//オブジェクトの次に情報が入っているとき
-		if (m_pNext != nullptr)
+	//オブジェクトの次に情報が入っているとき
+	if (m_pNext != nullptr)
+	{
+		//オブジェクトの前に情報が入っているとき
+		if (m_pPrev != nullptr)
 		{
-			//オブジェクトの前に情報が入っているとき
-			if (m_pPrev != nullptr)
-			{
-				//自分自身のm_pNextを前のオブジェクトのm_pNextに代入
-				m_pPrev->m_pNext = this->m_pNext;
+			//自分自身のm_pNextを前のオブジェクトのm_pNextに代入
+			m_pPrev->m_pNext = this->m_pNext;
 
-				//自分自身のm_pPrevを後ろのm_pPrevに代入
-				m_pNext->m_pPrev = this->m_pPrev;
-			}
-
-			//オブジェクトの前に情報が入っていないとき
-			else
-			{
-				//自分自身のm_pNextを先頭に代入
-				m_pTop[m_nPriority] = this->m_pNext;
-
-				//自分自身のm_pPrevを次のオブジェクトのm_pPrevに代入
-				m_pNext->m_pPrev = this->m_pPrev;
-			}
+			//自分自身のm_pPrevを後ろのm_pPrevに代入
+			m_pNext->m_pPrev = this->m_pPrev;
 		}
 
-		//オブジェクトの次に情報が入っていないとき
+		//オブジェクトの前に情報が入っていないとき
 		else
 		{
-			//オブジェクトの前に情報が入っているとき
-			if (m_pPrev != nullptr)
-			{
-				//後ろのm_pPrevにnullptrを代入
-				m_pCurrent[m_nPriority] = this->m_pPrev;
+			//自分自身のm_pNextを先頭に代入
+			m_pTop[m_nPriority] = this->m_pNext;
 
-				//後ろのm_pNextを前のオブジェクトのm_pNextに代入
-				m_pPrev->m_pNext = this->m_pNext;
-			}
+			//自分自身のm_pPrevを次のオブジェクトのm_pPrevに代入
+			m_pNext->m_pPrev = this->m_pPrev;
+		}
+	}
 
-			//オブジェクトの前に情報が入っていないとき
-			else
-			{
-				//先頭のオブジェクトにnullptrを代入
-				m_pTop[m_nPriority] = nullptr;
+	//オブジェクトの次に情報が入っていないとき
+	else
+	{
+		//オブジェクトの前に情報が入っているとき
+		if (m_pPrev != nullptr)
+		{
+			//後ろのm_pPrevにnullptrを代入
+			m_pCurrent[m_nPriority] = this->m_pPrev;
 
-				//後ろのオブジェクトにnullptrを代入
-				m_pCurrent[m_nPriority] = nullptr;
-			}
+			//後ろのm_pNextを前のオブジェクトのm_pNextに代入
+			m_pPrev->m_pNext = this->m_pNext;
 		}
 
-		//オブジェクト(自分自身)を、破棄
-		delete this;
+		//オブジェクトの前に情報が入っていないとき
+		else
+		{
+			//先頭のオブジェクトにnullptrを代入
+			m_pTop[m_nPriority] = nullptr;
+
+			//後ろのオブジェクトにnullptrを代入
+			m_pCurrent[m_nPriority] = nullptr;
+		}
+	}
+
+	//オブジェクト(自分自身)を、破棄
+	this->Uninit();		// 終了処理
+	delete this;
 }
 
 //=============================================================================
@@ -231,21 +231,44 @@ void CObject::ModeRelease()
 {
 	for (int nPriority = 0; nPriority < PRIORITY_LEVELMAX; nPriority++)
 	{
-		CObject *pObject = m_pTop[nPriority];
-
-		while (pObject != nullptr)
 		{
-			//pNextの保存
-			CObject *pObjectNext = pObject->m_pNext;
+			CObject *pObject = m_pTop[nPriority];
 
-			if (pObject->GetObjType() != OBJTYPE_MODE)
+			while (pObject != nullptr)
 			{
-				//終了処理の関数呼び出し
-				pObject->Release();
-			}
+				//pNextの保存
+				CObject *pObjectNext = pObject->m_pNext;
 
-			//pObjectにpObjectのpNextを代入
-			pObject = pObjectNext;
+				if (pObject->GetObjType() != OBJTYPE_MODE)
+				{
+					//終了処理の関数呼び出し
+					pObject->Release();
+				}
+				else
+				{
+					int a = 0;
+				}
+
+				//pObjectにpObjectのpNextを代入
+				pObject = pObjectNext;
+			}
+		}
+		{
+			CObject *pObject = m_pTop[nPriority];
+
+			while (pObject != nullptr)
+			{
+				//pNextの保存
+				CObject *pObjectNext = pObject->m_pNext;
+
+				if (pObject->GetObjType() != OBJTYPE_MODE)
+				{
+					pObject->Death();
+				}
+
+				//pObjectにpObjectのpNextを代入
+				pObject = pObjectNext;
+			}
 		}
 	}
 }

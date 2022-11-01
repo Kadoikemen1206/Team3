@@ -22,7 +22,8 @@
 //=============================================================================
 // 静的メンバ変数宣言
 //=============================================================================
-bool CGimmick::m_Completion = false;
+bool CGimmick::m_Completion1P = false;
+bool CGimmick::m_Completion2P = false;
 D3DXVECTOR3 CGimmick::m_Area = {};
 
 //=============================================================================
@@ -30,7 +31,8 @@ D3DXVECTOR3 CGimmick::m_Area = {};
 //=============================================================================
 CGimmick::CGimmick(int nPriority) 
 {
-	m_Completion = false;
+	m_Completion1P = false;
+	m_Completion2P = false;
 }
 
 //=============================================================================
@@ -95,16 +97,24 @@ void CGimmick::SetShapeType(SHAPETYPE type)
 //=============================================================================
 // ギミックの取得処理
 //=============================================================================
-bool CGimmick::GetCompletion()
+bool CGimmick::GetCompletion1P()
 {
-	return m_Completion;
+	return m_Completion1P;
+}
+bool CGimmick::GetCompletion2P()
+{
+	return m_Completion2P;
 }
 
 //=============================================================================
 // ギミックの設定処理
 //=============================================================================
-void CGimmick::SetCompletion(bool flag)
+void CGimmick::SetCompletion1P(bool flag)
 {
-	m_Completion = flag;
+	m_Completion1P = flag;
+}
+void CGimmick::SetCompletion2P(bool flag)
+{
+	m_Completion2P = flag;
 }
 

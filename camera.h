@@ -13,22 +13,26 @@
 #include "main.h"
 
 //=============================================================================
-//マクロ定義
-//=============================================================================
-#define CAMERA_SPEED	(5.0f)		//カメラの移動速度
-#define MAX_CAMERA		(2)			//カメラの最大数
-
-//=============================================================================
 // クラスの定義
 //=============================================================================
 class CCamera
 {
 public:
+	static const float MOVE_SPEED;			// 移動速度
+	static const unsigned int MAX_NUMBER;	// 最大数
+	static const D3DXVECTOR3 INIT_POSV;		// 視点の初期値
+	static const D3DXVECTOR3 INIT_POSR;		// 注視点の初期値
+	static const float Z_DEPTH;				// 注視点のZを持ってきた位置より奥深い位置にする
+	static const float Z_SEPARATE;			// 視点のZを持ってきた位置から離す
+
+public:
 	enum CAMERATYPE
 	{
 		CAMERATYPE_NONE = 0,
+		CAMERATYPE_TITLE,		// タイトル時
 		CAMERATYPE_ONE,			// カメラ1つ(ソロモード)
 		CAMERATYPE_TWO,			// カメラ2つ(対戦)
+		CAMERATYPE_RANKING,		// ランキング時
 		CAMERATYPE_MAX
 	};
 	//-------------------------------------------------------------------------
@@ -43,7 +47,7 @@ public:
 	HRESULT Init(void);					// 初期化処理
 	void Uninit(void);					// 終了処理
 	void Update(void);					// 更新処理
-	void SetCamera(int nCntCamera, CAMERATYPE type);		// 設定処理
+	void SetCamera(int nCntCamera = 0);	// 設定処理
 	void SetCameraType(CAMERATYPE type);							// カメラの種類の設定
 	static CAMERATYPE GetCameraType(void) { return m_nCameraType; }	// カメラの種類の取得
 	static D3DXVECTOR3 GetRot() { return m_rot; }

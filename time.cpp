@@ -46,11 +46,6 @@ HRESULT CTime::Init()
 //=============================================================================
 void CTime::Uninit()
 {
-	//テクスチャ座標の設定
-	for (int nCntScore = 0; nCntScore < 5; nCntScore++)
-	{
-		m_apNumBer[nCntScore]->Uninit();
-	}
 }
 
 //=============================================================================
@@ -107,9 +102,6 @@ void CTime::SetTime(int nScore)
 	nNumber[2] = time % 10000 / 1000;
 	nNumber[3] = time % 1000 / 100;
 	nNumber[4] = time % 100 / 10;
-	/*nNumber[5] = m_nTime % 10 / 1;*/
-	/*nNumber[6] = m_nTime % 10 / 1;*/
-	/*nNumber[7] = m_nTime % 10 / 1;*/
 
 	//テクスチャ座標の設定
 	for (int nCntTime = 0; nCntTime < 5; nCntTime++)

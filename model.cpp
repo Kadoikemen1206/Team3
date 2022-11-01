@@ -47,7 +47,7 @@ HRESULT CModel::Init()
 	CObjectX::Init();
 
 	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
-	LoadModel("VARTICALBIGWALL");
+	LoadModel("BOX");
 
 	return S_OK;
 }
