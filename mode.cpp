@@ -18,7 +18,7 @@
 CMode::CMode() : CObject(PRIORITY_LEVEL0)
 {
 	//オブジェクトのタイプセット処理
-	CObject::SetType(OBJTYPE_MODE);
+	//CObject::SetType(OBJTYPE_MODE);
 }
 
 //=============================================================================

@@ -19,7 +19,7 @@
 #include "renderer.h"
 #include "meshfield.h"
 #include "obstacle.h"
-
+#include "game.h"
 #include "particle.h"
 
 //=============================================================================
@@ -255,7 +255,7 @@ void CPlayer::Update()
 	}
 
 	// メッシュフィールドのポインタを取得
-	CMeshfield *pMeshField = CApplication::GetMeshfield();
+	CMeshfield *pMeshField = CGame::GetMeshfield();
 	//pMeshField->Collision(&pos);
 
 	// プレイヤーのposとrotの設定

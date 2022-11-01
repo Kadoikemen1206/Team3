@@ -219,22 +219,7 @@ void CMeshfield::Uninit()
 //=============================================================================
 void CMeshfield::Update()
 {
-	//m_fRotMove += 0.1f;
 
-	//if (m_fRotMove >= D3DX_PI)
-	//{// 移動方向の正規化
-	//	m_fRotMove -= D3DX_PI * 2;
-	//}
-	//else if (m_fRotMove <= -D3DX_PI)
-	//{// 移動方向の正規化
-	//	m_fRotMove += D3DX_PI * 2;
-	//}
-
-	////高さ更新
-	//m_pos.y += sinf(m_fRotMove) * 4.0f;
-
-	////座標設定
-	//SetPos(m_pos);
 }
 
 //=============================================================================
@@ -276,9 +261,6 @@ void CMeshfield::Draw()
 
 	//メッシュフィールドの描画
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, MESHFIELD_VERTEX_NUM, 0, MESHFIELD_PRIMITIVE_NUM);
-
-	//ポリゴンの描画
-	//pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 12);
 
 	//テクスチャの設定	(テクスチャがモデルにかぶらないようにする)
 	pDevice->SetTexture(0, NULL);

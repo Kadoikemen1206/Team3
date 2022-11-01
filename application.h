@@ -62,7 +62,6 @@ public:
 	static CRenderer *GetRenderer();
 	static CInput *GetInput();
 	static CCamera *GetCamera() { return m_pCamera; }
-	static CMeshfield *GetMeshfield() { return m_pMeshField; }
 	static CTexture *GetTexture() { return m_pTexture; }
 	static CObjectXGroup *GetObjectXGroup() { return m_pObjectXGroup; }
 
@@ -75,9 +74,6 @@ private:
 	static MODE m_mode;
 	static CObject *m_pMode;
 	static CCamera *m_pCamera;
-	static CLight *m_pLight;
-	static CMeshfield *m_pMeshField;
-	static CTime *m_pTime;
 	static CTexture *m_pTexture;
 	static CObjectXGroup *m_pObjectXGroup;
 };
