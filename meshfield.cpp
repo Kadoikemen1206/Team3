@@ -262,9 +262,6 @@ void CMeshfield::Draw()
 	//メッシュフィールドの描画
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, MESHFIELD_VERTEX_NUM, 0, MESHFIELD_PRIMITIVE_NUM);
 
-	//ポリゴンの描画
-	//pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 12);
-
 	//テクスチャの設定	(テクスチャがモデルにかぶらないようにする)
 	pDevice->SetTexture(0, NULL);
 }
