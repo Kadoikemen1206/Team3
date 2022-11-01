@@ -52,8 +52,8 @@ HRESULT CCamera::Init(void)
 	if (m_nCameraType == CAMERATYPE_TITLE)
 	{
 		// 視点・注視点・上方向を設定する（構造体の初期化）
-		m_posV[0] = D3DXVECTOR3(0.0f, 200.0f, -400.0f);	// 視点
-		m_posR[0] = D3DXVECTOR3(0.0f, 0.0f, .0f);		// 注視点
+		m_posV[0] = D3DXVECTOR3(0.0f, 500.0f, -500.0f);	// 視点
+		m_posR[0] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// 注視点
 		m_vecU[0] = D3DXVECTOR3(0.0f, 1.0f, 0.0f);		// 上方向ベクトル ←固定でOK!!
 		m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			// 向き
 		D3DXVECTOR3 length = m_posV[0] - m_posR[0];		// 差分
@@ -64,7 +64,7 @@ HRESULT CCamera::Init(void)
 	{
 		// 視点・注視点・上方向を設定する（構造体の初期化）
 		m_posV[0] = INIT_POSV;							// 視点
-		m_posR[0] = D3DXVECTOR3(0.0f, 0.0f, .0f);		// 注視点
+		m_posR[0] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// 注視点
 		m_vecU[0] = D3DXVECTOR3(0.0f, 1.0f, 0.0f);		// 上方向ベクトル ←固定でOK!!
 		m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			// 向き
 		D3DXVECTOR3 length = m_posV[0] - m_posR[0];		// 差分

@@ -64,7 +64,7 @@ public:
 	D3DXVECTOR3 GetMove(void) override { return m_move; }		// ˆÚ“®—Êæ“¾ˆ—
 	D3DXVECTOR3 GetRot(void) override { return m_rot; }			// Œü‚«æ“¾ˆ—
 	D3DXCOLOR GetCol(void) override { return m_col; }			// Fæ“¾ˆ—
-	static CObject2D *Create(D3DXVECTOR3 pos, int nPriority);	// ¶¬ˆ—
+	static CObject2D *Create(const char *aFileName, D3DXVECTOR3 pos, D3DXVECTOR3 size, int nPriority);	// ¶¬ˆ—
 
 private:
 	//-------------------------------------------------------------------------
