@@ -59,7 +59,7 @@ public:
 	D3DXVECTOR3 GetRot(void) override { return m_rot; }			// Œü‚«æ“¾ˆ—
 	D3DXCOLOR GetCol(void) override { return m_col; }			// Fæ“¾ˆ—
 
-	static CMeshfield *Create(const D3DXVECTOR3 pos, int nPriority);    // ¶¬ˆ—
+	static CMeshfield *Create(const D3DXVECTOR3 pos, int nPriority);	// ¶¬ˆ—
 	void Collision(D3DXVECTOR3 *PlayerPos);
 
 private:

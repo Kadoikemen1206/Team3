@@ -186,18 +186,15 @@ void CCamera::Update(void)
 //=============================================================================
 // 設定処理
 //=============================================================================
-void CCamera::SetCamera(int nCntCamera, CAMERATYPE type)
+void CCamera::SetCamera(int nCntCamera)
 {
 	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
-	// タイプ設定
-	SetCameraType(type);
-
 	//**************************************************
 	//	ソロモード
 	//**************************************************
-	if (type == CAMERATYPE_ONE)
+	if (m_nCameraType == CAMERATYPE_ONE)
 	{
 		//ビューマトリックスの初期化 
 		D3DXMatrixIdentity(&m_mtxView[0]);
@@ -228,7 +225,7 @@ void CCamera::SetCamera(int nCntCamera, CAMERATYPE type)
 	//**************************************************
 	//	vsモード
 	//**************************************************
-	if (type == CAMERATYPE_TWO)
+	if (m_nCameraType == CAMERATYPE_TWO)
 	{
 		//ビューポートの設定
 		pDevice->SetViewport(&m_Viewport[nCntCamera]);

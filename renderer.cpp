@@ -187,16 +187,16 @@ void CRenderer::Draw()
 //		}
 //	}
 
-	//**************************************************
-	//	vsモード
-	//**************************************************
-	for (int nCnt = 0; nCnt < 2; nCnt++)
+	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_TWO)
 	{
-		//カメラの設定処理
-		CApplication::GetCamera()->SetCamera(nCnt, CCamera::CAMERATYPE_TWO);
-
-		if (CCamera::GetCameraType() == CCamera::CAMERATYPE_TWO)
+		//**************************************************
+		//	vsモード
+		//**************************************************
+		for (int nCnt = 0; nCnt < 2; nCnt++)
 		{
+			//カメラの設定処理
+			CApplication::GetCamera()->SetCamera(nCnt);
+
 			// バックバッファ＆Ｚバッファのクリア
 			m_pD3DDevice->Clear(0, NULL,
 				(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
