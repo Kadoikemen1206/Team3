@@ -14,6 +14,7 @@
 #include "application.h"
 #include "renderer.h"
 #include "game.h"
+#include "fade.h"
 
 //=============================================================================
 // コンストラクタ
@@ -72,6 +73,7 @@ void CObstacle::Update()
 
 	// 連打で動く壁の処理関数呼び出し
 	ObstacleMove = BarrageMoveWall(ObstaclePos, PlayerPos1, PlayerPos2, ObstacleMove);
+
 	//************************************************
 	// 交互連打で動く壁
 	//************************************************
@@ -181,14 +183,8 @@ D3DXVECTOR3 CObstacle::BarrageMoveWall(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Po
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 
-	if (ObstaclePos.x + 150.0f >= P1Pos.x && ObstaclePos.z + 150.0f >= P1Pos.z
-		&&ObstaclePos.x - 150.0f <= P1Pos.x && ObstaclePos.z - 150.0f <= P1Pos.z
-		&&CGimmick::GetCompletion1P() == false
-		|| ObstaclePos.x + 150.0f >= P2Pos.x && ObstaclePos.z + 150.0f >= P2Pos.z
-		&&ObstaclePos.x - 150.0f <= P2Pos.x && ObstaclePos.z - 150.0f <= P2Pos.z
-		&&CGimmick::GetCompletion2P() == false)
-	{// ギミックの範囲 && 操作を完了していない時実行
-
+	if (CGimmick::GetCompletion1P() == false || CGimmick::GetCompletion2P() == false)
+	{// 操作を完了していない時実行
 		if (CGame::GetPlayer1P()->GetPlayerType() == CPlayer::EPLAYER_1P
 			&&ObstaclePos.x + 150.0f >= P1Pos.x && ObstaclePos.z + 150.0f >= P1Pos.z
 			&&ObstaclePos.x - 150.0f <= P1Pos.x && ObstaclePos.z - 150.0f <= P1Pos.z)
@@ -252,6 +248,11 @@ bool CObstacle::PlayerGoal(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Pos, D3DXVECTO
 		{// ギミックの範囲 && 操作を完了していない時実行
 		 //ゲームクリア
 			PlayerGoalFlag = true;
+			if (PlayerGoalFlag == true)
+			{
+				// 遷移
+				CFade::SetFade(CApplication::MODE_TITLE);
+			}
 		}
 	}
 
