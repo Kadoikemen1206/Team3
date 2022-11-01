@@ -18,6 +18,8 @@
 // 前方定義
 //=============================================================================
 class CFade;
+class CMeshfield;
+class CLight;
 
 //=============================================================================
 // クラスの定義
@@ -45,9 +47,11 @@ private:
 	// メンバー変数
 	//-------------------------------------------------------------------------
 	static LPDIRECT3DTEXTURE9 m_pTexture;	// テクスチャのポインタ
-	CObject2D *m_pObject2D;					// オブジェクト2Dのポインタ
 	static bool m_bTitleEnter;				// Enterを押したかのフラグ
-	CFade *m_pFade;
+	CObject2D *m_pObject2D;					// オブジェクト2Dのポインタ
+	CFade *m_pFade;							// フェードのポインタ
+	CMeshfield *m_pMeshField;				// メッシュフィールドのポインタ
+	CLight *m_pLight;						// ライトのポインタ
 };
 
 #endif

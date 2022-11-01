@@ -40,7 +40,7 @@ CObject *CApplication::m_pMode = nullptr;
 CCamera *CApplication::m_pCamera = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
 CObjectXGroup *CApplication::m_pObjectXGroup = nullptr;
-CApplication::MODE CApplication::m_mode = MODE_GAME;
+CApplication::MODE CApplication::m_mode = MODE_TITLE;
 
 //=============================================================================
 // コンストラクタ
