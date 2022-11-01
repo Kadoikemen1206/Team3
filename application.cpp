@@ -102,9 +102,6 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	//モード生成
 	CFade::Create(m_mode);
 
-	// ギミックの生成
-	CObstacle::Create(D3DXVECTOR3(0.0f,0.0f,500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL,CGimmick::SHAPETYPE_NONE, CObject::PRIORITY_LEVEL3);
-
 	return S_OK;
 }
 
