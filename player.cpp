@@ -154,8 +154,6 @@ void CPlayer::Update()
 	{
 		if (pInputKeyboard->Press(DIK_UP))
 		{// 上に移動
-			m_nTime++;
-
 			if (pInputKeyboard->Press(DIK_LEFT))
 			{
 				pos.x += sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
@@ -210,19 +208,29 @@ void CPlayer::Update()
 			pos.z += cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
 		}
+	}
 
-		if ((m_nTime % 5) == 0)
+	if (pos != m_posOld)
+	{
+		m_nTime++;
+	}
+
+	if ((m_nTime % 10) == 1)
+	{
+		for (int i = 0; i < 2; i++)
 		{
 			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 10.0f, pos.z),
 				CParticle::BEHAVIOR_SMOKE,
 				PRIORITY_LEVEL3);
 		}
+
+		m_nTime++;
 	}
 
 	//テスト用
 	if (pInputKeyboard->Trigger(DIK_PERIOD))
 	{
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 10.0f, pos.z),
 				D3DXVECTOR3(sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))))),
