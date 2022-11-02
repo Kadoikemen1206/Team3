@@ -299,24 +299,27 @@ void CPlayer::Update()
 	//pMeshField->Collision(&pos);
 	CMeshfield *pMeshField = CGame::GetMeshfield();
 
-	float i = pMeshField->GetAnswer();
-
-	// プレイヤーのposとrotの設定
-	if (pos.y < pMeshField->GetAnswer())
+	if (pMeshField != nullptr)
 	{
-		m_bJumpFlag = false;
-	}
+		float i = pMeshField->GetAnswer();
 
-	// メッシュフィールドとの当たり判定
-	if (m_bJumpFlag == false)
-	{
-		pMeshField->Collision(&pos);
-	}
+		// プレイヤーのposとrotの設定
+		if (pos.y < pMeshField->GetAnswer())
+		{
+			m_bJumpFlag = false;
+		}
 
-	// y軸が移動してなかった場合
-	if (pos.y == m_posOld.y)
-	{
-		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		// メッシュフィールドとの当たり判定
+		if (m_bJumpFlag == false)
+		{
+			pMeshField->Collision(&pos);
+		}
+
+		// y軸が移動してなかった場合
+		if (pos.y == m_posOld.y)
+		{
+			move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		}
 	}
 
 	// プレイヤーのposとrotとmoveの設定

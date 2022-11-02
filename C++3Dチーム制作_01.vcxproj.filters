@@ -1,39 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="fade.cpp">
-      <Filter>00_Code</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>00_Code</Filter>
-    </ClCompile>
-    <ClCompile Include="light.cpp">
-      <Filter>00_Code</Filter>
-    </ClCompile>
-    <ClCompile Include="mode.cpp">
-      <Filter>00_Code</Filter>
-    </ClCompile>
-    <ClCompile Include="number.cpp">
-      <Filter>00_Code</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>00_Code</Filter>
-    </ClCompile>
-    <ClCompile Include="ranking.cpp">
-      <Filter>00_Code</Filter>
-    </ClCompile>
-    <ClCompile Include="shadow.cpp">
-      <Filter>00_Code</Filter>
-    </ClCompile>
-    <ClCompile Include="time.cpp">
-      <Filter>00_Code</Filter>
-    </ClCompile>
-    <ClCompile Include="title.cpp">
-      <Filter>00_Code</Filter>
-    </ClCompile>
-    <ClCompile Include="application.cpp">
-      <Filter>00_Code\00_Main</Filter>
-    </ClCompile>
     <ClCompile Include="DirectInput.cpp">
       <Filter>00_Code\01_Input</Filter>
     </ClCompile>
@@ -76,20 +43,11 @@
     <ClCompile Include="application.cpp">
       <Filter>00_Code\00_Main\00_Main</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>00_Code\00_Main\03_3D</Filter>
-    </ClCompile>
     <ClCompile Include="fade.cpp">
       <Filter>00_Code\00_Main\01_Mode</Filter>
     </ClCompile>
     <ClCompile Include="file.cpp">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>00_Code\00_Main</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer.cpp">
-      <Filter>00_Code\00_Main</Filter>
     </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
@@ -115,9 +73,6 @@
     <ClCompile Include="texture.cpp">
       <Filter>00_Code\00_Main</Filter>
     </ClCompile>
-    <ClCompile Include="objectX_group.cpp">
-      <Filter>00_Code\00_Main</Filter>
-    </ClCompile>
     <ClCompile Include="time.cpp">
       <Filter>00_Code\02_Object</Filter>
     </ClCompile>
@@ -127,40 +82,58 @@
     <ClCompile Include="title_rogo.cpp">
       <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
     </ClCompile>
+    <ClCompile Include="load_stage.cpp">
+      <Filter>00_Code\00_Main\02_OutSide</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>00_Code\00_Main\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>00_Code\00_Main\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>00_Code\00_Main\00_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="objectX_group.cpp">
+      <Filter>00_Code\00_Main\02_OutSide</Filter>
+    </ClCompile>
+    <ClCompile Include="ranking.cpp">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="mode.cpp">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="fade.cpp">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>00_Code\00_Main\03_3D</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>00_Code\00_Main\03_3D</Filter>
+    </ClCompile>
+    <ClCompile Include="number.cpp">
+      <Filter>00_Code\02_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>00_Code\02_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="shadow.cpp">
+      <Filter>00_Code\02_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="time.cpp">
+      <Filter>00_Code\02_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="fade.h">
-      <Filter>00_Code</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>00_Code</Filter>
-    </ClInclude>
-    <ClInclude Include="light.h">
-      <Filter>00_Code</Filter>
-    </ClInclude>
-    <ClInclude Include="mode.h">
-      <Filter>00_Code</Filter>
-    </ClInclude>
-    <ClInclude Include="number.h">
-      <Filter>00_Code</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>00_Code</Filter>
-    </ClInclude>
-    <ClInclude Include="ranking.h">
-      <Filter>00_Code</Filter>
-    </ClInclude>
-    <ClInclude Include="shadow.h">
-      <Filter>00_Code</Filter>
-    </ClInclude>
     <ClInclude Include="time.h">
       <Filter>00_Code</Filter>
-    </ClInclude>
-    <ClInclude Include="title.h">
-      <Filter>00_Code</Filter>
-    </ClInclude>
-    <ClInclude Include="application.h">
-      <Filter>00_Code\00_Main</Filter>
     </ClInclude>
     <ClInclude Include="DirectInput.h">
       <Filter>00_Code\01_Input</Filter>
@@ -207,17 +180,11 @@
     <ClInclude Include="application.h">
       <Filter>00_Code\00_Main\00_Main</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>00_Code\00_Main\03_3D</Filter>
-    </ClInclude>
     <ClInclude Include="fade.h">
       <Filter>00_Code\00_Main\01_Mode</Filter>
     </ClInclude>
     <ClInclude Include="file.h">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>00_Code\00_Main</Filter>
     </ClInclude>
     <ClInclude Include="renderer.h">
       <Filter>00_Code\00_Main\00_Main</Filter>
@@ -257,6 +224,48 @@
     </ClInclude>
     <ClInclude Include="billboard.h" />
     <ClInclude Include="particle.h" />
+    <ClInclude Include="load_stage.h">
+      <Filter>00_Code\00_Main\02_OutSide</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>00_Code\00_Main\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>00_Code\00_Main\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="objectX_group.h">
+      <Filter>00_Code\00_Main\02_OutSide</Filter>
+    </ClInclude>
+    <ClInclude Include="ranking.h">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="mode.h">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="fade.h">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="title.h">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>00_Code\00_Main\03_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>00_Code\00_Main\03_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="number.h">
+      <Filter>00_Code\02_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>00_Code\02_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="shadow.h">
+      <Filter>00_Code\02_Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00_Code">
