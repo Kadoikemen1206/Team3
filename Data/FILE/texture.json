@@ -1,13 +1,100 @@
 {
   "TEXTURE": [
-    [ "NUMBER", "Data\/TEXTURE\/number01.png" ],
-    [ "FLOOR0", "Data\/TEXTURE\/yuka000.jpg"],
-    [ "FLOOR2", "Data\/TEXTURE\/yuka002.jpg"],
-    [ "VS_MODE", "Data\/TEXTURE\/vs.png" ],
-    [ "PARTICLE_BRIGHT1", "Data\/TEXTURE\/particles\/bright.png" ],
-    [ "PARTICLE_BRIGHT2", "Data\/TEXTURE\/particles\/bright2.png" ],
-    [ "PARTICLE_RAY", "Data\/TEXTURE\/particles\/ray.png" ],
-    [ "PARTICLE_STAR", "Data\/TEXTURE\/particles\/star.png" ],
-    [ "PARTICLE_FLARE", "Data\/TEXTURE\/particles\/flare.png"]
+    [
+      "NUMBER",
+      "Data\/TEXTURE\/number01.png"
+    ],
+    [
+      "FLOOR0",
+      "Data\/TEXTURE\/yuka000.jpg"
+    ],
+    [
+      "FLOOR2",
+      "Data\/TEXTURE\/yuka002.jpg"
+    ],
+    [
+      "VS_MODE",
+      "Data\/TEXTURE\/vs.png"
+    ],
+    [
+      "PARTICLE_BRIGHT1",
+      "Data\/TEXTURE\/particles\/bright.png"
+    ],
+    [
+      "PARTICLE_BRIGHT2",
+      "Data\/TEXTURE\/particles\/bright2.png"
+    ],
+    [
+      "PARTICLE_RAY",
+      "Data\/TEXTURE\/particles\/ray.png"
+    ],
+    [
+      "PARTICLE_STAR",
+      "Data\/TEXTURE\/particles\/star.png"
+    ],
+    [
+      "PARTICLE_FLARE",
+      "Data\/TEXTURE\/particles\/flare.png"
+    ],
+    [
+      "ANIMATION_EFFECTA",
+      "Data\/TEXTURE\/Effects\/pipo-btleffect051.png"
+    ],
+    [
+      "TITLE_D",
+      "Data\/TEXTURE\/Title\/D.png"
+    ],
+    [
+      "TITLE_E_01",
+      "Data\/TEXTURE\/Title\/E01.png"
+    ],
+    [
+      "TITLE_E_02",
+      "Data\/TEXTURE\/Title\/E02.png"
+    ],
+    [
+      "TITLE_H",
+      "Data\/TEXTURE\/Title\/H.png"
+    ],
+    [
+      "TITLE_I",
+      "Data\/TEXTURE\/Title\/I.png"
+    ],
+    [
+      "TITLE_L_01",
+      "Data\/TEXTURE\/Title\/L01.png"
+    ],
+    [
+      "TITLE_L_02",
+      "Data\/TEXTURE\/Title\/L02.png"
+    ],
+    [
+      "TITLE_N",
+      "Data\/TEXTURE\/Title\/N.png"
+    ],
+    [
+      "TITLE_O",
+      "Data\/TEXTURE\/Title\/O.png"
+    ],
+    [
+      "TITLE_R_01",
+      "Data\/TEXTURE\/Title\/R01.png"
+    ],
+    [
+      "TITLE_R_02",
+      "Data\/TEXTURE\/Title\/R02.png"
+    ],
+    [
+      "TITLE_S",
+      "Data\/TEXTURE\/Title\/S.png"
+    ],
+    [
+      "TITLE_T",
+      "Data\/TEXTURE\/Title\/T.png"
+    ],
+    [
+      "TITLE_U",
+      "Data\/TEXTURE\/Title\/U.png"
+    ]
   ]
 }

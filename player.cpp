@@ -20,14 +20,13 @@
 #include "meshfield.h"
 #include "obstacle.h"
 #include "game.h"
-
 #include "particle.h"
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CPlayer::CPlayer(int nPriority) : 
-	m_nSpeed(5.0f),					// 移動スピード
+	m_nSpeed(5.0f),					//移動スピード
 	m_rotDest(0.0f, 0.0f, 0.0f),	// 目的の角度
 	m_bJumpFlag(false)				// ジャンプしたかどうかのフラグ
 {
@@ -52,7 +51,7 @@ HRESULT CPlayer::Init()
 
 	//モデルのロード
 	LoadModel("PLAYER");
-
+	
 	return S_OK;
 }
 
@@ -73,7 +72,7 @@ void CPlayer::Update()
 	// 向き取得
 	D3DXVECTOR3 rot = CObjectX::GetRot();
 
-	// 移動量取得
+	// 前回の位置を保存
 	D3DXVECTOR3 move = CObjectX::GetMove();
 
 	// 重力設定
@@ -145,7 +144,6 @@ void CPlayer::Update()
 		if (pInputKeyboard->Trigger(DIK_J))
 		{// ジャンプ
 			m_bJumpFlag = true;
-			move.y = 0.0f;
 			move.y += 15.0f;
 		}
 	}
@@ -212,11 +210,17 @@ void CPlayer::Update()
 	}
 
 	//テスト用
-	if (pInputKeyboard->Press(DIK_PERIOD))
-		m_pParticle = CParticle::Create(pos,
-			D3DXVECTOR3(sinf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180)))), 1.0f, cosf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180))))),
-			D3DXCOLOR(rand() % 100 * 0.01f, rand() % 100 * 0.01f, rand() % 100 * 0.01f, 1.0f),
-			PRIORITY_LEVEL3);
+	if (pInputKeyboard->Trigger(DIK_PERIOD))
+	{
+		for (int i = 0; i < 50; i++)
+		{
+			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 20.0f, pos.z),
+				D3DXVECTOR3(sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))))),
+				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
+				"PARTICLE_FLARE",
+				PRIORITY_LEVEL3);
+		}
+	}
 
 	//角度の正規化(目的の角度)
 	if (m_rotDest.y - rot.y > D3DX_PI)
@@ -269,15 +273,15 @@ void CPlayer::Update()
 		pObject = pObject->GetNext();
 	}
 
-	// 移動量加算
+	// メッシュフィールドのポインタを取得
 	pos += move;
 
-	// メッシュフィールドのポインタを取得
+	//pMeshField->Collision(&pos);
 	CMeshfield *pMeshField = CGame::GetMeshfield();
 
 	float i = pMeshField->GetAnswer();
 
-	// ジャンプ後のメッシュフィールドとの当たり判定
+	// プレイヤーのposとrotの設定
 	if (pos.y < pMeshField->GetAnswer())
 	{
 		m_bJumpFlag = false;
@@ -287,6 +291,12 @@ void CPlayer::Update()
 	if (m_bJumpFlag == false)
 	{
 		pMeshField->Collision(&pos);
+	}
+
+	// y軸が移動してなかった場合
+	if (pos.y == m_posOld.y)
+	{
+		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	}
 
 	// プレイヤーのposとrotの設定

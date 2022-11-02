@@ -1,57 +1,47 @@
 //=============================================================================
 //
-// タイトル処理 [title.h]
+// タイトルロゴ処理 [title_rogo.h]
 // Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _TITLE_H_
-#define _TITLE_H_
+#ifndef _TITLE_ROGO_H_ 
+#define _TITLE_ROGO_H_
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
 #include "main.h"
-#include "object2D.h"
 #include "mode.h"
-
-//=============================================================================
-// 前方定義
-//=============================================================================
-class CFade;
-class CMeshfield;
-class CLight;
+#include "object2D.h"
+#include "application.h"
 
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CTitle : public CMode
+class CTitleRogo : public CObject2D
 {
 public:
+
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	CTitle();
-	~CTitle() override;
+	explicit CTitleRogo(int nPriority = PRIORITY_LEVEL5);
+	~CTitleRogo();
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init(void) override;	// 初期化処理
-	void Uninit(void) override;		// 終了処理
-	void Update(void) override;		// 更新処理
-	void Draw(void) override;		// 描画処理
-	static CTitle *Create();		// 生成処理
+	HRESULT Init() override;			// 初期化処理
+	void Uninit() override;				// 終了処理
+	void Update() override;				// 更新処理
+	void Draw() override;				// 描画処理
+	static CTitleRogo *Create(void);	// 生成処理
 
 private:
+
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	static LPDIRECT3DTEXTURE9 m_pTexture;	// テクスチャのポインタ
-	static bool m_bTitleEnter;				// Enterを押したかのフラグ
-	CObject2D *m_pObject2D;					// オブジェクト2Dのポインタ
-	CFade *m_pFade;							// フェードのポインタ
-	CMeshfield *m_pMeshField;				// メッシュフィールドのポインタ
-	CLight *m_pLight;						// ライトのポインタ
-};
 
+};
 #endif

@@ -38,12 +38,9 @@ CRenderer *CApplication::m_pRenderer = nullptr;
 CInput *CApplication::m_pInput = nullptr;
 CObject *CApplication::m_pMode = nullptr;
 CCamera *CApplication::m_pCamera = nullptr;
-CLight *CApplication::m_pLight = nullptr;
-CMeshfield *CApplication::m_pMeshField = nullptr;
-CTime *CApplication::m_pTime = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
 CObjectXGroup *CApplication::m_pObjectXGroup = nullptr;
-CApplication::MODE CApplication::m_mode = MODE_GAME;
+CApplication::MODE CApplication::m_mode = MODE_TITLE;
 
 //=============================================================================
 // コンストラクタ
@@ -88,7 +85,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	// カメラの初期化
 	m_pCamera = new CCamera;
 	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);	// ソロ
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);		// VS
+	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);	// VS
 	m_pCamera->Init();
 
 	// テクスチャの生成

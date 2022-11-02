@@ -22,6 +22,7 @@ public:
 		OBJTYPE_PLAYER,		//プレイヤー
 		OBJTYPE_BG,			//背景
 		OBJTYPE_EFFECT,		//エフェクト
+		OBJTYPE_MESH,		//メッシュ
 		OBJTYPE_NUMBER,		//番号
 		OBJTYPE_SCORE,		//スコア
 		OBJTYPE_MODE,		//モード

@@ -281,7 +281,7 @@ void CObject2D::SetUV(float x_1, float x_2, float y_1, float y_2)
 //=============================================================================
 // 生成処理
 //=============================================================================
-CObject2D * CObject2D::Create(D3DXVECTOR3 pos, int nPriority)
+CObject2D * CObject2D::Create(const char *aFileName, D3DXVECTOR3 pos, D3DXVECTOR3 size, int nPriority)
 {
 	//ポインタ宣言
 	CObject2D *pObject2D = nullptr;
@@ -291,8 +291,9 @@ CObject2D * CObject2D::Create(D3DXVECTOR3 pos, int nPriority)
 
 	if (pObject2D != nullptr)
 	{//ポインタが存在したら実行
+		pObject2D->BindTexture(aFileName);
 		pObject2D->SetPos(pos);
-		pObject2D->SetSize(D3DXVECTOR3((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, 0.0f));
+		pObject2D->SetSize(size);
 		pObject2D->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		pObject2D->Init();
 	}
