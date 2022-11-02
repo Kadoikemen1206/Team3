@@ -26,6 +26,7 @@
 // コンストラクタ
 //=============================================================================
 CPlayer::CPlayer(int nPriority) : 
+	m_nSmokeCnt(0),
 	m_nSpeed(5.0f),					//移動スピード
 	m_rotDest(0.0f, 0.0f, 0.0f),	// 目的の角度
 	m_bJumpFlag(false)				// ジャンプしたかどうかのフラグ
@@ -51,7 +52,7 @@ HRESULT CPlayer::Init()
 
 	//モデルのロード
 	LoadModel("PLAYER");
-
+	
 	return S_OK;
 }
 
@@ -209,12 +210,35 @@ void CPlayer::Update()
 		}
 	}
 
+	if (pos != m_posOld)
+	{
+		m_nSmokeCnt++;
+	}
+
+	if ((m_nSmokeCnt % 10) == 1)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 10.0f, pos.z),
+				CParticle::BEHAVIOR_SMOKE,
+				PRIORITY_LEVEL3);
+		}
+
+		m_nSmokeCnt++;
+	}
+
 	//テスト用
-	if (pInputKeyboard->Press(DIK_PERIOD))
-		m_pParticle = CParticle::Create(pos,
-			D3DXVECTOR3(sinf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180)))), 1.0f, cosf((rand() % 25 * ((360 / 25) * (D3DX_PI / 180))))),
-			D3DXCOLOR(rand() % 100 * 0.01f, rand() % 100 * 0.01f, rand() % 100 * 0.01f, 1.0f),
-			PRIORITY_LEVEL3);
+	if (pInputKeyboard->Trigger(DIK_PERIOD))
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 10.0f, pos.z),
+				D3DXVECTOR3(sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))))),
+				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
+				"PARTICLE_FLARE",
+				PRIORITY_LEVEL3);
+		}
+	}
 
 	//角度の正規化(目的の角度)
 	if (m_rotDest.y - rot.y > D3DX_PI)

@@ -37,6 +37,7 @@ public:
 	void SetRot(D3DXVECTOR3 rot) override { m_rot = rot; }		// 向き設定処理
 	void BindTexture(std::string inPath);						// 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 	void SetUV(float x_1, float x_2, float y_1, float y_2);		// テクスチャ座標更新処理
+	void SetAnimation(const int U, const int V, const int Speed, const int Drawtimer, const bool loop);
 	void SetRotate(bool set) { m_bIsRotate = set; }
 	void SetBlend(EAlphaBlend blend) { m_blend = blend; }
 
@@ -57,9 +58,21 @@ private:
 	D3DXVECTOR3 m_rot;						// 向き
 	D3DXVECTOR3 m_size;						// サイズ
 	D3DXCOLOR m_col;						// 色
+	int m_CounterAnim;
+	int m_PatternAnimX;
+	int m_PatternAnimY;
+	int m_DivisionX;						// X分割数
+	int m_DivisionY;						// Y分割数
+	int m_DivisionMAX;						// 最大分割数
+	int m_AnimationSpeed;					// アニメーションする速度
+	int m_AnimationSpdCnt;
+	int m_Timer;							// タイマー
+	int m_CntTime;							// 
 	float m_fLength;						// 対角線の長さ
 	float m_fAngle;							// 角度
 	bool m_bIsRotate;
+	bool m_bAnimation;
+	bool m_bLoop;
 	EObjType m_type;						// オブジェクトのタイプ
 	EAlphaBlend m_blend;
 	D3DXMATRIX m_mtxWorld;					// ワールドマトリックス

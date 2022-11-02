@@ -18,23 +18,31 @@
     ],
     [
       "PARTICLE_BRIGHT1",
-      "Data\/TEXTURE\/particles\/bright.png"
+      "Data\/TEXTURE\/Particles\/bright.png"
     ],
     [
       "PARTICLE_BRIGHT2",
-      "Data\/TEXTURE\/particles\/bright2.png"
+      "Data\/TEXTURE\/Particles\/bright2.png"
     ],
     [
       "PARTICLE_RAY",
-      "Data\/TEXTURE\/particles\/ray.png"
+      "Data\/TEXTURE\/Particles\/ray.png"
     ],
     [
       "PARTICLE_STAR",
-      "Data\/TEXTURE\/particles\/star.png"
+      "Data\/TEXTURE\/Particles\/star.png"
     ],
     [
       "PARTICLE_FLARE",
-      "Data\/TEXTURE\/particles\/flare.png"
+      "Data\/TEXTURE\/Particles\/flare.png"
+    ],
+    [
+      "PARTICLE_SMOKE",
+      "Data\/TEXTURE\/Particles\/smoke.png"
+    ],
+    [
+      "ANIMATION_EFFECTA",
+      "Data\/TEXTURE\/Effects\/pipo-btleffect051.png"
     ],
     [
       "TITLE_D",
