@@ -10,19 +10,25 @@
 class CParticle : public CBillboard
 {
 public:
+	enum EBehaviorType
+	{
+		BEHAVIOR_NONE = 0,
+		BEHAVIOR_FLY,
+		BEHAVIOR_FIREWORKS,
+		BEHAVIOR_SMOKE,
+		BEHAVIOR_MAX,
+		BEHAVIOR_INVALID
+	};
+
 	struct SData
 	{
 		D3DXVECTOR3 destPos;	//目的の位置
 		int frame;
 	};
 
-	enum EBehaviorType
+	struct SInfo
 	{
-		BEHAVIOR_NONE = 0,
-		BEHAVIOR_FLY,
-		BEHAVIOR_FIREWORKS,
-		BEHAVIOR_MAX,
-		BEHAVIOR_INVALID
+
 	};
 
 	explicit CParticle(int nPriority = PRIORITY_LEVEL3);
@@ -43,13 +49,14 @@ public:
 	void SetScaling(bool set) { m_bScaling = set; }
 	void SetScaling(bool set, float value) { m_bScaling = set, m_fScalingValue = value; }
 	void SetLocus(bool set) { m_bLocus = set; }
-	void SetBounce(bool set);
+	void SetBounce(bool set) { m_bBounce = set; }
 	void SetPosSpecify(bool set) { m_bPosSpecify = set; }
 	void SetTransitionColor(bool set, D3DXCOLOR col) { m_bTransition = set, m_destCol = col; }
 
 	//ゲッター
 	D3DXVECTOR3 GetPos(void) { return m_pos; }
 
+	static CParticle *Create(const D3DXVECTOR3 pos, EBehaviorType type, int nPriority);    // パーティクルの方で大体設定しちゃうとき用
 	static CParticle *Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, const std::string url, int nPriority);    // 生成処理
 
 private:
