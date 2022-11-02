@@ -50,7 +50,9 @@ private:
 	int m_nTriggerCount1;			// キーを押した回数
 	int m_nTriggerCount2;			// キーを押した回数
 	int m_ArrowRand;				// 矢印の種類ランダム
+
 	bool m_ArrowRandFlag;			// 矢印の種類ランダムフラグ
+	bool m_ArrowFlag;				// 矢印のフラグ
 	bool m_nAlternateFlag;			// 交互にキーを押しているか
 	bool PlayerGoalFlag;			// プレイヤーがゴールしたか
 };

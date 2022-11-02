@@ -158,7 +158,7 @@ void CRenderer::Draw()
 	D3DVIEWPORT9 viewport;		//ビューポート
 	pDevice->GetViewport(&viewport);
 
-	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_ONE)
+	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_ONE && CApplication::GetMode() == CApplication::MODE_GAME)
 	{
 		//**************************************************
 		//	ソロモード
@@ -187,7 +187,7 @@ void CRenderer::Draw()
 		}
 	}
 
-	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_TITLE)
+	if (CApplication::GetMode() == CApplication::MODE_TITLE)
 	{
 		//**************************************************
 		//	タイトルモード
@@ -200,7 +200,7 @@ void CRenderer::Draw()
 			(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
 			D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
 
-		// Direct3Dによる描画の開始
+		// Direct3Dによる描画の開始6
 		if (SUCCEEDED(m_pD3DDevice->BeginScene()))
 		{
 			//全てのオブジェクトの描画処理
@@ -216,7 +216,7 @@ void CRenderer::Draw()
 		}
 	}
 
-	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_TWO)
+	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_TWO && CApplication::GetMode() == CApplication::MODE_GAME)
 	{
 		//**************************************************
 		//	vsモード
@@ -225,7 +225,6 @@ void CRenderer::Draw()
 		{
 			//カメラの設定処理
 			CApplication::GetCamera()->SetCamera(nCnt);
-
 			// バックバッファ＆Ｚバッファのクリア
 			m_pD3DDevice->Clear(0, NULL,
 				(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
@@ -247,7 +246,7 @@ void CRenderer::Draw()
 			}
 		}
 	}
-
+	pDevice->SetViewport(&viewport);
 	// バックバッファとフロントバッファの入れ替え
 	m_pD3DDevice->Present(NULL, NULL, NULL, NULL);
 }

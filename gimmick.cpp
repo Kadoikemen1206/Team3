@@ -51,6 +51,9 @@ HRESULT CGimmick::Init()
 
 	m_Area = D3DXVECTOR3(100.0f,0.0f,100.0f);
 
+	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
+	LoadModel("TRIANGLE");
+
 	return S_OK;
 }
 
