@@ -55,8 +55,8 @@ HRESULT CLight::Init(void)
 	//ライトの拡散光を設定
 	m_aLight[0].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);		//ライトの色
 	m_aLight[1].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);		//ライトの色
-	m_aLight[2].Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.7f);		//ライトの色
-	m_aLight[3].Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.7f);		//ライトの色
+	m_aLight[2].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);		//ライトの色
+	m_aLight[3].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);		//ライトの色
 	m_aLight[4].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);		//ライトの色
 
 	//ライトの方向を設定

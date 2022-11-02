@@ -26,10 +26,15 @@
 // コンストラクタ
 //=============================================================================
 CPlayer::CPlayer(int nPriority) : 
+	m_rotDest(0.0f, 0.0f, 0.0f),
+	m_posOld(0.0f, 0.0f, 0.0f),
+	m_nType(EPLAYER_NONE),
 	m_nSmokeCnt(0),
-	m_nSpeed(5.0f),					//移動スピード
-	m_rotDest(0.0f, 0.0f, 0.0f),	// 目的の角度
-	m_bJumpFlag(false)				// ジャンプしたかどうかのフラグ
+	m_nSpeed(5.0f),
+	m_bJumpFlag(false),
+	m_bIsLanding(false),
+	m_bIsLandingUp(false),
+	m_pParticle(nullptr)
 {
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_PLAYER);
@@ -53,6 +58,10 @@ HRESULT CPlayer::Init()
 	//モデルのロード
 	LoadModel("PLAYER");
 	
+	CObjectX::SetPos(D3DXVECTOR3(0.0f, 10.0f, 0.0f));
+	m_posOld = CObjectX::GetPos();
+	CObjectX::SetMove(D3DXVECTOR3(0.0f, 10.0f, 0.0f));
+
 	return S_OK;
 }
 

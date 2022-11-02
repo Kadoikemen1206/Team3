@@ -11,17 +11,10 @@
 #include <time.h>
 #include "application.h"
 #include "renderer.h"
-#include "object2D.h"
-#include "object3D.h"
-#include "objectX.h"
 #include "object.h"
 #include "input.h"
 #include "camera.h"
 #include "light.h"
-#include "player.h"
-#include "meshfield.h"
-#include "time.h"
-#include "number.h"
 #include "texture.h"
 #include "model.h"
 #include "title.h"
@@ -29,7 +22,6 @@
 #include "ranking.h"
 #include "fade.h"
 #include "objectX_group.h"
-#include "obstacle.h"
 
 //=============================================================================
 // Ã“Iƒƒ“ƒo•Ï”éŒ¾
