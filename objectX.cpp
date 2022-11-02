@@ -323,11 +323,11 @@ bool CObjectX::UpCollision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR
 		(pPos->y <= m_pos.y + m_MaxVtx.y))
 	{
 		bIsLanding = true;
+		pPos->y = m_pos.y + m_MaxVtx.y;
 		if (pPos->y == pPosOld->y)
 		{
 			pMove->y = 0.0f;
 		}
-		pPos->y = m_pos.y + m_MaxVtx.y;
 	}
 
 	// ’l‚ð•Ô‚·

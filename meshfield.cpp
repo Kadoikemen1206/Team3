@@ -49,7 +49,7 @@ HRESULT CMeshfield::Init()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//テクスチャの読み込み
-	BindTexture("FLOOR2");
+	BindTexture("FLOOR0");
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4 * MESHFIELD_VERTEX_NUM,
@@ -374,7 +374,7 @@ CMeshfield * CMeshfield::Create(const D3DXVECTOR3 pos, int nPriority)
 	if (pMeshfield != nullptr)
 	{//ポインタが存在したら実行
 		pMeshfield->SetPos(pos);
-		pMeshfield->SetSize(D3DXVECTOR3(100.0f, 0.0f, 100.0f));
+		pMeshfield->SetSize(D3DXVECTOR3(100.0f, 50.0f, 100.0f));
 		pMeshfield->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		pMeshfield->Init();
 	}
