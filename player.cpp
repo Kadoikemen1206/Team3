@@ -58,9 +58,9 @@ HRESULT CPlayer::Init()
 	//ÉÇÉfÉãÇÃÉçÅ[Éh
 	LoadModel("PLAYER");
 	
-	CObjectX::SetPos(D3DXVECTOR3(0.0f, 10.0f, 0.0f));
+	CObjectX::SetPos(D3DXVECTOR3(0.0f, 20.0f, 0.0f));
 	m_posOld = CObjectX::GetPos();
-	CObjectX::SetMove(D3DXVECTOR3(0.0f, 10.0f, 0.0f));
+	CObjectX::SetMove(D3DXVECTOR3(0.0f, 60.0f, 0.0f));
 
 	return S_OK;
 }
