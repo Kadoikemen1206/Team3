@@ -47,8 +47,8 @@ public:
 	static CObjectX *Create(D3DXVECTOR3 pos, int nPriority);	// 生成処理
 	void LoadModel(const char *aFileName);						// モデルの読み込み処理
 	void Projection(void);										// 平行投影処理
-	void Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pSize);	// 当たり判定
-	//void Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 PosOld);	// 当たり判定
+	bool Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pSize);	// 当たり判定 (左右, 奥, 手前)
+	bool UpCollision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pSize, D3DXVECTOR3 *pMove);	// 当たり判定 (上側)
 	void SetMaxVtx(D3DXVECTOR3 Maxvtx);							// 頂点最大値設定処理
 	void SetMinVtx(D3DXVECTOR3 Minvtx);							// 頂点最小値設定処理
 	D3DXVECTOR3 GetMaxVtx(void) { return m_MaxVtx; }			// 頂点最大値取得処理

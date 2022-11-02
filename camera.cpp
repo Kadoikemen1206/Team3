@@ -77,12 +77,17 @@ HRESULT CCamera::Init(void)
 
 	if (m_nCameraType == CAMERATYPE_TWO && CApplication::GetMode() == CApplication::MODE_GAME)
 	{
+		D3DXVECTOR3 PlayerPos1P = CGame::GetPlayer1P()->GetPos();		//プレイヤーPOS情報の取得
+		D3DXVECTOR3 PlayerPos2P = CGame::GetPlayer2P()->GetPos();		//プレイヤーPOS情報の取得
+
 		//************************
 		// プレイヤーのカメラ
 		//************************
 		// 視点、注視点、上方向を設定する
 		m_posV[0] = INIT_POSV;
 		m_posR[0] = INIT_POSR;
+		m_posV[0].x = PlayerPos1P.x;
+		m_posR[0].x = PlayerPos1P.x;
 		m_vecU[0] = D3DXVECTOR3(0.0f, 1.0f, 0.0f);	//<-固定で良い
 
 		//************************
@@ -91,6 +96,8 @@ HRESULT CCamera::Init(void)
 		// 視点、注視点、上方向を設定する
 		m_posV[1] = INIT_POSV;
 		m_posR[1] = INIT_POSR;
+		m_posV[1].x = PlayerPos2P.x;
+		m_posR[1].x = PlayerPos2P.x;
 		m_vecU[1] = D3DXVECTOR3(0.0f, 1.0f, 0.0f);	// <-固定で良い
 
 		for (int nCnt = 0; nCnt < MAX_NUMBER; nCnt++)

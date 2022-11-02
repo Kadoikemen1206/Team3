@@ -4,12 +4,11 @@ Format Text Ver 1.0
 Scene {
 	pos 0.0000 0.0000 3859.6763
 	lookat -9.9131 509.3722 28.1478
-	head -0.4900
-	pich 0.1300
+	head -0.0800
+	pich 0.1608
 	bank 0.0000
-	ortho 1
+	ortho 0
 	zoom2 1.9433
-	zoom_pers 1.9433
 	amb 0.250 0.250 0.250
 	dirlights 1 {
 		light {
@@ -31,7 +30,7 @@ Material 10 {
 	"mat9" col(1.000 1.000 1.000 0.460) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
 }
 Object "顔" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -1088,7 +1087,7 @@ Object "顔" {
 	}
 }
 Object "体" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -1501,7 +1500,7 @@ Object "体" {
 	}
 }
 Object "太もも（左" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -1635,7 +1634,7 @@ Object "太もも（左" {
 	}
 }
 Object "太もも（右" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -1769,7 +1768,7 @@ Object "太もも（右" {
 	}
 }
 Object "人形あるある　膝が丸いやつ（左" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -1903,7 +1902,7 @@ Object "人形あるある　膝が丸いやつ（左" {
 	}
 }
 Object "人形あるある　膝が丸いやつ（右" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -2037,7 +2036,7 @@ Object "人形あるある　膝が丸いやつ（右" {
 	}
 }
 Object "左脚" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -2315,7 +2314,7 @@ Object "左脚" {
 	}
 }
 Object "右脚" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -2593,7 +2592,7 @@ Object "右脚" {
 	}
 }
 Object "二の腕（左" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -2717,7 +2716,7 @@ Object "二の腕（左" {
 	}
 }
 Object "二の腕（右" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -2841,7 +2840,7 @@ Object "二の腕（右" {
 	}
 }
 Object "人形あるある　腕の付け根？が丸いやつ　（左" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -3039,7 +3038,7 @@ Object "人形あるある　腕の付け根？が丸いやつ　（左" {
 	}
 }
 Object "人形あるある　腕の付け根？が丸いやつ　（右" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -3237,7 +3236,7 @@ Object "人形あるある　腕の付け根？が丸いやつ　（右" {
 	}
 }
 Object "左腕" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -3355,7 +3354,7 @@ Object "左腕" {
 	}
 }
 Object "右腕" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -3473,7 +3472,7 @@ Object "右腕" {
 	}
 }
 Object "左手" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -3623,7 +3622,7 @@ Object "左手" {
 	}
 }
 Object "右手" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -3773,7 +3772,7 @@ Object "右手" {
 	}
 }
 Object "髪" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -4413,7 +4412,7 @@ Object "髪" {
 	}
 }
 Object "顔のパーツ" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -4743,7 +4742,7 @@ Object "顔のパーツ" {
 	}
 }
 Object "服" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -5438,7 +5437,7 @@ Object "服" {
 	}
 }
 Object "スカート　（モーションの邪魔なら短く" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -5833,7 +5832,7 @@ Object "スカート　（モーションの邪魔なら短く" {
 	}
 }
 Object "帽子" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -6233,7 +6232,7 @@ Object "帽子" {
 	}
 }
 Object "服についてるパーツ" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -6309,7 +6308,7 @@ Object "服についてるパーツ" {
 	}
 }
 Object "obj1" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -7357,7 +7356,7 @@ Object "obj1" {
 	}
 }
 Object "服についてるパーツ1" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5
@@ -7525,7 +7524,7 @@ Object "服についてるパーツ1" {
 	}
 }
 Object "obj2" {
-	visible 15
+	visible 0
 	locking 0
 	shading 1
 	facet 59.5

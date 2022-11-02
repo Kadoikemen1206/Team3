@@ -43,17 +43,17 @@ CParticle::~CParticle()
 //=============================================================================
 HRESULT CParticle::Init()
 {
+	if (m_behavior != BEHAVIOR_INVALID || m_behavior != BEHAVIOR_NONE)
+	{
+		Preset();
+	}
+
 	//テクスチャの読み込み
 	BindTexture(m_path);
 
 	m_beginPos = CBillboard::GetPos();
 	m_destPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_destCol = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-
-	if (m_behavior != BEHAVIOR_INVALID || m_behavior != BEHAVIOR_NONE)
-	{
-		Preset();
-	}
 
 	//位置の指定テスト
 	//m_effect.destPos = m_beginPos + D3DXVECTOR3(0.0f,30.0f, 0.0f);
@@ -64,37 +64,6 @@ HRESULT CParticle::Init()
 	CBillboard::Init();
 	CBillboard::SetSize(D3DXVECTOR3(15.0f, 15.0f, 0.0f));
 	CBillboard::SetBlend(BLEND_ADDITIVE);
-
-	// ポインタ宣言
-	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
-
-	// メッシュのY位置を調べるためのもの（適当にやってる
-	if (m_bBounce)
-	{
-		while (pObject != nullptr)
-		{
-			if (pObject == this)
-			{
-				pObject = pObject->GetNext();
-				continue;
-			}
-
-			//変数宣言
-			CObject::EObjType objType;
-
-			//オブジェクトのタイプを取得
-			objType = pObject->GetObjType();
-
-			if (objType == OBJTYPE_MESH)
-			{
-				CObjectX *pObjectX = (CObjectX*)pObject;
-				m_lowerPos = pObjectX->GetPos();
-			}
-
-			//ポインタを次に進める
-			pObject = pObject->GetNext();
-		}
-	}
 
 	return S_OK;
 }
@@ -170,6 +139,24 @@ void CParticle::Update()
 //=============================================================================
 // 生成処理
 //=============================================================================
+CParticle * CParticle::Create(const D3DXVECTOR3 pos, EBehaviorType type, int nPriority)
+{
+	CParticle *pParticle = new CParticle(nPriority);
+
+	if (pParticle != nullptr)
+	{
+		pParticle->SetPos(pos);
+		pParticle->SetBehavior(type);
+		pParticle->Init();
+	}
+	else
+	{
+		assert(false);
+	}
+
+	return pParticle;
+}
+
 CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, const std::string url, int nPriority)
 {
 	CParticle *pParticle = new CParticle(nPriority);
@@ -206,7 +193,7 @@ void CParticle::DetailSetting()
 
 	if (m_bBounce)
 	{// バウンドを使用する場合
-		if (m_pos.y <= m_lowerPos.y)
+		if (m_pos.y <= 0.0f)
 		{
 			move.y += 1.0f * m_fTouchAttenuation;
 			m_fTouchAttenuation -= 0.02f;
@@ -244,9 +231,9 @@ void CParticle::DetailSetting()
 
 	if (m_bTransition)
 	{// 色の変化をつける場合
-		m_col.r += (m_destCol.r - m_col.r) / (m_nDestroyTime * 0.5f);
-		m_col.g += (m_destCol.g - m_col.g) / (m_nDestroyTime * 0.5f);
-		m_col.b += (m_destCol.b - m_col.b) / (m_nDestroyTime * 0.5f);
+		m_col.r += (m_destCol.r - m_col.r) / (m_nDestroyTime * 0.3f);
+		m_col.g += (m_destCol.g - m_col.g) / (m_nDestroyTime * 0.3f);
+		m_col.b += (m_destCol.b - m_col.b) / (m_nDestroyTime * 0.3f);
 	}
 
 	if (m_bLocus && (m_nTime % 3) == 0 && m_col.a >= 0.2f)
@@ -265,45 +252,6 @@ void CParticle::DetailSetting()
 	CBillboard::SetCol(m_col);
 }
 
-void CParticle::SetBounce(bool set)
-{
-	m_bBounce = set;
-
-	// ポインタ宣言
-	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
-
-	if (m_bBounce)
-	{
-		// メッシュのY位置を調べるためのもの（適当にやってる
-		if (m_bBounce)
-		{
-			while (pObject != nullptr)
-			{
-				if (pObject == this)
-				{
-					pObject = pObject->GetNext();
-					continue;
-				}
-
-				//変数宣言
-				CObject::EObjType objType;
-
-				//オブジェクトのタイプを取得
-				objType = pObject->GetObjType();
-
-				if (objType == OBJTYPE_MESH)
-				{
-					CObjectX *pObjectX = (CObjectX*)pObject;
-					m_lowerPos = pObjectX->GetPos();
-				}
-
-				//ポインタを次に進める
-				pObject = pObject->GetNext();
-			}
-		}
-	}
-}
-
 //挙動の設定
 void CParticle::Preset()
 {
@@ -312,7 +260,9 @@ void CParticle::Preset()
 	case BEHAVIOR_NONE:
 		break;
 
-	case BEHAVIOR_FLY:
+	case BEHAVIOR_FLY:			//for文100回くらいが限界
+		m_path = "PARTICLE_FLARE";
+		SetCol(D3DXCOLOR(1.0f,1.0f,0.0f,1.0f));
 		m_bGravity = true;
 		m_bFade = true;
 		m_bScaling = true;
@@ -326,7 +276,8 @@ void CParticle::Preset()
 		m_fAttenuation = 0.08f;
 		break;
 
-	case BEHAVIOR_FIREWORKS:
+	case BEHAVIOR_FIREWORKS:	//for文50回くらいが限界
+		SetCol(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
 		m_bGravity = true;
 		m_bFade = true;
 		m_bScaling = true;
@@ -336,6 +287,18 @@ void CParticle::Preset()
 		m_fFadeValue = -0.006f;
 		m_fScalingValue = 0.1f;
 		m_fAttenuation = 0.1f;
+		break;
+
+	case BEHAVIOR_SMOKE:		//for文3回くらいが良
+		m_path = "PARTICLE_SMOKE";
+		SetMove(D3DXVECTOR3((rand() % 100) * 0.01f, (rand() % 100) * 0.005f, (rand() % 100) * 0.01f));
+		SetCol(D3DXCOLOR(0.4f, 0.4f, 0.4f, 1.0f));
+		m_bFade = true;
+		m_bScaling = true;
+		m_bRotate = true;
+		m_fFadeValue = -0.03f;
+		m_fRotateSpeed = 0.1f;
+		m_fScalingValue = 0.1f;
 		break;
 	}
 }
