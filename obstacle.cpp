@@ -17,6 +17,7 @@
 #include "game.h"
 #include "fade.h"
 #include "model.h"
+#include "billboard.h"
 
 //=============================================================================
 // コンストラクタ
@@ -30,6 +31,7 @@ CObstacle::CObstacle(int nPriority)
 	m_nTriggerCount1 = 0;
 	m_nTriggerCount2 = 0;
 	m_ArrowRand = 0;
+	m_ArrowFlag = false;
 	m_ArrowRandFlag = false;
 	m_nAlternateFlag = false;
 	PlayerGoalFlag = false;
@@ -94,36 +96,16 @@ void CObstacle::Update()
 	{
 		if (m_ArrowRandFlag == false)
 		{
-			m_ArrowRand = rand() % 2 + 1;
+			m_ArrowRand = rand() % 1 + 1;
 			m_ArrowRandFlag = true;
 		}
 		if (m_ArrowRand == 1 && m_ArrowRandFlag == true)
 		{
-			// ギミックの生成
-			CObjectX::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CObject::PRIORITY_LEVEL1);
-			if (pInputKeyboard->Trigger(DIK_Y))
+			if (m_ArrowFlag == false)
 			{
-				m_ArrowRandFlag = false;
+				
+				m_ArrowFlag = true;
 			}
-		}
-		if (m_ArrowRand == 2 && m_ArrowRandFlag == true)
-		{
-			// ギミックの生成
-			CModel::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CObject::PRIORITY_LEVEL1);
-			if (pInputKeyboard->Trigger(DIK_H))
-			{
-				m_ArrowRandFlag = false;
-			}
-		}
-		if (m_ArrowRand == 3)
-		{
-			// ギミックの生成
-			CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_ARROW, CGimmick::SHAPETYPE_LEFT, CObject::PRIORITY_LEVEL3);
-		}
-		if (m_ArrowRand == 4)
-		{
-			// ギミックの生成
-			CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_ARROW, CGimmick::SHAPETYPE_DOWN, CObject::PRIORITY_LEVEL3);
 		}
 	}
 

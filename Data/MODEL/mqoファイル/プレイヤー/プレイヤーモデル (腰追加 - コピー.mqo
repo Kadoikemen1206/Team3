@@ -2,13 +2,13 @@ Metasequoia Document
 Format Text Ver 1.0
 
 Scene {
-	pos 0.0000 0.0000 3859.6765
+	pos 0.0000 0.0000 6175.4829
 	lookat -9.9131 509.3722 28.1478
 	head -0.0800
 	pich 0.1608
 	bank 0.0000
 	ortho 0
-	zoom2 1.9433
+	zoom2 1.2146
 	amb 0.250 0.250 0.250
 	dirlights 1 {
 		light {
@@ -19,7 +19,7 @@ Scene {
 }
 Material 10 {
 	"mat1" col(0.396 0.200 0.122 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
-	"目" col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("C:\Users\student\Documents\Visual Studio 2015\Projects\Team3\Data\MODEL\mqoファイル\プレイヤー\目.png")
+	"目" col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("目.png")
 	"mat3" col(0.122 0.122 0.122 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
 	"mat4" col(1.000 0.886 0.808 1.000) dif(0.920) amb(0.600) emi(0.000) spc(0.000) power(0.00)
 	"mat5" col(0.690 0.608 0.486 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
