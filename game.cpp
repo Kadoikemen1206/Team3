@@ -87,7 +87,7 @@ HRESULT CGame::Init(void)
 	//CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL, CGimmick::SHAPETYPE_AQUARE, CObject::PRIORITY_LEVEL3);
 
 	// ÉMÉ~ÉbÉNÇÃê∂ê¨
-	CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL, CGimmick::SHAPETYPE_NONE, CObject::PRIORITY_LEVEL3);
+	CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_ARROW, CGimmick::SHAPETYPE_UP, CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
