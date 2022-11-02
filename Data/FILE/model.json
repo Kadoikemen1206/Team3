@@ -25,6 +25,26 @@
       "Data\/MODEL\/Book03.x"
     ],
     [
+      "BOOK04",
+      "Data\/MODEL\/Book04.x"
+    ],
+    [
+      "BOOK05",
+      "Data\/MODEL\/Book05.x"
+    ],
+    [
+      "BOOKSHELF",
+      "Data\/MODEL\/BookShelf.x"
+    ],
+    [
+      "BOOKSHELF02",
+      "Data\/MODEL\/BookShelf02.x"
+    ],
+    [
+      "OPEN BOOK",
+      "Data\/MODEL\/open book.x"
+    ],
+    [
       "BOX",
       "Data\/MODEL\/Box.x"
     ],
@@ -75,6 +95,10 @@
     [
       "TABLE03",
       "Data\/MODEL\/Table03.x"
+    ],
+    [
+      "TABLE04",
+      "Data\/MODEL\/Table04.x"
     ],
     [
       "TEAPOT",
