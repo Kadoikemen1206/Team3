@@ -75,12 +75,6 @@ HRESULT CGame::Init(void)
 	CObjectX::Create(D3DXVECTOR3(100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
 	CObjectX::Create(D3DXVECTOR3(-100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
 
-	for (int nCnt = 0; nCnt < 10; nCnt++)
-	{
-		//モデルの生成(壁)
-		//CModel::Create(D3DXVECTOR3(-150.0f, 0.0f, 200.0f + (380.0f * nCnt)), CObject::PRIORITY_LEVEL1);
-	}
-
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-50.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 	m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(50.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
