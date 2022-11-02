@@ -130,6 +130,9 @@
     <ClCompile Include="model.cpp">
       <Filter>00_Code\02_Object\00_Main</Filter>
     </ClCompile>
+    <ClCompile Include="precompile.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -265,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="time.h">
       <Filter>00_Code\02_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="precompile.h">
+      <Filter>00_Code</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
