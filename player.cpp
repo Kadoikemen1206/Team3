@@ -26,7 +26,7 @@
 // コンストラクタ
 //=============================================================================
 CPlayer::CPlayer(int nPriority) : 
-	m_nTime(0),
+	m_nSmokeCnt(0),
 	m_nSpeed(5.0f),					//移動スピード
 	m_rotDest(0.0f, 0.0f, 0.0f),	// 目的の角度
 	m_bJumpFlag(false)				// ジャンプしたかどうかのフラグ
@@ -145,7 +145,7 @@ void CPlayer::Update()
 		if (pInputKeyboard->Trigger(DIK_J))
 		{// ジャンプ
 			m_bJumpFlag = true;
-			move.y += 15.0f;
+			move.y += 18.0f;
 		}
 	}
 	
@@ -154,8 +154,6 @@ void CPlayer::Update()
 	{
 		if (pInputKeyboard->Press(DIK_UP))
 		{// 上に移動
-			m_nTime++;
-
 			if (pInputKeyboard->Press(DIK_LEFT))
 			{
 				pos.x += sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
@@ -210,19 +208,29 @@ void CPlayer::Update()
 			pos.z += cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
 		}
+	}
 
-		if ((m_nTime % 5) == 0)
+	if (pos != m_posOld)
+	{
+		m_nSmokeCnt++;
+	}
+
+	if ((m_nSmokeCnt % 10) == 1)
+	{
+		for (int i = 0; i < 2; i++)
 		{
 			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 10.0f, pos.z),
 				CParticle::BEHAVIOR_SMOKE,
 				PRIORITY_LEVEL3);
 		}
+
+		m_nSmokeCnt++;
 	}
 
 	//テスト用
 	if (pInputKeyboard->Trigger(DIK_PERIOD))
 	{
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 10.0f, pos.z),
 				D3DXVECTOR3(sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))))),
@@ -258,6 +266,9 @@ void CPlayer::Update()
 	// ポインタ宣言
 	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
 
+	// 移動量加算
+	pos += move;
+
 	// プレイヤーとモデルの当たり判定
 	while (pObject != nullptr)
 	{
@@ -276,7 +287,8 @@ void CPlayer::Update()
 		if (objType == OBJTYPE_MODEL)
 		{
 			CObjectX *pObjectX = (CObjectX*)pObject;
-			pObjectX->Collision(&pos, &m_posOld, &CObjectX::GetSize());
+			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &CObjectX::GetSize());
+			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &CObjectX::GetSize(), &move);
 		}
 
 		//ポインタを次に進める
@@ -284,8 +296,6 @@ void CPlayer::Update()
 	}
 
 	// メッシュフィールドのポインタを取得
-	pos += move;
-
 	//pMeshField->Collision(&pos);
 	CMeshfield *pMeshField = CGame::GetMeshfield();
 
@@ -309,7 +319,7 @@ void CPlayer::Update()
 		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	}
 
-	// プレイヤーのposとrotの設定
+	// プレイヤーのposとrotとmoveの設定
 	CObjectX::SetPos(pos);
 	CObjectX::SetRot(rot);
 	CObjectX::SetMove(move);

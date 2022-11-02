@@ -26,11 +26,6 @@ public:
 		int frame;
 	};
 
-	struct SInfo
-	{
-
-	};
-
 	explicit CParticle(int nPriority = PRIORITY_LEVEL3);
 	~CParticle() override;
 

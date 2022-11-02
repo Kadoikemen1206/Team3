@@ -27,7 +27,7 @@ CParticle::CParticle(int nPriority) :
 	m_bBounce(false),				// バウンドさせる
 	m_bTransition(false),			// 色の変化
 	m_bPosSpecify(false),			// 位置の指定
-	m_behavior(BEHAVIOR_SMOKE)
+	m_behavior(BEHAVIOR_FLY)
 {
 }
 
@@ -261,6 +261,7 @@ void CParticle::Preset()
 		break;
 
 	case BEHAVIOR_FLY:			//for文100回くらいが限界
+		m_path = "PARTICLE_FLARE";
 		SetCol(D3DXCOLOR(1.0f,1.0f,0.0f,1.0f));
 		m_bGravity = true;
 		m_bFade = true;
@@ -291,11 +292,13 @@ void CParticle::Preset()
 	case BEHAVIOR_SMOKE:		//for文3回くらいが良
 		m_path = "PARTICLE_SMOKE";
 		SetMove(D3DXVECTOR3((rand() % 100) * 0.01f, (rand() % 100) * 0.005f, (rand() % 100) * 0.01f));
-		SetCol(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
+		SetCol(D3DXCOLOR(0.4f, 0.4f, 0.4f, 1.0f));
 		m_bFade = true;
 		m_bScaling = true;
-		m_fFadeValue = -0.01f;
-		m_fScalingValue = 0.05f;
+		m_bRotate = true;
+		m_fFadeValue = -0.03f;
+		m_fRotateSpeed = 0.1f;
+		m_fScalingValue = 0.1f;
 		break;
 	}
 }

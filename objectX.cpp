@@ -59,8 +59,7 @@ void CObjectX::Uninit()
 //=============================================================================
 void CObjectX::Update()
 {
-	//// 移動量加算
-	//m_pos += m_move;
+
 }
 
 //=============================================================================
@@ -252,136 +251,88 @@ void CObjectX::Projection(void)
 }
 
 //=============================================================================
-// 当たり判定
+// 当たり判定 (左右,奥,手前)
 //=============================================================================
-void CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * pSize)
+bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * pSize)
 {
-	//モデルの左側当たり判定
+	// 変数宣言
+	bool bIsLanding = false;
+
+	// モデルの左側当たり判定
 	if ((pPos->z - pSize->z / 2.0f < m_pos.z + m_MaxVtx.z) &&
 		(pPos->z + pSize->z / 2.0f > m_pos.z + m_MinVtx.z) &&
 		(pPosOld->x + pSize->x / 2.0f <= m_pos.x + m_MinVtx.x / 2.0f) &&
 		(pPos->x + pSize->x / 2.0f > m_pos.x + m_MinVtx.x / 2.0f) && 
-		(pPos->y + pSize->y / 2.0f > m_pos.y - m_MaxVtx.y / 2.0f) &&
-		(pPos->y - pSize->y / 2.0f < m_pos.y + m_MaxVtx.y / 2.0f))
+		(pPos->y + pSize->y > m_pos.y - m_MaxVtx.y / 2.0f) &&
+		(pPos->y < m_pos.y + m_MaxVtx.y / 2.0f))
 	{
+		bIsLanding = true;
 		pPos->x = m_pos.x + m_MinVtx.x / 2.0f - pSize->x / 2.0f;
 	}
-	//モデルの右側当たり判定
+	// モデルの右側当たり判定
 	if ((pPos->z - pSize->z / 2.0f < m_pos.z + m_MaxVtx.z) &&
 		(pPos->z + pSize->z / 2.0f > m_pos.z + m_MinVtx.z) &&
 		(pPosOld->x - pSize->x / 2.0f >= m_pos.x + m_MaxVtx.x / 2.0f) &&
 		(pPos->x - pSize->x / 2.0f < m_pos.x + m_MaxVtx.x / 2.0f) &&
-		(pPos->y + pSize->y / 2.0f > m_pos.y - m_MaxVtx.y / 2.0f) && 
-		(pPos->y - pSize->y / 2.0f < m_pos.y + m_MaxVtx.y / 2.0f))
+		(pPos->y + pSize->y > m_pos.y - m_MaxVtx.y / 2.0f) && 
+		(pPos->y < m_pos.y + m_MaxVtx.y / 2.0f))
 	{
+		bIsLanding = true;
 		pPos->x = m_pos.x + m_MaxVtx.x / 2.0f + pSize->x / 2.0f;
 	}
-	//モデルの奥側当たり判定
+	// モデルの奥側当たり判定
 	if ((pPos->x - pSize->x / 2.0f < m_pos.x + m_MaxVtx.x) &&
 		(pPos->x + pSize->x / 2.0f > m_pos.x + m_MinVtx.x) &&
 		(pPosOld->z - pSize->z / 2.0f >= m_pos.z + m_MaxVtx.z / 2.0f) &&
 		(pPos->z - pSize->z / 2.0f < m_pos.z + m_MaxVtx.z / 2.0f) &&
-		(pPos->y + pSize->y / 2.0f > m_pos.y - m_MaxVtx.y / 2.0f) && 
-		(pPos->y - pSize->y / 2.0f < m_pos.y + m_MaxVtx.y / 2.0f))
+		(pPos->y + pSize->y > m_pos.y - m_MaxVtx.y / 2.0f) && 
+		(pPos->y < m_pos.y + m_MaxVtx.y / 2.0f))
 	{
+		bIsLanding = true;
 		pPos->z = m_pos.z + m_MaxVtx.z / 2.0f + pSize->z / 2.0f;
 	}
-	//モデルの手前側当たり判定
+	// モデルの手前側当たり判定
 	if ((pPos->x - pSize->x / 2.0f < m_pos.x + m_MaxVtx.x) &&
 		(pPos->x + pSize->x / 2.0f > m_pos.x + m_MinVtx.x) &&
 		(pPosOld->z + pSize->z / 2.0f <= m_pos.z + m_MinVtx.z / 2.0f) &&
 		(pPos->z + pSize->z / 2.0f > m_pos.z + m_MinVtx.z / 2.0f) &&
-		(pPos->y + pSize->y / 2.0f > m_pos.y - m_MaxVtx.y / 2.0f) && 
-		(pPos->y - pSize->y / 2.0f < m_pos.y + m_MaxVtx.y / 2.0f))
+		(pPos->y + pSize->y > m_pos.y - m_MaxVtx.y / 2.0f) && 
+		(pPos->y < m_pos.y + m_MaxVtx.y / 2.0f))
 	{
+		bIsLanding = true;
 		pPos->z = m_pos.z + m_MinVtx.z / 2.0f - pSize->z / 2.0f;
 	}
+
+	// 値を返す
+	return bIsLanding;
 }
 
-//void CObjectX::Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 PosOld)
-//{
-//	// ターゲットの位置を取得
-//	D3DXVECTOR3 TargetPos = *pPos;
-//
-//	//頂点座標
-//	D3DXVECTOR3 vtx[4] =
-//	{
-//		D3DXVECTOR3(m_pos.x + m_MinVtx.x,0.0f,m_pos.z + m_MaxVtx.z),
-//		D3DXVECTOR3(m_pos.x + m_MaxVtx.x,0.0f,m_pos.z + m_MaxVtx.z),
-//		D3DXVECTOR3(m_pos.x + m_MaxVtx.x,0.0f,m_pos.z + m_MinVtx.z),
-//		D3DXVECTOR3(m_pos.x + m_MinVtx.x,0.0f,m_pos.z + m_MinVtx.z)
-//	};
-//
-//	//ベクトル
-//	D3DXVECTOR3 Vec [4] =
-//	{
-//		vtx[1] - vtx[0],
-//		vtx[2] - vtx[1],
-//		vtx[3] - vtx[2],
-//		vtx[0] - vtx[3]
-//	};
-//
-//	//ターゲットまでのベクトル
-//	D3DXVECTOR3 VecPos[4] = { D3DXVECTOR3(0.0f,0.0f,0.0f) };
-//
-//	for (int nCntVtx = 0; nCntVtx < 4; nCntVtx++)
-//	{
-//		VecPos[nCntVtx] = TargetPos - vtx[nCntVtx];
-//	}
-//
-//	// 外積
-//	float fCalculation[4] = { 0.0f };
-//	for (int nCntVtx = 0; nCntVtx < 4; nCntVtx++)
-//	{
-//		fCalculation[nCntVtx] = Vec[nCntVtx].x * VecPos[nCntVtx].z - VecPos[nCntVtx].x * Vec[nCntVtx].z;
-//	}
-//
-//	//プレイヤーの位置が全部-か+
-//	if (fCalculation[0] < 0.0f
-//		&& fCalculation[1] < 0.0f
-//		&& fCalculation[2] < 0.0f
-//		&& fCalculation[3] < 0.0f)
-//	{
-//		// 目的の頂点
-//		D3DXVECTOR3 TargetVtx = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-//
-//		// 目的のベクトル
-//		D3DXVECTOR3 TargetVec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-//
-//		//ターゲットの過去位置までのベクトル
-//		D3DXVECTOR3 VecPosOld[4] = { D3DXVECTOR3(0.0f,0.0f,0.0f) };
-//
-//		for (int nCntVtx = 0; nCntVtx < 4; nCntVtx++)
-//		{
-//			VecPosOld[nCntVtx] = PosOld - vtx[nCntVtx];
-//		}
-//
-//		for (int nCntVtx = 0; nCntVtx < 4; nCntVtx++)
-//		{
-//			fCalculation[nCntVtx] = Vec[nCntVtx].x * VecPosOld[nCntVtx].z - VecPosOld[nCntVtx].x * Vec[nCntVtx].z;
-//		}
-//
-//		for (int nCntVtx = 0; nCntVtx < 4; nCntVtx++)
-//		{
-//			if (fCalculation[nCntVtx] > 0.0f)
-//			{
-//				TargetVec = Vec[nCntVtx];
-//				TargetVtx = vtx[nCntVtx];
-//			}
-//		}
-//
-//		// 移動ベクトル
-//		D3DXVECTOR3 moveVec = TargetPos - PosOld;
-//		D3DXVECTOR3 TargetVtxVec = TargetVtx - PosOld;
-//		D3DXVECTOR3 TargetVecNor = TargetVec;
-//		D3DXVec3Normalize(&TargetVecNor, &TargetVecNor);
-//		float fLength = (moveVec.x * TargetVtxVec.z - TargetVtxVec.x * moveVec.z) / (TargetVecNor.x * moveVec.z - moveVec.x * TargetVecNor.z);
-//
-//		D3DXVECTOR3 pos = TargetVtx + (TargetVec * fLength);
-//
-//		*pPos = PosOld;
-//	}
-//}
+//=============================================================================
+// 当たり判定 (上側)
+//=============================================================================
+bool CObjectX::UpCollision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * pSize, D3DXVECTOR3 * pMove)
+{
+	// 変数宣言
+	bool bIsLanding = false;
+
+	// モデルの上側当たり判定
+	if ((pPos->z - pSize->z / 2.0f < m_pos.z + m_MaxVtx.z) &&
+		(pPos->z + pSize->z / 2.0f > m_pos.z + m_MinVtx.z) &&
+		(pPos->x - pSize->x / 2.0f < m_pos.x + m_MaxVtx.x) &&
+		(pPos->x + pSize->x / 2.0f > m_pos.x + m_MinVtx.x) &&
+		(pPos->y <= m_pos.y + m_MaxVtx.y))
+	{
+		bIsLanding = true;
+		if (pPos->y == pPosOld->y)
+		{
+			pMove->y = 0.0f;
+		}
+		pPos->y = m_pos.y + m_MaxVtx.y;
+	}
+
+	// 値を返す
+	return bIsLanding;
+}
 
 //=============================================================================
 // 頂点最大値設定処理
