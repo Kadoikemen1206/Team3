@@ -62,6 +62,8 @@ private:
 	EPLAYER m_nType;					// 1Pと2Pのタイプ分け
 	float m_nSpeed;						// スピード
 	bool m_bJumpFlag;					// ジャンプしたかどうかのフラグ
+	bool m_bIsLanding;					// モデルとの当たり判定フラグ(左右,奥,手前)
+	bool m_bIsLandingUp;				// モデルとの当たり判定フラグ(上側)
 
 	CParticle *m_pParticle;				// パーティクルのポインタ
 };
