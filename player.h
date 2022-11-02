@@ -60,7 +60,7 @@ private:
 	D3DXVECTOR3 m_rotDest;				// 目的の角度
 	D3DXVECTOR3 m_posOld;				// 前回の位置
 	EPLAYER m_nType;					// 1Pと2Pのタイプ分け
-	int m_nTime;
+	int m_nSmokeCnt;
 	float m_nSpeed;						// スピード
 	bool m_bJumpFlag;					// ジャンプしたかどうかのフラグ
 

@@ -26,7 +26,7 @@
 // コンストラクタ
 //=============================================================================
 CPlayer::CPlayer(int nPriority) : 
-	m_nTime(0),
+	m_nSmokeCnt(0),
 	m_nSpeed(5.0f),					//移動スピード
 	m_rotDest(0.0f, 0.0f, 0.0f),	// 目的の角度
 	m_bJumpFlag(false)				// ジャンプしたかどうかのフラグ
@@ -212,10 +212,10 @@ void CPlayer::Update()
 
 	if (pos != m_posOld)
 	{
-		m_nTime++;
+		m_nSmokeCnt++;
 	}
 
-	if ((m_nTime % 10) == 1)
+	if ((m_nSmokeCnt % 10) == 1)
 	{
 		for (int i = 0; i < 2; i++)
 		{
@@ -224,7 +224,7 @@ void CPlayer::Update()
 				PRIORITY_LEVEL3);
 		}
 
-		m_nTime++;
+		m_nSmokeCnt++;
 	}
 
 	//テスト用
