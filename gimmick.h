@@ -30,7 +30,7 @@ public:
 		GIMMICKTYPE_NONE = 0,
 		GIMMICKTYPE_BARRAGEMOVEWALL,		// 連打で動く壁
 		GIMMICKTYPE_ALTERNATEMOVEWALL,		// 交互に連打で動く壁
-		GIMMICKTYPE_SHAPE,					// 図形当てギミック
+		GIMMICKTYPE_ARROW,					// 矢印当てギミック
 		GIMMICKTYPE_GOAL,					// ゴール
 		GIMMICKTYPE_MAX
 	};
@@ -40,9 +40,10 @@ public:
 	enum SHAPETYPE
 	{
 		SHAPETYPE_NONE = 0,
-		SHAPETYPE_CIRCLE,				// 円形
-		SHAPETYPE_AQUARE,				// 四角形
-		SHAPETYPE_TRIANGLE,				// 三角形
+		SHAPETYPE_UP,			// 上
+		SHAPETYPE_RIGHT,		// 右
+		SHAPETYPE_LEFT,			// 左
+		SHAPETYPE_DOWN,			// 下
 		SHAPETYPE_MAX
 	};
 	//-------------------------------------------------------------------------

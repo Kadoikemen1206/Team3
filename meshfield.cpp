@@ -29,6 +29,8 @@ CMeshfield::CMeshfield(int nPriority) :
 	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_size(D3DXVECTOR2(0.0f, 0.0f))
 {
+	//オブジェクトのタイプセット処理
+	CObject::SetType(OBJTYPE_MESH);
 }
 
 //=============================================================================

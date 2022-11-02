@@ -47,7 +47,7 @@ HRESULT CModel::Init()
 	CObjectX::Init();
 
 	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
-	LoadModel("BOX");
+	LoadModel("TEAPOT");
 
 	return S_OK;
 }

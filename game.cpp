@@ -58,18 +58,20 @@ CGame::~CGame()
 //=============================================================================
 HRESULT CGame::Init(void)
 {
-	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TWO);		// ゲーム
+	// カメラの設定
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TWO);
+	CApplication::GetCamera()->Init();
 
-	//ライトの生成
+	// ライトの生成
 	m_pLight = CLight::Create();
 
 	// タイマーの生成
 	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL4);
 
-	//メッシュフィールドの生成
+	// メッシュフィールドの生成
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-300.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL2);
 
-	//モデルの生成
+	// モデルの生成
 	CObjectX::Create(D3DXVECTOR3(100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
 	CObjectX::Create(D3DXVECTOR3(-100.0f, 0.0f, -100.0f), CObject::PRIORITY_LEVEL3);
 
@@ -87,7 +89,7 @@ HRESULT CGame::Init(void)
 	//CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL, CGimmick::SHAPETYPE_AQUARE, CObject::PRIORITY_LEVEL3);
 
 	// ギミックの生成
-	CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL, CGimmick::SHAPETYPE_NONE, CObject::PRIORITY_LEVEL3);
+	CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_ARROW, CGimmick::SHAPETYPE_UP, CObject::PRIORITY_LEVEL3);
 
 	return S_OK;
 }
@@ -97,12 +99,13 @@ HRESULT CGame::Init(void)
 //=============================================================================
 void CGame::Uninit(void)
 {
-	//ナンバーの削除
+	// ナンバーの削除
 	CNumber::Unload();
 
-	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);		// カメラ
+	// カメラの設定
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
 
-	//ライトの解放・削除
+	// ライトの解放・削除
 	if (m_pLight != nullptr)
 	{
 		m_pLight->Uninit();
@@ -110,7 +113,7 @@ void CGame::Uninit(void)
 		m_pLight = nullptr;
 	}
 
-	//インスタンスの解放処理
+	// インスタンスの解放処理
 	CObject::Release();
 }
 
