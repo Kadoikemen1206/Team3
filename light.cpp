@@ -60,11 +60,11 @@ HRESULT CLight::Init(void)
 	m_aLight[4].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);		//ライトの色
 
 	//ライトの方向を設定
-	vecDir1 = D3DXVECTOR3(-1.0f, 0.5f, -0.5f);
-	vecDir2 = D3DXVECTOR3(-0.3f, 0.8f, 0.4f);
+	vecDir1 = D3DXVECTOR3(-1.0f, -0.5f, -0.5f);
+	vecDir2 = D3DXVECTOR3(-0.3f, -0.8f, 0.3f);
 	vecDir3 = D3DXVECTOR3(0.8f, -0.4f, -0.2f);
-	vecDir4 = D3DXVECTOR3(-0.8f, 0.4f, 0.2f);
-	vecDir5 = D3DXVECTOR3(0.0f, 0.1f, 0.4f);
+	vecDir4 = D3DXVECTOR3(-0.8f, -0.4f, 0.2f);
+	vecDir5 = D3DXVECTOR3(0.0f, -0.1f, 0.4f);
 
 	//正規化する（大きさ1のベクトルにする）
 	D3DXVec3Normalize(&vecDir1, &vecDir1);		//←ベクトルを大きさ1のする便利関数
@@ -87,11 +87,11 @@ HRESULT CLight::Init(void)
 	pDevice->SetLight(4, &m_aLight[4]);
 
 	//ライトを有効にする
-	pDevice->LightEnable(0, TRUE);
+	//pDevice->LightEnable(0, TRUE);
 	pDevice->LightEnable(1, TRUE);
-	pDevice->LightEnable(2, TRUE);
-	pDevice->LightEnable(3, TRUE);
-	pDevice->LightEnable(4, TRUE);
+	//pDevice->LightEnable(2, TRUE);
+	//pDevice->LightEnable(3, TRUE);
+	//pDevice->LightEnable(4, TRUE);
 
 	return S_OK;
 }
