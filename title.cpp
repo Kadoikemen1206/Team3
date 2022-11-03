@@ -18,6 +18,7 @@
 #include "meshfield.h"
 #include "light.h"
 #include "title_rogo.h"
+#include "title_menu.h"
 #include "load_stage.h"
 
 //=============================================================================
@@ -59,8 +60,11 @@ HRESULT CTitle::Init(void)
 	// ステージのロード
 	CLoadStage::LoadAll();
 
-	//タイトルロゴの生成
+	// タイトルロゴの生成
 	CTitleRogo::Create();
+
+	// タイトルメニューの生成
+	CTitleMenu::Create();
 
 	return S_OK;
 }

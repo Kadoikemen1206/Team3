@@ -99,6 +99,22 @@
     [
       "TITLE_U",
       "Data\/TEXTURE\/Title\/U.png"
+    ],
+    [
+      "TITLEMENU_BG",
+      "Data\/TEXTURE\/TitleMenu\/TitleMenu_bg.png"
+    ],
+    [
+      "TITLEMENU_GAME",
+      "Data\/TEXTURE\/TitleMenu\/TitleMenu_game.png"
+    ],
+    [
+      "TITLEMENU_TUTORIAL",
+      "Data\/TEXTURE\/TitleMenu\/TitleMenu_tutorial.png"
+    ],
+    [
+      "TITLEMENU_RANKING",
+      "Data\/TEXTURE\/TitleMenu\/TitleMenu_ranking.png"
     ]
   ]
 }

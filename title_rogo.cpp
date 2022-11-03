@@ -15,12 +15,14 @@
 // 静的メンバ変数宣言
 //=============================================================================
 CObject2D * CTitleRogo::m_apObject2D[14] = {};
+bool CTitleRogo::m_bTitleMenuFlag = false;
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CTitleRogo::CTitleRogo(int nPriority) :
 	m_bTitleRogoSwitch(false),
+	m_nTextureMax(14),
 	m_nSinCount(0),
 	m_fRotZ(0.0f)
 {
@@ -87,47 +89,48 @@ void CTitleRogo::Uninit()
 //=============================================================================
 void CTitleRogo::Update()
 {
-	// 位置の取得
+	// 座標取得
 	D3DXVECTOR3 pos[14];
-	for (int i = 0; i < 14; i++)
+	for (int nCnt = 0; nCnt < m_nTextureMax; nCnt++)
 	{
-		pos[i] = m_apObject2D[i]->GetPos();
+		pos[nCnt] = m_apObject2D[nCnt]->GetPos();
 	}
 
-	// 角度の取得
+	// 角度取得
 	D3DXVECTOR3 rot[14];
-	for (int i = 0; i < 14; i++)
+	for (int nCnt = 0; nCnt < m_nTextureMax; nCnt++)
 	{
-		rot[i] = m_apObject2D[i]->GetRot();
+		rot[nCnt] = m_apObject2D[nCnt]->GetRot();
 	}
 
 	//タイトルロゴの縦の動き
 	if (m_bTitleRogoSwitch == false)
 	{
-		for (int i = 0; i < 14; i++)
+		for (int nCnt = 0; nCnt < m_nTextureMax; nCnt++)
 		{
-			if (pos[i].y < 360.0f)
+			if (pos[nCnt].y < 360.0f)
 			{
-				m_apObject2D[i]->SetMove(D3DXVECTOR3(0.0f, 6.0f, 0.0f));
+				m_apObject2D[nCnt]->SetMove(D3DXVECTOR3(0.0f, 6.0f, 0.0f));
 			}
 			else
 			{
-				m_apObject2D[i]->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+				m_apObject2D[nCnt]->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 				m_bTitleRogoSwitch = true;
 			}
 		}
 	}
 	else
 	{
-		for (int i = 0; i < 14; i++)
+		for (int nCnt = 0; nCnt < m_nTextureMax; nCnt++)
 		{
-			if (pos[i].y >= 150.0f)
+			if (pos[nCnt].y >= 150.0f)
 			{
-				m_apObject2D[i]->SetMove(D3DXVECTOR3(0.0f, -2.0f, 0.0f));
+				m_apObject2D[nCnt]->SetMove(D3DXVECTOR3(0.0f, -2.0f, 0.0f));
 			}
 			else
 			{
-				m_apObject2D[i]->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+				m_apObject2D[nCnt]->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+				m_bTitleMenuFlag = true;
 			}
 		}
 	}
@@ -140,10 +143,10 @@ void CTitleRogo::Update()
 	}
 
 	// 角度の設定
-	for (int i = 0; i < 14; i++)
+	for (int nCnt = 0; nCnt < m_nTextureMax; nCnt++)
 	{
-		rot[i] = D3DXVECTOR3(0.0f, 0.0f, m_fRotZ);
-		m_apObject2D[i]->SetRot(rot[i]);
+		rot[nCnt] = D3DXVECTOR3(0.0f, 0.0f, m_fRotZ);
+		m_apObject2D[nCnt]->SetRot(rot[nCnt]);
 	}
 
 	// オブジェクトの更新処理

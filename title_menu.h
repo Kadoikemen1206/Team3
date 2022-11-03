@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// タイトルロゴ処理 [title_rogo.h]
+// タイトルメニュー処理 [title_menu.h]
 // Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _TITLE_ROGO_H_ 
-#define _TITLE_ROGO_H_
+#ifndef _TITLE_MENU_H_ 
+#define _TITLE_MENU_H_
 
 //=============================================================================
 // インクルードファイル
@@ -23,14 +23,14 @@ class CObject2D;
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CTitleRogo : public CObject2D
+class CTitleMenu : public CObject2D
 {
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	explicit CTitleRogo(int nPriority = PRIORITY_LEVEL5);
-	~CTitleRogo();
+	explicit CTitleMenu(int nPriority = PRIORITY_LEVEL4);
+	~CTitleMenu();
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
@@ -39,20 +39,16 @@ public:
 	void Uninit() override;					// 終了処理
 	void Update() override;					// 更新処理
 	void Draw() override;					// 描画処理
-
-	static CTitleRogo *Create(void);		// 生成処理
-	static bool GetTitleMenuFlag(void) { return m_bTitleMenuFlag; }		// タイトルフラグ取得処理
+	static CTitleMenu *Create(void);		// 生成処理
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	static	CObject2D *	m_apObject2D[14];	// ポインタ
-	static	bool		m_bTitleMenuFlag;	// タイトルメニューフラグ
-
+	static	CObject2D *m_apObject2D[4];		// ポインタ
 	int		m_nTextureMax;					// 使用するテクスチャの最大数
-	int		m_nSinCount;					// Z軸の角度を加算する為のカウント変数
-	float	m_fRotZ;						// Z軸の角度設定用の変数
-	bool	m_bTitleRogoSwitch;				// 縦の動きのフラグ
+	bool	m_bGame;						// GAMEフラグ
+	bool	m_bTutorial;					// TUTORIALフラグ
+	bool	m_bRanking;						// RANKINGフラグ
 };
 #endif
