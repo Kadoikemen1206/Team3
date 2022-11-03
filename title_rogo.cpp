@@ -20,7 +20,9 @@ CObject2D * CTitleRogo::m_apObject2D[14] = {};
 // コンストラクタ
 //=============================================================================
 CTitleRogo::CTitleRogo(int nPriority) :
-	m_bTitleRogoSwitch(false)
+	m_bTitleRogoSwitch(false),
+	m_nSinCount(0),
+	m_fRotZ(0.0f)
 {
 }
 
@@ -92,6 +94,13 @@ void CTitleRogo::Update()
 		pos[i] = m_apObject2D[i]->GetPos();
 	}
 
+	// 角度の取得
+	D3DXVECTOR3 rot[14];
+	for (int i = 0; i < 14; i++)
+	{
+		rot[i] = m_apObject2D[i]->GetRot();
+	}
+
 	//タイトルロゴの縦の動き
 	if (m_bTitleRogoSwitch == false)
 	{
@@ -123,12 +132,19 @@ void CTitleRogo::Update()
 		}
 	}
 
-	//D3DXVECTOR3 rot[14];
-	//for (int i = 0; i < 14; i++)
-	//{
-	//	m_apObject2D[i]->SetRot(D3DXVECTOR3(2.0f, 2.0f, 0.0f));
-	//	rot[i] = m_apObject2D[i]->GetRot();
-	//}
+	// Sin波で角度をずらす
+	if (m_bTitleRogoSwitch)
+	{
+		m_nSinCount++;
+		m_fRotZ = (((sinf(m_nSinCount * 0.03f) * 0.5f) * 0.5f) * 0.5f);
+	}
+
+	// 角度の設定
+	for (int i = 0; i < 14; i++)
+	{
+		rot[i] = D3DXVECTOR3(0.0f, 0.0f, m_fRotZ);
+		m_apObject2D[i]->SetRot(rot[i]);
+	}
 
 	// オブジェクトの更新処理
 	CObject2D::Update();

@@ -47,7 +47,9 @@ private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	static CObject2D *m_apObject2D[14];	// タイトルロゴのポインタ
-	bool m_bTitleRogoSwitch;			// タイトルロゴ縦の動きのフラグ
+	static	CObject2D *m_apObject2D[14];	// ポインタ
+	bool	m_bTitleRogoSwitch;				// 縦の動きのフラグ
+	int		m_nSinCount;					// Z軸の角度を加算する為のカウント変数
+	float	m_fRotZ;						// Z軸の角度設定用の変数
 };
 #endif
