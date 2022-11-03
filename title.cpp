@@ -18,6 +18,8 @@
 #include "meshfield.h"
 #include "light.h"
 #include "title_rogo.h"
+#include "title_menu.h"
+#include "load_stage.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -53,10 +55,16 @@ HRESULT CTitle::Init(void)
 	m_pLight = CLight::Create();
 
 	// メッシュフィールドの生成
-	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-350.0f, 0.0f, -500.0f), CObject::PRIORITY_LEVEL2);
+	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
 
-	//タイトルロゴの生成
+	// ステージのロード
+	CLoadStage::LoadAll();
+
+	// タイトルロゴの生成
 	CTitleRogo::Create();
+
+	// タイトルメニューの生成
+	CTitleMenu::Create();
 
 	return S_OK;
 }
@@ -97,22 +105,22 @@ void CTitle::Update(void)
 	D3DXVECTOR3 posR = pCamera->GetPosR();
 
 	// 視点と注視点を後ろにずらしていく処理
-	posV -= D3DXVECTOR3(0.0f, 0.0f, 3.0f);
-	posR -= D3DXVECTOR3(0.0f, 0.0f, 3.0f);
+	posV += D3DXVECTOR3(0.0f, 0.0f, 2.0f);
+	posR += D3DXVECTOR3(0.0f, 0.0f, 2.0f);
 
 	// 視点と注視点を設定
 	pCamera->SetPosV(posV);
 	pCamera->SetPosR(posR);
 
-	// 画面遷移処理
-	if (m_pFade->GetFade() == CFade::FADE_NONE)
-	{
-		if (pInput->Trigger(DIK_RETURN))
-		{
-			// フェード生成
-			CFade::SetFade(CApplication::MODE_GAME);
-		}
-	}
+	//// 画面遷移処理
+	//if (m_pFade->GetFade() == CFade::FADE_NONE)
+	//{
+	//	if (pInput->Trigger(DIK_RETURN))
+	//	{
+	//		// フェード生成
+	//		CFade::SetFade(CApplication::MODE_GAME);
+	//	}
+	//}
 }
 
 //=============================================================================

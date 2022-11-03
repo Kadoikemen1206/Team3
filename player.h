@@ -56,11 +56,10 @@ private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	CShadow *m_shadow;					// 影のポインタ
 	D3DXVECTOR3 m_rotDest;				// 目的の角度
 	D3DXVECTOR3 m_posOld;				// 前回の位置
 	EPLAYER m_nType;					// 1Pと2Pのタイプ分け
-	int m_nSmokeCnt;
+	int m_nSmokeCnt;					// スモークの状態
 	float m_nSpeed;						// スピード
 	bool m_bJumpFlag;					// ジャンプしたかどうかのフラグ
 	bool m_bIsLanding;					// モデルとの当たり判定フラグ(左右,奥,手前)

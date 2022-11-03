@@ -23,8 +23,8 @@ class CMeshfield : CObject
 	// マクロ定義
 	//-------------------------------------------------------------------------
 	#define POLYGON_DEPTH	(500.0f)			//ポリゴンの奥行き
-	#define POLYGON_HEIGHT	(50.0f)				//ポリゴンの高さ
-	#define POLYGON_WIDTH	(25.0f)				//ポリゴンの幅
+	#define POLYGON_HEIGHT	(100.0f)			//ポリゴンの高さ
+	#define POLYGON_WIDTH	(100.0f)			//ポリゴンの幅
 	#define MESHFIELD_X_BLOCK	(30)			//X方向のブロック数
 	#define MESHFIELD_Z_BLOCK	(30)			//Z方向のブロック数
 	#define MESHFIELD_VERTEX_NUM	((MESHFIELD_X_BLOCK + 1) * (MESHFIELD_Z_BLOCK + 1))									//頂点数

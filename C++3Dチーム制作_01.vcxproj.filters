@@ -130,6 +130,12 @@
     <ClCompile Include="model.cpp">
       <Filter>00_Code\02_Object\00_Main</Filter>
     </ClCompile>
+    <ClCompile Include="precompile.cpp">
+      <Filter>00_Code</Filter>
+    </ClCompile>
+    <ClCompile Include="title_menu.cpp">
+      <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -213,7 +219,6 @@
     <ClInclude Include="title_rogo.h">
       <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
     </ClInclude>
-    <ClInclude Include="billboard.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="load_stage.h">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
@@ -265,6 +270,15 @@
     </ClInclude>
     <ClInclude Include="time.h">
       <Filter>00_Code\02_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="precompile.h">
+      <Filter>00_Code</Filter>
+    </ClInclude>
+    <ClInclude Include="billboard.h">
+      <Filter>00_Code\02_Object\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="title_menu.h">
+      <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

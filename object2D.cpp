@@ -25,7 +25,7 @@ CObject2D::CObject2D(int nPriority) :
 	m_fAngle(0.0f),
 	m_pos(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
-	m_size(D3DXVECTOR2(0.0f, 0.0f))
+	m_size(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 {
 
 }

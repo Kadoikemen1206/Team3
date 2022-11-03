@@ -22,10 +22,10 @@ D3DXVECTOR3 CCamera::m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 CCamera::CAMERATYPE CCamera::m_nCameraType = CAMERATYPE_NONE;
 const float CCamera::MOVE_SPEED = 5.0f;										// 移動速度
 const unsigned int CCamera::MAX_NUMBER = 2;									// 最大数
-const D3DXVECTOR3 CCamera::INIT_POSV = D3DXVECTOR3(0.0f, 200.0f, -400.0f);	// 視点の初期値
+const D3DXVECTOR3 CCamera::INIT_POSV = D3DXVECTOR3(0.0f, 180.0f, -400.0f);	// 視点の初期値
 const D3DXVECTOR3 CCamera::INIT_POSR = D3DXVECTOR3(0.0f, 20.0f, -1.0f);		// 注視点の初期値
-const float CCamera::Z_DEPTH = 120.0f;										// 注視点のZを持ってきた位置より奥深い位置にする
-const float CCamera::Z_SEPARATE = 250.0f;									// 視点のZを持ってきた位置から離す
+const float CCamera::Z_DEPTH = 140.0f;										// 注視点のZを持ってきた位置より奥深い位置にする
+const float CCamera::Z_SEPARATE = 290.0f;									// 視点のZを持ってきた位置から離す
 
 //=============================================================================
 // コンストラクタ
