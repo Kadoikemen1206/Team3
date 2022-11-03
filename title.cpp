@@ -112,15 +112,15 @@ void CTitle::Update(void)
 	pCamera->SetPosV(posV);
 	pCamera->SetPosR(posR);
 
-	// 画面遷移処理
-	if (m_pFade->GetFade() == CFade::FADE_NONE)
-	{
-		if (pInput->Trigger(DIK_RETURN))
-		{
-			// フェード生成
-			CFade::SetFade(CApplication::MODE_GAME);
-		}
-	}
+	//// 画面遷移処理
+	//if (m_pFade->GetFade() == CFade::FADE_NONE)
+	//{
+	//	if (pInput->Trigger(DIK_RETURN))
+	//	{
+	//		// フェード生成
+	//		CFade::SetFade(CApplication::MODE_GAME);
+	//	}
+	//}
 }
 
 //=============================================================================

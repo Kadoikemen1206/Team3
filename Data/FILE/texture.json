@@ -115,6 +115,14 @@
     [
       "TITLEMENU_RANKING",
       "Data\/TEXTURE\/TitleMenu\/TitleMenu_ranking.png"
+    ],
+    [
+      "TITLEMENU_SOLO",
+      "Data\/TEXTURE\/TitleMenu\/TitleMenu_solo.png"
+    ],
+    [
+      "TITLEMENU_VS",
+      "Data\/TEXTURE\/TitleMenu\/TitleMenu_vs.png"
     ]
   ]
 }
