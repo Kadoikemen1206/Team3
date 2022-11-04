@@ -78,5 +78,7 @@ private:
 	bool		m_bRanking;						// RANKINGフラグ
 	bool		m_bSelect;						// メニュー選択できるかのフラグ
 	bool		m_bGameMenu;					// ゲームメニューフラグ
+
+	static	EMenu	m_eType;					// メニューのタイプ
 };
 #endif

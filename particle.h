@@ -35,6 +35,7 @@ public:
 	//セッター
 	void SetPath(std::string url) { m_path = url; }
 	void SetBehavior(EBehaviorType behavior) { m_behavior = behavior; }
+	void SetLower(D3DXVECTOR3 pos) { m_lowerPos = pos; }
 	void SetDelay(int time) { m_nDelay = time; }
 	void SetGravity(bool set) { m_bGravity = set; }
 	void SetGravity(bool set, float value) { m_bGravity = set, m_fFallSpeed = value; }

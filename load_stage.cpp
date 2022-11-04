@@ -34,8 +34,14 @@ void CLoadStage::LoadAll(const D3DXVECTOR3& inPos)
 		D3DXVECTOR3 rot = D3DXVECTOR3(list["STAGE"][i]["ROT"][0], list["STAGE"][i]["ROT"][1], list["STAGE"][i]["ROT"][2]);
 		objectX->SetRot(rot);
 
+		bool collision = list["STAGE"][i]["COLLISION"] == "TRUE";
+		objectX->SetCollisionFlag(collision);
+
 		// ƒ‚ƒfƒ‹‚ÌÝ’è
 		std::string tag = list["STAGE"][i]["MODEL"];
 		objectX->LoadModel(tag.c_str());
+
+		// ˆÊ’u‚ÌÄŒvŽZ
+		//objectX->CalculationVtx();
 	}
 }

@@ -193,7 +193,7 @@ void CParticle::DetailSetting()
 
 	if (m_bBounce)
 	{// バウンドを使用する場合
-		if (m_pos.y <= 0.0f)
+		if (m_pos.y <= m_lowerPos.y)
 		{
 			move.y += 1.0f * m_fTouchAttenuation;
 			m_fTouchAttenuation -= 0.02f;

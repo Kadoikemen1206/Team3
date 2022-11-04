@@ -289,6 +289,19 @@ void CTitleMenu::SelectMenu(void)
 			}
 		}
 	}
+
+	else
+	{
+		if (pInput->Trigger(DIK_RETURN))
+		{
+			for (int nCnt = 0; nCnt < m_nTextureMax - 2; nCnt++)
+			{
+				// タイトルメニュー ショートカット
+				m_apObject2D[nCnt]->SetPos(D3DXVECTOR3((float)SCREEN_WIDTH_HALF, (float)SCREEN_HEIGHT_HALF, 0.0f));
+				m_bSelect = true;
+			}
+		}
+	}
 }
 
 //=============================================================================
