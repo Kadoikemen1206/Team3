@@ -13,6 +13,7 @@
 #include "application.h"
 #include "main.h"
 #include "objectX_group.h"
+#include "texture.h"
 
 //=============================================================================
 // コンストラクタ
@@ -70,7 +71,7 @@ void CObjectX::Draw()
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
-	D3DXMATRIX mtxRot, mtxTrans;		//計算用マトリックス
+	D3DXMATRIX mtxRot, mtxTrans, mtxParent;		//計算用マトリックス
 	D3DMATERIAL9 matDef;				//現在のマテリアル保存用
 	D3DXMATERIAL *pMat;					//マテリアルデータへのポインタ
 
@@ -84,6 +85,14 @@ void CObjectX::Draw()
 	//位置を反映
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);	//(※行列移動関数(第1引数にx,y,z方向の移動行列を作成))
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+
+	if (m_pParent != nullptr)
+	{
+		mtxParent = m_pParent->GetMtxWorld();
+
+		// 行列掛け算関数
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
+	}
 
 	//Projection();
 
@@ -107,6 +116,148 @@ void CObjectX::Draw()
 
 	//保持していたマテリアルを戻す
 	pDevice->SetMaterial(&matDef);
+}
+
+//=============================================================================
+// 描画
+// Author : 唐﨑結斗
+// 概要 : 描画を行う
+//=============================================================================
+void CObjectX::Draw(D3DXMATRIX mtxParent)
+{
+	// 計算用マトリックス
+	D3DXMATRIX mtxRot, mtxTrans, mtxScaling;
+
+	// 現在のマテリアル保存用
+	D3DMATERIAL9 matDef;
+
+	// ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&m_mtxWorld);
+
+	// 向きの反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);	// 行列回転関数
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);				// 行列掛け算関数 
+
+	// 位置を反映
+	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);		// 行列移動関数
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);			// 行列掛け算関数
+
+	// 行列掛け算関数
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
+
+	// デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
+
+	// ワールドマトリックスの設定
+	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
+
+	// 現在のマテリアルを保持
+	pDevice->GetMaterial(&matDef);
+
+	// テクスチャポインタの取得
+	CTexture *pTexture = CApplication::GetTexture();
+
+	// マテリアルデータへのポインタ
+	D3DXMATERIAL *pMat;
+
+	if (m_pBuffMat != nullptr)
+	{// マテリアルデータへのポインタを取得
+		pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
+
+		for (int nCntMat = 0; nCntMat < (int)m_NumMat; nCntMat++)
+		{// マテリアルの設定
+			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+
+			// テクスチャの設定
+			pDevice->SetTexture(0, pTexture->GetTexture("NULL"));
+
+			// モデルパーツの描画
+			m_pMesh->DrawSubset(nCntMat);
+
+			// テクスチャの設定
+			pDevice->SetTexture(0, nullptr);
+		}
+	}
+
+	// 保持していたマテリアルを戻す
+	pDevice->SetMaterial(&matDef);
+}
+
+//=============================================================================
+// 頂点最大小値の計算処理
+//=============================================================================
+void CObjectX::CalculationVtx()
+{
+	m_MinVtx = D3DXVECTOR3(FLT_MAX, FLT_MAX, FLT_MAX);
+	m_MaxVtx = D3DXVECTOR3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+
+	int nNumVtx;	// 頂点数保存用変数
+	DWORD sizeFVF;	// 頂点フォーマットのサイズ
+	BYTE *pVtxBuff;	// 頂点バッファへのポインタ
+
+	//頂点数の取得
+	nNumVtx = m_pMesh->GetNumVertices();
+
+	//頂点フォーマットのサイズを取得
+	sizeFVF = D3DXGetFVFVertexSize(m_pMesh->GetFVF());
+
+	//頂点バッファのロック
+	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
+
+	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
+	{
+		D3DXMATRIX mtxRot, mtxTrans, mtxWorld;
+
+		D3DXMatrixIdentity(&mtxWorld);
+
+		//頂点座標の代入
+		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;
+
+		// 向きの反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);	// 行列回転関数
+		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);					// 行列掛け算関数
+
+		// 位置を反映
+		D3DXMatrixTranslation(&mtxTrans, vtx.x, vtx.y, vtx.z);		// 行列移動関数
+		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);		// 行列掛け算関数
+
+		vtx = D3DXVECTOR3(mtxWorld._41, mtxWorld._42, mtxWorld._43);
+
+		D3DXVec3TransformCoord(&m_MaxVtx, &m_MaxVtx, &m_mtxWorld);
+
+		//X
+		if (vtx.x < m_MinVtx.x)
+		{//最小値
+			m_MinVtx.x = vtx.x;
+		}
+		if (vtx.x > m_MaxVtx.x)
+		{//最大値
+			m_MaxVtx.x = vtx.x;
+		}
+
+		//Y
+		if (vtx.y < m_MinVtx.y)
+		{//最小値
+			m_MinVtx.y = vtx.y;
+		}
+		if (vtx.y > m_MaxVtx.y)
+		{//最大値
+			m_MaxVtx.y = vtx.y;
+		}
+
+		//Z
+		if (vtx.z < m_MinVtx.z)
+		{//最小値
+			m_MinVtx.z = vtx.z;
+		}
+		if (vtx.z > m_MaxVtx.z)
+		{//最大値
+			m_MaxVtx.z = vtx.z;
+		}
+
+		//頂点フォーマットのサイズ分ポインタ進める
+		pVtxBuff += sizeFVF;
+	}
 }
 
 //=============================================================================
@@ -255,6 +406,11 @@ void CObjectX::Projection(void)
 //=============================================================================
 bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * pSize)
 {
+	if (!m_isCollision)
+	{
+		return false;
+	}
+
 	// 変数宣言
 	bool bIsLanding = false;
 
@@ -312,6 +468,11 @@ bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 //=============================================================================
 bool CObjectX::UpCollision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * pSize, D3DXVECTOR3 * pMove)
 {
+	if (!m_isCollision)
+	{
+		return false;
+	}
+
 	// 変数宣言
 	bool bIsLanding = false;
 

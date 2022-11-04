@@ -152,7 +152,7 @@ HRESULT CMeshfield::Init()
 		//3éüå≥äOêœÇÃåvéZ
 		Calculation3DNor[0] = IdxPosNor[1] - IdxPosNor[0];
 		Calculation3DNor[1] = IdxPosNor[2] - IdxPosNor[0];
-		D3DXVec3Cross(&VecAnswer, &Calculation3DNor[0], &Calculation3DNor[1]);
+		D3DXVec3Cross(&VecAnswer, &Calculation3DNor[1], &Calculation3DNor[0]);
 
 		if (nCnt % 2 == 0)
 		{

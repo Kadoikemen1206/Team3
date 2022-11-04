@@ -46,21 +46,21 @@ HRESULT CLight::Init(void)
 	ZeroMemory(&m_aLight[0], sizeof(m_aLight));		//←構造体変数をゼロクリアできる便利関数(memsetと同じ)
 
 	//ライトの種類を設定
-	m_aLight[0].Type = D3DLIGHT_DIRECTIONAL;		//平行光源
-	m_aLight[1].Type = D3DLIGHT_DIRECTIONAL;		//平行光源
-	m_aLight[2].Type = D3DLIGHT_DIRECTIONAL;		//平行光源
-	m_aLight[3].Type = D3DLIGHT_DIRECTIONAL;		//平行光源
-	m_aLight[4].Type = D3DLIGHT_DIRECTIONAL;		//平行光源
+	m_aLight[0].Type = D3DLIGHT_DIRECTIONAL;	// 平行光源
+	m_aLight[1].Type = D3DLIGHT_DIRECTIONAL;	// 平行光源
+	m_aLight[2].Type = D3DLIGHT_DIRECTIONAL;	// 平行光源
+	m_aLight[3].Type = D3DLIGHT_DIRECTIONAL;	// 平行光源
+	m_aLight[4].Type = D3DLIGHT_DIRECTIONAL;	// 平行光源
 
 	//ライトの拡散光を設定
-	m_aLight[0].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);		//ライトの色
-	m_aLight[1].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);		//ライトの色
-	m_aLight[2].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);		//ライトの色
-	m_aLight[3].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);		//ライトの色
-	m_aLight[4].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);		//ライトの色
+	m_aLight[0].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	// ライトの色
+	m_aLight[1].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	// ライトの色
+	m_aLight[2].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	// ライトの色
+	m_aLight[3].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	// ライトの色
+	m_aLight[4].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	// ライトの色
 
 	//ライトの方向を設定
-	vecDir1 = D3DXVECTOR3(-1.0f, -0.5f, -0.5f);
+	vecDir1 = D3DXVECTOR3(0.2f, -0.5f, 0.5f);
 	vecDir2 = D3DXVECTOR3(-0.3f, -0.8f, 0.3f);
 	vecDir3 = D3DXVECTOR3(0.8f, -0.4f, -0.2f);
 	vecDir4 = D3DXVECTOR3(-0.8f, -0.4f, 0.2f);
@@ -87,8 +87,8 @@ HRESULT CLight::Init(void)
 	pDevice->SetLight(4, &m_aLight[4]);
 
 	//ライトを有効にする
-	//pDevice->LightEnable(0, TRUE);
-	pDevice->LightEnable(1, TRUE);
+	pDevice->LightEnable(0, TRUE);
+	//pDevice->LightEnable(1, TRUE);
 	//pDevice->LightEnable(2, TRUE);
 	//pDevice->LightEnable(3, TRUE);
 	//pDevice->LightEnable(4, TRUE);
