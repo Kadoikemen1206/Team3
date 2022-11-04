@@ -217,6 +217,11 @@ void CPlayer::Update()
 			pos.z += cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
 		}
+		if (pInputKeyboard->Trigger(DIK_K))
+		{// ƒWƒƒƒ“ƒv
+			m_bJumpFlag = true;
+			move.y += 18.0f;
+		}
 	}
 
 	if (pos != m_posOld)

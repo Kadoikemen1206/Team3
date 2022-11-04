@@ -22,6 +22,7 @@ class CCamera;
 class CMeshfield;
 class CTime;
 class CFade;
+class CObstacle;
 
 //=============================================================================
 // クラスの定義
@@ -48,6 +49,8 @@ public:
 	static CPlayer *GetPlayer2P() { return m_pPlayer2P; }
 	static CCamera *GetCamera() { return m_pCamera; }
 	static CMeshfield *GetMeshfield() { return m_pMeshField; }
+	static CObstacle *GetObstacle1P() { return m_pObstacle1P; }
+	static CObstacle *GetObstacle2P() { return m_pObstacle2P; }
 
 private:
 	//-------------------------------------------------------------------------
@@ -60,6 +63,8 @@ private:
 	static CLight *m_pLight;				// ライトのポインタ
 	static CMeshfield *m_pMeshField;		// メッシュフィールドのポインタ	
 	static CTime *m_pTime;					// タイムのポインタ
+	static CObstacle *m_pObstacle1P;		// 1P障害物のポインタ
+	static CObstacle *m_pObstacle2P;		// 2P障害物のポインタ
 	CFade *m_pFade;							// フェードのポインタ
 };
 

@@ -32,7 +32,7 @@ CObject *CApplication::m_pMode = nullptr;
 CCamera *CApplication::m_pCamera = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
 CObjectXGroup *CApplication::m_pObjectXGroup = nullptr;
-CApplication::MODE CApplication::m_mode = MODE_TITLE;
+CApplication::MODE CApplication::m_mode = MODE_GAME;
 
 //=============================================================================
 // コンストラクタ
@@ -76,7 +76,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	// カメラの初期化
 	m_pCamera = new CCamera;
-	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);	// ソロ
+	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);	// ソロ
 	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);	// VS
 	m_pCamera->Init();
 
