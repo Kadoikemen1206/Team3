@@ -28,31 +28,39 @@ public:
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init() override;									// 初期化処理
-	void Uninit() override;										// 終了処理
-	void Update() override;										// 更新処理
-	void Draw() override;										// 描画処理
-	void VtxUpdate() override {};								// 頂点座標更新処理
-	void SetPos(D3DXVECTOR3 pos) override;						// 座標設定処理
-	void SetSize(D3DXVECTOR3 size) override;					// サイズ設定処理
-	void SetMove(D3DXVECTOR3 move) override;					// 移動量設定処理
-	void SetCol(D3DXCOLOR col) override;						// 色設定処理
-	void SetRot(D3DXVECTOR3 rot) override;						// 向き設定処理
-	D3DXVECTOR3 GetPos(void) override { return m_pos; }			// 座標取得処理
-	D3DXVECTOR3 GetSize(void) override { return m_size; }		// サイズ取得処理
-	D3DXVECTOR3 GetMove(void) override { return m_move; }		// 移動量取得処理
-	D3DXVECTOR3 GetRot(void) override { return m_rot; }			// 向き取得処理
-	D3DXCOLOR GetCol(void) override { return m_col; }			// 色取得処理
+	HRESULT Init() override;								// 初期化処理
+	void Uninit() override;									// 終了処理
+	void Update() override;									// 更新処理
+	void Draw() override;									// 描画処理
+	void Draw(D3DXMATRIX mtxParent);						// 描画処理
+	void VtxUpdate() override {};							// 頂点座標更新処理
+
+	// Setter
+	void SetPos(D3DXVECTOR3 pos) override;					// 座標設定処理
+	void SetSize(D3DXVECTOR3 size) override;				// サイズ設定処理
+	void SetMove(D3DXVECTOR3 move) override;				// 移動量設定処理
+	void SetCol(D3DXCOLOR col) override;					// 色設定処理
+	void SetRot(D3DXVECTOR3 rot) override;					// 向き設定処理
+	void SetMaxVtx(D3DXVECTOR3 Maxvtx);						// 頂点最大値設定処理
+	void SetMinVtx(D3DXVECTOR3 Minvtx);						// 頂点最小値設定処理
+	void SetParent(CObjectX* inParent) { m_pParent = inParent; }			// 親モデルの情報
+
+	// Getter
+	D3DXVECTOR3 GetPos(void) override { return m_pos; }		// 座標取得処理
+	D3DXVECTOR3 GetSize(void) override { return m_size; }	// サイズ取得処理
+	D3DXVECTOR3 GetMove(void) override { return m_move; }	// 移動量取得処理
+	D3DXVECTOR3 GetRot(void) override { return m_rot; }		// 向き取得処理
+	D3DXCOLOR GetCol(void) override { return m_col; }		// 色取得処理
+	D3DXVECTOR3 GetMaxVtx(void) { return m_MaxVtx; }		// 頂点最大値取得処理
+	D3DXVECTOR3 GetMinVtx(void) { return m_MinVtx; }		// 頂点最小値取得処理
+	CObjectX* GetParent(void) { return m_pParent; }			// 親モデルの情報
+	D3DXMATRIX GetMtxWorld(void) { return m_mtxWorld; }
 
 	static CObjectX *Create(D3DXVECTOR3 pos, int nPriority);	// 生成処理
 	void LoadModel(const char *aFileName);						// モデルの読み込み処理
 	void Projection(void);										// 平行投影処理
 	bool Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pSize);	// 当たり判定 (左右, 奥, 手前)
 	bool UpCollision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pSize, D3DXVECTOR3 *pMove);	// 当たり判定 (上側)
-	void SetMaxVtx(D3DXVECTOR3 Maxvtx);							// 頂点最大値設定処理
-	void SetMinVtx(D3DXVECTOR3 Minvtx);							// 頂点最小値設定処理
-	D3DXVECTOR3 GetMaxVtx(void) { return m_MaxVtx; }			// 頂点最大値取得処理
-	D3DXVECTOR3 GetMinVtx(void) { return m_MinVtx; }			// 頂点最小値取得処理
 
 private:
 	//-------------------------------------------------------------------------
@@ -66,9 +74,12 @@ private:
 	D3DXVECTOR3 m_MaxVtx;				// モデルの頂点最大値
 	D3DXCOLOR m_col;					// 色
 	D3DXMATRIX m_mtxWorld;				// ワールドマトリックス
+
 	LPD3DXMESH m_pMesh;					// メッシュ情報へのポインタ
 	LPD3DXBUFFER m_pBuffMat;			// マテリアル情報へのポインタ
 	DWORD m_NumMat;						// マテリアル情報の数
-};
 
+	CObjectX *m_pParent;				// 親モデルの情報
+
+};
 #endif
