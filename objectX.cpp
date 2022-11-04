@@ -329,6 +329,11 @@ void CObjectX::Projection(void)
 //=============================================================================
 bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * pSize)
 {
+	if (!m_isCollision)
+	{
+		return false;
+	}
+
 	// ïœêîêÈåæ
 	bool bIsLanding = false;
 
@@ -386,6 +391,11 @@ bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 //=============================================================================
 bool CObjectX::UpCollision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * pSize, D3DXVECTOR3 * pMove)
 {
+	if (!m_isCollision)
+	{
+		return false;
+	}
+
 	// ïœêîêÈåæ
 	bool bIsLanding = false;
 
