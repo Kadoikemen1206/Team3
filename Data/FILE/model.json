@@ -45,6 +45,10 @@
       "Data\/MODEL\/BookShelf02.x"
     ],
     [
+      "BOOKSHELF03",
+      "Data\/MODEL\/BookShelf03.x"
+    ],
+    [
       "OPEN BOOK",
       "Data\/MODEL\/open book.x"
     ],
@@ -111,6 +115,10 @@
     [
       "HOURGLASS",
       "Data\/MODEL\/hourglass.x"
+    ],
+    [
+      "PICTURE FRAME",
+      "Data\/MODEL\/picture frame.x"
     ],
     [
       "PLATE",
