@@ -55,7 +55,7 @@ HRESULT CObstacle::Init()
 	srand((unsigned int)time(NULL));	//起動時に一回だけ行うため初期化に書く
 
 	//モデルのロード
-	LoadModel("TRIANGLE");
+	LoadModel("BOX");
 
 	return S_OK;
 }
@@ -81,7 +81,7 @@ void CObstacle::Update()
 	D3DXVECTOR3 PlayerPos2 = CGame::GetPlayer2P()->GetPos();		//プレイヤー2POS情報の取得
 
 	// 連打で動く壁の処理関数呼び出し
-	//ObstacleMove = BarrageMoveWall(ObstaclePos, PlayerPos1, PlayerPos2, ObstacleMove);
+	ObstacleMove = BarrageMoveWall(ObstaclePos, PlayerPos1, PlayerPos2, ObstacleMove);
 	// 交互連打で動く壁の処理関数呼び出し
 	//ObstacleMove = AlternateMoveWal(ObstaclePos, PlayerPos1, PlayerPos2, ObstacleMove);
 	// プレイヤーがゴールした時の関数呼び出し
@@ -90,7 +90,7 @@ void CObstacle::Update()
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 
-	if (CGimmick::GetGimmickType() == GIMMICKTYPE_ARROW
+	/*if (CGimmick::GetGimmickType() == GIMMICKTYPE_ARROW
 		&&ObstaclePos.x + 150.0f >= PlayerPos1.x && ObstaclePos.z + 150.0f >= PlayerPos1.z
 		&&ObstaclePos.x - 150.0f <= PlayerPos1.x && ObstaclePos.z - 150.0f <= PlayerPos1.z)
 	{
@@ -107,7 +107,7 @@ void CObstacle::Update()
 				m_ArrowFlag = true;
 			}
 		}
-	}
+	}*/
 
 	if (CGimmick::GetCompletion1P() == true)
 	{// 操作が完了した時に実行
