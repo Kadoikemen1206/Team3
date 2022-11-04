@@ -44,6 +44,7 @@ public:
 	void SetMaxVtx(D3DXVECTOR3 Maxvtx);						// 頂点最大値設定処理
 	void SetMinVtx(D3DXVECTOR3 Minvtx);						// 頂点最小値設定処理
 	void SetParent(CObjectX* inParent) { m_pParent = inParent; }			// 親モデルの情報
+	void SetCollisionFlag(bool inFlag) { m_isCollision = inFlag; }
 
 	// Getter
 	D3DXVECTOR3 GetPos(void) override { return m_pos; }		// 座標取得処理
@@ -80,6 +81,6 @@ private:
 	DWORD m_NumMat;						// マテリアル情報の数
 
 	CObjectX *m_pParent;				// 親モデルの情報
-
+	bool m_isCollision;					// 当たり判定が必要か
 };
 #endif
