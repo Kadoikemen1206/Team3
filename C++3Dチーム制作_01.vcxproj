@@ -176,6 +176,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="meshfield.cpp" />
     <ClCompile Include="mode.cpp" />
+    <ClCompile Include="motion.cpp" />
+    <ClCompile Include="motion_model3D.cpp" />
     <ClCompile Include="number.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="objectX_group.cpp" />
@@ -185,6 +187,7 @@
     <ClCompile Include="objectX.cpp" />
     <ClCompile Include="obstacle.cpp" />
     <ClCompile Include="particle.cpp" />
+    <ClCompile Include="parts.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="precompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -216,6 +219,8 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="meshfield.h" />
     <ClInclude Include="mode.h" />
+    <ClInclude Include="motion.h" />
+    <ClInclude Include="motion_model3D.h" />
     <ClInclude Include="number.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="objectX_group.h" />
@@ -225,6 +230,7 @@
     <ClInclude Include="objectX.h" />
     <ClInclude Include="obstacle.h" />
     <ClInclude Include="particle.h" />
+    <ClInclude Include="parts.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="ranking.h" />

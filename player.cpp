@@ -13,7 +13,7 @@
 #include "camera.h"
 #include "input.h"
 #include "main.h"
-#include "objectX.h"
+#include "motion_model3D.h"
 #include "player.h"
 #include "shadow.h"
 #include "renderer.h"
@@ -53,14 +53,14 @@ CPlayer::~CPlayer()
 HRESULT CPlayer::Init()
 {
 	//オブジェクトの初期化
-	CObjectX::Init();
+	CMotionModel3D::Init();
 
 	//モデルのロード
-	LoadModel("PLAYER");
+	SetMotion("Data/MODEL/PLAYER/player_new/Motion/motion.txt");
 	
-	CObjectX::SetPos(D3DXVECTOR3(0.0f, 20.0f, 0.0f));
-	m_posOld = CObjectX::GetPos();
-	CObjectX::SetMove(D3DXVECTOR3(0.0f, 60.0f, 0.0f));
+	SetPos(D3DXVECTOR3(0.0f, 20.0f, 0.0f));
+	m_posOld = GetPos();
+	SetMove(D3DXVECTOR3(0.0f, 60.0f, 0.0f));
 
 	return S_OK;
 }
@@ -70,6 +70,8 @@ HRESULT CPlayer::Init()
 //=============================================================================
 void CPlayer::Update()
 {
+	CMotionModel3D::Update();
+
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 
@@ -77,13 +79,13 @@ void CPlayer::Update()
 	D3DXVECTOR3 pCameraRot = CCamera::GetRot();
 
 	// 座標取得
-	D3DXVECTOR3 pos = CObjectX::GetPos();
+	D3DXVECTOR3 pos = GetPos();
 
 	// 向き取得
-	D3DXVECTOR3 rot = CObjectX::GetRot();
+	D3DXVECTOR3 rot = GetRot();
 
 	// 前回の位置を保存
-	D3DXVECTOR3 move = CObjectX::GetMove();
+	D3DXVECTOR3 move = GetMove();
 
 	// 重力設定
 	move.y -= 1.0f;
@@ -296,8 +298,8 @@ void CPlayer::Update()
 		if (objType == OBJTYPE_MODEL)
 		{
 			CObjectX *pObjectX = (CObjectX*)pObject;
-			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &CObjectX::GetSize());
-			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &CObjectX::GetSize(), &move);
+			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &GetSize());
+			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetSize(), &move);
 		}
 
 		//ポインタを次に進める
@@ -332,12 +334,9 @@ void CPlayer::Update()
 	}
 
 	// プレイヤーのposとrotとmoveの設定
-	CObjectX::SetPos(pos);
-	CObjectX::SetRot(rot);
-	CObjectX::SetMove(move);
-
-	// CObjectXの更新処理
-	CObjectX::Update();
+	SetPos(pos);
+	SetRot(rot);
+	SetMove(move);
 }
 
 //=============================================================================

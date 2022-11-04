@@ -14,19 +14,19 @@ NUM_MODEL = 13
 # モデルファイル名
 #------------------------------------------------------------------------------
 
-MODEL_FILENAME = data/MODEL/player/body.x				# [0]体
-MODEL_FILENAME = data/MODEL/player/face.x				# [1]顔
-MODEL_FILENAME = data/MODEL/player/left_arm.x			# [2]左腕
-MODEL_FILENAME = data/MODEL/player/left_hand.x			# [3]左手
-MODEL_FILENAME = data/MODEL/player/left_leg.x			# [4]左脚
-MODEL_FILENAME = data/MODEL/player/left_thigh.x			# [5]左モモ
-MODEL_FILENAME = data/MODEL/player/left_upper_arm.x		# [6]左腕U
-MODEL_FILENAME = data/MODEL/player/right_arm.x			# [7]右腕
-MODEL_FILENAME = data/MODEL/player/right_hand.x			# [8]右手
-MODEL_FILENAME = data/MODEL/player/right_leg.x			# [9]右脚
-MODEL_FILENAME = data/MODEL/player/right_thigh.x		# [10]右モモ
-MODEL_FILENAME = data/MODEL/player/right_upper_arm.x	# [11]右腕U
-MODEL_FILENAME = data/MODEL/player/waist.x				# [12]腰
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/body.x				# [0]体
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/face.x				# [1]顔
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/left_arm.x			# [2]左腕U
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/left_hand.x			# [3]左手
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/left_leg.x			# [4]左脚
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/left_thigh.x			# [5]左モモ
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/left_upper_arm.x		# [6]左腕U
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/right_arm.x			# [7]右腕
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/right_hand.x			# [8]右手
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/right_leg.x			# [9]右脚
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/right_thigh.x		# [10]右モモ
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/right_upper_arm.x	# [11]右腕U
+MODEL_FILENAME = Data/MODEL/PLAYER/player_new/waist.x				# [12]腰
 
 #------------------------------------------------------------------------------
 # キャラクター情報
