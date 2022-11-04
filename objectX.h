@@ -35,6 +35,8 @@ public:
 	void Draw(D3DXMATRIX mtxParent);						// 描画処理
 	void VtxUpdate() override {};							// 頂点座標更新処理
 
+	void CalculationVtx();										// 頂点最大小値の計算処理
+
 	// Setter
 	void SetPos(D3DXVECTOR3 pos) override;					// 座標設定処理
 	void SetSize(D3DXVECTOR3 size) override;				// サイズ設定処理

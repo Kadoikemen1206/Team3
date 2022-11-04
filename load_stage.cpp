@@ -40,5 +40,8 @@ void CLoadStage::LoadAll(const D3DXVECTOR3& inPos)
 		// ƒ‚ƒfƒ‹‚ÌÝ’è
 		std::string tag = list["STAGE"][i]["MODEL"];
 		objectX->LoadModel(tag.c_str());
+
+		// ˆÊ’u‚ÌÄŒvŽZ
+		objectX->CalculationVtx();
 	}
 }

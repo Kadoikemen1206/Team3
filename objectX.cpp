@@ -184,6 +184,83 @@ void CObjectX::Draw(D3DXMATRIX mtxParent)
 }
 
 //=============================================================================
+// 頂点最大小値の計算処理
+//=============================================================================
+void CObjectX::CalculationVtx()
+{
+	m_MinVtx = D3DXVECTOR3(FLT_MAX, FLT_MAX, FLT_MAX);
+	m_MaxVtx = D3DXVECTOR3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+
+	int nNumVtx;	// 頂点数保存用変数
+	DWORD sizeFVF;	// 頂点フォーマットのサイズ
+	BYTE *pVtxBuff;	// 頂点バッファへのポインタ
+
+	//頂点数の取得
+	nNumVtx = m_pMesh->GetNumVertices();
+
+	//頂点フォーマットのサイズを取得
+	sizeFVF = D3DXGetFVFVertexSize(m_pMesh->GetFVF());
+
+	//頂点バッファのロック
+	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
+
+	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
+	{
+		D3DXMATRIX mtxRot, mtxTrans, mtxWorld;
+
+		D3DXMatrixIdentity(&mtxWorld);
+
+		//頂点座標の代入
+		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;
+
+		// 向きの反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);	// 行列回転関数
+		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);					// 行列掛け算関数
+
+		// 位置を反映
+		D3DXMatrixTranslation(&mtxTrans, vtx.x, vtx.y, vtx.z);		// 行列移動関数
+		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);		// 行列掛け算関数
+
+		vtx = D3DXVECTOR3(mtxWorld._41, mtxWorld._42, mtxWorld._43);
+
+		D3DXVec3TransformCoord(&m_MaxVtx, &m_MaxVtx, &m_mtxWorld);
+
+		//X
+		if (vtx.x < m_MinVtx.x)
+		{//最小値
+			m_MinVtx.x = vtx.x;
+		}
+		if (vtx.x > m_MaxVtx.x)
+		{//最大値
+			m_MaxVtx.x = vtx.x;
+		}
+
+		//Y
+		if (vtx.y < m_MinVtx.y)
+		{//最小値
+			m_MinVtx.y = vtx.y;
+		}
+		if (vtx.y > m_MaxVtx.y)
+		{//最大値
+			m_MaxVtx.y = vtx.y;
+		}
+
+		//Z
+		if (vtx.z < m_MinVtx.z)
+		{//最小値
+			m_MinVtx.z = vtx.z;
+		}
+		if (vtx.z > m_MaxVtx.z)
+		{//最大値
+			m_MaxVtx.z = vtx.z;
+		}
+
+		//頂点フォーマットのサイズ分ポインタ進める
+		pVtxBuff += sizeFVF;
+	}
+}
+
+//=============================================================================
 // 座標設定関数
 //=============================================================================
 void CObjectX::SetPos(D3DXVECTOR3 pos)
