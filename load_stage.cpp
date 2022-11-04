@@ -42,6 +42,6 @@ void CLoadStage::LoadAll(const D3DXVECTOR3& inPos)
 		objectX->LoadModel(tag.c_str());
 
 		// ˆÊ’u‚ÌÄŒvŽZ
-		objectX->CalculationVtx();
+		//objectX->CalculationVtx();
 	}
 }
