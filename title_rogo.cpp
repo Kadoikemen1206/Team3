@@ -69,6 +69,9 @@ HRESULT CTitleRogo::Init()
 
 	m_apObject2D[13] = CObject2D::Create("TITLE_T", D3DXVECTOR3((float)SCREEN_WIDTH_HALF, -(float)SCREEN_HEIGHT_HALF, 0.0f), D3DXVECTOR3(1280.0f, 720.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 
+	// フラグの初期化
+	m_bTitleMenuFlag = false;
+
 	// オブジェクトの初期化処理
 	CObject2D::Init();
 
@@ -123,7 +126,7 @@ void CTitleRogo::Update()
 	{
 		for (int nCnt = 0; nCnt < m_nTextureMax; nCnt++)
 		{
-			if (pos[nCnt].y >= 150.0f)
+			if (pos[nCnt].y >= 180.0f)
 			{
 				m_apObject2D[nCnt]->SetMove(D3DXVECTOR3(0.0f, -2.0f, 0.0f));
 			}
