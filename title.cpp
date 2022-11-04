@@ -18,6 +18,7 @@
 #include "meshfield.h"
 #include "light.h"
 #include "title_rogo.h"
+#include "title_menu.h"
 #include "load_stage.h"
 
 //=============================================================================
@@ -59,8 +60,11 @@ HRESULT CTitle::Init(void)
 	// ステージのロード
 	CLoadStage::LoadAll();
 
-	//タイトルロゴの生成
+	// タイトルロゴの生成
 	CTitleRogo::Create();
+
+	// タイトルメニューの生成
+	CTitleMenu::Create();
 
 	return S_OK;
 }
@@ -108,15 +112,15 @@ void CTitle::Update(void)
 	pCamera->SetPosV(posV);
 	pCamera->SetPosR(posR);
 
-	// 画面遷移処理
-	if (m_pFade->GetFade() == CFade::FADE_NONE)
-	{
-		if (pInput->Trigger(DIK_RETURN))
-		{
-			// フェード生成
-			CFade::SetFade(CApplication::MODE_GAME);
-		}
-	}
+	//// 画面遷移処理
+	//if (m_pFade->GetFade() == CFade::FADE_NONE)
+	//{
+	//	if (pInput->Trigger(DIK_RETURN))
+	//	{
+	//		// フェード生成
+	//		CFade::SetFade(CApplication::MODE_GAME);
+	//	}
+	//}
 }
 
 //=============================================================================
