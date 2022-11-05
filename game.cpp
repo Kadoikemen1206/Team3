@@ -28,6 +28,7 @@
 #include "obstacle.h"
 #include "load_stage.h"
 #include "barrage_move_wall.h"
+#include "alternate_move_wall.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -73,7 +74,7 @@ HRESULT CGame::Init(void)
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
 
 	// ギミックの生成
-	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
 
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);

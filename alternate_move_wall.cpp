@@ -9,7 +9,7 @@
 // インクルードファイル
 //=============================================================================
 #include <time.h>
-#include "barrage_move_wall.h"
+#include "alternate_move_wall.h"
 #include "player.h"
 #include "input.h"
 #include "application.h"
@@ -26,11 +26,10 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CBarrageMoveWall::CBarrageMoveWall(int nPriority)
+CAlternateMoveWall::CAlternateMoveWall(int nPriority)
 {
 	m_PosOld = {};
 	m_nTriggerCount = 0;
-	m_Completion = false;
 
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_GIMMICK);
@@ -39,14 +38,14 @@ CBarrageMoveWall::CBarrageMoveWall(int nPriority)
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CBarrageMoveWall::~CBarrageMoveWall()
+CAlternateMoveWall::~CAlternateMoveWall()
 {
 }
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CBarrageMoveWall::Init()
+HRESULT CAlternateMoveWall::Init()
 {
 	// ギミックの初期化
 	CGimmick::Init();
@@ -62,7 +61,7 @@ HRESULT CBarrageMoveWall::Init()
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CBarrageMoveWall::Uninit()
+void CAlternateMoveWall::Uninit()
 {
 	CGimmick::Uninit();
 }
@@ -70,7 +69,7 @@ void CBarrageMoveWall::Uninit()
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CBarrageMoveWall::Update()
+void CAlternateMoveWall::Update()
 {
 	if (GetCompletion())
 	{
@@ -126,7 +125,7 @@ void CBarrageMoveWall::Update()
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CBarrageMoveWall::Draw()
+void CAlternateMoveWall::Draw()
 {
 	CGimmick::Draw();
 }
@@ -134,7 +133,7 @@ void CBarrageMoveWall::Draw()
 //=============================================================================
 // 生成処理
 //=============================================================================
-void CBarrageMoveWall::ConstOperate()
+void CAlternateMoveWall::ConstOperate()
 {
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
@@ -153,22 +152,27 @@ void CBarrageMoveWall::ConstOperate()
 
 	/* ↓操作が完了していない↓ */
 
-	if (pInputKeyboard->Trigger(DIK_SPACE))
-	{// SPACEキーを押したらカウントを増やす
+	if (pInputKeyboard->Trigger(DIK_Z) && m_nAlternateFlag == false)
+	{// Zキーを押したら実行
 		m_nTriggerCount++;
-		if (m_nTriggerCount >= 20)
-		{// カウントが20回以上行ったら実行
-		 // ギミック(壁)が上に移動
-			// 操作が完了した
-			SetCompletion(true);
-		}
+		m_nAlternateFlag = true;
+	}
+	if (pInputKeyboard->Trigger(DIK_C) && m_nAlternateFlag == true)
+	{// Cキーを押したら実行
+		m_nTriggerCount++;
+		m_nAlternateFlag = false;
+	}
+	if (m_nTriggerCount >= 20)
+	{
+		// 操作が完了した
+		CGimmick::SetCompletion(true);
 	}
 }
 
 //=============================================================================
 // キーをカウントする関数
 //=============================================================================
-void CBarrageMoveWall::KeyCount()
+void CAlternateMoveWall::KeyCount()
 {
 	m_nTriggerCount++;
 }
@@ -176,9 +180,9 @@ void CBarrageMoveWall::KeyCount()
 //=============================================================================
 // 操作処理
 //=============================================================================
-CBarrageMoveWall* CBarrageMoveWall::Create(const D3DXVECTOR3& pos)
+CAlternateMoveWall* CAlternateMoveWall::Create(const D3DXVECTOR3& pos)
 {
-	CBarrageMoveWall *pObstacle = new CBarrageMoveWall();
+	CAlternateMoveWall *pObstacle = new CAlternateMoveWall();
 
 	if (pObstacle != nullptr)
 	{

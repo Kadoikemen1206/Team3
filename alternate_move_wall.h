@@ -5,8 +5,8 @@
 // Author : Yuda Kaito
 //
 //=============================================================================
-#ifndef _BARRAGE_MOVE_WALL_H_
-#define _BARRAGE_MOVE_WALL_H_
+#ifndef _ALTERNATE_MOVE_WALL_H_
+#define _ALTERNATE_MOVE_WALL_H_
 
 //=============================================================================
 // インクルードファイル
@@ -16,17 +16,17 @@
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CBarrageMoveWall : public CGimmick
+class CAlternateMoveWall : public CGimmick
 {
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	explicit CBarrageMoveWall(int nPriority = PRIORITY_LEVEL3);
-	~CBarrageMoveWall() override;
+	explicit CAlternateMoveWall(int nPriority = PRIORITY_LEVEL3);
+	~CAlternateMoveWall() override;
 
 	// 生成処理
-	static CBarrageMoveWall *Create(const D3DXVECTOR3& pos);
+	static CAlternateMoveWall *Create(const D3DXVECTOR3& pos);
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
@@ -46,6 +46,6 @@ private:
 	D3DXVECTOR3 m_PosOld;			// 前回の位置
 	int m_nTriggerCount;			// キーを押した回数
 
-	bool m_Completion;				// Gimmickが完了したか否かフラグ
+	bool m_nAlternateFlag;
 };
 #endif
