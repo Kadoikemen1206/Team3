@@ -239,7 +239,7 @@ void CObstacle::Draw()
 //=============================================================================
 // 生成処理
 //=============================================================================
-void CObstacle::ConstOperate(int barrage, int rotate)
+void CObstacle::ConstOperate()
 {
 }
 
@@ -279,7 +279,7 @@ D3DXVECTOR3 CObstacle::BarrageMoveWall(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Po
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 
-	if (CGimmick::GetCompletion1P() == false)
+	if (CGimmick::GetCompletion() == false)
 	{// 操作を完了していない時実行
 		if (CGame::GetPlayer1P()->GetPlayerType() == CPlayer::EPLAYER_1P
 			&&ObstaclePos.x + 150.0f >= P1Pos.x && ObstaclePos.z + 150.0f >= P1Pos.z
@@ -300,12 +300,13 @@ D3DXVECTOR3 CObstacle::BarrageMoveWall(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Po
 					 // ギミック(壁)が上に移動
  					ObstacleMove = D3DXVECTOR3(0.0f, 2.5f,0.0f);
 					// 操作が完了した
-					CGimmick::SetCompletion1P(true);
+					CGimmick::SetCompletion(true);
 				}
 			}
 		}
 	}
-	if (CGimmick::GetCompletion2P() == false)
+
+	if (CGimmick::GetCompletion() == false)
 	{// 操作を完了していない時実行
 		if (CGame::GetPlayer2P()->GetPlayerType() == CPlayer::EPLAYER_2P
 			&&ObstaclePos.x + 150.0f >= P2Pos.x && ObstaclePos.z + 150.0f >= P2Pos.z
@@ -326,7 +327,7 @@ D3DXVECTOR3 CObstacle::BarrageMoveWall(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Po
 				 // ギミック(壁)が上に移動
 					ObstacleMove2P = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
 					// 操作が完了した
-					CGimmick::SetCompletion2P(true);
+					CGimmick::SetCompletion(true);
 				}
 			}
 		}
@@ -343,7 +344,7 @@ D3DXVECTOR3 CObstacle::AlternateMoveWal(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1P
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 
-	if (CGimmick::GetCompletion1P() == false || CGimmick::GetCompletion2P() == false)
+	if (CGimmick::GetCompletion() == false || CGimmick::GetCompletion() == false)
 	{// 操作を完了していない時実行
 		if (CGame::GetPlayer1P()->GetPlayerType() == CPlayer::EPLAYER_1P
 			&&ObstaclePos.x + 150.0f >= P1Pos.x && ObstaclePos.z + 150.0f >= P1Pos.z
@@ -379,7 +380,7 @@ D3DXVECTOR3 CObstacle::AlternateMoveWal(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1P
 					ObstacleMove = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
 
 					// 操作が完了した
-					CGimmick::SetCompletion1P(true);
+					CGimmick::SetCompletion(true);
 				}
 			}
 			if (CGame::GetPlayer2P()->GetPlayerType() == CPlayer::EPLAYER_2P)
@@ -400,7 +401,7 @@ D3DXVECTOR3 CObstacle::AlternateMoveWal(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1P
 					ObstacleMove = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
 
 					// 操作が完了した
-					CGimmick::SetCompletion2P(true);
+					CGimmick::SetCompletion(true);
 				}
 			}
 		}
@@ -420,33 +421,6 @@ D3DXVECTOR3 CObstacle::PushMoveObject(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Pos
 	{
 		// 重力設定
 		ObstacleMove.y -= 0.0f;
-
-		//if (CGimmick::GetCompletion1P() == false || CGimmick::GetCompletion1P() == false)
-		//{// 操作を完了していない時実行
-		//	if (CGame::GetPlayer1P()->GetPlayerType() == CPlayer::EPLAYER_1P
-		//		&&ObstaclePos.x + 50.0f >= P1Pos.x && ObstaclePos.z + 75.0f >= P1Pos.z
-		//		&&ObstaclePos.x - 50.0f <= P1Pos.x && ObstaclePos.z - 75.0f <= P1Pos.z)
-		//	{// プレイヤータイプが1Pだったら && ギミックの範囲内にいたら
-
-		//		m_AreaFlag1P = true;
-		//		if (m_AreaFlag1P == true)
-		//		{
-		//			//プレイヤー1の移動を1.5fにする
-		//			CGame::GetPlayer1P()->SetSpeed(1.5f);
-		//			ObstacleMove.z = 1.5f;
-		//		}
-		//	}
-		//	else
-		//	{
-		//		m_AreaFlag1P = false;
-
-		//		if (m_AreaFlag1P == false)
-		//		{
-		//			//プレイヤー1の移動を1.5fにする
-		//			CGame::GetPlayer1P()->SetSpeed(5.0f);
-		//			ObstacleMove.z = 0.0f;
-		//		}
-		//	}
 
 		if (CGame::GetPlayer2P()->GetPlayerType() == CPlayer::EPLAYER_2P
 			&&ObstaclePos.x + 50.0f >= P2Pos.x && ObstaclePos.z + 75.0f >= P2Pos.z
@@ -472,39 +446,6 @@ D3DXVECTOR3 CObstacle::PushMoveObject(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Pos
 				ObstacleMove.z = 0.0f;
 			}
 		}
-		//}
-	//}
-
-	//// ポインタ宣言
-	//CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
-
-	//// ギミックとモデルの当たり判定
-	//while (pObject != nullptr)
-	//{
-	//	if (pObject == this)
-	//	{
-	//		pObject = pObject->GetNext();
-	//		continue;
-	//	}
-
-	//	//変数宣言
-	//	CObject::EObjType objType;
-
-	//	//オブジェクトのタイプを取得
-	//	objType = pObject->GetObjType();
-
-	//	if (objType == OBJTYPE_MODEL)
-	//	{
-	//		CObjectX *pObjectX = (CObjectX*)pObject;
-	//		m_bIsLanding = pObjectX->Collision(&ObstaclePos, &m_PosOld, &CObjectX::GetSize());
-	//		m_bIsLandingUp = pObjectX->UpCollision(&ObstaclePos, &m_PosOld, &CObjectX::GetSize(), &ObstacleMove);
-	//	}
-
-	//	//ポインタを次に進める
-	//	pObject = pObject->GetNext();
-	//}
-
-		
 	}
 	return ObstacleMove;
 }
@@ -518,10 +459,10 @@ bool CObstacle::PlayerGoal(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Pos, D3DXVECTO
 	{
 		if (ObstaclePos.x + 150.0f >= P1Pos.x && ObstaclePos.z + 50.0f >= P1Pos.z
 			&&ObstaclePos.x - 150.0f <= P1Pos.x && ObstaclePos.z - 50.0f <= P1Pos.z
-			&&CGimmick::GetCompletion1P() == false && PlayerGoalFlag == false
+			&&CGimmick::GetCompletion() == false && PlayerGoalFlag == false
 			|| ObstaclePos.x + 150.0f >= P2Pos.x && ObstaclePos.z + 50.0f >= P2Pos.z
 			&&ObstaclePos.x - 150.0f <= P2Pos.x && ObstaclePos.z - 50.0f <= P2Pos.z
-			&&CGimmick::GetCompletion2P() == false && PlayerGoalFlag == false)
+			&&CGimmick::GetCompletion() == false && PlayerGoalFlag == false)
 		{// ギミックの範囲 && 操作を完了していない時実行
 		 //ゲームクリア
 			PlayerGoalFlag = true;
@@ -547,29 +488,34 @@ bool CObstacle::BarrageMoveWall2(CObstacle * pCObstacle, D3DXVECTOR3 ObstaclePos
 	// 変数宣言
 	bool bFlag = true;
 
-	if (pCObstacle->GetCompletion() == false)
-	{// 操作を完了していない時実行
-		if (((ObstaclePos.x + 150.0f) >= PlayerPos.x) && ((ObstaclePos.z + 150.0f) >= PlayerPos.z)
-			&&((ObstaclePos.x - 150.0f) <= PlayerPos.x) && ((ObstaclePos.z - 150.0f) <= PlayerPos.z))
-		{// プレイヤーを動かさないようにするフラグを有効にする
-			bFlag = false;
-		}
+	if (pCObstacle->GetCompletion())
+	{
+		// 操作が完了している
+		return bFlag;
+	}
 
-		if (pCObstacle->GetGimmickType() == GIMMICKTYPE_BARRAGEMOVEWALL)
-		{// ギミックのタイプが連打で動く壁だった時実行
-			if (!bFlag)
-			{
-				if (pInputKeyboard->Trigger(DIK_SPACE))
-				{// SPACEキーを押したらカウントを増やす
-					m_nTriggerCount1++;
-					if (m_nTriggerCount1 >= 20)
-					{// カウントが20回以上行ったら実行
-					 // ギミック(壁)が上に移動
-						bFlag = true;
-						// 操作が完了した
-						pCObstacle->SetCompletion(true);
-						pCObstacle->SetStopFlag(true);
-					}
+	/* ↓操作が完了していない↓ */
+
+	if (((ObstaclePos.x + 150.0f) >= PlayerPos.x) && ((ObstaclePos.z + 150.0f) >= PlayerPos.z)
+		&& ((ObstaclePos.x - 150.0f) <= PlayerPos.x) && ((ObstaclePos.z - 150.0f) <= PlayerPos.z))
+	{// プレイヤーを動かさないようにするフラグを有効にする
+		bFlag = false;
+	}
+
+	if (pCObstacle->GetGimmickType() == GIMMICKTYPE_BARRAGEMOVEWALL)
+	{// ギミックのタイプが連打で動く壁だった時実行
+		if (!bFlag)
+		{
+			if (pInputKeyboard->Trigger(DIK_SPACE))
+			{// SPACEキーを押したらカウントを増やす
+				m_nTriggerCount1++;
+				if (m_nTriggerCount1 >= 20)
+				{// カウントが20回以上行ったら実行
+				 // ギミック(壁)が上に移動
+					bFlag = true;
+					// 操作が完了した
+					pCObstacle->SetCompletion(true);
+					pCObstacle->SetStopFlag(true);
 				}
 			}
 		}

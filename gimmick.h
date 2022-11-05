@@ -15,6 +15,7 @@
 //=============================================================================
 // 前方定義
 //=============================================================================
+class CPlayer;
 
 //=============================================================================
 // クラスの定義
@@ -51,23 +52,21 @@ public:
 	GIMMICKTYPE GetGimmickType(void) { return m_GimmickType; }	// ギミックの種類の取得
 	void SetGimmickType(GIMMICKTYPE type);						// ギミックの種類の設定
 
-	D3DXVECTOR3 GetArea() { return m_Area; }					// ギミックのエリア取得処理
+	bool Collision(CPlayer* inPlayer);							// プレイヤーが接触
 
-	virtual void ConstOperate(int barrage,int rotate) = 0;		// 一定の操作(連打、回転)
+	virtual void ConstOperate() = 0;		// 一定の操作(連打、回転)
 
-	static bool GetCompletion1P();			// 完了したかを知らせる
-	static bool GetCompletion2P();			// 完了したかを知らせる
-	static void SetCompletion1P(bool flag);	// 1Pが完了したかを設定
-	static void SetCompletion2P(bool flag);	// 2Pが完了したかを設定
+	void SetCompletion(bool flag) { m_Completion = flag; }		// 完了したかを設定
+	bool GetCompletion() { return m_Completion; }				// 完了したかを知らせる
 
+	CPlayer* GetHitPlayer() { return m_pHitPlayer; }
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
 	D3DXVECTOR3 m_Pos;				// ギミックの位置
 	GIMMICKTYPE m_GimmickType;		// ギミックの種類
-	static bool m_Completion1P;		// 1Pが完了したか否かフラグ
-	static bool m_Completion2P;		// 2Pが完了したか否かフラグ
-	static D3DXVECTOR3 m_Area;		// ギミックの範囲
+	CPlayer* m_pHitPlayer;			// 当たったプレイヤー
+	bool m_Completion;				// 完了したか否かフラグ
 };
 #endif

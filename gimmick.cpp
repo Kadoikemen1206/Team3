@@ -10,29 +10,16 @@
 //=============================================================================
 #include <assert.h>
 #include "application.h"
-#include "camera.h"
-#include "input.h"
 #include "main.h"
 #include "objectX.h"
 #include "gimmick.h"
-#include "shadow.h"
-#include "renderer.h"
-#include "meshfield.h"
-
-//=============================================================================
-// 静的メンバ変数宣言
-//=============================================================================
-bool CGimmick::m_Completion1P = false;
-bool CGimmick::m_Completion2P = false;
-D3DXVECTOR3 CGimmick::m_Area = {};
+#include "player.h"
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CGimmick::CGimmick(int nPriority) 
 {
-	m_Completion1P = false;
-	m_Completion2P = false;
 }
 
 //=============================================================================
@@ -48,8 +35,6 @@ CGimmick::~CGimmick()
 HRESULT CGimmick::Init()
 {
 	CObjectX::Init();
-
-	m_Area = D3DXVECTOR3(100.0f,0.0f,100.0f);
 
 	//モデルのロード
 	LoadModel("TRIANGLE");
@@ -90,26 +75,29 @@ void CGimmick::SetGimmickType(GIMMICKTYPE type)
 }
 
 //=============================================================================
-// ギミックの取得処理
+// 当たったかどうかの判定
 //=============================================================================
-bool CGimmick::GetCompletion1P()
+bool CGimmick::Collision(CPlayer* inPlayer)
 {
-	return m_Completion1P;
-}
-bool CGimmick::GetCompletion2P()
-{
-	return m_Completion2P;
-}
+	if (inPlayer == nullptr)
+	{
+		return false;
+	}
 
-//=============================================================================
-// ギミックの設定処理
-//=============================================================================
-void CGimmick::SetCompletion1P(bool flag)
-{
-	m_Completion1P = flag;
-}
-void CGimmick::SetCompletion2P(bool flag)
-{
-	m_Completion2P = flag;
-}
+	if (m_pHitPlayer != nullptr)
+	{
+		return false;
+	}
 
+	D3DXVECTOR3 playerPos = inPlayer->GetPos();
+	D3DXVECTOR3 thisPos = GetPos();
+
+	if (((thisPos.x + 150.0f) >= playerPos.x) && ((thisPos.z + 150.0f) >= playerPos.z)
+		&& ((thisPos.x - 150.0f) <= playerPos.x) && ((thisPos.z - 150.0f) <= playerPos.z))
+	{// プレイヤーを動かさないようにするフラグを有効にする
+		m_pHitPlayer = inPlayer;
+		return true;
+	}
+
+	return false;
+}

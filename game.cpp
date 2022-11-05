@@ -27,6 +27,7 @@
 #include "number.h"
 #include "obstacle.h"
 #include "load_stage.h"
+#include "barrage_move_wall.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -74,8 +75,8 @@ HRESULT CGame::Init(void)
 	//CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL, CGimmick::SHAPETYPE_AQUARE, CObject::PRIORITY_LEVEL3);
 
 	// ギミックの生成
-	m_pObstacle1P = CObstacle::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL, CObject::PRIORITY_LEVEL3);
-	m_pObstacle2P = CObstacle::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL, CObject::PRIORITY_LEVEL3);
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
 
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
