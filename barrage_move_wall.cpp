@@ -29,18 +29,8 @@
 CBarrageMoveWall::CBarrageMoveWall(int nPriority)
 {
 	m_PosOld = {};
-	m_nTriggerCount1 = 0;
-	m_nTriggerCount2 = 0;
-	m_ArrowRand = 0;
-	m_AreaFlag1P = false;
-	m_AreaFlag2P = false;
-	m_ArrowRandFlag = false;
-	m_nAlternateFlag = false;
-	PlayerGoalFlag = false;
-	m_bIsLanding = false;
-	m_bIsLandingUp = false;
+	m_nTriggerCount = 0;
 	m_Completion = false;
-	m_StopObstacle = false;
 
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_GIMMICK);
@@ -60,9 +50,6 @@ HRESULT CBarrageMoveWall::Init()
 {
 	// ギミックの初期化
 	CGimmick::Init();
-
-	//乱数
-	srand((unsigned int)time(NULL));	//起動時に一回だけ行うため初期化に書く
 
 	m_PosOld = CObjectX::GetPos();
 
@@ -87,6 +74,8 @@ void CBarrageMoveWall::Update()
 {
 	if (GetCompletion())
 	{
+		/* ↓Gimmickクリアしている↓ */
+
 		// ギミックの座標,移動量取得
 		D3DXVECTOR3 pos = GetPos();
 		D3DXVECTOR3 move = GetMove();
@@ -103,37 +92,38 @@ void CBarrageMoveWall::Update()
 
 		SetPos(pos);	// 座標の設定
 		SetMove(move);	// 移動量の設定
-
-		return;
 	}
-
-	// 当たり判定のチェック
-	Collision(CGame::GetPlayer1P());
-	Collision(CGame::GetPlayer2P());
-
-	if (GetHitPlayer() == nullptr)
+	else
 	{
-		return;
+		/* ↓Gimmickクリアしていない↓ */
+
+		// 当たり判定のチェック
+		Collision(CGame::GetPlayer1P());
+		Collision(CGame::GetPlayer2P());
+
+		if (GetHitPlayer() == nullptr)
+		{
+			return;
+		}
+
+		// ギミック処理
+		ConstOperate();
+
+		CPlayer* hitPlayer = GetHitPlayer();
+
+		hitPlayer->SetSpeed(0.0f);
+		if (GetCompletion())
+		{// 操作が完了した時に実行
+		 // プレイヤーのスピードを元に戻す
+			hitPlayer->SetSpeed(5.0f);
+		}
+
+		// プレイヤーの座標取得
+		D3DXVECTOR3 PlayerPos1 = hitPlayer->GetPos();
+
+		// ギミックの更新
+		CGimmick::Update();
 	}
-
-	// ギミック処理
-	ConstOperate();
-
-	CPlayer* hitPlayer = GetHitPlayer();
-
-	hitPlayer->SetSpeed(0.0f);
-	if (GetCompletion())
-	{// 操作が完了した時に実行
-	 // プレイヤーのスピードを元に戻す
-		hitPlayer->SetSpeed(5.0f);
-	}
-
-	// プレイヤーの座標取得
-	D3DXVECTOR3 PlayerPos1 = hitPlayer->GetPos();
-
-
-	// ギミックの更新
-	CGimmick::Update();
 }
 
 //=============================================================================
@@ -168,13 +158,12 @@ void CBarrageMoveWall::ConstOperate()
 
 	if (pInputKeyboard->Trigger(DIK_SPACE))
 	{// SPACEキーを押したらカウントを増やす
-		m_nTriggerCount1++;
-		if (m_nTriggerCount1 >= 20)
+		m_nTriggerCount++;
+		if (m_nTriggerCount >= 20)
 		{// カウントが20回以上行ったら実行
 		 // ギミック(壁)が上に移動
 			// 操作が完了した
 			SetCompletion(true);
-			SetStopFlag(true);
 		}
 	}
 }
@@ -184,7 +173,7 @@ void CBarrageMoveWall::ConstOperate()
 //=============================================================================
 void CBarrageMoveWall::KeyCount()
 {
-	m_nTriggerCount1++;
+	m_nTriggerCount++;
 }
 
 //=============================================================================
