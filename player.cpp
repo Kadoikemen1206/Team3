@@ -21,6 +21,14 @@
 #include "obstacle.h"
 #include "game.h"
 #include "particle.h"
+#include "motion.h"
+
+//=============================================================================
+// 定数定義
+//=============================================================================
+const float CPlayer::SPEED_POWER = 5.0f;
+const float CPlayer::JUMP_POWER = 12.0f;
+const float CPlayer::GRAVITY_POWER = 0.75f;
 
 //=============================================================================
 // コンストラクタ
@@ -56,12 +64,8 @@ HRESULT CPlayer::Init()
 	CMotionModel3D::Init();
 
 	//モデルのロード
-	SetMotion("Data/MODEL/PLAYER/player_new/Motion/motion.txt");
+	SetMotion("Data/MODEL/PLAYER/player_new/Motion/motion_new.txt");
 	
-	SetPos(D3DXVECTOR3(0.0f, 20.0f, 0.0f));
-	m_posOld = GetPos();
-	SetMove(D3DXVECTOR3(0.0f, 60.0f, 0.0f));
-
 	return S_OK;
 }
 
@@ -88,7 +92,7 @@ void CPlayer::Update()
 	D3DXVECTOR3 move = GetMove();
 
 	// 重力設定
-	move.y -= 1.0f;
+	move.y -= GRAVITY_POWER;
 
 	// 前回の位置を保存
 	m_posOld = pos;
@@ -100,20 +104,20 @@ void CPlayer::Update()
 		{// 上に移動
 			if (pInputKeyboard->Press(DIK_A))
 			{
-				pos.x += sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
-				pos.z += cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
+				move.x = sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
+				move.z = cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.75f;
 			}
 			else if (pInputKeyboard->Press(DIK_D))
 			{
-				pos.x += sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
-				pos.z += cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
+				move.x = sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
+				move.z = cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.75f;
 			}
 			else
 			{
-				pos.x += sinf(pCameraRot.y) * m_nSpeed;
-				pos.z += cosf(pCameraRot.y) * m_nSpeed;
+				move.x = sinf(pCameraRot.y) * m_nSpeed;
+				move.z = cosf(pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI;
 			}
 		}
@@ -122,41 +126,41 @@ void CPlayer::Update()
 		{// 下に移動
 			if (pInputKeyboard->Press(DIK_A))
 			{
-				pos.x += sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
-				pos.z += cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
+				move.x = sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
+				move.z = cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.25f;
 			}
 			else if (pInputKeyboard->Press(DIK_D))
 			{
-				pos.x += sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
-				pos.z += cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
+				move.x = sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
+				move.z = cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.25f;
 			}
 			else
 			{
-				pos.x -= sinf(pCameraRot.y) * m_nSpeed;
-				pos.z -= cosf(pCameraRot.y) * m_nSpeed;
+				move.x = sinf(pCameraRot.y) * -m_nSpeed;
+				move.z = cosf(pCameraRot.y) * -m_nSpeed;
 				m_rotDest.y = pCameraRot.y + 0.0f;
 			}
 
 		}
 		else if (pInputKeyboard->Press(DIK_A))
 		{// 左に移動
-			pos.x -= sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
-			pos.z -= cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
+			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
+			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
 			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.5f;
 		}
 		else if (pInputKeyboard->Press(DIK_D))
 		{// 右に移動
-			pos.x += sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
-			pos.z += cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
+			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
+			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
 		}
 
 		if (pInputKeyboard->Trigger(DIK_J))
 		{// ジャンプ
 			m_bJumpFlag = true;
-			move.y += 18.0f;
+			move.y += JUMP_POWER;
 		}
 	}
 	
@@ -167,20 +171,20 @@ void CPlayer::Update()
 		{// 上に移動
 			if (pInputKeyboard->Press(DIK_LEFT))
 			{
-				pos.x += sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
-				pos.z += cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
+				move.x = sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
+				move.z = cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.75f;
 			}
 			else if (pInputKeyboard->Press(DIK_RIGHT))
 			{
-				pos.x += sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
-				pos.z += cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
+				move.x = sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
+				move.z = cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.75f;
 			}
 			else
 			{
-				pos.x += sinf(pCameraRot.y) * m_nSpeed;
-				pos.z += cosf(pCameraRot.y) * m_nSpeed;
+				move.x = sinf(pCameraRot.y) * m_nSpeed;
+				move.z = cosf(pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI;
 			}
 		}
@@ -189,40 +193,66 @@ void CPlayer::Update()
 		{// 下に移動
 			if (pInputKeyboard->Press(DIK_LEFT))
 			{
-				pos.x += sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
-				pos.z += cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
+				move.x = sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
+				move.z = cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.25f;
 			}
 			else if (pInputKeyboard->Press(DIK_RIGHT))
 			{
-				pos.x += sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
-				pos.z += cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
+				move.x = sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
+				move.z = cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.25f;
 			}
 			else
 			{
-				pos.x -= sinf(pCameraRot.y) * m_nSpeed;
-				pos.z -= cosf(pCameraRot.y) * m_nSpeed;
+				move.x = sinf(pCameraRot.y) * -m_nSpeed;
+				move.z = cosf(pCameraRot.y) * -m_nSpeed;
 				m_rotDest.y = pCameraRot.y + 0.0f;
 			}
 
 		}
 		else if (pInputKeyboard->Press(DIK_LEFT))
 		{// 左に移動
-			pos.x -= sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
-			pos.z -= cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
+			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
+			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
 			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.5f;
 		}
 		else if (pInputKeyboard->Press(DIK_RIGHT))
 		{// 右に移動
-			pos.x += sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
-			pos.z += cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
+			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
+			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
 		}
 		if (pInputKeyboard->Trigger(DIK_K))
 		{// ジャンプ
 			m_bJumpFlag = true;
-			move.y += 18.0f;
+			move.y += JUMP_POWER;
+		}
+	}
+
+	if (move.x == 0.0f && move.z == 0.0f)
+	{
+		if (m_moutionType != 0)
+		{
+			m_moutionType = 0;
+			GetMotion()->SetNumMotion(m_moutionType);
+		}
+	}
+	else
+	{
+		if (move.x < 0.5f && move.x > -0.5f)
+		{
+			move.x = 0.0f;
+		}
+		if (move.z < 0.5f && move.z > -0.5f)
+		{
+			move.z = 0.0f;
+		}
+
+		if (m_moutionType != 1)
+		{
+			m_moutionType = 1;
+			GetMotion()->SetNumMotion(m_moutionType);
 		}
 	}
 

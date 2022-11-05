@@ -24,6 +24,11 @@ class CParticle;
 class CPlayer : public CMotionModel3D
 {
 public:
+	static const float SPEED_POWER;
+	static const float JUMP_POWER;
+	static const float GRAVITY_POWER;
+
+public:
 	//-------------------------------------------------------------------------
 	// 列挙型
 	//-------------------------------------------------------------------------
@@ -46,8 +51,12 @@ public:
 	//-------------------------------------------------------------------------
 	HRESULT Init() override;							// 初期化処理
 	void Update() override;								// 更新処理
+
+	// Setter
 	void SetType(EPLAYER type);							// タイプ設定処理
 	void SetSpeed(float speed);							// プレイヤー移動スピード設定処理
+
+	// Getter
 	EPLAYER GetPlayerType(void) { return m_nType; }		// プレイヤータイプ取得処理
 
 	static CPlayer *Create(EPLAYER type, const D3DXVECTOR3 pos, int nPriority);	// 生成処理
@@ -64,6 +73,8 @@ private:
 	bool m_bJumpFlag;					// ジャンプしたかどうかのフラグ
 	bool m_bIsLanding;					// モデルとの当たり判定フラグ(左右,奥,手前)
 	bool m_bIsLandingUp;				// モデルとの当たり判定フラグ(上側)
+
+	int m_moutionType;
 
 	CParticle *m_pParticle;				// パーティクルのポインタ
 };
