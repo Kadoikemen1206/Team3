@@ -40,6 +40,7 @@ CLight *CGame::m_pLight = nullptr;
 CTime *CGame::m_pTime = nullptr;
 CObstacle *CGame::m_pObstacle1P = nullptr;
 CObstacle *CGame::m_pObstacle2P = nullptr;
+CGame::EMode CGame::m_mode = CGame::EMode::SOLO;
 
 //=============================================================================
 // コンストラクタ
@@ -71,21 +72,24 @@ HRESULT CGame::Init(void)
 	// メッシュフィールドの生成
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
 
-	// 障害物を作成
-	//CObstacle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f), CGimmick::GIMMICKTYPE_BARRAGEMOVEWALL, CGimmick::SHAPETYPE_AQUARE, CObject::PRIORITY_LEVEL3);
-
 	// ギミックの生成
 	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
-	CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
 
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 	CLoadStage::LoadAll(m_pPlayer1P->GetPos());
-	m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
-	CLoadStage::LoadAll(m_pPlayer2P->GetPos());
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
+
+	if (m_mode == EMode::VS)
+	{
+		CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
+
+		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+		CLoadStage::LoadAll(m_pPlayer2P->GetPos());
+		CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TWO);
+	}
 
 	// カメラの設定
-	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TWO);
 	CApplication::GetCamera()->Init();
 
 	return S_OK;

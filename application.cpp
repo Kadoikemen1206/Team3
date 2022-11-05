@@ -32,7 +32,7 @@ CObject *CApplication::m_pMode = nullptr;
 CCamera *CApplication::m_pCamera = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
 CObjectXGroup *CApplication::m_pObjectXGroup = nullptr;
-CApplication::MODE CApplication::m_mode = MODE_GAME;
+CApplication::MODE CApplication::m_mode = MODE_TITLE;
 
 //=============================================================================
 // コンストラクタ
@@ -76,9 +76,6 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	// カメラの初期化
 	m_pCamera = new CCamera;
-	m_pCamera->SetCameraType(CCamera::CAMERATYPE_ONE);	// ソロ
-	//m_pCamera->SetCameraType(CCamera::CAMERATYPE_TWO);	// VS
-	m_pCamera->Init();
 
 	// テクスチャの生成
 	m_pTexture = new CTexture;
@@ -215,7 +212,12 @@ void CApplication::SetMode(MODE mode)
 	case MODE_TITLE:
 		m_pMode = CTitle::Create();
 		break;
-	case MODE_GAME:
+	case MODE_GAME_SOLO:
+		CGame::SetMode(CGame::EMode::SOLO);
+		m_pMode = CGame::Create();
+		break;
+	case MODE_GAME_VS:
+		CGame::SetMode(CGame::EMode::VS);
 		m_pMode = CGame::Create();
 		break;
 	case MODE_RANKING:
