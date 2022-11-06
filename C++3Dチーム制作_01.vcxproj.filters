@@ -40,17 +40,11 @@
     <ClCompile Include="light.cpp">
       <Filter>00_Code\00_Main\03_3D</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>00_Code\00_Main</Filter>
-    </ClCompile>
     <ClCompile Include="file.cpp">
       <Filter>00_Code\00_Main</Filter>
     </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>00_Code\00_Main</Filter>
-    </ClCompile>
-    <ClCompile Include="time.cpp">
-      <Filter>00_Code\02_Object</Filter>
     </ClCompile>
     <ClCompile Include="title.cpp">
       <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
@@ -118,22 +112,13 @@
     <ClCompile Include="model.cpp">
       <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
     </ClCompile>
-    <ClCompile Include="motion.cpp">
-      <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
-    </ClCompile>
     <ClCompile Include="title_menu.cpp">
       <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
-    </ClCompile>
-    <ClCompile Include="motion_model3D.cpp">
-      <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
     </ClCompile>
     <ClCompile Include="object3D.cpp">
       <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
     </ClCompile>
     <ClCompile Include="objectX.cpp">
-      <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
-    </ClCompile>
-    <ClCompile Include="parts.cpp">
       <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
     </ClCompile>
     <ClCompile Include="particle.cpp">
@@ -144,6 +129,27 @@
     </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>00_Code\02_Object\01_3D</Filter>
+    </ClCompile>
+    <ClCompile Include="barrage_move_wall.cpp">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>00_Code\00_Main\03_3D</Filter>
+    </ClCompile>
+    <ClCompile Include="motion.cpp">
+      <Filter>00_Code\02_Object\01_3D\00_Main\00_Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="motion_model3D.cpp">
+      <Filter>00_Code\02_Object\01_3D\00_Main\00_Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="parts.cpp">
+      <Filter>00_Code\02_Object\01_3D\00_Main\00_Motion</Filter>
+    </ClCompile>
+    <ClCompile Include="time.cpp">
+      <Filter>00_Code\02_Object\00_2D</Filter>
+    </ClCompile>
+    <ClCompile Include="alternate_move_wall.cpp">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -192,15 +198,6 @@
     <ClInclude Include="light.h">
       <Filter>00_Code\00_Main\03_3D</Filter>
     </ClInclude>
-    <ClInclude Include="number.h">
-      <Filter>00_Code\02_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>00_Code\02_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>00_Code\00_Main</Filter>
-    </ClInclude>
     <ClInclude Include="file.h">
       <Filter>00_Code\00_Main</Filter>
     </ClInclude>
@@ -210,7 +207,6 @@
     <ClInclude Include="title_rogo.h">
       <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
     </ClInclude>
-    <ClInclude Include="particle.h" />
     <ClInclude Include="load_stage.h">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
     </ClInclude>
@@ -274,19 +270,10 @@
     <ClInclude Include="title_menu.h">
       <Filter>00_Code\00_Main\01_Mode\TITLE</Filter>
     </ClInclude>
-    <ClInclude Include="motion.h">
-      <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
-    </ClInclude>
-    <ClInclude Include="motion_model3D.h">
-      <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
-    </ClInclude>
     <ClInclude Include="object3D.h">
       <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
     </ClInclude>
     <ClInclude Include="objectX.h">
-      <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
-    </ClInclude>
-    <ClInclude Include="parts.h">
       <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
     </ClInclude>
     <ClInclude Include="particle.h">
@@ -297,6 +284,33 @@
     </ClInclude>
     <ClInclude Include="player.h">
       <Filter>00_Code\02_Object\01_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="barrage_move_wall.h">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>00_Code\00_Main\03_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="motion.h">
+      <Filter>00_Code\02_Object\01_3D\00_Main\00_Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="motion_model3D.h">
+      <Filter>00_Code\02_Object\01_3D\00_Main\00_Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="parts.h">
+      <Filter>00_Code\02_Object\01_3D\00_Main\00_Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>00_Code\02_Object\01_3D\00_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="number.h">
+      <Filter>00_Code\02_Object\00_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="particle.h">
+      <Filter>00_Code\02_Object\01_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="alternate_move_wall.h">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -344,6 +358,9 @@
     </Filter>
     <Filter Include="00_Code\02_Object\01_3D\01_Gimmick">
       <UniqueIdentifier>{09bc6039-398b-4b2e-8d42-dc4ee5570a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Code\02_Object\01_3D\00_Main\00_Motion">
+      <UniqueIdentifier>{0a28c837-6579-4a87-aac5-89ec10835d9e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

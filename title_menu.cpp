@@ -265,7 +265,7 @@ void CTitleMenu::SelectMenu(void)
 						if (pInput->Trigger(DIK_RETURN))
 						{
 							// フェード生成
-							CFade::SetFade(CApplication::MODE_GAME);
+							CFade::SetFade(CApplication::MODE_GAME_SOLO);
 						}
 					}
 				}
@@ -282,7 +282,7 @@ void CTitleMenu::SelectMenu(void)
 						if (pInput->Trigger(DIK_RETURN))
 						{
 							// フェード生成
-							CFade::SetFade(CApplication::MODE_GAME);
+							CFade::SetFade(CApplication::MODE_GAME_VS);
 						}
 					}
 				}

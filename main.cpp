@@ -77,6 +77,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpC
 	//マネージャクラスの生成
 	pApplication = new CApplication;
 
+	//乱数
+	srand((unsigned int)time(NULL));	//起動時に一回だけ行うため初期化に書く
+
 	// 初期化処理
 	if (FAILED(pApplication->Init(hInstance, hWnd, TRUE)))
 	{ //初期化処理が失敗した場合a

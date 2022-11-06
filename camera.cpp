@@ -53,7 +53,11 @@ HRESULT CCamera::Init(void)
 		m_Viewport[nCnt] = {};
 	}
 
-	if (CApplication::GetMode() == CApplication::MODE_TITLE)
+	switch (m_nCameraType)
+	{
+	case CCamera::CAMERATYPE_NONE:
+		break;
+	case CCamera::CAMERATYPE_TITLE:
 	{
 		// 視点・注視点・上方向を設定する（構造体の初期化）
 		m_posV[0] = D3DXVECTOR3(0.0f, 500.0f, -500.0f);	// 視点
@@ -63,19 +67,28 @@ HRESULT CCamera::Init(void)
 		D3DXVECTOR3 length = m_posV[0] - m_posR[0];		// 差分
 		m_fDistance = sqrtf((length.x * length.x) + (length.z * length.z));	// 視点から注視点までの距離
 	}
-
-	if (m_nCameraType == CAMERATYPE_ONE)
+		break;
+	case CCamera::CAMERATYPE_ONE:
 	{
 		// 視点・注視点・上方向を設定する（構造体の初期化）
-		m_posV[0] = INIT_POSV;							// 視点
-		m_posR[0] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// 注視点
-		m_vecU[0] = D3DXVECTOR3(0.0f, 1.0f, 0.0f);		// 上方向ベクトル ←固定でOK!!
+		D3DXVECTOR3 PlayerPos1P = CGame::GetPlayer1P()->GetPos();		//プレイヤーPOS情報の取得
+
+		//************************
+		// プレイヤーのカメラ
+		//************************
+		// 視点、注視点、上方向を設定する
+		m_posV[0] = INIT_POSV;
+		m_posR[0] = INIT_POSR;
+		m_posV[0].x = PlayerPos1P.x;
+		m_posR[0].x = PlayerPos1P.x;
+		m_vecU[0] = D3DXVECTOR3(0.0f, 1.0f, 0.0f);	//<-固定で良い
+
 		m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			// 向き
 		D3DXVECTOR3 length = m_posV[0] - m_posR[0];		// 差分
 		m_fDistance = sqrtf((length.x * length.x) + (length.z * length.z));	// 視点から注視点までの距離
 	}
-
-	if (m_nCameraType == CAMERATYPE_TWO && CApplication::GetMode() == CApplication::MODE_GAME)
+		break;
+	case CCamera::CAMERATYPE_TWO:
 	{
 		D3DXVECTOR3 PlayerPos1P = CGame::GetPlayer1P()->GetPos();		//プレイヤーPOS情報の取得
 		D3DXVECTOR3 PlayerPos2P = CGame::GetPlayer2P()->GetPos();		//プレイヤーPOS情報の取得
@@ -130,6 +143,15 @@ HRESULT CCamera::Init(void)
 		m_Viewport[1].MinZ = 0.0f;
 		m_Viewport[1].MaxZ = 1.0f;
 	}
+		break;
+	case CCamera::CAMERATYPE_RANKING:
+		break;
+	case CCamera::CAMERATYPE_MAX:
+		break;
+	default:
+		break;
+	}
+
 	return S_OK;
 }
 
@@ -149,7 +171,7 @@ void CCamera::Update(void)
 	//************************
 	// カメラの追従処理
 	//************************
-	if (CApplication::GetMode() == CApplication::MODE_GAME)
+	if (CApplication::GetMode() == CApplication::MODE_GAME_SOLO || CApplication::GetMode() == CApplication::MODE_GAME_VS)
 	{
 		switch (m_nCameraType)
 		{
@@ -252,7 +274,7 @@ void CCamera::SetCamera(int nCntCamera)
 	//**************************************************
 	//	vsモード
 	//**************************************************
-	if (m_nCameraType == CAMERATYPE_TWO && CApplication::GetMode() == CApplication::MODE_GAME)
+	if (m_nCameraType == CAMERATYPE_TWO && CApplication::GetMode() == CApplication::MODE_GAME_VS)
 	{
 		//ビューポートの設定
 		pDevice->SetViewport(&m_Viewport[nCntCamera]);

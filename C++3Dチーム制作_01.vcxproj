@@ -160,7 +160,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="alternate_move_wall.cpp" />
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="barrage_move_wall.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="DirectInput.cpp" />
@@ -203,7 +205,9 @@
     <ClCompile Include="title_rogo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="alternate_move_wall.h" />
     <ClInclude Include="application.h" />
+    <ClInclude Include="barrage_move_wall.h" />
     <ClInclude Include="billboard.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="DirectInput.h" />

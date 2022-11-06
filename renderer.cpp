@@ -158,7 +158,7 @@ void CRenderer::Draw()
 	D3DVIEWPORT9 viewport;		//ビューポート
 	pDevice->GetViewport(&viewport);
 
-	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_ONE && CApplication::GetMode() == CApplication::MODE_GAME)
+	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_ONE)
 	{
 		//**************************************************
 		//	ソロモード
@@ -216,7 +216,7 @@ void CRenderer::Draw()
 		}
 	}
 
-	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_TWO && CApplication::GetMode() == CApplication::MODE_GAME)
+	if (CCamera::GetCameraType() == CCamera::CAMERATYPE_TWO)
 	{
 		//**************************************************
 		//	vsモード
