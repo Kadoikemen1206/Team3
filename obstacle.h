@@ -40,12 +40,10 @@ public:
 	void ConstOperate() override;			// 一定の操作(連打、回転)
 	void KeyCount();												// キーをカウントする関数
 
-	D3DXVECTOR3 BarrageMoveWall(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Pos, D3DXVECTOR3 P2Pos, D3DXVECTOR3 ObstacleMove1P, D3DXVECTOR3 ObstacleMove2P);	// 連打で動く壁の処理
+	bool BarrageMoveWall(CObstacle * pCObstacle, D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 PlayerPos);	// 連打で動く壁の処理
 	D3DXVECTOR3 AlternateMoveWal(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Pos, D3DXVECTOR3 P2Pos, D3DXVECTOR3 ObstacleMove);	// 交互連打で動く壁の処理
-	D3DXVECTOR3 PushMoveObject(D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 P1Pos, D3DXVECTOR3 P2Pos, D3DXVECTOR3 ObstacleMove);	// プレイヤーが押して動く壁の処理
+	//bool PushMoveObject(CObstacle * pCObstacle, D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 PlayerPos);		// プレイヤーが押して動く壁の処理
 	bool PlayerGoal(D3DXVECTOR3 ObstaclePos , D3DXVECTOR3 P1Pos, D3DXVECTOR3 P2Pos, D3DXVECTOR3 ObstacleMove);				// プレイヤーがゴールした時の処理
-
-	bool BarrageMoveWall2(CObstacle * pCObstacle, D3DXVECTOR3 ObstaclePos, D3DXVECTOR3 PlayerPos);	// 連打で動く壁の処理
 
 	static CObstacle *Create(const D3DXVECTOR3 pos, GIMMICKTYPE gimmicktype,int nPriority);			// 生成処理
 
