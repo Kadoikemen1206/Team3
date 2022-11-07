@@ -42,7 +42,6 @@ HRESULT CObjectX::Init()
 {
 	//モデルの読み込み
 	LoadModel("BOX");
-
 	return S_OK;
 }
 
@@ -60,7 +59,6 @@ void CObjectX::Uninit()
 //=============================================================================
 void CObjectX::Update()
 {
-
 }
 
 //=============================================================================
@@ -94,7 +92,7 @@ void CObjectX::Draw()
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
 	}
 
-	//Projection();
+	Projection();
 
 	//ワールドマトリックスの設定（ワールド座標行列の設定）
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
@@ -188,75 +186,37 @@ void CObjectX::Draw(D3DXMATRIX mtxParent)
 //=============================================================================
 void CObjectX::CalculationVtx()
 {
-	m_MinVtx = D3DXVECTOR3(FLT_MAX, FLT_MAX, FLT_MAX);
-	m_MaxVtx = D3DXVECTOR3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+	D3DXMATRIX mtxRot, mtxTrans, mtxWorld;
 
-	int nNumVtx;	// 頂点数保存用変数
-	DWORD sizeFVF;	// 頂点フォーマットのサイズ
-	BYTE *pVtxBuff;	// 頂点バッファへのポインタ
+	D3DXMatrixIdentity(&mtxWorld);
 
-	//頂点数の取得
-	nNumVtx = m_pMesh->GetNumVertices();
+	// 向きの反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);	// 行列回転関数
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);					// 行列掛け算関数
 
-	//頂点フォーマットのサイズを取得
-	sizeFVF = D3DXGetFVFVertexSize(m_pMesh->GetFVF());
+	D3DXVec3TransformCoord(&m_MaxVtx, &m_MaxVtx, &mtxWorld);
+	D3DXVec3TransformCoord(&m_MinVtx, &m_MinVtx, &mtxWorld);
 
-	//頂点バッファのロック
-	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
 
-	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
+	if (m_MaxVtx.x < m_MinVtx.x)
 	{
-		D3DXMATRIX mtxRot, mtxTrans, mtxWorld;
+		float change = m_MaxVtx.x;
+		m_MaxVtx.x = m_MinVtx.x;
+		m_MinVtx.x = change;
+	}
 
-		D3DXMatrixIdentity(&mtxWorld);
+	if (m_MaxVtx.y < m_MinVtx.y)
+	{
+		float change = m_MaxVtx.y;
+		m_MaxVtx.y = m_MinVtx.y;
+		m_MinVtx.y = change;
+	}
 
-		//頂点座標の代入
-		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;
-
-		// 向きの反映
-		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);	// 行列回転関数
-		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);					// 行列掛け算関数
-
-		// 位置を反映
-		D3DXMatrixTranslation(&mtxTrans, vtx.x, vtx.y, vtx.z);		// 行列移動関数
-		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);		// 行列掛け算関数
-
-		vtx = D3DXVECTOR3(mtxWorld._41, mtxWorld._42, mtxWorld._43);
-
-		D3DXVec3TransformCoord(&m_MaxVtx, &m_MaxVtx, &m_mtxWorld);
-
-		//X
-		if (vtx.x < m_MinVtx.x)
-		{//最小値
-			m_MinVtx.x = vtx.x;
-		}
-		if (vtx.x > m_MaxVtx.x)
-		{//最大値
-			m_MaxVtx.x = vtx.x;
-		}
-
-		//Y
-		if (vtx.y < m_MinVtx.y)
-		{//最小値
-			m_MinVtx.y = vtx.y;
-		}
-		if (vtx.y > m_MaxVtx.y)
-		{//最大値
-			m_MaxVtx.y = vtx.y;
-		}
-
-		//Z
-		if (vtx.z < m_MinVtx.z)
-		{//最小値
-			m_MinVtx.z = vtx.z;
-		}
-		if (vtx.z > m_MaxVtx.z)
-		{//最大値
-			m_MaxVtx.z = vtx.z;
-		}
-
-		//頂点フォーマットのサイズ分ポインタ進める
-		pVtxBuff += sizeFVF;
+	if (m_MaxVtx.z < m_MinVtx.z)
+	{
+		float change = m_MaxVtx.z;
+		m_MaxVtx.z = m_MinVtx.z;
+		m_MinVtx.z = change;
 	}
 }
 
@@ -362,8 +322,18 @@ void CObjectX::Projection(void)
 	//シャドウマトリックスの初期化
 	D3DXMatrixIdentity(&mtxShadow);
 
-	vecLight = -D3DXVECTOR4(1.0f, -0.5f, 0.5f, 0.0f);
-	pos = D3DXVECTOR3(0.0f, 0.1f, 0.0f);
+	vecLight = -D3DXVECTOR4(0.2f, -0.5f, 0.3f, 0.0f);
+
+	if (m_pos.y < -20.0f)
+	{
+		pos = D3DXVECTOR3(0.0f, -209.1f, 0.0f);
+	}
+
+	if (m_pos.y >= -20.0f)
+	{
+		pos = D3DXVECTOR3(0.0f, 0.1f, 0.0f);
+	}
+
 	normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	D3DXPlaneFromPointNormal(&planeField, &pos, &normal);
 	D3DXMatrixShadow(&mtxShadow,&vecLight, &planeField);
@@ -457,6 +427,68 @@ bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 	{
 		bIsLanding = true;
 		pPos->z = m_pos.z + m_MinVtx.z / 2.0f - pSize->z / 2.0f;
+	}
+
+	// 値を返す
+	return bIsLanding;
+}
+
+//=============================================================================
+// 当たり判定 (左右,奥,手前)
+//=============================================================================
+bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * inMaxVtx, D3DXVECTOR3 * inMinVtx)
+{
+	if (!m_isCollision)
+	{
+		return false;
+	}
+
+	// 変数宣言
+	bool bIsLanding = false;
+
+	// モデルの左側当たり判定
+	if ((pPos->z + inMinVtx->z < m_pos.z + m_MaxVtx.z) &&
+		(pPos->z + inMaxVtx->z > m_pos.z + m_MinVtx.z) &&
+		(pPosOld->x + inMaxVtx->x  <= m_pos.x + m_MinVtx.x) &&
+		(pPos->x + inMaxVtx->x > m_pos.x + m_MinVtx.x) &&
+		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y < m_pos.y + m_MaxVtx.y))
+	{
+		bIsLanding = true;
+		pPos->x = m_pos.x + m_MinVtx.x + inMinVtx->x;
+	}
+	// モデルの右側当たり判定
+	if ((pPos->z + inMinVtx->z < m_pos.z + m_MaxVtx.z) &&
+		(pPos->z + inMaxVtx->z > m_pos.z + m_MinVtx.z) &&
+		(pPosOld->x + inMinVtx->x >= m_pos.x + m_MaxVtx.x) &&
+		(pPos->x + inMinVtx->x < m_pos.x + m_MaxVtx.x) &&
+		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y < m_pos.y + m_MaxVtx.y))
+	{
+		bIsLanding = true;
+		pPos->x = m_pos.x + m_MaxVtx.x + inMaxVtx->x;
+	}
+	// モデルの奥側当たり判定
+	if ((pPos->x + inMinVtx->x < m_pos.x + m_MaxVtx.x) &&
+		(pPos->x + inMaxVtx->x > m_pos.x + m_MinVtx.x) &&
+		(pPosOld->z + inMinVtx->z >= m_pos.z + m_MaxVtx.z) &&
+		(pPos->z + inMinVtx->z < m_pos.z + m_MaxVtx.z) &&
+		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y < m_pos.y + m_MaxVtx.y))
+	{
+		bIsLanding = true;
+		pPos->z = m_pos.z + m_MaxVtx.z + inMaxVtx->z;
+	}
+	// モデルの手前側当たり判定
+	if ((pPos->x + inMinVtx->x < m_pos.x + m_MaxVtx.x) &&
+		(pPos->x + inMaxVtx->x > m_pos.x + m_MinVtx.x) &&
+		(pPosOld->z + inMaxVtx->z <= m_pos.z + m_MinVtx.z) &&
+		(pPos->z + inMaxVtx->z > m_pos.z + m_MinVtx.z) &&
+		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y < m_pos.y + m_MaxVtx.y))
+	{
+		bIsLanding = true;
+		pPos->z = m_pos.z + m_MinVtx.z + inMinVtx->z;
 	}
 
 	// 値を返す

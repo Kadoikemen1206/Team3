@@ -84,11 +84,6 @@ bool CGimmick::Collision(CPlayer* inPlayer)
 		return false;
 	}
 
-	if (m_pHitPlayer != nullptr)
-	{
-		return false;
-	}
-
 	D3DXVECTOR3 playerPos = inPlayer->GetPos();
 	D3DXVECTOR3 thisPos = GetPos();
 

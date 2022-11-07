@@ -29,6 +29,7 @@
 #include "load_stage.h"
 #include "barrage_move_wall.h"
 #include "alternate_move_wall.h"
+#include "push_move_wall.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -73,8 +74,12 @@ HRESULT CGame::Init(void)
 	// メッシュフィールドの生成
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
 
-	// ギミックの生成
-	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	// ギミックの生成(連打ギミック)
+	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	// ギミックの生成(交互連打ギミック)
+	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	// ギミックの生成(押すギミック)
+	//CPushMoveWall::Create(D3DXVECTOR3(-700.0f,0.0f,2000.0f));
 
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
@@ -83,7 +88,10 @@ HRESULT CGame::Init(void)
 
 	if (m_mode == EMode::VS)
 	{
-		CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
+		//CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
+		// ギミックの生成(押すギミック)
+		CPushMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+		CPushMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
 
 		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 		CLoadStage::LoadAll(m_pPlayer2P->GetPos());
