@@ -20,6 +20,7 @@
 #include "title.h"
 #include "game.h"
 #include "ranking.h"
+#include "tutorial.h"
 #include "fade.h"
 #include "objectX_group.h"
 
@@ -223,6 +224,9 @@ void CApplication::SetMode(MODE mode)
 	case MODE_RANKING:
 		m_pMode = CRanking::Create();
 		//CRanking::SetRankingScore();
+		break;
+	case MODE_TUTORIAL:
+		m_pMode = CTutorial::Create();
 		break;
 	}
 }

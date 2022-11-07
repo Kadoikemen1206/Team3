@@ -223,6 +223,15 @@ void CTitleMenu::SelectMenu(void)
 				m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 				m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 				m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+
+				if (m_pFade->GetFade() == CFade::FADE_NONE)
+				{
+					if (pInput->Trigger(DIK_RETURN))
+					{
+						// フェード生成
+						CFade::SetFade(CApplication::MODE_TUTORIAL);
+					}
+				}
 			}
 			else
 			{
