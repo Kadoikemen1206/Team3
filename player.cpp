@@ -338,10 +338,11 @@ void CPlayer::Update()
 
 			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx());
 
-			if (!m_bIsLanding)
+			if (m_bIsLanding)
 			{
-				m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetSize(), &move);
+				move = D3DXVECTOR3(0.0f, move.y, 0.0f);
 			}
+			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx(), &move);
 		}
 
 		//ポインタを次に進める
