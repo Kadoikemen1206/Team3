@@ -1,65 +1,51 @@
 //=============================================================================
 //
-// ランキング処理 [ranking.h]
+// ランキングロゴ処理 [ranking_rogo.h]
 // Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _RANKING_H_
-#define _RANKING_H_    
+#ifndef _RANKING_ROGO_H_ 
+#define _RANKING_ROGO_H_
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
+#include "main.h"
 #include "mode.h"
+#include "object2D.h"
+#include "application.h"
 
 //=============================================================================
-// 前方定義
+// 前方宣言
 //=============================================================================
 class CObject2D;
-class CFade;
-class CNumber;
-
-//=============================================================================
-// マクロ定義
-//=============================================================================
-#define MAX_RANKING        (5)        //ランキングの桁数
-#define MAX_RANKINGRANK    (5)        //ランキングの順位分
-#define MAX_TEXTURE        (4)        //テクスチャの数
 
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CRanking : public CMode
+class CRankingRogo : public CObject2D
 {
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	CRanking();
-	~CRanking();
+	explicit CRankingRogo(int nPriority = PRIORITY_LEVEL5);
+	~CRankingRogo();
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
-	void Load(void);
-	void Save(void);
-	static void SetRankingScore();
-	static void GetRanking(int Ranking);
+	HRESULT Init() override;				// 初期化処理
+	void Uninit() override;					// 終了処理
+	void Update() override;					// 更新処理
+	void Draw() override;					// 描画処理
 
-	static CRanking * Create();
+	static CRankingRogo *Create(void);		// 生成処理
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
-	//-------------------------------------------------------------------------     
-	CFade	*m_pFade;							// フェードのポインタ
-
-	static CNumber * m_apNumber[MAX_RANKINGRANK][MAX_RANKING]; 
-	static int m_nRanking;
-	static int aData[MAX_RANKINGRANK];
+	//-------------------------------------------------------------------------
+	static	CObject2D *	m_apObject2D[6];	// ポインタ
 };
 #endif
