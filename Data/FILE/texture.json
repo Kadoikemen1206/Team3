@@ -147,6 +147,10 @@
     [
       "RANKING_5",
       "Data\/TEXTURE\/Ranking\/5th.png"
+    ],
+    [
+      "RANKING_BG",
+      "Data\/TEXTURE\/Ranking\/ranking-bg.png"
     ]
   ]
 }
