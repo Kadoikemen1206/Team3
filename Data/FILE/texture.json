@@ -130,23 +130,23 @@
     ],
     [
       "RANKING_1",
-      "Data\/TEXTURE\/Ranking\/ranking-1.png"
+      "Data\/TEXTURE\/Ranking\/1st.png"
     ],
     [
       "RANKING_2",
-      "Data\/TEXTURE\/Ranking\/ranking-2.png"
+      "Data\/TEXTURE\/Ranking\/2nd.png"
     ],
     [
       "RANKING_3",
-      "Data\/TEXTURE\/Ranking\/ranking-3.png"
+      "Data\/TEXTURE\/Ranking\/3rd.png"
     ],
     [
       "RANKING_4",
-      "Data\/TEXTURE\/Ranking\/ranking-4.png"
+      "Data\/TEXTURE\/Ranking\/4th.png"
     ],
     [
       "RANKING_5",
-      "Data\/TEXTURE\/Ranking\/ranking-5.png"
+      "Data\/TEXTURE\/Ranking\/5th.png"
     ]
   ]
 }
