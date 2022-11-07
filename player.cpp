@@ -337,6 +337,11 @@ void CPlayer::Update()
 			//SegmentCollision(pObjectX);
 
 			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx());
+
+			if (m_bIsLanding)
+			{
+				move = D3DXVECTOR3(0.0f, move.y, 0.0f);
+			}
 			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx(), &move);
 		}
 

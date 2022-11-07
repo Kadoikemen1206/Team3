@@ -446,16 +446,22 @@ bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 	// 変数宣言
 	bool bIsLanding = false;
 
+	// モデルの乗り上げ判定
+	if ((pPos->y + 20.0f > m_pos.y + m_MaxVtx.y))
+	{
+		return bIsLanding;
+	}
+
 	// モデルの左側当たり判定
 	if ((pPos->z + inMinVtx->z < m_pos.z + m_MaxVtx.z) &&
 		(pPos->z + inMaxVtx->z > m_pos.z + m_MinVtx.z) &&
 		(pPosOld->x + inMaxVtx->x  <= m_pos.x + m_MinVtx.x) &&
 		(pPos->x + inMaxVtx->x > m_pos.x + m_MinVtx.x) &&
-		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y + inMaxVtx->y > m_pos.y + m_MinVtx.y) &&
 		(pPos->y < m_pos.y + m_MaxVtx.y))
 	{
 		bIsLanding = true;
-		pPos->x = m_pos.x + m_MinVtx.x + inMinVtx->x - (pPos->x - pPosOld->x);
+		pPos->x = m_pos.x + m_MinVtx.x + inMinVtx->x - 5.0f;
 	}
 
 	// モデルの右側当たり判定
@@ -463,7 +469,7 @@ bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 		(pPos->z + inMaxVtx->z > m_pos.z + m_MinVtx.z) &&
 		(pPosOld->x + inMinVtx->x >= m_pos.x + m_MaxVtx.x) &&
 		(pPos->x + inMinVtx->x < m_pos.x + m_MaxVtx.x) &&
-		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y + inMaxVtx->y > m_pos.y + m_MinVtx.y) &&
 		(pPos->y < m_pos.y + m_MaxVtx.y))
 	{
 		bIsLanding = true;
@@ -476,7 +482,7 @@ bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 		(pPos->x + inMaxVtx->x > m_pos.x + m_MinVtx.x) &&
 		(pPosOld->z + inMinVtx->z >= m_pos.z + m_MaxVtx.z) &&
 		(pPos->z + inMinVtx->z < m_pos.z + m_MaxVtx.z) &&
-		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y + inMaxVtx->y > m_pos.y + m_MinVtx.y) &&
 		(pPos->y < m_pos.y + m_MaxVtx.y))
 	{
 		bIsLanding = true;
@@ -488,11 +494,11 @@ bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 		(pPos->x + inMaxVtx->x > m_pos.x + m_MinVtx.x) &&
 		(pPosOld->z + inMaxVtx->z <= m_pos.z + m_MinVtx.z) &&
 		(pPos->z + inMaxVtx->z > m_pos.z + m_MinVtx.z) &&
-		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y + inMaxVtx->y > m_pos.y + m_MinVtx.y) &&
 		(pPos->y < m_pos.y + m_MaxVtx.y))
 	{
 		bIsLanding = true;
-		pPos->z = m_pos.z + m_MinVtx.z + inMinVtx->z - (pPos->z - pPosOld->z);
+		pPos->z = m_pos.z + m_MinVtx.z + inMinVtx->z - 5.0f;
 		pPos->z -= 0.1f;
 	}
 

@@ -3,8 +3,6 @@
 //-----------------------------------------------------------------------------
 #include "load_stage.h"
 #include "file.h"
-#include "objectX.h"
-#include "application.h"
 #include "objectX_group.h"
 
 CLoadStage::CLoadStage()
