@@ -28,9 +28,11 @@
 //=============================================================================
 CPushMoveWall::CPushMoveWall(int nPriority)
 {
-	m_PosOld = {};
+	m_PosOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_nTriggerCount = 0;
 	m_Completion = false;
+	m_bIsLanding = false;
+	m_bIsLandingUp = false;
 
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_GIMMICK);
@@ -72,49 +74,98 @@ void CPushMoveWall::Uninit()
 //=============================================================================
 void CPushMoveWall::Update()
 {
-	if (GetCompletion() == false)
+	// ギミックの更新
+	CGimmick::Update();
+
+	// ギミックの座標,移動量取得
+	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 move = GetMove();
+
+	// 重力設定
+	move.y -= 1.0f;
+
+	// 前回の位置を保存
+	m_PosOld = pos;
+
+	// ポインタ宣言
+	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
+
+	// 位置更新
+	pos += move;
+
+	// ギミック(モデル)とモデルの当たり判定
+	while (pObject != nullptr)
 	{
-		// ギミックの座標,移動量取得
-		D3DXVECTOR3 pos = GetPos();
-		D3DXVECTOR3 move = GetMove();
-
-		/* ↓Gimmickクリアしていない↓ */
-
-		// 当たり判定のチェック
-		Collision(CGame::GetPlayer1P());
-		Collision(CGame::GetPlayer2P());
-
-		if (GetHitPlayer() == nullptr)
+		if (pObject == this)
 		{
-			return;
+			pObject = pObject->GetNext();
+			continue;
 		}
 
-		// ギミック処理
-		ConstOperate();
+		//変数宣言
+		CObject::EObjType objType;
 
-		if (GetHitPlayer())
+		//オブジェクトのタイプを取得
+		objType = pObject->GetObjType();
+
+		if (objType == OBJTYPE_MODEL)
 		{
-			CPlayer* hitPlayer = GetHitPlayer();
-
-			hitPlayer->SetSpeed(2.5f);
-			move = D3DXVECTOR3(0.0f, 0.0f, 2.5f);
-			if(pos.z)
+			CObjectX *pObjectX = (CObjectX*)pObject;
+			m_bIsLanding = pObjectX->Collision(&pos, &m_PosOld, &GetSize());
+			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_PosOld, &GetSize(), &move);
 		}
 
-		// ギミックの更新
-		CGimmick::Update();
-
-		// 位置更新
-		pos += move;
-
-		// 移動量減衰
-		pos.x += (0.0f - move.x) * 0.1f;
-		pos.y += (0.0f - move.y) * 0.1f;
-		pos.z += (0.0f - move.z) * 0.1f;
-
-		SetPos(pos);	// 座標の設定
-		SetMove(move);	// 移動量の設定
+		//ポインタを次に進める
+		pObject = pObject->GetNext();
 	}
+
+	// 当たり判定のチェック
+	bool bCollision1P = Collision(CGame::GetPlayer1P());
+	bool bCollision2P = Collision(CGame::GetPlayer2P());
+
+	if (GetHitPlayer() == nullptr)
+	{
+		return;
+	}
+
+	// ギミック処理
+	ConstOperate();
+
+	// プレイヤーが接触したかのポインタ
+	CPlayer* hitPlayer = GetHitPlayer();
+
+	// ギミックとプレイヤーが接触した時
+	if (bCollision1P || bCollision2P)
+	{
+		// プレイヤーとギミックのスピードを1.5fに固定
+		hitPlayer->SetSpeed(1.5f);
+		move = D3DXVECTOR3(0.0f, 0.0f, 1.5f);
+	}
+	// ギミックとプレイヤーが離れた時
+	else
+	{
+		// プレイヤーのスピードを5.0f、ギミックのスピードを0.0fに戻す
+		hitPlayer->SetSpeed(5.0f);
+		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	}
+
+	// ギミックが下に落ちた時
+	if (pos.y <= -50.0f)
+	{
+		// プレイヤーのスピードを5.0fに戻す
+		hitPlayer->SetSpeed(5.0f);
+		// ギミック削除
+		Uninit();
+		return;
+	}
+
+	// 移動量減衰
+	pos.x += (0.0f - move.x) * 0.1f;
+	pos.y += (0.0f - move.y) * 0.1f;
+	pos.z += (0.0f - move.z) * 0.1f;
+
+	SetPos(pos);	// 座標の設定
+	SetMove(move);	// 移動量の設定
 }
 
 //=============================================================================
