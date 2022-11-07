@@ -208,6 +208,7 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_menu.cpp" />
     <ClCompile Include="title_rogo.cpp" />
+    <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alternate_move_wall.h" />
@@ -254,6 +255,7 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="title_menu.h" />
     <ClInclude Include="title_rogo.h" />
+    <ClInclude Include="tutorial.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\FILE\model.json" />

@@ -47,12 +47,16 @@ private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
+	static const int m_nMaxTex = 14;
 	static	CObject2D *	m_apObject2D[14];	// ポインタ
 	static	bool		m_bTitleMenuFlag;	// タイトルメニューフラグ
 
+	int		m_nTime;						// 時間
+	int		m_nDelay[m_nMaxTex];			// タイトルロゴが降りる時の遅延
 	int		m_nTextureMax;					// 使用するテクスチャの最大数
 	int		m_nSinCount;					// Z軸の角度を加算する為のカウント変数
 	float	m_fRotZ;						// Z軸の角度設定用の変数
+	float	m_fSpeed[m_nMaxTex];			// ロゴが降りてくるスピード
 	bool	m_bTitleRogoSwitch;				// 縦の動きのフラグ
 };
 #endif

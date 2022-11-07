@@ -155,6 +155,10 @@
       <Filter>00_Code\00_Main\01_Mode\RANKING</Filter>
     </ClCompile>
     <ClCompile Include="push_move_wall.cpp" />
+    <ClCompile Include="tutorial.cpp">
+      <Filter>00_Code\00_Main\01_Mode\TUTORIAL</Filter>
+    </ClCompile>
+    <ClCompile Include="push_move_wall.cpp" />
     <ClCompile Include="pause.cpp">
       <Filter>00_Code\00_Main\01_Mode</Filter>
     </ClCompile>
@@ -323,6 +327,10 @@
       <Filter>00_Code\00_Main\01_Mode\RANKING</Filter>
     </ClInclude>
     <ClInclude Include="push_move_wall.h" />
+    <ClInclude Include="tutorial.h">
+      <Filter>00_Code\00_Main\01_Mode\TUTORIAL</Filter>
+    </ClInclude>
+    <ClInclude Include="push_move_wall.h" />
     <ClInclude Include="pause.h">
       <Filter>00_Code\00_Main\01_Mode</Filter>
     </ClInclude>
@@ -378,6 +386,9 @@
     </Filter>
     <Filter Include="00_Code\00_Main\01_Mode\RANKING">
       <UniqueIdentifier>{e0758835-cbc9-4c5c-a890-a1c7baffde97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Code\00_Main\01_Mode\TUTORIAL">
+      <UniqueIdentifier>{6b9a699e-e40c-4273-8095-bee980245579}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

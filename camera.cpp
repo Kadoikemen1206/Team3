@@ -14,6 +14,7 @@
 #include "input.h"
 #include "player.h"
 #include "game.h"
+#include "tutorial.h"
 
 //=============================================================================
 // Ã“Iƒƒ“ƒo•Ï”éŒ¾

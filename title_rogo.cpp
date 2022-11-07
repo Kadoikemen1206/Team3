@@ -22,6 +22,7 @@ bool CTitleRogo::m_bTitleMenuFlag = false;
 //=============================================================================
 CTitleRogo::CTitleRogo(int nPriority) :
 	m_bTitleRogoSwitch(false),
+	m_nTime(0),
 	m_nTextureMax(14),
 	m_nSinCount(0),
 	m_fRotZ(0.0f)
@@ -69,6 +70,12 @@ HRESULT CTitleRogo::Init()
 
 	m_apObject2D[13] = CObject2D::Create("TITLE_T", D3DXVECTOR3((float)SCREEN_WIDTH_HALF, -(float)SCREEN_HEIGHT_HALF, 0.0f), D3DXVECTOR3(1280.0f, 720.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 
+	for (int i = 0; i < m_nMaxTex; i++)
+	{
+		m_nDelay[i] = rand() % 35;
+		m_fSpeed[i] = (rand() % 7 + 50) * 0.1f;
+	}
+
 	// ƒtƒ‰ƒO‚Ì‰Šú‰»
 	m_bTitleMenuFlag = false;
 
@@ -92,6 +99,8 @@ void CTitleRogo::Uninit()
 //=============================================================================
 void CTitleRogo::Update()
 {
+	m_nTime++;
+
 	// À•WŽæ“¾
 	D3DXVECTOR3 pos[14];
 	for (int nCnt = 0; nCnt < m_nTextureMax; nCnt++)
@@ -113,7 +122,12 @@ void CTitleRogo::Update()
 		{
 			if (pos[nCnt].y < 360.0f)
 			{
-				m_apObject2D[nCnt]->SetMove(D3DXVECTOR3(0.0f, 6.0f, 0.0f));
+				if (m_nDelay[nCnt] >= m_nTime)
+				{
+					continue;
+				}
+
+				m_apObject2D[nCnt]->SetMove(D3DXVECTOR3(0.0f, m_fSpeed[nCnt], 0.0f));
 			}
 			else
 			{
