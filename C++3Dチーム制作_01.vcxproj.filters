@@ -67,9 +67,6 @@
     <ClCompile Include="objectX_group.cpp">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
     </ClCompile>
-    <ClCompile Include="ranking.cpp">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
-    </ClCompile>
     <ClCompile Include="mode.cpp">
       <Filter>00_Code\00_Main\01_Mode</Filter>
     </ClCompile>
@@ -151,8 +148,11 @@
     <ClCompile Include="alternate_move_wall.cpp">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClCompile>
-    <ClCompile Include="push_move_wall.cpp">
-      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    <ClCompile Include="ranking.cpp">
+      <Filter>00_Code\00_Main\01_Mode\RANKING</Filter>
+    </ClCompile>
+    <ClCompile Include="ranking_rogo.cpp">
+      <Filter>00_Code\00_Main\01_Mode\RANKING</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,9 +221,6 @@
     </ClInclude>
     <ClInclude Include="objectX_group.h">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
-    </ClInclude>
-    <ClInclude Include="ranking.h">
-      <Filter>00_Code\00_Main\01_Mode</Filter>
     </ClInclude>
     <ClInclude Include="mode.h">
       <Filter>00_Code\00_Main\01_Mode</Filter>
@@ -315,8 +312,11 @@
     <ClInclude Include="alternate_move_wall.h">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClInclude>
-    <ClInclude Include="push_move_wall.h">
-      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    <ClInclude Include="ranking.h">
+      <Filter>00_Code\00_Main\01_Mode\RANKING</Filter>
+    </ClInclude>
+    <ClInclude Include="ranking_rogo.h">
+      <Filter>00_Code\00_Main\01_Mode\RANKING</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +367,9 @@
     </Filter>
     <Filter Include="00_Code\02_Object\01_3D\00_Main\00_Motion">
       <UniqueIdentifier>{0a28c837-6579-4a87-aac5-89ec10835d9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Code\00_Main\01_Mode\RANKING">
+      <UniqueIdentifier>{e0758835-cbc9-4c5c-a890-a1c7baffde97}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

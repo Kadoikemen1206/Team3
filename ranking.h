@@ -32,11 +32,15 @@ class CNumber;
 class CRanking : public CMode
 {
 public:
-
+	//-------------------------------------------------------------------------
+	// コンストラクタとデストラクタ
+	//-------------------------------------------------------------------------
 	CRanking();
 	~CRanking();
 
-	//プロトタイプ宣言
+	//-------------------------------------------------------------------------
+	// メンバー関数
+	//-------------------------------------------------------------------------
 	HRESULT Init(void);
 	void Uninit(void);
 	void Update(void);
@@ -49,10 +53,11 @@ public:
 	static CRanking * Create();
 
 private:
+	//-------------------------------------------------------------------------
+	// メンバー変数
+	//-------------------------------------------------------------------------     
+	CFade	*m_pFade;							// フェードのポインタ
 
-	LPDIRECT3DTEXTURE9 m_pTexture[MAX_TEXTURE] = {};        
-	CObject2D * m_pObject2D[3];                                
-	CFade * m_pFade;
 	static CNumber * m_apNumber[MAX_RANKINGRANK][MAX_RANKING]; 
 	static int m_nRanking;
 	static int aData[MAX_RANKINGRANK];

@@ -1,52 +1,51 @@
 //=============================================================================
 //
-// 押すと動く壁ギミック
-// Author : saito shian
-// Author : Yuda Kaito
+// ランキングロゴ処理 [ranking_rogo.h]
+// Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _PUSH_MOVE_WALL_H_
-#define _PUSH_MOVE_WALL_H_
+#ifndef _RANKING_ROGO_H_ 
+#define _RANKING_ROGO_H_
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
-#include "gimmick.h"
+#include "main.h"
+#include "mode.h"
+#include "object2D.h"
+#include "application.h"
+
+//=============================================================================
+// 前方宣言
+//=============================================================================
+class CObject2D;
 
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CPushMoveWall : public CGimmick
+class CRankingRogo : public CObject2D
 {
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	explicit CPushMoveWall(int nPriority = PRIORITY_LEVEL3);
-	~CPushMoveWall() override;
-
-	// 生成処理
-	static CPushMoveWall *Create(const D3DXVECTOR3& pos);
+	explicit CRankingRogo(int nPriority = PRIORITY_LEVEL5);
+	~CRankingRogo();
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init() override;		// 初期化処理
-	void Uninit() override;			// 終了処理
-	void Update() override;			// 更新処理
-	void Draw() override;			// 描画処理
+	HRESULT Init() override;				// 初期化処理
+	void Uninit() override;					// 終了処理
+	void Update() override;					// 更新処理
+	void Draw() override;					// 描画処理
 
-	void ConstOperate() override;	// 一定の操作(連打、回転)
+	static CRankingRogo *Create(void);		// 生成処理
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	D3DXVECTOR3 m_PosOld;			// 前回の位置
-	int m_nTriggerCount;			// キーを押した回数
-
-	bool m_Completion;				// Gimmickが完了したか否かフラグ
-	bool m_bIsLanding;				// モデルとの当たり判定フラグ(左右,奥,手前)
-	bool m_bIsLandingUp;			// モデルとの当たり判定フラグ(上側)
+	static	CObject2D *	m_apObject2D[6];	// ポインタ
 };
 #endif

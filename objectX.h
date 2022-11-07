@@ -35,7 +35,7 @@ public:
 	void Draw(D3DXMATRIX mtxParent);						// 描画処理
 	void VtxUpdate() override {};							// 頂点座標更新処理
 
-	void CalculationVtx();										// 頂点最大小値の計算処理
+	void CalculationVtx();									// 頂点最大小値の計算処理
 
 	// Setter
 	void SetPos(D3DXVECTOR3 pos) override;					// 座標設定処理
@@ -58,11 +58,15 @@ public:
 	D3DXVECTOR3 GetMinVtx(void) { return m_MinVtx; }		// 頂点最小値取得処理
 	CObjectX* GetParent(void) { return m_pParent; }			// 親モデルの情報
 	D3DXMATRIX GetMtxWorld(void) { return m_mtxWorld; }
+	bool IsCollision() { return m_isCollision; }
 
 	static CObjectX *Create(D3DXVECTOR3 pos, int nPriority);	// 生成処理
 	void LoadModel(const char *aFileName);						// モデルの読み込み処理
 	void Projection(void);										// 平行投影処理
+
+	// Collision
 	bool Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pSize);	// 当たり判定 (左右, 奥, 手前)
+	bool Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *inMaxVtx, D3DXVECTOR3 *inMinVtx);	// 当たり判定 (左右, 奥, 手前)
 	bool UpCollision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pSize, D3DXVECTOR3 *pMove);	// 当たり判定 (上側)
 
 private:

@@ -84,11 +84,6 @@ bool CGimmick::Collision(CPlayer* inPlayer)
 		return false;
 	}
 
-	if (m_pHitPlayer != nullptr)
-	{
-		return false;
-	}
-
 	D3DXVECTOR3 playerPos = inPlayer->GetPos();
 	D3DXVECTOR3 thisPos = GetPos();
 
@@ -97,10 +92,6 @@ bool CGimmick::Collision(CPlayer* inPlayer)
 	{// プレイヤーを動かさないようにするフラグを有効にする
 		m_pHitPlayer = inPlayer;
 		return true;
-	}
-	else
-	{
-		return false;
 	}
 
 	return false;

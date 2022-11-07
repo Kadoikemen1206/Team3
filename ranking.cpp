@@ -15,6 +15,8 @@
 #include "ranking.h"
 #include "renderer.h"
 #include "object.h"
+#include "object2D.h"
+#include "ranking_rogo.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -42,31 +44,8 @@ CRanking::~CRanking()
 //=============================================================================
 HRESULT CRanking::Init(void)
 {
-	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\ranking.png",
-		&m_pTexture[0]);
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\ranking_logo.png",
-		&m_pTexture[1]);
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\ranking_rank.png",
-		&m_pTexture[2]);
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\number000.png",
-		&m_pTexture[3]);
-
-	//ファイル読み込み処理
-	Load();
+	// ランキングロゴの生成
+	CRankingRogo::Create();
 
 	return S_OK;
 }
@@ -85,14 +64,11 @@ void CRanking::Uninit(void)
 //=============================================================================
 void CRanking::Update(void)
 {
-	//入力処理用のポインタ宣言
-	CInput *pInput = CInput::GetKey();
+	// キーボードの情報取得
+	CInput *pInput = CApplication::GetInput();
 
 	if (pInput->Trigger(DIK_RETURN) == true && m_pFade->GetFade() == CFade::FADE_NONE)
-	{// ENTERキーが押されたら実行
-		//ファイル書き出し処理
-		Save();
-
+	{
 		//モード設定
 		CFade::SetFade(CApplication::MODE_TITLE);
 	}

@@ -60,7 +60,7 @@ HRESULT CLight::Init(void)
 	m_aLight[4].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	// ライトの色
 
 	//ライトの方向を設定
-	vecDir1 = D3DXVECTOR3(0.2f, -0.5f, 0.5f);
+	vecDir1 = D3DXVECTOR3(0.2f, -0.5f, 0.3f);
 	vecDir2 = D3DXVECTOR3(-0.3f, -0.8f, 0.3f);
 	vecDir3 = D3DXVECTOR3(0.8f, -0.4f, -0.2f);
 	vecDir4 = D3DXVECTOR3(-0.8f, -0.4f, 0.2f);
