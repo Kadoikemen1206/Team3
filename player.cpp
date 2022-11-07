@@ -65,7 +65,7 @@ HRESULT CPlayer::Init()
 
 	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
 	SetMotion("Data/MODEL/PLAYER/player_new/Motion/motion_new.txt");
-	
+
 	return S_OK;
 }
 
@@ -336,7 +336,8 @@ void CPlayer::Update()
 			CObjectX *pObjectX = (CObjectX*)pObject;
 			//SegmentCollision(pObjectX);
 
-			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &GetSize());
+			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx());
+
 			if (!m_bIsLanding)
 			{
 				m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetSize(), &move);

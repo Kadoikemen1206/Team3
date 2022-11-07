@@ -16,6 +16,7 @@
 #include "renderer.h"
 #include "application.h"
 #include "objectX.h"
+#include "parts.h"
 
 //=============================================================================
 // インスタンス生成
@@ -77,7 +78,6 @@ HRESULT CMotionModel3D::Init()
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					// 位置
 	m_posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				// 過去位置
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					// 向き
-	m_size = D3DXVECTOR3(30.0f, 120.0f, 30.0f);					// 大きさ
 
 	return E_NOTIMPL;
 }
@@ -173,8 +173,56 @@ void CMotionModel3D::SetMotion(const char * pName)
 
 	// モーション番号の設定
 	m_pMotion->SetNumMotion(0);
+
+	SetMaxMinVtx();
 }
 
+
+void CMotionModel3D::SetMaxMinVtx()
+{
+
+	D3DXVECTOR3 minVtx(FLT_MAX, FLT_MAX, FLT_MAX);
+	D3DXVECTOR3 maxVtx(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+
+	for (int nCntParts = 0; nCntParts < m_pMotion->GetMaxParts(); nCntParts++)
+	{
+		D3DXVECTOR3 partsMinVtx = m_pMotion->GetParts(nCntParts)->GetMinVtx();
+		D3DXVECTOR3 partsMaxVtx = m_pMotion->GetParts(nCntParts)->GetMaxVtx();
+
+		//X
+		if (partsMinVtx.x < minVtx.x)
+		{//最小値
+			minVtx.x = partsMinVtx.x;
+		}
+		if (partsMaxVtx.x > maxVtx.x)
+		{//最大値
+			maxVtx.x = partsMaxVtx.x;
+		}
+
+		//Y
+		if (partsMinVtx.y < minVtx.y)
+		{//最小値
+			minVtx.y = partsMinVtx.y;
+		}
+		if (partsMaxVtx.y > maxVtx.y)
+		{//最大値
+			maxVtx.y = partsMaxVtx.y;
+		}
+
+		//Z
+		if (partsMinVtx.z < minVtx.z)
+		{//最小値
+			minVtx.z = partsMinVtx.z;
+		}
+		if (partsMaxVtx.z > maxVtx.z)
+		{//最大値
+			maxVtx.z = partsMaxVtx.z;
+		}
+	}
+
+	m_MinVtx = minVtx;
+	m_MaxVtx = maxVtx;
+}
 
 //=============================================================================
 // 線分の当たり判定

@@ -63,7 +63,10 @@ public:
 	static CObjectX *Create(D3DXVECTOR3 pos, int nPriority);	// 生成処理
 	void LoadModel(const char *aFileName);						// モデルの読み込み処理
 	void Projection(void);										// 平行投影処理
+
+	// Collision
 	bool Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pSize);	// 当たり判定 (左右, 奥, 手前)
+	bool Collision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *inMaxVtx, D3DXVECTOR3 *inMinVtx);	// 当たり判定 (左右, 奥, 手前)
 	bool UpCollision(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pSize, D3DXVECTOR3 *pMove);	// 当たり判定 (上側)
 
 private:

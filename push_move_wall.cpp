@@ -98,7 +98,6 @@ void CPushMoveWall::Update()
 
 			hitPlayer->SetSpeed(2.5f);
 			move = D3DXVECTOR3(0.0f, 0.0f, 2.5f);
-			if(pos.z)
 		}
 
 		// ギミックの更新
