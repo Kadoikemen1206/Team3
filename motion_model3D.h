@@ -18,6 +18,7 @@
 // 前方宣言
 //*****************************************************************************
 class CMotion;
+class CObjectX;
 
 //=============================================================================
 // 3Dプレイヤークラス
@@ -66,6 +67,9 @@ public:
 	CMotion *GetMotion() { return m_pMotion; }							// モーション情報の取得
 	D3DXVECTOR3 GetMove() override { return m_move; }
 	D3DXCOLOR GetCol() override { return D3DXCOLOR(0.0f, 0.0f, 0.0f,0.0f); }
+
+	bool SegmentCollision(CObjectX* inObjectX);
+	float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0);
 
 private:
 	//--------------------------------------------------------------------

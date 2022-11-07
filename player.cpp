@@ -334,8 +334,13 @@ void CPlayer::Update()
 		if (objType == OBJTYPE_MODEL)
 		{
 			CObjectX *pObjectX = (CObjectX*)pObject;
+			//SegmentCollision(pObjectX);
+
 			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &GetSize());
-			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetSize(), &move);
+			if (!m_bIsLanding)
+			{
+				m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetSize(), &move);
+			}
 		}
 
 		//ポインタを次に進める

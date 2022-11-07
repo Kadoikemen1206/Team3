@@ -60,7 +60,6 @@ void CObjectX::Uninit()
 //=============================================================================
 void CObjectX::Update()
 {
-
 }
 
 //=============================================================================
@@ -94,7 +93,7 @@ void CObjectX::Draw()
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
 	}
 
-	//Projection();
+	Projection();
 
 	//ワールドマトリックスの設定（ワールド座標行列の設定）
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
@@ -363,7 +362,7 @@ void CObjectX::Projection(void)
 	D3DXMatrixIdentity(&mtxShadow);
 
 	vecLight = -D3DXVECTOR4(1.0f, -0.5f, 0.5f, 0.0f);
-	pos = D3DXVECTOR3(0.0f, 0.1f, 0.0f);
+	pos = D3DXVECTOR3(0.0f, -210.1f, 0.0f);
 	normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	D3DXPlaneFromPointNormal(&planeField, &pos, &normal);
 	D3DXMatrixShadow(&mtxShadow,&vecLight, &planeField);

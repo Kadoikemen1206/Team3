@@ -35,7 +35,7 @@ public:
 	void Draw(D3DXMATRIX mtxParent);						// 描画処理
 	void VtxUpdate() override {};							// 頂点座標更新処理
 
-	void CalculationVtx();										// 頂点最大小値の計算処理
+	void CalculationVtx();									// 頂点最大小値の計算処理
 
 	// Setter
 	void SetPos(D3DXVECTOR3 pos) override;					// 座標設定処理
@@ -58,6 +58,7 @@ public:
 	D3DXVECTOR3 GetMinVtx(void) { return m_MinVtx; }		// 頂点最小値取得処理
 	CObjectX* GetParent(void) { return m_pParent; }			// 親モデルの情報
 	D3DXMATRIX GetMtxWorld(void) { return m_mtxWorld; }
+	bool IsCollision() { return m_isCollision; }
 
 	static CObjectX *Create(D3DXVECTOR3 pos, int nPriority);	// 生成処理
 	void LoadModel(const char *aFileName);						// モデルの読み込み処理

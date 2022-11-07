@@ -15,6 +15,7 @@
 #include "motion.h"
 #include "renderer.h"
 #include "application.h"
+#include "objectX.h"
 
 //=============================================================================
 // インスタンス生成
@@ -76,7 +77,7 @@ HRESULT CMotionModel3D::Init()
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					// 位置
 	m_posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				// 過去位置
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					// 向き
-	m_size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					// 大きさ
+	m_size = D3DXVECTOR3(30.0f, 120.0f, 30.0f);					// 大きさ
 
 	return E_NOTIMPL;
 }
@@ -172,4 +173,269 @@ void CMotionModel3D::SetMotion(const char * pName)
 
 	// モーション番号の設定
 	m_pMotion->SetNumMotion(0);
+}
+
+
+//=============================================================================
+// 線分の当たり判定
+//=============================================================================
+bool CMotionModel3D::SegmentCollision(CObjectX* inObjectX)
+{
+	if (!inObjectX->IsCollision())
+	{
+		return false;
+	}
+
+	// 変数宣言
+
+	D3DXVECTOR3 interval = GetPos() - inObjectX->GetPos();
+
+	D3DXVECTOR3 thisVecX;
+	D3DXVECTOR3 thisVecY;
+	D3DXVECTOR3 thisVecZ;
+	D3DXVECTOR3 thisNormalizeVecX;
+	D3DXVECTOR3 thisNormalizeVecY;
+	D3DXVECTOR3 thisNormalizeVecZ;
+
+	{
+		// 計算用マトリックス
+		D3DXMATRIX mtxRot;
+
+		D3DXMATRIX mtxWorld;
+		// ワールドマトリックスの初期化
+		D3DXMatrixIdentity(&mtxWorld);
+
+		// 向きの反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);	// 行列回転関数
+		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);				// 行列掛け算関数 
+
+		thisVecX = D3DXVECTOR3(m_size.x, 0.0f, 0.0f);
+		thisVecY = D3DXVECTOR3(0.0f, m_size.y, 0.0f);
+		thisVecZ = D3DXVECTOR3(0.0f, 0.0f, m_size.z);
+		D3DXVec3TransformCoord(&thisVecX, &thisVecX, &mtxWorld);
+		D3DXVec3TransformCoord(&thisVecY, &thisVecY, &mtxWorld);
+		D3DXVec3TransformCoord(&thisVecZ, &thisVecZ, &mtxWorld);
+		D3DXVec3Normalize(&thisNormalizeVecX, &thisVecX);
+		D3DXVec3Normalize(&thisNormalizeVecY, &thisVecY);
+		D3DXVec3Normalize(&thisNormalizeVecZ, &thisVecZ);
+	}
+
+	D3DXVECTOR3 targetVecX;
+	D3DXVECTOR3 targetVecY;
+	D3DXVECTOR3 targetVecZ;
+	D3DXVECTOR3 targetNormalizeVecX;
+	D3DXVECTOR3 targetNormalizeVecY;
+	D3DXVECTOR3 targetNormalizeVecZ;
+
+	{
+		// 計算用マトリックス
+		D3DXMATRIX mtxRot;
+
+		D3DXMATRIX mtxWorld;
+		// ワールドマトリックスの初期化
+		D3DXMatrixIdentity(&mtxWorld);
+
+		D3DXVECTOR3 rot = inObjectX->GetRot();
+		D3DXVECTOR3 size = inObjectX->GetSize();
+
+		// 向きの反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);	// 行列回転関数
+		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);			// 行列掛け算関数 
+
+		targetVecX = D3DXVECTOR3(size.x, 0.0f, 0.0f);
+		targetVecY = D3DXVECTOR3(0.0f, size.y, 0.0f);
+		targetVecZ = D3DXVECTOR3(0.0f, 0.0f, size.z);
+		D3DXVec3TransformCoord(&targetVecX, &targetVecX, &mtxWorld);
+		D3DXVec3TransformCoord(&targetVecY, &targetVecY, &mtxWorld);
+		D3DXVec3TransformCoord(&targetVecZ, &targetVecZ, &mtxWorld);
+		D3DXVec3Normalize(&targetNormalizeVecX, &targetVecX);
+		D3DXVec3Normalize(&targetNormalizeVecY, &targetVecY);
+		D3DXVec3Normalize(&targetNormalizeVecZ, &targetVecZ);
+	}
+
+	float thisRadius;
+	float targetRadius;
+	float length;
+
+	//A.e1
+	thisRadius = D3DXVec3Length(&thisVecX);
+	targetRadius = LenSegOnSeparateAxis(&thisNormalizeVecX, &targetVecX, &targetVecY, &targetVecZ);
+	length = fabs(D3DXVec3Dot(&interval, &thisNormalizeVecX));
+	if (length > thisRadius + targetRadius)
+	{
+		return false;
+	}
+
+	//A.e2
+	thisRadius = D3DXVec3Length(&thisVecY);
+	targetRadius = LenSegOnSeparateAxis(&thisNormalizeVecY, &targetVecX, &targetVecY, &targetVecZ);
+	length = fabs(D3DXVec3Dot(&interval, &thisNormalizeVecY));
+	if (length > thisRadius + targetRadius)
+	{
+		return false;
+	}
+
+	//A.e3
+	thisRadius = D3DXVec3Length(&thisVecZ);
+	targetRadius = LenSegOnSeparateAxis(&thisNormalizeVecZ, &targetVecX, &targetVecY, &targetVecZ);
+	length = fabs(D3DXVec3Dot(&interval, &thisNormalizeVecZ));
+	if (length > thisRadius + targetRadius)
+	{
+		return false;
+	}
+
+	//B.e1
+	thisRadius = D3DXVec3Length(&targetVecX);
+	targetRadius = LenSegOnSeparateAxis(&targetNormalizeVecX, &thisVecX, &thisVecY, &thisVecZ);
+	length = fabs(D3DXVec3Dot(&interval, &targetNormalizeVecX));
+	if (length > thisRadius + targetRadius)
+	{
+		return false;
+	}
+
+	//B.e2
+	thisRadius = D3DXVec3Length(&targetVecY);
+	targetRadius = LenSegOnSeparateAxis(&targetNormalizeVecY, &thisVecX, &thisVecY, &thisVecZ);
+	length = fabs(D3DXVec3Dot(&interval, &targetNormalizeVecY));
+	if (length > thisRadius + targetRadius)
+	{
+		return false;
+	}
+
+	//B.e3
+	thisRadius = D3DXVec3Length(&targetVecZ);
+	targetRadius = LenSegOnSeparateAxis(&targetNormalizeVecZ, &thisVecX, &thisVecY, &thisVecZ);
+	length = fabs(D3DXVec3Dot(&interval, &targetNormalizeVecZ));
+	if (length > thisRadius + targetRadius)
+	{
+		return false;
+	}
+
+	//C11
+	{
+		D3DXVECTOR3 Cross;
+		D3DXVec3Cross(&Cross, &thisNormalizeVecX, &targetNormalizeVecX);
+		thisRadius = LenSegOnSeparateAxis(&Cross, &thisVecY, &thisVecZ);
+		targetRadius = LenSegOnSeparateAxis(&Cross, &targetVecY, &targetVecZ);
+		length = fabs(D3DXVec3Dot(&interval, &Cross));
+		if (length > thisRadius + targetRadius)
+		{
+			return false;
+		}
+	}
+
+	//C12
+	{
+		D3DXVECTOR3 Cross;
+		D3DXVec3Cross(&Cross, &thisNormalizeVecX, &targetNormalizeVecY);
+		thisRadius = LenSegOnSeparateAxis(&Cross, &thisVecY, &thisVecZ);
+		targetRadius = LenSegOnSeparateAxis(&Cross, &targetVecX, &targetVecZ);
+		length = fabs(D3DXVec3Dot(&interval, &Cross));
+		if (length > thisRadius + targetRadius)
+		{
+			return false;
+		}
+	}
+
+	//C13
+	{
+		D3DXVECTOR3 Cross;
+		D3DXVec3Cross(&Cross, &thisNormalizeVecX, &targetNormalizeVecZ);
+		thisRadius = LenSegOnSeparateAxis(&Cross, &thisVecY, &thisVecZ);
+		targetRadius = LenSegOnSeparateAxis(&Cross, &targetVecX, &targetVecZ);
+		length = fabs(D3DXVec3Dot(&interval, &Cross));
+		if (length > thisRadius + targetRadius)
+		{
+			return false;
+		}
+	}
+
+	//C21
+	{
+		D3DXVECTOR3 Cross;
+		D3DXVec3Cross(&Cross, &thisNormalizeVecY, &targetNormalizeVecX);
+		thisRadius = LenSegOnSeparateAxis(&Cross, &thisVecX, &thisVecZ);
+		targetRadius = LenSegOnSeparateAxis(&Cross, &targetVecY, &targetVecZ);
+		length = fabs(D3DXVec3Dot(&interval, &Cross));
+		if (length > thisRadius + targetRadius)
+		{
+			return false;
+		}
+	}
+
+	//C22
+	{
+		D3DXVECTOR3 Cross;
+		D3DXVec3Cross(&Cross, &thisNormalizeVecY, &targetNormalizeVecY);
+		thisRadius = LenSegOnSeparateAxis(&Cross, &thisVecX, &thisVecZ);
+		targetRadius = LenSegOnSeparateAxis(&Cross, &targetVecX, &targetVecZ);
+		length = fabs(D3DXVec3Dot(&interval, &Cross));
+		if (length > thisRadius + targetRadius)
+		{
+			return false;
+		}
+	}
+
+	//C23
+	{
+		D3DXVECTOR3 Cross;
+		D3DXVec3Cross(&Cross, &thisNormalizeVecY, &targetNormalizeVecZ);
+		thisRadius = LenSegOnSeparateAxis(&Cross, &thisVecX, &thisVecZ);
+		targetRadius = LenSegOnSeparateAxis(&Cross, &targetVecX, &targetVecY);
+		length = fabs(D3DXVec3Dot(&interval, &Cross));
+		if (length > thisRadius + targetRadius)
+		{
+			return false;
+		}
+	}
+
+	//C31
+	{
+		D3DXVECTOR3 Cross;
+		D3DXVec3Cross(&Cross, &thisNormalizeVecZ, &targetNormalizeVecX);
+		thisRadius = LenSegOnSeparateAxis(&Cross, &thisVecX, &thisVecY);
+		targetRadius = LenSegOnSeparateAxis(&Cross, &targetVecX, &targetVecZ);
+		length = fabs(D3DXVec3Dot(&interval, &Cross));
+		if (length > thisRadius + targetRadius)
+		{
+			return false;
+		}
+	}
+
+	//C32
+	{
+		D3DXVECTOR3 Cross;
+		D3DXVec3Cross(&Cross, &thisNormalizeVecZ, &targetNormalizeVecX);
+		thisRadius = LenSegOnSeparateAxis(&Cross, &thisVecX, &thisVecY);
+		targetRadius = LenSegOnSeparateAxis(&Cross, &targetVecX, &targetVecZ);
+		length = fabs(D3DXVec3Dot(&interval, &Cross));
+		if (length > thisRadius + targetRadius)
+		{
+			return false;
+		}
+	}
+
+	//C33
+	{
+		D3DXVECTOR3 Cross;
+		D3DXVec3Cross(&Cross, &thisNormalizeVecZ, &targetNormalizeVecZ);
+		thisRadius = LenSegOnSeparateAxis(&Cross, &thisVecX, &thisVecY);
+		targetRadius = LenSegOnSeparateAxis(&Cross, &targetVecX, &targetVecY);
+		length = fabs(D3DXVec3Dot(&interval, &Cross));
+		if (length > thisRadius + targetRadius)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+float CMotionModel3D::LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3)
+{
+	// 3つの内積の絶対値の和で投影線分長を計算
+	// 分離軸Sepは標準化されていること
+	float r1 = fabs(D3DXVec3Dot(Sep, e1));
+	float r2 = fabs(D3DXVec3Dot(Sep, e2));
+	float r3 = e3 ? (fabs(D3DXVec3Dot(Sep, e3))) : 0;
+	return r1 + r2 + r3;
 }
