@@ -337,11 +337,7 @@ void CPlayer::Update()
 			//SegmentCollision(pObjectX);
 
 			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx());
-
-			if (!m_bIsLanding)
-			{
-				m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetSize(), &move);
-			}
+			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx(), &move);
 		}
 
 		//ポインタを次に進める
