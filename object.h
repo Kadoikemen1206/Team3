@@ -68,21 +68,22 @@ public:
 	virtual void SetCol(D3DXCOLOR col) {};				// 色設定処理
 	virtual void SetRot(D3DXVECTOR3 rot) {};			// 向き設定処理
 	virtual void SetType(const EObjType type);			// タイプ設定処理
+	virtual void SetCanPoseUpdate() { m_canPoseUpdate = true; }
 
 	// Gettter
-	virtual EObjType GetObjType(void);					// オブジェクトのタイプ取得処理
-	virtual D3DXVECTOR3 GetPos(void) { return D3DXVECTOR3(); };				// 座標取得処理
-	virtual D3DXVECTOR3 GetSize(void) { return D3DXVECTOR3(); };				// サイズ取得処理
-	virtual D3DXVECTOR3 GetMove(void) { return D3DXVECTOR3(); };				// 移動量取得処理
-	virtual D3DXVECTOR3 GetRot(void) { return D3DXVECTOR3(); };				// 向き取得処理
-	virtual D3DXCOLOR GetCol(void) { return D3DXCOLOR(); };					// 色取得処理
-	virtual int GetID(void) { return m_nID; }			// 接続先の番号のゲッター
+	virtual EObjType GetObjType(void);								// オブジェクトのタイプ取得処理
+	virtual D3DXVECTOR3 GetPos(void) { return D3DXVECTOR3(); };		// 座標取得処理
+	virtual D3DXVECTOR3 GetSize(void) { return D3DXVECTOR3(); };	// サイズ取得処理
+	virtual D3DXVECTOR3 GetMove(void) { return D3DXVECTOR3(); };	// 移動量取得処理
+	virtual D3DXVECTOR3 GetRot(void) { return D3DXVECTOR3(); };		// 向き取得処理
+	virtual D3DXCOLOR GetCol(void) { return D3DXCOLOR(); };			// 色取得処理
+	virtual int GetID(void) { return m_nID; }						// 接続先の番号のゲッター
 
-	static  void UninitAll(void);						// 全てのインスタンスの終了処理
-	static  void UpdateAll(void);						// 全てのインスタンスの更新処理
-	static  void DrawAll(void);							// 全てのインスタンスの描画処理
-	static  void ModeRelease();							// モード以外だったら破棄処理
-	void	Death(void);								// オブジェクト破棄処理
+	static void UninitAll(void);						// 全てのインスタンスの終了処理
+	static void UpdateAll(void);						// 全てのインスタンスの更新処理
+	static void DrawAll(void);							// 全てのインスタンスの描画処理
+	static void ModeRelease();							// モード以外だったら破棄処理
+	void Death(void);								// オブジェクト破棄処理
 
 	static CObject* GetTop(int nPriority) { return m_pTop[nPriority]; }
 	static CObject* GetCurrent(int nPriority) { return m_pCurrent[nPriority]; }

@@ -17,6 +17,7 @@
 // 前方宣言
 //=============================================================================
 class CObject2D;
+class CPauseQuit;
 
 //=============================================================================
 // クラスの定義
@@ -41,8 +42,16 @@ public:
 	void Update(void) override;		// 更新処理
 	void Draw(void) override;		// 描画処理
 
+	void BeginUpdate();
+	void SelectUpdate();
+	void EndUpdate();
+
 private:
 	CObject2D* m_pBg;
+	CPauseQuit* m_quit;
+
+	bool m_isEndFlag;
+	bool m_isBeginFlag;
 };
 
 #endif

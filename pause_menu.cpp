@@ -8,8 +8,8 @@
 //=============================================================================
 // インクルードファイル
 //=============================================================================
-#include "title_menu.h"
-#include "title_logo.h"
+#include "pause_menu.h"
+#include "pause_logo.h"
 #include "application.h"
 #include "input.h"
 #include "fade.h"
@@ -17,14 +17,12 @@
 //=============================================================================
 // 静的メンバ変数宣言
 //=============================================================================
-CObject2D * CTitleMenu::m_apObject2D[6] = {};
+CObject2D * CPauseMenu::m_apObject2D[6] = {};
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CTitleMenu::CTitleMenu(int nPriority) :
-	m_eMenu(MENU_GAME),
-	m_eGameMenu(MENU_SOLO),
+CPauseMenu::CPauseMenu(int nPriority) :
 	m_nTextureMax(6),
 	m_bGame(false),
 	m_bTutorial(false),
@@ -37,14 +35,14 @@ CTitleMenu::CTitleMenu(int nPriority) :
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CTitleMenu::~CTitleMenu()
+CPauseMenu::~CPauseMenu()
 {
 }
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CTitleMenu::Init()
+HRESULT CPauseMenu::Init()
 {
 	// タイトルメニュー [背景]
 	m_apObject2D[0] = CObject2D::Create("TITLEMENU_BG", D3DXVECTOR3(-(float)SCREEN_WIDTH_HALF - 30.0f, (float)SCREEN_HEIGHT_HALF, 0.0f), D3DXVECTOR3(1300.0f, 720.0f, 0.0f), CObject::PRIORITY_LEVEL3);
@@ -75,7 +73,7 @@ HRESULT CTitleMenu::Init()
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CTitleMenu::Uninit()
+void CPauseMenu::Uninit()
 {
 	// オブジェクトの終了処理
 	CObject2D::Uninit();
@@ -84,7 +82,7 @@ void CTitleMenu::Uninit()
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CTitleMenu::Update()
+void CPauseMenu::Update()
 {
 	// 座標取得
 	for (int nCnt = 0; nCnt < m_nTextureMax; nCnt++)
@@ -105,7 +103,7 @@ void CTitleMenu::Update()
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CTitleMenu::Draw()
+void CPauseMenu::Draw()
 {
 	// オブジェクトの描画処理
 	CObject2D::Draw();
@@ -114,10 +112,10 @@ void CTitleMenu::Draw()
 //=============================================================================
 // メニュー欄出現処理
 //=============================================================================
-void CTitleMenu::PutoutMenu(void)
+void CPauseMenu::PutoutMenu(void)
 {
 	// タイトルメニュー[壁紙]出現
-	if (CTitleLogo::GetTitleMenuFlag())
+	//if (CPauseMenu::GetTitleMenuFlag())
 	{
 		if (m_pos[0].x < SCREEN_WIDTH_HALF)
 		{
@@ -176,178 +174,178 @@ void CTitleMenu::PutoutMenu(void)
 //=============================================================================
 // メニュー欄選択処理
 //=============================================================================
-void CTitleMenu::SelectMenu(void)
+void CPauseMenu::SelectMenu(void)
 {
-	// キーボードの情報取得
-	CInput *pInput = CApplication::GetInput();
+	//// キーボードの情報取得
+	//CInput *pInput = CApplication::GetInput();
 
-	if (m_bSelect)
-	{
-		if (m_bGameMenu == false)
-		{
-			// メニュー選択
-			if (pInput->Trigger(DIK_A))
-			{//Wキーが入力されたとき
-				m_eMenu--;
-				if (m_eMenu < 0)
-				{
-					m_eMenu = 2;
-				}
-			}
-			else if (pInput->Trigger(DIK_D))
-			{//Sキーが入力されたとき
-				m_eMenu++;
-				if (m_eMenu >= 3)
-				{
-					m_eMenu = 0;
-				}
-			}
+	//if (m_bSelect)
+	//{
+	//	if (m_bGameMenu == false)
+	//	{
+	//		// メニュー選択
+	//		if (pInput->Trigger(DIK_A))
+	//		{//Wキーが入力されたとき
+	//			m_eMenu--;
+	//			if (m_eMenu < 0)
+	//			{
+	//				m_eMenu = 2;
+	//			}
+	//		}
+	//		else if (pInput->Trigger(DIK_D))
+	//		{//Sキーが入力されたとき
+	//			m_eMenu++;
+	//			if (m_eMenu >= 3)
+	//			{
+	//				m_eMenu = 0;
+	//			}
+	//		}
 
-			// メニュー欄の色の調整
-			if (m_eMenu == MENU_GAME)
-			{
-				m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-				m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
-				m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+	//		// メニュー欄の色の調整
+	//		if (m_eMenu == MENU_GAME)
+	//		{
+	//			m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	//			m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+	//			m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 
-				if (pInput->Trigger(DIK_RETURN))
-				{
-					m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
-					m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
-					m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
-					m_bGameMenu = true;
-				}
-			}
-			else if (m_eMenu == MENU_TUTORIAL)
-			{
-				m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
-				m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-				m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+	//			if (pInput->Trigger(DIK_RETURN))
+	//			{
+	//				m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+	//				m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+	//				m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+	//				m_bGameMenu = true;
+	//			}
+	//		}
+	//		else if (m_eMenu == MENU_TUTORIAL)
+	//		{
+	//			m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+	//			m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	//			m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 
-				if (m_pFade->GetFade() == CFade::FADE_NONE)
-				{
-					if (pInput->Trigger(DIK_RETURN))
-					{
-						// フェード生成
-						CFade::SetFade(CApplication::MODE_TUTORIAL);
-					}
-				}
-			}
-			else
-			{
-				m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
-				m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
-				m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	//			if (m_pFade->GetFade() == CFade::FADE_NONE)
+	//			{
+	//				if (pInput->Trigger(DIK_RETURN))
+	//				{
+	//					// フェード生成
+	//					CFade::SetFade(CApplication::MODE_TUTORIAL);
+	//				}
+	//			}
+	//		}
+	//		else
+	//		{
+	//			m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+	//			m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+	//			m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-				if (m_pFade->GetFade() == CFade::FADE_NONE)
-				{
-					if (pInput->Trigger(DIK_RETURN))
-					{
-						// フェード生成
-						CFade::SetFade(CApplication::MODE_RANKING);
-					}
-				}
-			}
-		}
+	//			if (m_pFade->GetFade() == CFade::FADE_NONE)
+	//			{
+	//				if (pInput->Trigger(DIK_RETURN))
+	//				{
+	//					// フェード生成
+	//					CFade::SetFade(CApplication::MODE_RANKING);
+	//				}
+	//			}
+	//		}
+	//	}
 
-		else
-		{
-			// メニュー選択
-			if (pInput->Trigger(DIK_A))
-			{//Wキーが入力されたとき
-				m_eGameMenu--;
-				if (m_eGameMenu < 0)
-				{
-					m_eGameMenu = 1;
-				}
-			}
-			else if (pInput->Trigger(DIK_D))
-			{//Sキーが入力されたとき
-				m_eGameMenu++;
-				if (m_eGameMenu >= 2)
-				{
-					m_eGameMenu = 0;
-				}
-			}
+	//	else
+	//	{
+	//		// メニュー選択
+	//		if (pInput->Trigger(DIK_A))
+	//		{//Wキーが入力されたとき
+	//			m_eGameMenu--;
+	//			if (m_eGameMenu < 0)
+	//			{
+	//				m_eGameMenu = 1;
+	//			}
+	//		}
+	//		else if (pInput->Trigger(DIK_D))
+	//		{//Sキーが入力されたとき
+	//			m_eGameMenu++;
+	//			if (m_eGameMenu >= 2)
+	//			{
+	//				m_eGameMenu = 0;
+	//			}
+	//		}
 
-			// メニュー欄の色の調整
-			if (m_eGameMenu == MENU_SOLO)
-			{
-				m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-				m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+	//		// メニュー欄の色の調整
+	//		if (m_eGameMenu == MENU_SOLO)
+	//		{
+	//			m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	//			m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 
-				if (pInput->Trigger(DIK_RETURN))
-				{
-					if (m_pFade->GetFade() == CFade::FADE_NONE)
-					{
-						if (pInput->Trigger(DIK_RETURN))
-						{
-							// フェード生成
-							CFade::SetFade(CApplication::MODE_GAME_SOLO);
-						}
-					}
-				}
-			}
-			else
-			{
-				m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
-				m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	//			if (pInput->Trigger(DIK_RETURN))
+	//			{
+	//				if (m_pFade->GetFade() == CFade::FADE_NONE)
+	//				{
+	//					if (pInput->Trigger(DIK_RETURN))
+	//					{
+	//						// フェード生成
+	//						CFade::SetFade(CApplication::MODE_GAME_SOLO);
+	//					}
+	//				}
+	//			}
+	//		}
+	//		else
+	//		{
+	//			m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+	//			m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-				if (pInput->Trigger(DIK_RETURN))
-				{
-					if (m_pFade->GetFade() == CFade::FADE_NONE)
-					{
-						if (pInput->Trigger(DIK_RETURN))
-						{
-							// フェード生成
-							CFade::SetFade(CApplication::MODE_GAME_VS);
-						}
-					}
-				}
-			}
+	//			if (pInput->Trigger(DIK_RETURN))
+	//			{
+	//				if (m_pFade->GetFade() == CFade::FADE_NONE)
+	//				{
+	//					if (pInput->Trigger(DIK_RETURN))
+	//					{
+	//						// フェード生成
+	//						CFade::SetFade(CApplication::MODE_GAME_VS);
+	//					}
+	//				}
+	//			}
+	//		}
 
-			if (pInput->Trigger(DIK_BACKSPACE))
-			{
-				m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
-				m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
-				m_bGameMenu = false;
-			}
-		}
-	}
+	//		if (pInput->Trigger(DIK_BACKSPACE))
+	//		{
+	//			m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+	//			m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+	//			m_bGameMenu = false;
+	//		}
+	//	}
+	//}
 
-	else
-	{
-		if (pInput->Trigger(DIK_RETURN))
-		{
-			for (int nCnt = 0; nCnt < m_nTextureMax - 2; nCnt++)
-			{
-				// タイトルメニュー ショートカット
-				m_apObject2D[nCnt]->SetPos(D3DXVECTOR3((float)SCREEN_WIDTH_HALF, (float)SCREEN_HEIGHT_HALF, 0.0f));
-				m_bSelect = true;
-			}
-		}
-	}
+	//else
+	//{
+	//	if (pInput->Trigger(DIK_RETURN))
+	//	{
+	//		for (int nCnt = 0; nCnt < m_nTextureMax - 2; nCnt++)
+	//		{
+	//			// タイトルメニュー ショートカット
+	//			m_apObject2D[nCnt]->SetPos(D3DXVECTOR3((float)SCREEN_WIDTH_HALF, (float)SCREEN_HEIGHT_HALF, 0.0f));
+	//			m_bSelect = true;
+	//		}
+	//	}
+	//}
 }
 
 //=============================================================================
 // 生成処理
 //=============================================================================
-CTitleMenu * CTitleMenu::Create(void)
+CPauseMenu * CPauseMenu::Create(void)
 {
 	//ポインタ宣言
-	CTitleMenu *pTitleMenu = nullptr;
+	CPauseMenu *pMenu = nullptr;
 
 	//インスタンス生成
-	pTitleMenu = new CTitleMenu;
+	pMenu = new CPauseMenu;
 
-	if (pTitleMenu != nullptr)
+	if (pMenu != nullptr)
 	{//ポインタが存在したら実行
-		pTitleMenu->Init();
+		pMenu->Init();
 	}
 	else
 	{//ポインタが虚無だったら実行
 		assert(false);
 	}
 
-	return pTitleMenu;
+	return pMenu;
 }

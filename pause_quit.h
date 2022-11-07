@@ -4,8 +4,8 @@
 // Author : Yuda Kaito
 //
 //=============================================================================
-#ifndef _PAUSE_LOGO_H_
-#define _PAUSE_LOGO_H_
+#ifndef _PAUSE_QUIT_H_
+#define _PAUSE_QUIT_H_
 
 //=============================================================================
 // インクルードファイル
@@ -21,17 +21,17 @@ class CObject2D;
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CPauseLogo : public CObject
+class CPauseQuit : public CObject
 {
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	CPauseLogo();
-	~CPauseLogo() override;
+	CPauseQuit();
+	~CPauseQuit() override;
 
 	// 生成処理
-	static CPauseLogo *Create();
+	static CPauseQuit *Create();
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
@@ -41,8 +41,13 @@ public:
 	void Update() override;		// 更新処理
 	void Draw() override;		// 描画処理
 
+	void BeginUpdate();
+	void SelectUpdate();
+	void EndUpdate();
+
 private:
-	CObject2D* m_pLogo[4];
+	CObject2D* m_pQuit[4];
+	CObject2D* m_pOutLine[4];
 };
 
 #endif

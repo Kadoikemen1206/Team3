@@ -191,6 +191,9 @@
     <ClCompile Include="obstacle.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="parts.cpp" />
+    <ClCompile Include="pause_logo.cpp" />
+    <ClCompile Include="pause_menu.cpp" />
+    <ClCompile Include="pause_quit.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="precompile.cpp">
@@ -207,7 +210,7 @@
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_menu.cpp" />
-    <ClCompile Include="title_rogo.cpp" />
+    <ClCompile Include="title_logo.cpp" />
     <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +245,9 @@
     <ClInclude Include="obstacle.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="parts.h" />
+    <ClInclude Include="pause_logo.h" />
+    <ClInclude Include="pause_menu.h" />
+    <ClInclude Include="pause_quit.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="pause.h" />
     <ClInclude Include="precompile.h" />
@@ -254,7 +260,7 @@
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="title_menu.h" />
-    <ClInclude Include="title_rogo.h" />
+    <ClInclude Include="title_logo.h" />
     <ClInclude Include="tutorial.h" />
   </ItemGroup>
   <ItemGroup>

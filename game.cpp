@@ -137,19 +137,13 @@ void CGame::Update(void)
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 
-	if (pInputKeyboard->Trigger(DIK_P))
+	if (m_pPause == nullptr)
 	{
-		if (m_pPause == nullptr)
+		if (pInputKeyboard->Trigger(DIK_P))
 		{
 			m_pPause = CPause::Create();
 		}
-		else
-		{
-			m_pPause->Uninit();
-			m_pPause = nullptr;
-		}
 	}
-
 
 	if (m_pFade->GetFade() == CFade::FADE_NONE)
 	{
