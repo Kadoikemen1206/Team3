@@ -158,6 +158,10 @@
     <ClCompile Include="tutorial.cpp">
       <Filter>00_Code\00_Main\01_Mode\TUTORIAL</Filter>
     </ClCompile>
+    <ClCompile Include="push_move_wall.cpp" />
+    <ClCompile Include="pause.cpp">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -325,6 +329,10 @@
     <ClInclude Include="push_move_wall.h" />
     <ClInclude Include="tutorial.h">
       <Filter>00_Code\00_Main\01_Mode\TUTORIAL</Filter>
+    </ClInclude>
+    <ClInclude Include="push_move_wall.h" />
+    <ClInclude Include="pause.h">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
