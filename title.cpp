@@ -94,9 +94,6 @@ void CTitle::Uninit(void)
 //=============================================================================
 void CTitle::Update(void)
 {
-	// キーボードの情報取得
-	CInput *pInput = CApplication::GetInput();
-
 	// カメラの情報取得
 	CCamera *pCamera = CApplication::GetCamera();
 
@@ -111,16 +108,6 @@ void CTitle::Update(void)
 	// 視点と注視点を設定
 	pCamera->SetPosV(posV);
 	pCamera->SetPosR(posR);
-
-	//// 画面遷移処理
-	//if (m_pFade->GetFade() == CFade::FADE_NONE)
-	//{
-	//	if (pInput->Trigger(DIK_RETURN))
-	//	{
-	//		// フェード生成
-	//		CFade::SetFade(CApplication::MODE_GAME);
-	//	}
-	//}
 }
 
 //=============================================================================
@@ -128,7 +115,6 @@ void CTitle::Update(void)
 //=============================================================================
 void CTitle::Draw(void)
 {
-
 }
 
 //=============================================================================

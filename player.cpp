@@ -82,13 +82,13 @@ void CPlayer::Update()
 	// カメラの情報取得
 	D3DXVECTOR3 pCameraRot = CCamera::GetRot();
 
-	// 座標取得
+	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
-	// 前回の位置を保存
+	// 移動力取得
 	D3DXVECTOR3 move = GetMove();
 
 	// 重力設定
@@ -310,11 +310,11 @@ void CPlayer::Update()
 		rot.y = rot.y + D3DX_PI * 2;
 	}
 
-	// ポインタ宣言
-	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
-
 	// 移動量加算
 	pos += move;
+
+	// ポインタ宣言
+	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
 
 	// プレイヤーとモデルの当たり判定
 	while (pObject != nullptr)
@@ -376,10 +376,25 @@ void CPlayer::Update()
 		}
 	}
 
+	// リスポーン処理
+	//Respawn(pos);
+
 	// プレイヤーのposとrotとmoveの設定
 	SetPos(pos);
 	SetRot(rot);
 	SetMove(move);
+}
+
+//=============================================================================
+// リスポーン処理
+//=============================================================================
+void CPlayer::Respawn(D3DXVECTOR3 &pos)
+{
+	// 位置変更
+	if (pos.y == 0.0f)
+	{
+		pos.y = 30.0f;
+	}
 }
 
 //=============================================================================
@@ -410,6 +425,7 @@ void CPlayer::SetType(EPLAYER type)
 {
 	m_nType = type;
 }
+
 //=============================================================================
 // スピードの設定
 //=============================================================================

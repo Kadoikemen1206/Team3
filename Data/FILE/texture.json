@@ -123,6 +123,30 @@
     [
       "TITLEMENU_VS",
       "Data\/TEXTURE\/TitleMenu\/TitleMenu_vs.png"
+    ],
+    [
+      "RANKING_0",
+      "Data\/TEXTURE\/Ranking\/ranking-0.png"
+    ],
+    [
+      "RANKING_1",
+      "Data\/TEXTURE\/Ranking\/1st.png"
+    ],
+    [
+      "RANKING_2",
+      "Data\/TEXTURE\/Ranking\/2nd.png"
+    ],
+    [
+      "RANKING_3",
+      "Data\/TEXTURE\/Ranking\/3rd.png"
+    ],
+    [
+      "RANKING_4",
+      "Data\/TEXTURE\/Ranking\/4th.png"
+    ],
+    [
+      "RANKING_5",
+      "Data\/TEXTURE\/Ranking\/5th.png"
     ]
   ]
 }
