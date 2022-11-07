@@ -287,6 +287,13 @@ void CTitleMenu::SelectMenu(void)
 					}
 				}
 			}
+
+			if (pInput->Trigger(DIK_BACKSPACE))
+			{
+				m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+				m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+				m_bGameMenu = false;
+			}
 		}
 	}
 
