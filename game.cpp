@@ -30,6 +30,7 @@
 #include "barrage_move_wall.h"
 #include "alternate_move_wall.h"
 #include "push_move_wall.h"
+#include "pause.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -42,6 +43,7 @@ CLight *CGame::m_pLight = nullptr;
 CTime *CGame::m_pTime = nullptr;
 CObstacle *CGame::m_pObstacle1P = nullptr;
 CObstacle *CGame::m_pObstacle2P = nullptr;
+CPause *CGame::m_pPause = nullptr;
 CGame::EMode CGame::m_mode = CGame::EMode::SOLO;
 
 //=============================================================================
@@ -134,6 +136,20 @@ void CGame::Update(void)
 {
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
+
+	if (pInputKeyboard->Trigger(DIK_P))
+	{
+		if (m_pPause == nullptr)
+		{
+			m_pPause = CPause::Create();
+		}
+		else
+		{
+			m_pPause->Uninit();
+			m_pPause = nullptr;
+		}
+	}
+
 
 	if (m_pFade->GetFade() == CFade::FADE_NONE)
 	{

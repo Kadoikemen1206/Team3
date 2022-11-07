@@ -192,6 +192,7 @@
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="parts.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="precompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -241,6 +242,7 @@
     <ClInclude Include="particle.h" />
     <ClInclude Include="parts.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="pause.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="push_move_wall.h" />
     <ClInclude Include="ranking.h" />

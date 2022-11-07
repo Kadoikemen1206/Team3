@@ -19,6 +19,7 @@ public:
 	enum EObjType
 	{
 		OBJTYPE_NONE = 0,
+		OBJTYPE_PAUSE,		//ポーズ
 		OBJTYPE_PLAYER,		//プレイヤー
 		OBJTYPE_BG,			//背景
 		OBJTYPE_EFFECT,		//エフェクト
@@ -58,21 +59,24 @@ public:
 	virtual void Uninit() = 0;							// 終了処理
 	virtual void Update() = 0;							// 更新処理
 	virtual void Draw() = 0;							// 描画処理
-	virtual void VtxUpdate() = 0;						// 頂点座標更新処理
-	virtual void SetPos(D3DXVECTOR3 pos) = 0;			// 座標設定処理
-	virtual void SetSize(D3DXVECTOR3 size) = 0;			// サイズ設定処理
-	virtual void SetMove(D3DXVECTOR3 move) = 0;			// 移動量設定処理
-	virtual void SetCol(D3DXCOLOR col) = 0;				// 色設定処理
-	virtual void SetRot(D3DXVECTOR3 rot) = 0;			// 向き設定処理
-	virtual void SetType(const EObjType type);			// タイプ設定処理
-	virtual EObjType GetObjType(void);					// オブジェクトのタイプ取得処理
-	virtual D3DXVECTOR3 GetPos(void) = 0;				// 座標取得処理
-	virtual D3DXVECTOR3 GetSize(void) = 0;				// サイズ取得処理
-	virtual D3DXVECTOR3 GetMove(void) = 0;				// 移動量取得処理
-	virtual D3DXVECTOR3 GetRot(void) = 0;				// 向き取得処理
-	virtual D3DXCOLOR GetCol(void) = 0;					// 色取得処理
-	virtual int GetID(void) { return m_nID; }			// 接続先の番号のゲッター
+	virtual void VtxUpdate() {}						// 頂点座標更新処理
 
+	// Setter
+	virtual void SetPos(D3DXVECTOR3 pos) {};			// 座標設定処理
+	virtual void SetSize(D3DXVECTOR3 size) {};			// サイズ設定処理
+	virtual void SetMove(D3DXVECTOR3 move) {};			// 移動量設定処理
+	virtual void SetCol(D3DXCOLOR col) {};				// 色設定処理
+	virtual void SetRot(D3DXVECTOR3 rot) {};			// 向き設定処理
+	virtual void SetType(const EObjType type);			// タイプ設定処理
+
+	// Gettter
+	virtual EObjType GetObjType(void);					// オブジェクトのタイプ取得処理
+	virtual D3DXVECTOR3 GetPos(void) { return D3DXVECTOR3(); };				// 座標取得処理
+	virtual D3DXVECTOR3 GetSize(void) { return D3DXVECTOR3(); };				// サイズ取得処理
+	virtual D3DXVECTOR3 GetMove(void) { return D3DXVECTOR3(); };				// 移動量取得処理
+	virtual D3DXVECTOR3 GetRot(void) { return D3DXVECTOR3(); };				// 向き取得処理
+	virtual D3DXCOLOR GetCol(void) { return D3DXCOLOR(); };					// 色取得処理
+	virtual int GetID(void) { return m_nID; }			// 接続先の番号のゲッター
 
 	static  void UninitAll(void);						// 全てのインスタンスの終了処理
 	static  void UpdateAll(void);						// 全てのインスタンスの更新処理
@@ -99,11 +103,15 @@ private:
 	int m_nPriority;											// プライオリティの保存
 	EObjType m_objType;											// オブジェクトの種類
 
+	// リスト構造
 	static CObject *m_pTop[PRIORITY_LEVELMAX];					// 先頭のオブジェクトへのポインタ
 	static CObject *m_pCurrent[PRIORITY_LEVELMAX];				// 現在(一番後ろ)のオブジェクトへのポインタ
 	CObject *m_pPrev;											// 前のオブジェクトへのポインタ
 	CObject *m_pNext;											// 次のオブジェクトへのポインタ
+
 	bool m_bDeath;												// 死フラグ
+
+	bool m_canPoseUpdate;	// ポーズ中の更新が出来るか
 };
 
 #endif

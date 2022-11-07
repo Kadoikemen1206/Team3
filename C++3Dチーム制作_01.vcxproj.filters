@@ -154,6 +154,10 @@
     <ClCompile Include="ranking_rogo.cpp">
       <Filter>00_Code\00_Main\01_Mode\RANKING</Filter>
     </ClCompile>
+    <ClCompile Include="push_move_wall.cpp" />
+    <ClCompile Include="pause.cpp">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -317,6 +321,10 @@
     </ClInclude>
     <ClInclude Include="ranking_rogo.h">
       <Filter>00_Code\00_Main\01_Mode\RANKING</Filter>
+    </ClInclude>
+    <ClInclude Include="push_move_wall.h" />
+    <ClInclude Include="pause.h">
+      <Filter>00_Code\00_Main\01_Mode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
