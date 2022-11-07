@@ -133,7 +133,7 @@ CTitle * CTitle::Create()
 		pTitle->Init();
 	}
 	else
-	{// ポインタが虚無だったら実行
+	{// ポインタが虚無だったら実行5
 		assert(false);
 	}
 

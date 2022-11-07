@@ -18,6 +18,7 @@
 class CObject2D;
 class CFade;
 class CNumber;
+class CLight;
 
 //=============================================================================
 // マクロ定義
@@ -56,7 +57,8 @@ private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------     
-	CFade	*m_pFade;							// フェードのポインタ
+	CFade	*m_pFade;					// フェードのポインタ
+	CLight	*m_pLight;					// ライトのポインタ
 
 	static CNumber * m_apNumber[MAX_RANKINGRANK][MAX_RANKING]; 
 	static int m_nRanking;
