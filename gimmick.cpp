@@ -98,6 +98,10 @@ bool CGimmick::Collision(CPlayer* inPlayer)
 		m_pHitPlayer = inPlayer;
 		return true;
 	}
+	else
+	{
+		return false;
+	}
 
 	return false;
 }
