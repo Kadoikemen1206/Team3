@@ -17,6 +17,7 @@
 //=============================================================================
 class CShadow;
 class CParticle;
+class CIcon;
 
 //=============================================================================
 // クラスの定義
@@ -94,5 +95,6 @@ private:
 	EMotion m_moutionType;
 
 	CParticle *m_pParticle;				// パーティクルのポインタ
+	CIcon *m_pIcon;
 };
 #endif

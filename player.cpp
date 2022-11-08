@@ -23,6 +23,8 @@
 #include "particle.h"
 #include "motion.h"
 
+#include "icon.h"
+
 //=============================================================================
 // 定数定義
 //=============================================================================
@@ -275,15 +277,31 @@ void CPlayer::Update()
 	//テスト用
 	if (pInputKeyboard->Trigger(DIK_PERIOD))
 	{
-		for (int i = 0; i < 10; i++)
+		int max = 100;
+		for (int i = 0; i < max; i++)
 		{
-			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 10.0f, pos.z),
-				D3DXVECTOR3(sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))))),
+			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 180.0f, pos.z),
+				D3DXVECTOR3(sinf((rand() % max * ((360 / max) * (D3DX_PI / 180)))), sinf((rand() % max * ((360 / max) * (D3DX_PI / 180)))) * cosf((rand() % max * ((360 / max) * (D3DX_PI / 180)))), cosf((rand() % max * ((360 / max) * (D3DX_PI / 180))))),
 				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
 				"PARTICLE_FLARE",
 				PRIORITY_LEVEL3);
-			m_pParticle->SetLower(pos);
+			//m_pParticle->SetLower(pos);
 		}
+
+		//テスト用
+		{
+			m_pIcon = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z), D3DXVECTOR3(40.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+			m_pIcon->SetScaling(true);
+			m_pIcon->SetAnimation(1, 1, 12, 1, true);
+
+			m_pIcon = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z), D3DXVECTOR3(15.0f, 15.0f, 0.0f), "BUTTON_Y", PRIORITY_LEVEL3);
+			m_pIcon->SetAnimation(2, 1, 12, 1, true);
+		}
+	}
+
+	if (pInputKeyboard->Trigger(DIK_BACKSPACE))
+	{
+		m_pIcon->SetDestroy(true);
 	}
 
 	//角度の正規化(目的の角度)

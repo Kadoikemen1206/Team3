@@ -176,6 +176,9 @@
     <ClCompile Include="sound.cpp">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
     </ClCompile>
+    <ClCompile Include="icon.cpp">
+      <Filter>00_Code\02_Object\01_3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -361,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="sound.h">
       <Filter>00_Code\00_Main\02_OutSide</Filter>
+    </ClInclude>
+    <ClInclude Include="icon.h">
+      <Filter>00_Code\02_Object\01_3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
