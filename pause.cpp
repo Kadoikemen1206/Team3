@@ -57,6 +57,7 @@ HRESULT CPause::Init(void)
 //=============================================================================
 void CPause::Uninit(void)
 {
+	m_quit->Uninit();
 	m_pBg->Uninit();
 	Release();
 }
@@ -66,12 +67,18 @@ void CPause::Uninit(void)
 //=============================================================================
 void CPause::Update(void)
 {
-	CInput* pInput = CApplication::GetInput();
-
-	if (pInput->Trigger(DIK_P))
+	if (m_isBeginFlag)
 	{
-		Uninit();
-		return;
+		BeginUpdate();
+	}
+
+	if (m_isEndFlag)
+	{
+		EndUpdate();
+	}
+	else
+	{
+		SelectUpdate();
 	}
 }
 
@@ -82,14 +89,34 @@ void CPause::Draw(void)
 {
 }
 
+//=============================================================================
+// 開始中更新
+//=============================================================================
 void CPause::BeginUpdate()
 {
+	m_quit->BeginUpdate();
 }
 
+//=============================================================================
+// 選択中更新
+//=============================================================================
 void CPause::SelectUpdate()
 {
+	m_quit->SelectUpdate();
+
+	CInput* pInput = CApplication::GetInput();
+
+	if (pInput->Trigger(DIK_P))
+	{
+		Uninit();
+		return;
+	}
 }
 
+//=============================================================================
+// 終了中更新
+//=============================================================================
 void CPause::EndUpdate()
 {
+	m_quit->EndUpdate();
 }

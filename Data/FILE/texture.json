@@ -40,7 +40,7 @@
     [ "QUIT_Q", "Data\/TEXTURE\/Quit\/QUIT-Q.png" ],
     [ "QUIT_U", "Data\/TEXTURE\/Quit\/QUIT-U.png" ],
     [ "QUIT_I", "Data\/TEXTURE\/Quit\/QUIT-I.png" ],
-    [ "QUIT_T", "Data\/TEXTURE\/Quit\/QUIT-T.png" ]
+    [ "QUIT_T", "Data\/TEXTURE\/Quit\/QUIT-T.png" ],
     [ "RANKING_BG", "Data\/TEXTURE\/Ranking\/ranking-bg.png" ]
   ]
 }
