@@ -18,6 +18,7 @@
 #include "fade.h"
 #include "model.h"
 #include "billboard.h"
+#include "particle.h"
 
 //=============================================================================
 // コンストラクタ
@@ -183,6 +184,19 @@ void CAlternateMoveWall::ConstOperate()
 		GetHitPlayer()->SetUpdateStop(false);
 		m_buttonPushCount = 0;
 		m_nAlternateFlag = true;
+
+		for (int i = 0; i < 2; i++)
+		{
+			D3DXVECTOR3 move;
+			move.x = sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
+			move.y = sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
+			move.z = cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
+
+			D3DXCOLOR color((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f);
+
+			CParticle* particle = CParticle::Create(GetPos(),move, color,"PARTICLE_FLARE",PRIORITY_LEVEL3);
+			particle->SetLower(GetPos());
+		}
 	}
 
 	if (pInputKeyboard->Trigger(DIK_C) && m_nAlternateFlag)
@@ -191,6 +205,15 @@ void CAlternateMoveWall::ConstOperate()
 		GetHitPlayer()->SetUpdateStop(false);
 		m_buttonPushCount = 0;
 		m_nAlternateFlag = false;
+
+		for (int i = 0; i < 2; i++)
+		{
+			CParticle* particle = CParticle::Create(m_Screw->GetPos(),
+				D3DXVECTOR3(sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))))),
+				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
+				"PARTICLE_FLARE", PRIORITY_LEVEL3);
+			particle->SetLower(m_Screw->GetPos());
+		}
 	}
 
 	if (m_nTriggerCount >= 40)
