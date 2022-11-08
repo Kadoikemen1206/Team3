@@ -27,7 +27,8 @@ CObject *CObject::m_pCurrent[PRIORITY_LEVELMAX] = {};
 CObject::CObject(int nPriority /* = PRIORITY_LEVEL0 */) :
 	m_pNext(nullptr),
 	m_pPrev(nullptr),
-	m_bDeath(false)
+	m_bDeath(false),
+	m_canPoseUpdate(false)
 {
 	//プライオリティの保存
 	m_nPriority = nPriority;
@@ -97,6 +98,8 @@ void CObject::UninitAll(void)
 //=============================================================================
 void CObject::UpdateAll(void)
 {
+	bool isPause = false;
+
 	for (int nPriority = 0; nPriority < PRIORITY_LEVELMAX; nPriority++)
 	{
 		CObject *pObject = m_pTop[nPriority];
@@ -108,7 +111,22 @@ void CObject::UpdateAll(void)
 
 			if (pObject->m_bDeath == false)
 			{
-				pObject->Update();
+				if (pObject->GetObjType ()== OBJTYPE_PAUSE)
+				{
+					isPause = true;
+				}
+
+				if (isPause)
+				{
+					if (pObject->m_canPoseUpdate)
+					{
+						pObject->Update();
+					}
+				}
+				else
+				{
+					pObject->Update();
+				}
 			}
 
 			//pObjectにpObjectのpNextを代入

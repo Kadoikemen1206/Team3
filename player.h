@@ -51,6 +51,7 @@ public:
 	//-------------------------------------------------------------------------
 	HRESULT Init() override;							// 初期化処理
 	void Update() override;								// 更新処理
+	void Respawn(D3DXVECTOR3 &pos);						// リスポーン処理
 
 	// Setter
 	void SetType(EPLAYER type);							// タイプ設定処理

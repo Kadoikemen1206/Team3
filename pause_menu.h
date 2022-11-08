@@ -1,11 +1,12 @@
 //=============================================================================
 //
-// タイトルロゴ処理 [title_rogo.h]
+// ポーズメニュー処理 [pause_menu.h]
 // Author : KADO TAKUMA
+// Author : Yuda Kaito
 //
 //=============================================================================
-#ifndef _TITLE_ROGO_H_ 
-#define _TITLE_ROGO_H_
+#ifndef _PAUSE_MENU_H_ 
+#define _PAUSE_MENU_H_
 
 //=============================================================================
 // インクルードファイル
@@ -23,14 +24,25 @@ class CObject2D;
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CTitleRogo : public CObject2D
+class CPauseMenu : public CObject2D
 {
 public:
 	//-------------------------------------------------------------------------
+	// 列挙型
+	//-------------------------------------------------------------------------
+	enum EMenu
+	{
+		MENU_QUIT = 0,
+		MENU_RETRY,
+		MENU_EXIT,
+		MENU_MAX
+	};
+
+	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	explicit CTitleRogo(int nPriority = PRIORITY_LEVEL5);
-	~CTitleRogo();
+	explicit CPauseMenu(int nPriority = PRIORITY_LEVEL4);
+	~CPauseMenu();
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
@@ -39,20 +51,25 @@ public:
 	void Uninit() override;					// 終了処理
 	void Update() override;					// 更新処理
 	void Draw() override;					// 描画処理
-
-	static CTitleRogo *Create(void);		// 生成処理
-	static bool GetTitleMenuFlag(void) { return m_bTitleMenuFlag; }		// タイトルフラグ取得処理
+	void PutoutMenu(void);					// メニュー欄出現処理
+	void SelectMenu(void);					// メニュー欄選択処理
+	static CPauseMenu *Create(void);		// 生成処理
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	static	CObject2D *	m_apObject2D[14];	// ポインタ
-	static	bool		m_bTitleMenuFlag;	// タイトルメニューフラグ
+	static	CObject2D *m_apObject2D[6];		// ポインタ
 
-	int		m_nTextureMax;					// 使用するテクスチャの最大数
-	int		m_nSinCount;					// Z軸の角度を加算する為のカウント変数
-	float	m_fRotZ;						// Z軸の角度設定用の変数
-	bool	m_bTitleRogoSwitch;				// 縦の動きのフラグ
+	D3DXVECTOR3	m_pos[6];					// メニューの座標
+	EMenu		m_eMenu;					// メニューのタイプ
+	int			m_nTextureMax;				// 使用するテクスチャの最大数
+	bool		m_bGame;					// GAMEフラグ
+	bool		m_bTutorial;				// TUTORIALフラグ
+	bool		m_bRanking;					// RANKINGフラグ
+	bool		m_bSelect;					// メニュー選択できるかのフラグ
+	bool		m_bGameMenu;				// ゲームメニューフラグ
+
+	static	EMenu	m_eType;				// メニューのタイプ
 };
 #endif

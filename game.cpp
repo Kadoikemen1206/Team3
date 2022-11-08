@@ -30,6 +30,7 @@
 #include "barrage_move_wall.h"
 #include "alternate_move_wall.h"
 #include "push_move_wall.h"
+#include "pause.h"
 #include "button_move_player.h"
 
 //=============================================================================
@@ -43,6 +44,7 @@ CLight *CGame::m_pLight = nullptr;
 CTime *CGame::m_pTime = nullptr;
 CObstacle *CGame::m_pObstacle1P = nullptr;
 CObstacle *CGame::m_pObstacle2P = nullptr;
+CPause *CGame::m_pPause = nullptr;
 CGame::EMode CGame::m_mode = CGame::EMode::SOLO;
 
 //=============================================================================
@@ -137,6 +139,14 @@ void CGame::Update(void)
 {
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
+
+	if (m_pPause == nullptr)
+	{
+		if (pInputKeyboard->Trigger(DIK_P))
+		{
+			m_pPause = CPause::Create();
+		}
+	}
 
 	if (m_pFade->GetFade() == CFade::FADE_NONE)
 	{

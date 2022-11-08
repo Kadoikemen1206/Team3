@@ -3,8 +3,6 @@
 //-----------------------------------------------------------------------------
 #include "load_stage.h"
 #include "file.h"
-#include "objectX.h"
-#include "application.h"
 #include "objectX_group.h"
 
 CLoadStage::CLoadStage()
@@ -42,6 +40,6 @@ void CLoadStage::LoadAll(const D3DXVECTOR3& inPos)
 		objectX->LoadModel(tag.c_str());
 
 		// ˆÊ’u‚ÌÄŒvŽZ
-		//objectX->CalculationVtx();
+		objectX->CalculationVtx();
 	}
 }

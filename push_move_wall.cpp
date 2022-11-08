@@ -102,10 +102,10 @@ void CPushMoveWall::Update()
 			continue;
 		}
 
-		//変数宣言
+		/* ↓Gimmickクリアしていない↓ */
 		CObject::EObjType objType;
 
-		//オブジェクトのタイプを取得
+		// 当たり判定のチェック
 		objType = pObject->GetObjType();
 
 		if (objType == OBJTYPE_MODEL)
@@ -115,7 +115,7 @@ void CPushMoveWall::Update()
 			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_PosOld, &GetSize(), &move);
 		}
 
-		//ポインタを次に進める
+		// ギミック処理
 		pObject = pObject->GetNext();
 	}
 
@@ -137,7 +137,7 @@ void CPushMoveWall::Update()
 	// ギミックとプレイヤーが接触した時
 	if (bCollision1P || bCollision2P)
 	{
-		// プレイヤーとギミックのスピードを1.5fに固定
+		// 位置更新
 		hitPlayer->SetSpeed(1.5f);
 		move = D3DXVECTOR3(0.0f, 0.0f, 1.5f);
 	}
@@ -152,7 +152,7 @@ void CPushMoveWall::Update()
 	// ギミックが下に落ちた時
 	if (pos.y <= -100.0f)
 	{
-		// プレイヤーのスピードを5.0fに戻す
+		// 移動量減衰
 		hitPlayer->SetSpeed(5.0f);
 		// ギミック削除
 		Uninit();

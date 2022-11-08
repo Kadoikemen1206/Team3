@@ -18,6 +18,7 @@
 // 前方宣言
 //*****************************************************************************
 class CMotion;
+class CObjectX;
 
 //=============================================================================
 // 3Dプレイヤークラス
@@ -35,7 +36,7 @@ public:
 	//--------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//--------------------------------------------------------------------
-	CMotionModel3D();
+	CMotionModel3D(int nPriority = PRIORITY_LEVEL3);
 	~CMotionModel3D();
 
 	//--------------------------------------------------------------------
@@ -56,6 +57,7 @@ public:
 	void SetMotion(const char *pName);									// モーション情報の設定
 	void SetMove(D3DXVECTOR3 inMove) override { m_move = inMove; }
 	void SetCol(D3DXCOLOR) override {};
+	void SetMaxMinVtx();
 
 	// Getter
 	D3DXVECTOR3 GetPos() override { return m_pos; }						// 位置
@@ -65,13 +67,20 @@ public:
 	D3DXMATRIX GetMtxWorld() { return m_mtxWorld; }						// ワールドマトリックスのゲッター
 	CMotion *GetMotion() { return m_pMotion; }							// モーション情報の取得
 	D3DXVECTOR3 GetMove() override { return m_move; }
-	D3DXCOLOR GetCol() override { return D3DXCOLOR(0.0f, 0.0f, 0.0f,0.0f); }
+	D3DXCOLOR GetCol() override { return D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f); }
+	D3DXVECTOR3 GetMaxVtx() { return m_MaxVtx; }
+	D3DXVECTOR3 GetMinVtx() { return m_MinVtx; }
+
+	bool SegmentCollision(CObjectX* inObjectX);
+	float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0);
 
 private:
 	//--------------------------------------------------------------------
 	// メンバ変数
 	//--------------------------------------------------------------------
 	CMotion			*m_pMotion;				// モーションインスタンス
+	D3DXVECTOR3		m_MinVtx;				// モデルの頂点最小値
+	D3DXVECTOR3		m_MaxVtx;				// モデルの頂点最大値
 	D3DXMATRIX		m_mtxWorld;				// ワールドマトリックス
 	D3DXVECTOR3		m_pos;					// 位置
 	D3DXVECTOR3		m_move;					// 

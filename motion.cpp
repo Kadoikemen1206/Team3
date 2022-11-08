@@ -413,6 +413,7 @@ void CMotion::LoodSetMotion(const char *pFileName)
 
 							// Ç±Ç±Ç≈ì«çûÇ›
 							m_pParts[nCntParts]->LoadModel(nameTag.c_str());
+							m_pParts[nCntParts]->CalculationVtx();
 						}
 						if (strcmp(&aString[0], "PARENT") == 0)
 						{// êeÇÃì«Ç›çûÇ›
