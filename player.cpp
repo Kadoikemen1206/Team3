@@ -86,6 +86,9 @@ void CPlayer::Update()
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
+	// 前回の位置を保存
+	m_posOld = pos;
+
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
@@ -94,9 +97,6 @@ void CPlayer::Update()
 
 	// 重力設定
 	move.y -= GRAVITY_POWER;
-
-	// 前回の位置を保存
-	m_posOld = pos;
 
 	// 1Pの場合下記の移動処理を実行
 	if (m_nType == EPLAYER_1P)
