@@ -12,6 +12,7 @@
 //=============================================================================
 #include "main.h"
 #include "object.h"
+#include <vector>
 
 //=============================================================================
 // 前方宣言
@@ -21,17 +22,25 @@ class CObject2D;
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CPauseQuit : public CObject
+class CPauseSelect : public CObject
 {
+public:
+	enum ESelect
+	{
+		QUIT,
+		RETRY,
+		EXIT
+	};
+
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	CPauseQuit();
-	~CPauseQuit() override;
+	CPauseSelect();
+	~CPauseSelect() override;
 
 	// 生成処理
-	static CPauseQuit *Create();
+	static CPauseSelect *Create(ESelect inSelect);
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
@@ -42,12 +51,13 @@ public:
 	void Draw() override;		// 描画処理
 
 	void BeginUpdate();
-	void SelectUpdate();
-	void EndUpdate();
+	void SelectNowUpdate();
+	void SelectNoUpdate();
+	void EndNowUpdate();
+	void EndNoUpdate();
 
 private:
-	CObject2D* m_pQuit[4];
-	CObject2D* m_pOutLine[4];
+	std::vector<CObject2D*> m_pText;
 };
 
 #endif

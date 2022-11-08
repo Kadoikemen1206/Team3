@@ -37,10 +37,19 @@
     [ "RANKING_3", "Data\/TEXTURE\/Ranking\/3rd.png" ],
     [ "RANKING_4", "Data\/TEXTURE\/Ranking\/4th.png" ],
     [ "RANKING_5", "Data\/TEXTURE\/Ranking\/5th.png" ],
+    [ "RANKING_BG", "Data\/TEXTURE\/Ranking\/ranking-bg.png" ],
     [ "QUIT_Q", "Data\/TEXTURE\/Quit\/QUIT-Q.png" ],
     [ "QUIT_U", "Data\/TEXTURE\/Quit\/QUIT-U.png" ],
     [ "QUIT_I", "Data\/TEXTURE\/Quit\/QUIT-I.png" ],
     [ "QUIT_T", "Data\/TEXTURE\/Quit\/QUIT-T.png" ],
-    [ "RANKING_BG", "Data\/TEXTURE\/Ranking\/ranking-bg.png" ]
+    [ "RETRY_R", "Data\/TEXTURE\/Retry\/RETRY-R1.png" ],
+    [ "RETRY_E", "Data\/TEXTURE\/Retry\/RETRY-E.png" ],
+    [ "RETRY_T", "Data\/TEXTURE\/Retry\/RETRY-T.png" ],
+    [ "RETRY_R", "Data\/TEXTURE\/Retry\/RETRY-R2.png" ],
+    [ "RETRY_Y", "Data\/TEXTURE\/Retry\/RETRY-Y.png" ],
+    [ "EXIT_E", "Data\/TEXTURE\/Exit\/EXIT-E.png" ],
+    [ "EXIT_X", "Data\/TEXTURE\/Exit\/EXIT-X.png" ],
+    [ "EXIT_I", "Data\/TEXTURE\/Exit\/EXIT-I.png" ],
+    [ "EXIT_T", "Data\/TEXTURE\/Exit\/EXIT-T.png" ]
   ]
 }
