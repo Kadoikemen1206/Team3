@@ -1,6 +1,13 @@
+//=============================================================================
+//
+// タイム処理 [time.cpp]
+// Author : kubota yuuki
+//
+//=============================================================================
 #include "number.h"
 #include "time.h"
 #include <time.h>
+#include <math.h>
 CNumber *CTime::m_apNumBer[5] = {};
 
 //=============================================================================
@@ -97,11 +104,16 @@ void CTime::SetTime(int nScore)
 	int time;
 	time = nScore;
 
-	nNumber[0] = time % 1000000 / 100000;
+	for (int nCnt = 0; nCnt < 5; nCnt++)
+	{
+		nNumber[nCnt] = time % (int)powf(10, (5 - nCnt) + 1) / (int)powf(10, (5 - nCnt));
+	}
+
+	/*nNumber[0] = time % 1000000 / 100000;
 	nNumber[1] = time % 100000 / 10000;
 	nNumber[2] = time % 10000 / 1000;
 	nNumber[3] = time % 1000 / 100;
-	nNumber[4] = time % 100 / 10;
+	nNumber[4] = time % 100 / 10;*/
 
 	//テクスチャ座標の設定
 	for (int nCntTime = 0; nCntTime < 5; nCntTime++)
@@ -122,7 +134,7 @@ void CTime::SetPos(D3DXVECTOR3 pos)
 	//座標
 	m_pos = pos;
 
-	//ネオンボールライフの座標設定
+	//タイムの座標設定
 	for (int nCnt = 0; nCnt < m_nDigit; nCnt++)
 	{
 		if (m_apNumBer[nCnt] != nullptr)
@@ -137,7 +149,6 @@ void CTime::SetPos(D3DXVECTOR3 pos)
 //=============================================================================
 void CTime::AddTime(int nValue)
 {
-	
 	SetTime((int)(timeGetTime() - m_nTime));
 }
 

@@ -154,6 +154,9 @@
     <ClCompile Include="push_move_wall.cpp">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClCompile>
+    <ClCompile Include="button_move_player.cpp">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -316,6 +319,9 @@
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClInclude>
     <ClInclude Include="push_move_wall.h">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="button_move_player.h">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClInclude>
   </ItemGroup>

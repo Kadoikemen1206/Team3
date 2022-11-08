@@ -165,6 +165,7 @@
     <ClCompile Include="application.cpp" />
     <ClCompile Include="barrage_move_wall.cpp" />
     <ClCompile Include="billboard.cpp" />
+    <ClCompile Include="button_move_player.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="fade.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="application.h" />
     <ClInclude Include="barrage_move_wall.h" />
     <ClInclude Include="billboard.h" />
+    <ClInclude Include="button_move_player.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="DirectInput.h" />
     <ClInclude Include="fade.h" />
