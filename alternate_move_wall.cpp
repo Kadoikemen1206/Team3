@@ -19,6 +19,7 @@
 #include "model.h"
 #include "billboard.h"
 #include "particle.h"
+#include "icon.h"
 
 //=============================================================================
 // コンストラクタ
@@ -80,9 +81,8 @@ void CAlternateMoveWall::Update()
 
 		// ギミックの座標,移動量取得
 		D3DXVECTOR3 pos = GetPos();
-		D3DXVECTOR3 move = GetMove();
 
-		move = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
+		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
 
 		// 位置更新
 		pos += move;
@@ -178,6 +178,19 @@ void CAlternateMoveWall::ConstOperate()
 
 	/* ↓操作が完了していない↓ */
 
+	if (m_pIcon[0] == nullptr)
+	{
+		m_pIcon[0] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(40.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+		m_pIcon[0]->SetScaling(true);
+		m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
+	}
+
+	if (m_pIcon[1] == nullptr)
+	{
+		m_pIcon[1] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(15.0f, 15.0f, 0.0f), "BUTTON_Y", PRIORITY_LEVEL3);
+		m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+	}
+
 	if (pInputKeyboard->Trigger(DIK_Z) && !m_nAlternateFlag)
 	{// Zキーを押したら実行
 		m_nTriggerCount++;
@@ -187,11 +200,13 @@ void CAlternateMoveWall::ConstOperate()
 
 		for (int i = 0; i < 2; i++)
 		{
+			// 移動量
 			D3DXVECTOR3 move;
 			move.x = sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
 			move.y = sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
 			move.z = cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
 
+			// 色
 			D3DXCOLOR color((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f);
 
 			CParticle* particle = CParticle::Create(GetPos(),move, color,"PARTICLE_FLARE",PRIORITY_LEVEL3);
@@ -208,18 +223,25 @@ void CAlternateMoveWall::ConstOperate()
 
 		for (int i = 0; i < 2; i++)
 		{
-			CParticle* particle = CParticle::Create(m_Screw->GetPos(),
-				D3DXVECTOR3(sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))))),
-				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
-				"PARTICLE_FLARE", PRIORITY_LEVEL3);
-			particle->SetLower(m_Screw->GetPos());
+			D3DXVECTOR3 move;
+			move.x = sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
+			move.y = sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
+			move.z = cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
+
+			D3DXCOLOR color((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f);
+
+			CParticle* particle = CParticle::Create(GetPos(), move, color, "PARTICLE_FLARE", PRIORITY_LEVEL3);
+			particle->SetLower(GetPos());
 		}
 	}
 
+	// 指定回数のボタンを押した場合
 	if (m_nTriggerCount >= 40)
 	{
 		// 操作が完了した
 		GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
+		m_pIcon[0]->Uninit();
+		m_pIcon[1]->Uninit();
 		CGimmick::SetCompletion(true);
 	}
 }

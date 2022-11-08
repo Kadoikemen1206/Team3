@@ -1,3 +1,9 @@
+//=============================================================================
+//
+// ビルボードでアイコンの表示 [icon.h]
+// Author : Tanaka Kouta
+//
+//=============================================================================
 #ifndef _ICON_H_
 #define _ICON_H_
 
@@ -22,9 +28,9 @@ public:
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init(void) override;    // 初期化処理
-	void Uninit(void) override;     // 終了処理
-	void Update(void) override;     // 更新処理
+	HRESULT Init(void) override;	// 初期化処理
+	void Uninit(void) override;		// 終了処理
+	void Update(void) override;		// 更新処理
 	void Draw(void) override;		// 描画処理
 
 	void SetPath(std::string path) { m_path = path; }

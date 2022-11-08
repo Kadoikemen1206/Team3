@@ -34,7 +34,7 @@ CPauseSelect * CPauseSelect::Create(ESelect inSelect)
 			auto TextCreate = [](const char* inTag)
 			{
 				D3DXVECTOR3 pos = D3DXVECTOR3((float)SCREEN_WIDTH_HALF - 200.0f, (float)-SCREEN_HEIGHT_HALF, 0.0f);
-				D3DXVECTOR3 size = D3DXVECTOR3(1280.0f * 0.75f, 720.0f * 0.75f, 0.0f);
+				D3DXVECTOR3 size = D3DXVECTOR3(400.0f * 0.25f, 850.0f * 0.5f, 0.0f);
 				CObject2D* object = CObject2D::Create(inTag, pos, size, CObject::PRIORITY_LEVEL5);
 				object->SetCanPoseUpdate();
 				return object;
@@ -150,7 +150,8 @@ void CPauseSelect::SelectNowUpdate()
 	for (int i = 0; i < (int)m_pText.size(); i++)
 	{
 		time += 0.05f;
-		m_pText[i]->SetSize(D3DXVECTOR3(1280.0f * 0.75f + sinf(time) * 50.0f, 720.0f * 0.75f + sinf(time) * 50.0f, 0.0f));
+		//D3DXVECTOR3 size = D3DXVECTOR3(400.0f * 0.5f, 850.0f * 0.5f, 0.0f);
+		m_pText[i]->SetSize(D3DXVECTOR3(400.0f * 0.5f + sinf(time) * 50.0f, 850.0f * 0.5f + sinf(time) * 50.0f, 0.0f));
 	}
 }
 
@@ -167,7 +168,7 @@ void CPauseSelect::EndNowUpdate()
 	for (int i = 0; i < (int)m_pText.size(); i++)
 	{
 		time += 0.05f;
-		m_pText[i]->SetSize(D3DXVECTOR3(1280.0f * 0.75f + sinf(time) * 50.0f, 720.0f * 0.75f + sinf(time) * 50.0f, 0.0f));
+		m_pText[i]->SetSize(D3DXVECTOR3(400.0f * 0.5f + sinf(time) * 50.0f, 850.0f * 0.5f + sinf(time) * 50.0f, 0.0f));
 	}
 }
 

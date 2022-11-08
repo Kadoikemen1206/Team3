@@ -52,8 +52,8 @@ public:
 	//ゲッター
 	D3DXVECTOR3 GetPos(void) { return m_pos; }
 
-	static CParticle *Create(const D3DXVECTOR3 pos, EBehaviorType type, int nPriority);    // パーティクルの方で大体設定しちゃうとき用
-	static CParticle *Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, const std::string url, int nPriority);    // 生成処理
+	static CParticle *Create(const D3DXVECTOR3 pos, EBehaviorType type, int nPriority);	// パーティクルの方で大体設定しちゃうとき用
+	static CParticle *Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, const std::string url, int nPriority);	// 生成処理
 
 private:
 	void DetailSetting();

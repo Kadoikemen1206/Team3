@@ -1,3 +1,9 @@
+//=============================================================================
+//
+// ビルボードでアイコンの表示 [icon.cpp]
+// Author : Tanaka Kouta
+//
+//=============================================================================
 #include "application.h"
 #include "renderer.h"
 #include "icon.h"
@@ -39,6 +45,7 @@ HRESULT CIcon::Init(void)
 //=============================================================================
 void CIcon::Uninit(void)
 {
+	CBillboard::Uninit();
 }
 
 //=============================================================================
@@ -50,7 +57,7 @@ void CIcon::Update(void)
 
 	if (m_bScaling)
 	{
-		auto scale = CBillboard::GetSize();
+		D3DXVECTOR3 scale = CBillboard::GetSize();
 
 		scale.x += 0.5f;
 		scale.y += 0.5f;
