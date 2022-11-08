@@ -50,8 +50,9 @@ private:
 	CObject2D* m_pBg;
 	CPauseQuit* m_quit;
 
-	bool m_isEndFlag;
-	bool m_isBeginFlag;
+	int m_endCount;			// 終了までのカウント
+	bool m_isEndFlag;		// 終了するフラグ
+	bool m_isBeginFlag;		// 始まってる最中のフラグ
 };
 
 #endif

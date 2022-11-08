@@ -42,7 +42,8 @@ public:
 	void Draw() override;		// •`‰æˆ—
 
 	void BeginUpdate();
-	void SelectUpdate();
+	void SelectNowUpdate();
+	void SelectNoUpdate();
 	void EndUpdate();
 
 private:
