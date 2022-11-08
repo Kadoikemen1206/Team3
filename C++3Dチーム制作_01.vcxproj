@@ -194,7 +194,7 @@
     <ClCompile Include="parts.cpp" />
     <ClCompile Include="pause_logo.cpp" />
     <ClCompile Include="pause_menu.cpp" />
-    <ClCompile Include="pause_quit.cpp" />
+    <ClCompile Include="pause_select.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="precompile.cpp">
@@ -249,7 +249,7 @@
     <ClInclude Include="parts.h" />
     <ClInclude Include="pause_logo.h" />
     <ClInclude Include="pause_menu.h" />
-    <ClInclude Include="pause_quit.h" />
+    <ClInclude Include="pause_select.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="pause.h" />
     <ClInclude Include="precompile.h" />

@@ -161,9 +161,6 @@
     <ClCompile Include="title_logo.cpp">
       <Filter>00_Code\00_Main\01_Mode\01_TITLE</Filter>
     </ClCompile>
-    <ClCompile Include="pause_quit.cpp">
-      <Filter>00_Code\00_Main\01_Mode\00_PAUSE</Filter>
-    </ClCompile>
     <ClCompile Include="pause_menu.cpp">
       <Filter>00_Code\00_Main\01_Mode\00_PAUSE</Filter>
     </ClCompile>
@@ -172,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="push_move_wall.cpp">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="pause_select.cpp">
+      <Filter>00_Code\00_Main\01_Mode\00_PAUSE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,9 +344,6 @@
     <ClInclude Include="title_logo.h">
       <Filter>00_Code\00_Main\01_Mode\01_TITLE</Filter>
     </ClInclude>
-    <ClInclude Include="pause_quit.h">
-      <Filter>00_Code\00_Main\01_Mode\00_PAUSE</Filter>
-    </ClInclude>
     <ClInclude Include="pause_menu.h">
       <Filter>00_Code\00_Main\01_Mode\00_PAUSE</Filter>
     </ClInclude>
@@ -355,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="push_move_wall.h">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="pause_select.h">
+      <Filter>00_Code\00_Main\01_Mode\00_PAUSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
