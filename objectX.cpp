@@ -446,49 +446,60 @@ bool CObjectX::Collision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 
 	// 変数宣言
 	bool bIsLanding = false;
 
+	// モデルの乗り上げ判定
+	if ((pPos->y + 20.0f > m_pos.y + m_MaxVtx.y))
+	{
+		return bIsLanding;
+	}
+
 	// モデルの左側当たり判定
 	if ((pPos->z + inMinVtx->z < m_pos.z + m_MaxVtx.z) &&
 		(pPos->z + inMaxVtx->z > m_pos.z + m_MinVtx.z) &&
 		(pPosOld->x + inMaxVtx->x  <= m_pos.x + m_MinVtx.x) &&
 		(pPos->x + inMaxVtx->x > m_pos.x + m_MinVtx.x) &&
-		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y + inMaxVtx->y > m_pos.y + m_MinVtx.y) &&
 		(pPos->y < m_pos.y + m_MaxVtx.y))
 	{
 		bIsLanding = true;
-		pPos->x = m_pos.x + m_MinVtx.x + inMinVtx->x;
+		pPos->x = m_pos.x + m_MinVtx.x + inMinVtx->x - 5.0f;
 	}
+
 	// モデルの右側当たり判定
 	if ((pPos->z + inMinVtx->z < m_pos.z + m_MaxVtx.z) &&
 		(pPos->z + inMaxVtx->z > m_pos.z + m_MinVtx.z) &&
 		(pPosOld->x + inMinVtx->x >= m_pos.x + m_MaxVtx.x) &&
 		(pPos->x + inMinVtx->x < m_pos.x + m_MaxVtx.x) &&
-		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y + inMaxVtx->y > m_pos.y + m_MinVtx.y) &&
 		(pPos->y < m_pos.y + m_MaxVtx.y))
 	{
 		bIsLanding = true;
 		pPos->x = m_pos.x + m_MaxVtx.x + inMaxVtx->x;
+		pPos->x -= 0.1f;
 	}
+
 	// モデルの奥側当たり判定
 	if ((pPos->x + inMinVtx->x < m_pos.x + m_MaxVtx.x) &&
 		(pPos->x + inMaxVtx->x > m_pos.x + m_MinVtx.x) &&
 		(pPosOld->z + inMinVtx->z >= m_pos.z + m_MaxVtx.z) &&
 		(pPos->z + inMinVtx->z < m_pos.z + m_MaxVtx.z) &&
-		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y + inMaxVtx->y > m_pos.y + m_MinVtx.y) &&
 		(pPos->y < m_pos.y + m_MaxVtx.y))
 	{
 		bIsLanding = true;
 		pPos->z = m_pos.z + m_MaxVtx.z + inMaxVtx->z;
 	}
+
 	// モデルの手前側当たり判定
 	if ((pPos->x + inMinVtx->x < m_pos.x + m_MaxVtx.x) &&
 		(pPos->x + inMaxVtx->x > m_pos.x + m_MinVtx.x) &&
 		(pPosOld->z + inMaxVtx->z <= m_pos.z + m_MinVtx.z) &&
 		(pPos->z + inMaxVtx->z > m_pos.z + m_MinVtx.z) &&
-		(pPos->y + inMaxVtx->y > m_pos.y - m_MaxVtx.y) &&
+		(pPos->y + inMaxVtx->y > m_pos.y + m_MinVtx.y) &&
 		(pPos->y < m_pos.y + m_MaxVtx.y))
 	{
 		bIsLanding = true;
-		pPos->z = m_pos.z + m_MinVtx.z + inMinVtx->z;
+		pPos->z = m_pos.z + m_MinVtx.z + inMinVtx->z - 5.0f;
+		pPos->z -= 0.1f;
 	}
 
 	// 値を返す
@@ -513,6 +524,35 @@ bool CObjectX::UpCollision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR
 		(pPos->z + pSize->z / 2.0f > m_pos.z + m_MinVtx.z) &&
 		(pPos->x - pSize->x / 2.0f < m_pos.x + m_MaxVtx.x) &&
 		(pPos->x + pSize->x / 2.0f > m_pos.x + m_MinVtx.x) &&
+		(pPos->y <= m_pos.y + m_MaxVtx.y))
+	{
+		bIsLanding = true;
+		pPos->y = m_pos.y + m_MaxVtx.y;
+		if (pPos->y == pPosOld->y)
+		{
+			pMove->y = 0.0f;
+		}
+	}
+
+	// 値を返す
+	return bIsLanding;
+}
+
+bool CObjectX::UpCollision(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * inMaxVtx, D3DXVECTOR3 * inMinVtx, D3DXVECTOR3 * pMove)
+{
+	if (!m_isCollision)
+	{
+		return false;
+	}
+
+	// 変数宣言
+	bool bIsLanding = false;
+
+	// モデルの上側当たり判定
+	if ((pPos->z + inMinVtx->z < m_pos.z + m_MaxVtx.z) &&
+		(pPos->z + inMaxVtx->z > m_pos.z + m_MinVtx.z) &&
+		(pPos->x + inMinVtx->x < m_pos.x + m_MaxVtx.x) &&
+		(pPos->x + inMaxVtx->x > m_pos.x + m_MinVtx.x) &&
 		(pPos->y <= m_pos.y + m_MaxVtx.y))
 	{
 		bIsLanding = true;

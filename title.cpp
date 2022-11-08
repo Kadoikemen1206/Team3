@@ -17,7 +17,7 @@
 #include "camera.h"
 #include "meshfield.h"
 #include "light.h"
-#include "title_rogo.h"
+#include "title_logo.h"
 #include "title_menu.h"
 #include "load_stage.h"
 
@@ -61,7 +61,7 @@ HRESULT CTitle::Init(void)
 	CLoadStage::LoadAll();
 
 	// タイトルロゴの生成
-	CTitleRogo::Create();
+	CTitleLogo::Create();
 
 	// タイトルメニューの生成
 	CTitleMenu::Create();
@@ -133,7 +133,7 @@ CTitle * CTitle::Create()
 		pTitle->Init();
 	}
 	else
-	{// ポインタが虚無だったら実行
+	{// ポインタが虚無だったら実行5
 		assert(false);
 	}
 

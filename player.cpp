@@ -34,6 +34,7 @@ const float CPlayer::GRAVITY_POWER = 0.75f;
 // コンストラクタ
 //=============================================================================
 CPlayer::CPlayer(int nPriority) : 
+	CMotionModel3D(nPriority),
 	m_rotDest(0.0f, 0.0f, 0.0f),
 	m_posOld(0.0f, 0.0f, 0.0f),
 	m_nType(EPLAYER_NONE),
@@ -338,10 +339,11 @@ void CPlayer::Update()
 
 			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx());
 
-			if (!m_bIsLanding)
+			if (m_bIsLanding)
 			{
-				m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetSize(), &move);
+				move = D3DXVECTOR3(0.0f, move.y, 0.0f);
 			}
+			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx(), &move);
 		}
 
 		//ポインタを次に進める

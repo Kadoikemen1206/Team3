@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 障害物処理 [obstacle.cpp]
+// ボタンを押すとプレイヤーが進むギミック
 // Author : saito shian
 //
 //=============================================================================
@@ -9,7 +9,7 @@
 // インクルードファイル
 //=============================================================================
 #include <time.h>
-#include "push_move_wall.h"
+#include "button_move_player.h"
 #include "player.h"
 #include "input.h"
 #include "application.h"
@@ -26,13 +26,13 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CPushMoveWall::CPushMoveWall(int nPriority)
+CButtonMovePlayer::CButtonMovePlayer(int nPriority)
 {
-	m_PosOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_nTriggerCount = 0;
-	m_Completion = false;
-	m_bIsLanding = false;
-	m_bIsLandingUp = false;
+	m_MoveCount = MAX_WALK_COUNT;
+	m_TimeToMove = 0;
+	m_RandNumber = 0;
+	m_MoveFlag = false;
+	m_RandFlag = false;
 
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_GIMMICK);
@@ -41,22 +41,23 @@ CPushMoveWall::CPushMoveWall(int nPriority)
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CPushMoveWall::~CPushMoveWall()
+CButtonMovePlayer::~CButtonMovePlayer()
 {
 }
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CPushMoveWall::Init()
+HRESULT CButtonMovePlayer::Init()
 {
 	// ギミックの初期化
 	CGimmick::Init();
 
-	m_PosOld = CObjectX::GetPos();
+	//乱数
+	srand((unsigned int)time(NULL));	//起動時に一回だけ行うため初期化に書く
 
 	//モデルのロード
-	LoadModel("BUGGY");
+	LoadModel("TABLE04");
 
 	return S_OK;
 }
@@ -64,7 +65,7 @@ HRESULT CPushMoveWall::Init()
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CPushMoveWall::Uninit()
+void CButtonMovePlayer::Uninit()
 {
 	CGimmick::Uninit();
 }
@@ -72,7 +73,7 @@ void CPushMoveWall::Uninit()
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CPushMoveWall::Update()
+void CButtonMovePlayer::Update()
 {
 	// ギミックの更新
 	CGimmick::Update();
@@ -80,44 +81,6 @@ void CPushMoveWall::Update()
 	// ギミックの座標,移動量取得
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 move = GetMove();
-
-	// 重力設定
-	move.y -= 2.5f;
-
-	// 前回の位置を保存
-	m_PosOld = pos;
-
-	// ポインタ宣言
-	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
-
-	// 位置更新
-	pos += move;
-
-	// ギミック(モデル)とモデルの当たり判定
-	while (pObject != nullptr)
-	{
-		if (pObject == this)
-		{
-			pObject = pObject->GetNext();
-			continue;
-		}
-
-		/* ↓Gimmickクリアしていない↓ */
-		CObject::EObjType objType;
-
-		// 当たり判定のチェック
-		objType = pObject->GetObjType();
-
-		if (objType == OBJTYPE_MODEL)
-		{
-			CObjectX *pObjectX = (CObjectX*)pObject;
-			m_bIsLanding = pObjectX->Collision(&pos, &m_PosOld, &GetSize());
-			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_PosOld, &GetSize(), &move);
-		}
-
-		// ギミック処理
-		pObject = pObject->GetNext();
-	}
 
 	// 当たり判定のチェック
 	bool bCollision1P = Collision(CGame::GetPlayer1P());
@@ -137,24 +100,12 @@ void CPushMoveWall::Update()
 	// ギミックとプレイヤーが接触した時
 	if (bCollision1P || bCollision2P)
 	{
-		// 位置更新
-		hitPlayer->SetSpeed(1.5f);
-		move = D3DXVECTOR3(0.0f, 0.0f, 1.5f);
+		hitPlayer->SetSpeed(0.0f);
+		ButtonPush();
 	}
-	// ギミックとプレイヤーが離れた時
 	else
 	{
-		// プレイヤーのスピードを5.0f、ギミックのスピードを0.0fに戻す
 		hitPlayer->SetSpeed(5.0f);
-		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	}
-
-	// ギミックが下に落ちた時
-	if (pos.y <= -100.0f)
-	{
-		// 移動量減衰
-		hitPlayer->SetSpeed(5.0f);
-		// ギミック削除
 		Uninit();
 		return;
 	}
@@ -171,7 +122,7 @@ void CPushMoveWall::Update()
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CPushMoveWall::Draw()
+void CButtonMovePlayer::Draw()
 {
 	CGimmick::Draw();
 }
@@ -179,7 +130,7 @@ void CPushMoveWall::Draw()
 //=============================================================================
 // 操作処理
 //=============================================================================
-void CPushMoveWall::ConstOperate()
+void CButtonMovePlayer::ConstOperate()
 {
 	if (GetHitPlayer())
 	{
@@ -195,11 +146,68 @@ void CPushMoveWall::ConstOperate()
 }
 
 //=============================================================================
+// キーを押す処理
+//=============================================================================
+void CButtonMovePlayer::ButtonPush()
+{
+	// キーボードの情報取得
+	CInput *pInputKeyboard = CApplication::GetInput();
+
+	// プレイヤーが接触したかのポインタ
+	CPlayer* hitPlayer = GetHitPlayer();
+
+	// ランダムで押すキーが決まる
+	if (m_RandFlag == false)
+	{
+		m_RandNumber = rand() % 3 + 1;
+		m_RandFlag = true;
+	}
+	else if (m_RandFlag == true && m_RandNumber == 1)
+	{
+		if (pInputKeyboard->Trigger(DIK_B))
+		{
+			m_RandFlag = false;
+		}
+	}
+	else if (m_RandFlag == true && m_RandNumber == 2)
+	{
+		if (pInputKeyboard->Trigger(DIK_N))
+		{
+			m_RandFlag = false;
+		}
+	}
+	else if (m_RandFlag == true && m_RandNumber == 3)
+	{
+		if (pInputKeyboard->Trigger(DIK_M))
+		{
+			m_RandFlag = false;
+		}
+	}
+
+	if (m_RandFlag == false && m_MoveFlag == false)
+	{// ランダムで決まったキーを押したとき && プレイヤーが止まらないといけないとき実行
+		m_MoveFlag = true;	
+	}
+	if (m_MoveFlag == true)
+	{// プレイヤーが動けるようになるとき実行
+		hitPlayer->SetMove(D3DXVECTOR3(0.0f, 0.0f, 2.0f));
+		m_MoveCount--;
+		if (m_MoveCount <= 0)
+		{// カウントが0以下になったら実行
+			hitPlayer->SetMove(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+			// 変数を初期化
+			m_MoveCount = MAX_WALK_COUNT;
+			m_MoveFlag = false;
+		}
+	}
+}
+
+//=============================================================================
 // 生成処理
 //=============================================================================
-CPushMoveWall* CPushMoveWall::Create(const D3DXVECTOR3& pos)
+CButtonMovePlayer* CButtonMovePlayer::Create(const D3DXVECTOR3& pos)
 {
-	CPushMoveWall *pObstacle = new CPushMoveWall();
+	CButtonMovePlayer *pObstacle = new CButtonMovePlayer();
 
 	if (pObstacle != nullptr)
 	{

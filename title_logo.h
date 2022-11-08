@@ -1,67 +1,62 @@
 //=============================================================================
 //
-// ランキング処理 [ranking.h]
+// タイトルロゴ処理 [title_rogo.h]
 // Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _RANKING_H_
-#define _RANKING_H_    
+#ifndef _TITLE_ROGO_H_ 
+#define _TITLE_ROGO_H_
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
+#include "main.h"
 #include "mode.h"
+#include "object2D.h"
+#include "application.h"
 
 //=============================================================================
-// 前方定義
+// 前方宣言
 //=============================================================================
 class CObject2D;
-class CFade;
-class CNumber;
-class CLight;
-
-//=============================================================================
-// マクロ定義
-//=============================================================================
-#define MAX_RANKING        (5)        //ランキングの桁数
-#define MAX_RANKINGRANK    (5)        //ランキングの順位分
-#define MAX_TEXTURE        (4)        //テクスチャの数
 
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CRanking : public CMode
+class CTitleLogo : public CObject2D
 {
 public:
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
-	CRanking();
-	~CRanking();
+	explicit CTitleLogo(int nPriority = PRIORITY_LEVEL5);
+	~CTitleLogo();
 
 	//-------------------------------------------------------------------------
 	// メンバー関数
 	//-------------------------------------------------------------------------
-	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
-	void Load(void);
-	void Save(void);
-	static void SetRankingScore();
-	static void GetRanking(int Ranking);
+	HRESULT Init() override;				// 初期化処理
+	void Uninit() override;					// 終了処理
+	void Update() override;					// 更新処理
+	void Draw() override;					// 描画処理
 
-	static CRanking * Create();
+	static CTitleLogo *Create(void);		// 生成処理
+	static bool GetTitleMenuFlag(void) { return m_bTitleMenuFlag; }		// タイトルフラグ取得処理
 
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
-	//-------------------------------------------------------------------------     
-	CFade	*m_pFade;					// フェードのポインタ
-	CLight	*m_pLight;					// ライトのポインタ
+	//-------------------------------------------------------------------------
+	static const int m_nMaxTex = 14;
+	static	CObject2D *	m_apObject2D[14];	// ポインタ
+	static	bool		m_bTitleMenuFlag;	// タイトルメニューフラグ
 
-	static CNumber * m_apNumber[MAX_RANKINGRANK][MAX_RANKING]; 
-	static int m_nRanking;
-	static int aData[MAX_RANKINGRANK];
+	int		m_nTime;						// 時間
+	int		m_nDelay[m_nMaxTex];			// タイトルロゴが降りる時の遅延
+	int		m_nTextureMax;					// 使用するテクスチャの最大数
+	int		m_nSinCount;					// Z軸の角度を加算する為のカウント変数
+	float	m_fRotZ;						// Z軸の角度設定用の変数
+	float	m_fSpeed[m_nMaxTex];			// ロゴが降りてくるスピード
+	bool	m_bTitleRogoSwitch;				// 縦の動きのフラグ
 };
 #endif
