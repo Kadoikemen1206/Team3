@@ -87,6 +87,11 @@ HRESULT CGame::Init(void)
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 	CLoadStage::LoadAll(m_pPlayer1P->GetPos());
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2800.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3600.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3800.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4000.0f));
 
 	if (m_mode == EMode::VS)
 	{

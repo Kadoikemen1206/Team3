@@ -102,7 +102,7 @@ void CPause::BeginUpdate()
 //=============================================================================
 void CPause::SelectUpdate()
 {
-	m_quit->SelectUpdate();
+	//m_quit->SelectUpdate();
 
 	CInput* pInput = CApplication::GetInput();
 
