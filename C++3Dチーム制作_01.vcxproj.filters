@@ -167,6 +167,9 @@
     <ClCompile Include="pause_menu.cpp">
       <Filter>00_Code\00_Main\01_Mode\00_PAUSE</Filter>
     </ClCompile>
+    <ClCompile Include="button_move_player.cpp">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClCompile>
     <ClCompile Include="push_move_wall.cpp">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClCompile>
@@ -346,6 +349,9 @@
     </ClInclude>
     <ClInclude Include="pause_menu.h">
       <Filter>00_Code\00_Main\01_Mode\00_PAUSE</Filter>
+    </ClInclude>
+    <ClInclude Include="button_move_player.h">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClInclude>
     <ClInclude Include="push_move_wall.h">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
