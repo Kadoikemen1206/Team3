@@ -16,7 +16,9 @@
 //==================================================
 const CSound::SParam CSound::PARAM[] =
 {// 各音素材のパラメータ
-	{ "data/SOUND/BGM/title.wav", -1},	// タイトル
+	{ "data/SOUND/BGM/title.wav", -1 },	// タイトル
+	{ "data/SOUND/BGM/title.wav", -1 },	// タイトル
+	{ "data/SOUND/BGM/title.wav", -1 },	// タイトル
 	{ "data/SOUND/SE/Shot01.wav", 0 },	// 決定音
 	{ "data/SOUND/SE/Dead1.wav", 0 },	// 死亡音
 	{ "data/SOUND/SE/Decision.wav", 0 },	// 決定音

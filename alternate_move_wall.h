@@ -55,7 +55,8 @@ private:
 
 	int m_buttonPushCount;
 
-	CObjectX* m_Screw;				// ÇÀÇ∂
-	CIcon* m_pIcon[2];
+	CObjectX* m_Screw;	// ÇÀÇ∂
+	CIcon* m_pIcon[2];	// ÉAÉCÉRÉì
+
 };
 #endif
