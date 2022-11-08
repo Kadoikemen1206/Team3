@@ -9,7 +9,7 @@
 // インクルードファイル
 //=============================================================================
 #include "title_menu.h"
-#include "title_rogo.h"
+#include "title_logo.h"
 #include "application.h"
 #include "input.h"
 #include "fade.h"
@@ -117,7 +117,7 @@ void CTitleMenu::Draw()
 void CTitleMenu::PutoutMenu(void)
 {
 	// タイトルメニュー[壁紙]出現
-	if (CTitleRogo::GetTitleMenuFlag())
+	if (CTitleLogo::GetTitleMenuFlag())
 	{
 		if (m_pos[0].x < SCREEN_WIDTH_HALF)
 		{

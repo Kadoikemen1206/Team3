@@ -36,6 +36,7 @@ const float CPlayer::GRAVITY_POWER = 0.75f;
 // コンストラクタ
 //=============================================================================
 CPlayer::CPlayer(int nPriority) : 
+	CMotionModel3D(nPriority),
 	m_rotDest(0.0f, 0.0f, 0.0f),
 	m_posOld(0.0f, 0.0f, 0.0f),
 	m_nType(EPLAYER_NONE),
@@ -236,7 +237,7 @@ void CPlayer::Update()
 	{
 		if (m_moutionType != 0)
 		{
-			m_moutionType = 0;
+			m_moutionType = MOTION_NONE;
 			GetMotion()->SetNumMotion(m_moutionType);
 		}
 	}
@@ -253,7 +254,7 @@ void CPlayer::Update()
 
 		if (m_moutionType != 1)
 		{
-			m_moutionType = 1;
+			m_moutionType = MOTION_MOVE;
 			GetMotion()->SetNumMotion(m_moutionType);
 		}
 	}

@@ -82,7 +82,7 @@ void CPushMoveWall::Update()
 	D3DXVECTOR3 move = GetMove();
 
 	// 重力設定
-	move.y -= 1.0f;
+	move.y -= 2.5f;
 
 	// 前回の位置を保存
 	m_PosOld = pos;
@@ -150,7 +150,7 @@ void CPushMoveWall::Update()
 	}
 
 	// ギミックが下に落ちた時
-	if (pos.y <= -50.0f)
+	if (pos.y <= -100.0f)
 	{
 		// 移動量減衰
 		hitPlayer->SetSpeed(5.0f);

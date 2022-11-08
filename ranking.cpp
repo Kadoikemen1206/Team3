@@ -17,6 +17,10 @@
 #include "object.h"
 #include "object2D.h"
 #include "ranking_rogo.h"
+#include "camera.h"
+#include "light.h"
+#include "meshfield.h"
+#include "load_stage.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -44,6 +48,19 @@ CRanking::~CRanking()
 //=============================================================================
 HRESULT CRanking::Init(void)
 {
+	// カメラの設定
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TITLE);
+	CApplication::GetCamera()->Init();
+
+	// ライトの生成
+	m_pLight = CLight::Create();
+
+	// メッシュフィールドの生成
+	CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
+
+	// ステージのロード
+	CLoadStage::LoadAll();
+
 	// ランキングロゴの生成
 	CRankingRogo::Create();
 
@@ -55,6 +72,17 @@ HRESULT CRanking::Init(void)
 //=============================================================================
 void CRanking::Uninit(void)
 {
+	// カメラの設定
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
+
+	// ライトの解放・削除
+	if (m_pLight != nullptr)
+	{
+		m_pLight->Uninit();
+		delete m_pLight;
+		m_pLight = nullptr;
+	}
+
 	//インスタンスの解放処理
 	CObject::Release();
 }
@@ -64,6 +92,21 @@ void CRanking::Uninit(void)
 //=============================================================================
 void CRanking::Update(void)
 {
+	// カメラの情報取得
+	CCamera *pCamera = CApplication::GetCamera();
+
+	// カメラの視点と注視点取得
+	D3DXVECTOR3 posV = pCamera->GetPosV();
+	D3DXVECTOR3 posR = pCamera->GetPosR();
+
+	// 視点と注視点を後ろにずらしていく処理
+	posV += D3DXVECTOR3(0.0f, 0.0f, 2.0f);
+	posR += D3DXVECTOR3(0.0f, 0.0f, 2.0f);
+
+	// 視点と注視点を設定
+	pCamera->SetPosV(posV);
+	pCamera->SetPosR(posR);
+
 	// キーボードの情報取得
 	CInput *pInput = CApplication::GetInput();
 

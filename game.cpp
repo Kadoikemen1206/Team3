@@ -30,6 +30,8 @@
 #include "barrage_move_wall.h"
 #include "alternate_move_wall.h"
 #include "push_move_wall.h"
+#include "pause.h"
+#include "button_move_player.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -42,6 +44,7 @@ CLight *CGame::m_pLight = nullptr;
 CTime *CGame::m_pTime = nullptr;
 CObstacle *CGame::m_pObstacle1P = nullptr;
 CObstacle *CGame::m_pObstacle2P = nullptr;
+CPause *CGame::m_pPause = nullptr;
 CGame::EMode CGame::m_mode = CGame::EMode::SOLO;
 
 //=============================================================================
@@ -75,23 +78,33 @@ HRESULT CGame::Init(void)
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
 
 	// ギミックの生成(連打ギミック)
-	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 1500.0f));
 	// ギミックの生成(交互連打ギミック)
-	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3000.0f));
 	// ギミックの生成(押すギミック)
 	//CPushMoveWall::Create(D3DXVECTOR3(-700.0f,0.0f,2000.0f));
+	// ギミックの生成(ボタンをしたら少しずつ進むギミック)
+	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2000.0f));
 
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 	CLoadStage::LoadAll(m_pPlayer1P->GetPos());
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
+	CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2000.0f));
+	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2800.0f));
+	CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 3600.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4000.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4300.0f));
 
 	if (m_mode == EMode::VS)
 	{
 		//CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
 		// ギミックの生成(押すギミック)
-		CPushMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
-		CPushMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
+		CButtonMovePlayer::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
+		CAlternateMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2800.0f));
+		CButtonMovePlayer::Create(D3DXVECTOR3(700.0f, 0.0f, 3600.0f));
+		CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 4000.0f));
+		CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 4300.0f));
 
 		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 		CLoadStage::LoadAll(m_pPlayer2P->GetPos());
@@ -137,10 +150,26 @@ void CGame::Update(void)
 
 	if (m_pFade->GetFade() == CFade::FADE_NONE)
 	{
-		if (pInputKeyboard->Trigger(DIK_RETURN))
+		if (m_pPause == nullptr)
 		{
-			// 遷移
-			CFade::SetFade(CApplication::MODE_TITLE);
+			if (pInputKeyboard->Trigger(DIK_P))
+			{
+				m_pPause = CPause::Create();
+			}
+		}
+		else
+		{
+			if (m_pPause->GetEndFlag())
+			{
+				static int count = 0;
+				count++;
+
+				if (count <= 20)
+				{
+					count = 0;
+					m_pPause = nullptr;
+				}
+			}
 		}
 	}
 }
