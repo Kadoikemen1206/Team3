@@ -27,7 +27,7 @@ CParticle::CParticle(int nPriority) :
 	m_bBounce(false),				// バウンドさせる
 	m_bTransition(false),			// 色の変化
 	m_bPosSpecify(false),			// 位置の指定
-	m_behavior(BEHAVIOR_FLY)
+	m_behavior(BEHAVIOR_FIREWORKS)
 {
 }
 
@@ -178,7 +178,7 @@ CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, con
 }
 
 //詳細設定
-void CParticle::DetailSetting()
+inline void CParticle::DetailSetting()
 {
 	D3DXVECTOR3 move = CBillboard::GetMove();
 	D3DXVECTOR3 scale = CBillboard::GetSize();
@@ -277,11 +277,13 @@ void CParticle::Preset()
 		break;
 
 	case BEHAVIOR_FIREWORKS:	//for文50回くらいが限界
-		SetCol(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+		m_path = "PARTICLE_FLARE";
+		//SetCol(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
 		m_bGravity = true;
 		m_bFade = true;
 		m_bScaling = true;
 		m_bTransition = true;
+		m_bLocus = true;
 		m_nDelay = 100;
 		m_fFallSpeed = 0.001f;
 		m_fFadeValue = -0.006f;

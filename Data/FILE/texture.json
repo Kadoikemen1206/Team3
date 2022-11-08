@@ -17,6 +17,10 @@
       "Data\/TEXTURE\/vs.png"
     ],
     [
+      "SPEECH_BUBBLE",
+      "Data\/TEXTURE\/Speech_Bubble.png"
+    ],
+    [
       "PARTICLE_BRIGHT1",
       "Data\/TEXTURE\/Particles\/bright.png"
     ],
@@ -25,8 +29,32 @@
       "Data\/TEXTURE\/Particles\/bright2.png"
     ],
     [
-      "PARTICLE_RAY",
-      "Data\/TEXTURE\/Particles\/ray.png"
+      "BUTTON_A",
+      "Data\/TEXTURE\/Buttons\/AButton.png"
+    ],
+    [
+      "BUTTON_B",
+      "Data\/TEXTURE\/Buttons\/BButton.png"
+    ],
+    [
+      "BUTTON_Y",
+      "Data\/TEXTURE\/Buttons\/YButton.png"
+    ],
+    [
+      "BUTTON_X",
+      "Data\/TEXTURE\/Buttons\/XButton.png"
+    ],
+    [
+      "BUTTON_WKEY",
+      "Data\/TEXTURE\/Buttons\/WKey.png"
+    ],
+    [
+      "BUTTON_ENTER",
+      "Data\/TEXTURE\/Buttons\/EnterButton.png"
+    ],
+    [
+      "STICK",
+      "Data\/TEXTURE\/Buttons\/Stick.png"
     ],
     [
       "PARTICLE_STAR",
