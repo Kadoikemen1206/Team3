@@ -173,6 +173,9 @@
     <ClCompile Include="pause_select.cpp">
       <Filter>00_Code\00_Main\01_Mode\00_PAUSE</Filter>
     </ClCompile>
+    <ClCompile Include="sound.cpp">
+      <Filter>00_Code\00_Main\02_OutSide</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -355,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="pause_select.h">
       <Filter>00_Code\00_Main\01_Mode\00_PAUSE</Filter>
+    </ClInclude>
+    <ClInclude Include="sound.h">
+      <Filter>00_Code\00_Main\02_OutSide</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

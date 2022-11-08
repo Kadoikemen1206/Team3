@@ -41,6 +41,20 @@ public:
 	};
 
 	//-------------------------------------------------------------------------
+	// 列挙型
+	//-------------------------------------------------------------------------
+	enum EMotion
+	{
+		MOTION_NONE = 0,
+		MOTION_MOVE,
+		MOTION_JUMP,
+		MOTION_LANDING,
+		MOTION_SCREW,
+		MOTION_PUSH,
+		MOTION_MAX
+	};
+
+	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
 	explicit CPlayer(int nPriority = PRIORITY_LEVEL3);
@@ -76,7 +90,7 @@ private:
 	bool m_bIsLanding;					// モデルとの当たり判定フラグ(左右,奥,手前)
 	bool m_bIsLandingUp;				// モデルとの当たり判定フラグ(上側)
 
-	int m_moutionType;
+	EMotion m_moutionType;
 
 	CParticle *m_pParticle;				// パーティクルのポインタ
 };

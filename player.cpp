@@ -235,7 +235,7 @@ void CPlayer::Update()
 	{
 		if (m_moutionType != 0)
 		{
-			m_moutionType = 0;
+			m_moutionType = MOTION_NONE;
 			GetMotion()->SetNumMotion(m_moutionType);
 		}
 	}
@@ -252,7 +252,7 @@ void CPlayer::Update()
 
 		if (m_moutionType != 1)
 		{
-			m_moutionType = 1;
+			m_moutionType = MOTION_MOVE;
 			GetMotion()->SetNumMotion(m_moutionType);
 		}
 	}
