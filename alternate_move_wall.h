@@ -47,5 +47,9 @@ private:
 	int m_nTriggerCount;			// ƒL[‚ğ‰Ÿ‚µ‚½‰ñ”
 
 	bool m_nAlternateFlag;
+
+	int m_buttonPushCount;
+
+	CObjectX* m_Screw;				// ‚Ë‚¶
 };
 #endif

@@ -233,10 +233,9 @@ void CPlayer::Update()
 
 	if (move.x == 0.0f && move.z == 0.0f)
 	{
-		if (m_moutionType != 0)
+		if (m_moutionType != MOTION_NONE && m_moutionType != MOTION_SCREW)
 		{
-			m_moutionType = MOTION_NONE;
-			GetMotion()->SetNumMotion(m_moutionType);
+			SetMotionType(MOTION_NONE);
 		}
 	}
 	else
@@ -250,10 +249,9 @@ void CPlayer::Update()
 			move.z = 0.0f;
 		}
 
-		if (m_moutionType != 1)
+		if (m_moutionType != MOTION_MOVE)
 		{
-			m_moutionType = MOTION_MOVE;
-			GetMotion()->SetNumMotion(m_moutionType);
+			SetMotionType(MOTION_MOVE);
 		}
 	}
 
@@ -433,4 +431,16 @@ void CPlayer::SetType(EPLAYER type)
 void CPlayer::SetSpeed(float speed)
 {
 	m_nSpeed = speed;
+}
+
+void CPlayer::SetMotionType(EMotion inMotion)
+{
+	// “¯‚¶ƒ‚[ƒVƒ‡ƒ“‚É‚Í‘JˆÚ‚µ‚È‚¢B
+	if (m_moutionType == inMotion)
+	{
+		return;
+	}
+
+	m_moutionType = inMotion;
+	GetMotion()->SetNumMotion(m_moutionType);
 }

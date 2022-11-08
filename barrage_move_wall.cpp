@@ -54,7 +54,9 @@ HRESULT CBarrageMoveWall::Init()
 	m_PosOld = CObjectX::GetPos();
 
 	//ÉÇÉfÉãÇÃÉçÅ[Éh
-	LoadModel("BOX");
+	LoadModel("BOOK04");
+	SetRot(D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
+	SetPos(GetPos() + D3DXVECTOR3(0.0f, GetMaxVtx().z, 0.0f));
 
 	return S_OK;
 }

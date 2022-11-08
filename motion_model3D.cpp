@@ -53,7 +53,8 @@ CMotionModel3D::CMotionModel3D(int nPriority) :
 	m_pos(D3DXVECTOR3()),										// 位置
 	m_posOld(D3DXVECTOR3()),									// 過去位置
 	m_rot(D3DXVECTOR3()),										// 向き
-	m_size(D3DXVECTOR3())										// 大きさ
+	m_size(D3DXVECTOR3()),										// 大きさ
+	m_isUpdateStop(false)
 {
 	
 }
@@ -112,7 +113,10 @@ void CMotionModel3D::Update()
 {
 	if (m_pMotion != nullptr)
 	{// モーション番号の設定
-		m_pMotion->Update();
+		if(!m_isUpdateStop)
+		{
+			m_pMotion->Update();
+		}
 	}
 }
 

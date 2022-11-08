@@ -47,9 +47,9 @@ public:
 	{
 		MOTION_NONE = 0,
 		MOTION_MOVE,
+		MOTION_SCREW,
 		MOTION_JUMP,
 		MOTION_LANDING,
-		MOTION_SCREW,
 		MOTION_PUSH,
 		MOTION_MAX
 	};
@@ -70,6 +70,7 @@ public:
 	// Setter
 	void SetType(EPLAYER type);							// タイプ設定処理
 	void SetSpeed(float speed);							// プレイヤー移動スピード設定処理
+	void SetMotionType(EMotion inMotion);							// プレイヤー移動スピード設定処理
 
 	// Getter
 	EPLAYER GetPlayerType(void) { return m_nType; }		// プレイヤータイプ取得処理

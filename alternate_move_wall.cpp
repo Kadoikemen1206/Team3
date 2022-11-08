@@ -26,7 +26,9 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CAlternateMoveWall::CAlternateMoveWall(int nPriority)
+CAlternateMoveWall::CAlternateMoveWall(int nPriority) :
+	m_Screw(nullptr),
+	m_buttonPushCount(0)
 {
 	m_PosOld = {};
 	m_nTriggerCount = 0;
@@ -53,7 +55,7 @@ HRESULT CAlternateMoveWall::Init()
 	m_PosOld = CObjectX::GetPos();
 
 	//モデルのロード
-	LoadModel("BOX");
+	LoadModel("POCKET_WATCH");
 
 	return S_OK;
 }
@@ -105,10 +107,31 @@ void CAlternateMoveWall::Update()
 			return;
 		}
 
+		CPlayer* hitPlayer = GetHitPlayer();
+
+		if (hitPlayer->GetPos().x != 0.0f)
+		{
+			D3DXVECTOR3 pos = hitPlayer->GetPos();
+			pos.x = GetPos().x;
+			hitPlayer->SetPos(pos);
+		}
+		hitPlayer->SetMotionType(CPlayer::MOTION_SCREW);
+
 		// ギミック処理
 		ConstOperate();
 
-		CPlayer* hitPlayer = GetHitPlayer();
+		m_buttonPushCount++;
+
+		if (m_buttonPushCount >= 10)
+		{
+			hitPlayer->SetUpdateStop(true);
+		}
+		else
+		{
+			D3DXVECTOR3 rot = m_Screw->GetRot();
+			rot.y += 0.04f;
+			m_Screw->SetRot(rot);
+		}
 
 		hitPlayer->SetSpeed(0.0f);
 		if (GetCompletion())
@@ -119,6 +142,7 @@ void CAlternateMoveWall::Update()
 
 		// ギミックの更新
 		CGimmick::Update();
+		m_Screw->Update();
 	}
 }
 
@@ -128,6 +152,7 @@ void CAlternateMoveWall::Update()
 void CAlternateMoveWall::Draw()
 {
 	CGimmick::Draw();
+	m_Screw->Draw();
 }
 
 //=============================================================================
@@ -152,19 +177,26 @@ void CAlternateMoveWall::ConstOperate()
 
 	/* ↓操作が完了していない↓ */
 
-	if (pInputKeyboard->Trigger(DIK_Z) && m_nAlternateFlag == false)
+	if (pInputKeyboard->Trigger(DIK_Z) && !m_nAlternateFlag)
 	{// Zキーを押したら実行
 		m_nTriggerCount++;
+		GetHitPlayer()->SetUpdateStop(false);
+		m_buttonPushCount = 0;
 		m_nAlternateFlag = true;
 	}
-	if (pInputKeyboard->Trigger(DIK_C) && m_nAlternateFlag == true)
+
+	if (pInputKeyboard->Trigger(DIK_C) && m_nAlternateFlag)
 	{// Cキーを押したら実行
 		m_nTriggerCount++;
+		GetHitPlayer()->SetUpdateStop(false);
+		m_buttonPushCount = 0;
 		m_nAlternateFlag = false;
 	}
-	if (m_nTriggerCount >= 20)
+
+	if (m_nTriggerCount >= 40)
 	{
 		// 操作が完了した
+		GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
 		CGimmick::SetCompletion(true);
 	}
 }
@@ -189,6 +221,8 @@ CAlternateMoveWall* CAlternateMoveWall::Create(const D3DXVECTOR3& pos)
 		pObstacle->SetGimmickType(GIMMICKTYPE_BARRAGEMOVEWALL);
 		pObstacle->Init();
 		pObstacle->SetPos(pos);
+		pObstacle->m_Screw = CObjectX::Create(pos - D3DXVECTOR3(0.0f, 0.0f, 130.0f), CObject::PRIORITY_LEVEL3);
+		pObstacle->m_Screw->LoadModel("SCREW WINDING");
 	}
 	else
 	{
