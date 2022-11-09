@@ -180,15 +180,29 @@ void CAlternateMoveWall::ConstOperate()
 
 	if (m_pIcon[0] == nullptr)
 	{
-		m_pIcon[0] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(40.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
-		m_pIcon[0]->SetScaling(true);
+		m_pIcon[0] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+		m_pIcon[0]->SetScaling(true, true);
 		m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
 	}
 
 	if (m_pIcon[1] == nullptr)
 	{
-		m_pIcon[1] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(15.0f, 15.0f, 0.0f), "BUTTON_Y", PRIORITY_LEVEL3);
+		m_pIcon[1] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ZKEY", PRIORITY_LEVEL3);
 		m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+		m_pIcon[1]->SetStopAnim(0, 0);
+	}
+
+	if (m_pIcon[2] == nullptr)
+	{
+		m_pIcon[2] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_CKEY", PRIORITY_LEVEL3);
+		m_pIcon[2]->SetAnimation(2, 1, 12, 1, true);
+		m_pIcon[2]->SetStopAnim(1, 0);
+	}
+
+	if (m_pIcon[3] == nullptr)
+	{
+		m_pIcon[3] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(5.0f, 5.0f, 0.0f), "ARROW", PRIORITY_LEVEL3);
+		m_pIcon[3]->SetFlip(CIcon::FLIP_HORIZON);
 	}
 
 	if (pInputKeyboard->Trigger(KEY_LEFT_ACTION) && !m_nAlternateFlag)
@@ -203,15 +217,30 @@ void CAlternateMoveWall::ConstOperate()
 			// 移動量
 			D3DXVECTOR3 move;
 			move.x = sinf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
-			move.y = sinf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180))) * cosf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
+			move.y = 1.0f;
 			move.z = cosf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
 
 			// 色
 			D3DXCOLOR color((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f);
+			D3DXCOLOR destColor(1.0f, 0.2f, 0.0f, 1.0f);
 
 			CParticle* particle = CParticle::Create(GetPos(),move, color,"PARTICLE_FLARE",PRIORITY_LEVEL3);
+			particle->SetDestCol(destColor);
+			particle->SetGravity(true, 0.1f);
+			particle->SetDelay(15);
+			particle->SetBounce(true);
 			particle->SetLower(GetPos());
 		}
+
+		//アイコン
+		m_pIconEffect = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_EFFECT", PRIORITY_LEVEL4);
+		m_pIconEffect->SetCol(D3DXCOLOR(1.0f,0.5f,0.0f,1.0f));
+		m_pIconEffect->SetFade(true);
+		m_pIconEffect->SetScaling(true);
+
+		m_pIcon[1]->SetStopAnim(1, 0);
+		m_pIcon[2]->SetStopAnim(0, 0);
+		m_pIcon[3]->SetFlip(CIcon::FLIP_HORIZON);
 	}
 
 	if (pInputKeyboard->Trigger(KEY_RIGHT_ACTION) && m_nAlternateFlag)
@@ -225,14 +254,29 @@ void CAlternateMoveWall::ConstOperate()
 		{
 			D3DXVECTOR3 move;
 			move.x = sinf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
-			move.y = sinf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180))) * cosf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
+			move.y = 1.0f;
 			move.z = cosf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
 
 			D3DXCOLOR color((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f);
+			D3DXCOLOR destColor(1.0f, 0.2f,0.0f,1.0f);
 
 			CParticle* particle = CParticle::Create(GetPos(), move, color, "PARTICLE_FLARE", PRIORITY_LEVEL3);
+			particle->SetDestCol(destColor);
+			particle->SetGravity(true, 0.1f);
+			particle->SetDelay(15);
+			particle->SetBounce(true);
 			particle->SetLower(GetPos());
 		}
+
+		//アイコン
+		m_pIconEffect = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_EFFECT", PRIORITY_LEVEL4);
+		m_pIconEffect->SetCol(D3DXCOLOR(1.0f, 0.5f, 0.0f, 1.0f));
+		m_pIconEffect->SetFade(true);
+		m_pIconEffect->SetScaling(true);
+
+		m_pIcon[1]->SetStopAnim(0, 0);
+		m_pIcon[2]->SetStopAnim(1, 0);
+		m_pIcon[3]->SetFlip(CIcon::FLIP_HORIZON);
 	}
 
 	// 指定回数のボタンを押した場合
@@ -242,6 +286,8 @@ void CAlternateMoveWall::ConstOperate()
 		GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
 		m_pIcon[0]->Uninit();
 		m_pIcon[1]->Uninit();
+		m_pIcon[2]->Uninit();
+		m_pIcon[3]->Uninit();
 		CGimmick::SetCompletion(true);
 	}
 }
