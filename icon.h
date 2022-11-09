@@ -32,10 +32,13 @@ public:
 	void Uninit(void) override;		// I—¹ˆ—
 	void Update(void) override;		// XVˆ—
 	void Draw(void) override;		// •`‰æˆ—
+	void SwapTexture(std::string url);
 
 	void SetPath(std::string path) { m_path = path; }
 	void SetDestroy(bool set) { m_bDestroy = set; }
 	void SetScaling(bool set) { m_bScaling = set; }
+	void SetFade(bool set) { m_bFade = set; }
+	void SetScaling(bool set, bool limit) { m_bScaling = set, m_bLimit = limit; }
 
 	static CIcon *Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size, std::string url, int nPriority);    // ¶¬
 
@@ -43,6 +46,8 @@ private:
 	D3DXVECTOR3 m_beginScale;
 	std::string m_path;
 	bool m_bScaling;
+	bool m_bFade;
+	bool m_bLimit;
 	bool m_bDestroy;
 	bool m_bAnim;
 };

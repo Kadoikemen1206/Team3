@@ -33,6 +33,7 @@
 #include "push_move_wall.h"
 #include "pause.h"
 #include "button_move_player.h"
+#include "countdown.h"
 #include "stop_gimmick.h"
 #include "goal.h"
 #include "random_door.h"
@@ -72,17 +73,19 @@ CGame::~CGame()
 //=============================================================================
 HRESULT CGame::Init(void)
 {
-	//乱数
-	srand((unsigned int)time(NULL));	//起動時に一回だけ行うため初期化に書く
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
 
 	// ライトの生成
 	m_pLight = CLight::Create();
 
 	// タイマーの生成
-	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 3,CObject::PRIORITY_LEVEL4);
+	m_pTime = CTime::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 500.0f, 0.0f), 0, CObject::PRIORITY_LEVEL4);
 
 	// メッシュフィールドの生成
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
+
+	// カウントダウンの生成
+	CCountDown::Create(D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f));
 
 	// ギミックの生成(連打ギミック)
 	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 1500.0f));
@@ -97,20 +100,22 @@ HRESULT CGame::Init(void)
 	// ゴールの生成
 	CGoal::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
 
-	//for (int nCnt = 0; nCnt < 4; nCnt++)
-	//{
-	//	CRandomDoor::Create(D3DXVECTOR3(-800.0f + 75.0f * nCnt, 0.0f, 2000.0f));
-	//}
+	int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
 
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+	m_pPlayer1P->SetKeyIndex(joyoadCount - 1);
+
+	// ステージのロード
 	CLoadStage::LoadAll(m_pPlayer1P->GetPos());
-	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
+
+	// ギミックの設置
 	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 20.0f, 2000.0f));
 	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 45.0f, 2800.0f));
 	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 3600.0f));
 	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4000.0f));
 	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4300.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
 
 	if (m_mode == EMode::VS)
 	{
@@ -123,6 +128,7 @@ HRESULT CGame::Init(void)
 		CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 4300.0f));
 
 		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+		m_pPlayer2P->SetKeyIndex(joyoadCount - 2);
 		CLoadStage::LoadAll(m_pPlayer2P->GetPos());
 		CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TWO);
 	}
@@ -167,7 +173,7 @@ void CGame::Update(void)
 	{
 		if (m_pPause == nullptr)
 		{
-			if (pInputKeyboard->Trigger(DIK_P))
+			if (pInputKeyboard->Trigger(KEY_PAUSE))
 			{
 				m_pPause = CPause::Create();
 			}

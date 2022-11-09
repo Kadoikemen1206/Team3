@@ -123,7 +123,7 @@ void CPause::SelectUpdate()
 	// キーボードの情報取得
 	CInput *pInput = CApplication::GetInput();
 
-	if (pInput->Trigger(DIK_A))
+	if (pInput->Trigger(KEY_LEFT))
 	{
 		switch (m_select)
 		{
@@ -140,7 +140,7 @@ void CPause::SelectUpdate()
 			break;
 		}
 	}
-	else if (pInput->Trigger(DIK_D))
+	else if (pInput->Trigger(KEY_RIGHT))
 	{
 		switch (m_select)
 		{
@@ -179,13 +179,13 @@ void CPause::SelectUpdate()
 		break;
 	}
 
-	if (pInput->Trigger(DIK_P))
+	if (pInput->Trigger(KEY_PAUSE))
 	{
 		m_select = QUIT;
 		m_isEndFlag = true;
 	}
 
-	if (pInput->Trigger(DIK_RETURN))
+	if (pInput->Trigger(KEY_DECISION))
 	{
 		m_isEndFlag = true;
 	}

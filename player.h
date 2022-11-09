@@ -68,10 +68,14 @@ public:
 	void Update() override;								// 更新処理
 	void Respawn(D3DXVECTOR3 &pos);						// リスポーン処理
 
+	void Move();
+
 	// Setter
-	void SetType(EPLAYER type);							// タイプ設定処理
-	void SetSpeed(float speed);							// プレイヤー移動スピード設定処理
-	void SetMotionType(EMotion inMotion);							// プレイヤー移動スピード設定処理
+	void SetType(EPLAYER type);								// タイプ設定処理
+	void SetSpeed(float speed);								// プレイヤー移動スピード設定処理
+	void SetMotionType(EMotion inMotion);					// プレイヤー移動スピード設定処理
+	void SetIsMove(bool isMove) { m_isMove = isMove; }		// 移動を行う有無
+	void SetKeyIndex(int index) { m_keyIndex = index; }
 
 	// Getter
 	EPLAYER GetPlayerType(void) { return m_nType; }		// プレイヤータイプ取得処理
@@ -92,7 +96,10 @@ private:
 	bool m_bIsLanding;					// モデルとの当たり判定フラグ(左右,奥,手前)
 	bool m_bIsLandingUp;				// モデルとの当たり判定フラグ(上側)
 
+	bool m_isMove;						// 移動を行うか否か
+
 	EMotion m_moutionType;
+	int m_keyIndex;						// 入力デバイスの番号
 
 	CParticle *m_pParticle;				// パーティクルのポインタ
 	CIcon *m_pIcon;

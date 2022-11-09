@@ -14,15 +14,12 @@
 #include "input.h"
 #include "main.h"
 #include "motion_model3D.h"
-#include "player.h"
-#include "shadow.h"
-#include "renderer.h"
-#include "meshfield.h"
-#include "obstacle.h"
-#include "game.h"
-#include "particle.h"
 #include "motion.h"
+#include "player.h"
+#include "meshfield.h"
+#include "game.h"
 
+#include "particle.h"
 #include "icon.h"
 
 //=============================================================================
@@ -41,11 +38,13 @@ CPlayer::CPlayer(int nPriority) :
 	m_posOld(0.0f, 0.0f, 0.0f),
 	m_nType(EPLAYER_NONE),
 	m_nSmokeCnt(0),
+	m_keyIndex(-1),
 	m_nSpeed(5.0f),
 	m_bJumpFlag(false),
 	m_bIsLanding(false),
 	m_bIsLandingUp(false),
-	m_pParticle(nullptr)
+	m_pParticle(nullptr),
+	m_isMove(true)
 {
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_PLAYER);
@@ -79,12 +78,6 @@ void CPlayer::Update()
 {
 	CMotionModel3D::Update();
 
-	// キーボードの情報取得
-	CInput *pInputKeyboard = CApplication::GetInput();
-
-	// カメラの情報取得
-	D3DXVECTOR3 pCameraRot = CCamera::GetRot();
-
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
@@ -94,144 +87,13 @@ void CPlayer::Update()
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
+	Move();
+
 	// 移動力取得
 	D3DXVECTOR3 move = GetMove();
 
 	// 重力設定
 	move.y -= GRAVITY_POWER;
-
-	// 1Pの場合下記の移動処理を実行
-	if (m_nType == EPLAYER_1P)
-	{
-		if (pInputKeyboard->Press(DIK_W))
-		{// 上に移動
-			if (pInputKeyboard->Press(DIK_A))
-			{
-				move.x = sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
-				move.z = cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
-				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.75f;
-			}
-			else if (pInputKeyboard->Press(DIK_D))
-			{
-				move.x = sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
-				move.z = cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
-				m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.75f;
-			}
-			else
-			{
-				move.x = sinf(pCameraRot.y) * m_nSpeed;
-				move.z = cosf(pCameraRot.y) * m_nSpeed;
-				m_rotDest.y = pCameraRot.y + D3DX_PI;
-			}
-		}
-
-		else if (pInputKeyboard->Press(DIK_S))
-		{// 下に移動
-			if (pInputKeyboard->Press(DIK_A))
-			{
-				move.x = sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
-				move.z = cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
-				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.25f;
-			}
-			else if (pInputKeyboard->Press(DIK_D))
-			{
-				move.x = sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
-				move.z = cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
-				m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.25f;
-			}
-			else
-			{
-				move.x = sinf(pCameraRot.y) * -m_nSpeed;
-				move.z = cosf(pCameraRot.y) * -m_nSpeed;
-				m_rotDest.y = pCameraRot.y + 0.0f;
-			}
-
-		}
-		else if (pInputKeyboard->Press(DIK_A))
-		{// 左に移動
-			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
-			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
-			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.5f;
-		}
-		else if (pInputKeyboard->Press(DIK_D))
-		{// 右に移動
-			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
-			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
-			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
-		}
-
-		if (pInputKeyboard->Trigger(DIK_J))
-		{// ジャンプ
-			m_bJumpFlag = true;
-			move.y += JUMP_POWER;
-		}
-	}
-	
-	// 2Pの場合下記の移動処理を実行
-	if (m_nType == EPLAYER_2P)
-	{
-		if (pInputKeyboard->Press(DIK_UP))
-		{// 上に移動
-			if (pInputKeyboard->Press(DIK_LEFT))
-			{
-				move.x = sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
-				move.z = cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
-				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.75f;
-			}
-			else if (pInputKeyboard->Press(DIK_RIGHT))
-			{
-				move.x = sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
-				move.z = cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
-				m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.75f;
-			}
-			else
-			{
-				move.x = sinf(pCameraRot.y) * m_nSpeed;
-				move.z = cosf(pCameraRot.y) * m_nSpeed;
-				m_rotDest.y = pCameraRot.y + D3DX_PI;
-			}
-		}
-
-		else if (pInputKeyboard->Press(DIK_DOWN))
-		{// 下に移動
-			if (pInputKeyboard->Press(DIK_LEFT))
-			{
-				move.x = sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
-				move.z = cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
-				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.25f;
-			}
-			else if (pInputKeyboard->Press(DIK_RIGHT))
-			{
-				move.x = sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
-				move.z = cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
-				m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.25f;
-			}
-			else
-			{
-				move.x = sinf(pCameraRot.y) * -m_nSpeed;
-				move.z = cosf(pCameraRot.y) * -m_nSpeed;
-				m_rotDest.y = pCameraRot.y + 0.0f;
-			}
-
-		}
-		else if (pInputKeyboard->Press(DIK_LEFT))
-		{// 左に移動
-			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
-			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
-			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.5f;
-		}
-		else if (pInputKeyboard->Press(DIK_RIGHT))
-		{// 右に移動
-			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
-			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
-			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
-		}
-		if (pInputKeyboard->Trigger(DIK_K))
-		{// ジャンプ
-			m_bJumpFlag = true;
-			move.y += JUMP_POWER;
-		}
-	}
 
 	if (move.x == 0.0f && move.z == 0.0f)
 	{
@@ -274,36 +136,6 @@ void CPlayer::Update()
 		m_nSmokeCnt++;
 	}
 
-	//テスト用
-	if (pInputKeyboard->Trigger(DIK_PERIOD))
-	{
-		int max = 100;
-		for (int i = 0; i < max; i++)
-		{
-			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 180.0f, pos.z),
-				D3DXVECTOR3(sinf((rand() % max * ((360 / max) * (D3DX_PI / 180)))), sinf((rand() % max * ((360 / max) * (D3DX_PI / 180)))) * cosf((rand() % max * ((360 / max) * (D3DX_PI / 180)))), cosf((rand() % max * ((360 / max) * (D3DX_PI / 180))))),
-				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
-				"PARTICLE_FLARE",
-				PRIORITY_LEVEL3);
-			//m_pParticle->SetLower(pos);
-		}
-
-		//テスト用
-		{
-			m_pIcon = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z), D3DXVECTOR3(40.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
-			m_pIcon->SetScaling(true);
-			m_pIcon->SetAnimation(1, 1, 12, 1, true);
-
-			m_pIcon = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z), D3DXVECTOR3(15.0f, 15.0f, 0.0f), "BUTTON_Y", PRIORITY_LEVEL3);
-			m_pIcon->SetAnimation(2, 1, 12, 1, true);
-		}
-	}
-
-	if (pInputKeyboard->Trigger(DIK_BACKSPACE))
-	{
-		m_pIcon->SetDestroy(true);
-	}
-
 	//角度の正規化(目的の角度)
 	if (m_rotDest.y - rot.y > D3DX_PI)
 	{
@@ -342,23 +174,22 @@ void CPlayer::Update()
 			continue;
 		}
 
-		//変数宣言
-		CObject::EObjType objType;
-
 		//オブジェクトのタイプを取得
-		objType = pObject->GetObjType();
+		CObject::EObjType objType = pObject->GetObjType();
 
 		if (objType == OBJTYPE_MODEL)
 		{
 			CObjectX *pObjectX = (CObjectX*)pObject;
-			//SegmentCollision(pObjectX);
 
+			// 当たり判定
 			m_bIsLanding = pObjectX->Collision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx());
 
 			if (m_bIsLanding)
-			{
+			{ // 当たった場合
 				move = D3DXVECTOR3(0.0f, move.y, 0.0f);
 			}
+
+			// y軸の当たり判定
 			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx(), &move);
 		}
 
@@ -413,6 +244,130 @@ void CPlayer::Respawn(D3DXVECTOR3 &pos)
 		pos.y = 30.0f;
 	}
 }
+
+//=============================================================================
+// 生成処理
+//=============================================================================
+void CPlayer::Move()
+{
+	if (!m_isMove)
+	{
+		return;
+	}
+
+	/* ↓移動処理↓ */
+
+	// キーボードの情報取得
+	CInput *pInputKeyboard = CApplication::GetInput();
+
+	// 移動力取得
+	D3DXVECTOR3 move = GetMove();
+
+	// カメラの情報取得
+	D3DXVECTOR3 pCameraRot = CCamera::GetRot();
+
+	if (pInputKeyboard->Press(KEY_UP, m_keyIndex))
+	{// 上に移動
+		if (pInputKeyboard->Press(KEY_LEFT, m_keyIndex))
+		{
+			move.x = sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
+			move.z = cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
+			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.75f;
+		}
+		else if (pInputKeyboard->Press(KEY_RIGHT, m_keyIndex))
+		{
+			move.x = sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
+			move.z = cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
+			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.75f;
+		}
+		else
+		{
+			move.x = sinf(pCameraRot.y) * m_nSpeed;
+			move.z = cosf(pCameraRot.y) * m_nSpeed;
+			m_rotDest.y = pCameraRot.y + D3DX_PI;
+		}
+	}
+
+	else if (pInputKeyboard->Press(KEY_DOWN, m_keyIndex))
+	{// 下に移動
+		if (pInputKeyboard->Press(KEY_LEFT, m_keyIndex))
+		{
+			move.x = sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
+			move.z = cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
+			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.25f;
+		}
+		else if (pInputKeyboard->Press(KEY_RIGHT, m_keyIndex))
+		{
+			move.x = sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
+			move.z = cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
+			m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.25f;
+		}
+		else
+		{
+			move.x = sinf(pCameraRot.y) * -m_nSpeed;
+			move.z = cosf(pCameraRot.y) * -m_nSpeed;
+			m_rotDest.y = pCameraRot.y + 0.0f;
+		}
+
+	}
+	else if (pInputKeyboard->Press(KEY_LEFT, m_keyIndex))
+	{// 左に移動
+		move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
+		move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
+		m_rotDest.y = pCameraRot.y + D3DX_PI * 0.5f;
+	}
+	else if (pInputKeyboard->Press(KEY_RIGHT, m_keyIndex))
+	{// 右に移動
+		move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
+		move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
+		m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
+	}
+
+	if (pInputKeyboard->Trigger(KEY_JUMP, m_keyIndex))
+	{// ジャンプ
+		m_bJumpFlag = true;
+		move.y += JUMP_POWER;
+	}
+
+	SetMove(move);
+
+	//テスト用
+#ifdef _DEBUG
+
+	D3DXVECTOR3 pos = GetPos();
+
+	if (pInputKeyboard->Trigger(DIK_PERIOD))
+	{
+		int max = 100;
+		for (int i = 0; i < max; i++)
+		{
+			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 180.0f, pos.z),
+				D3DXVECTOR3(sinf((rand() % max * ((360 / max) * (D3DX_PI / 180)))), sinf((rand() % max * ((360 / max) * (D3DX_PI / 180)))) * cosf((rand() % max * ((360 / max) * (D3DX_PI / 180)))), cosf((rand() % max * ((360 / max) * (D3DX_PI / 180))))),
+				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
+				"PARTICLE_FLARE",
+				PRIORITY_LEVEL3);
+			//m_pParticle->SetLower(pos);
+		}
+
+		//テスト用
+		{
+			m_pIcon = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z), D3DXVECTOR3(40.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+			m_pIcon->SetScaling(true);
+			m_pIcon->SetAnimation(1, 1, 12, 1, true);
+
+			m_pIcon = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z), D3DXVECTOR3(15.0f, 15.0f, 0.0f), "BUTTON_Y", PRIORITY_LEVEL3);
+			m_pIcon->SetAnimation(2, 1, 12, 1, true);
+		}
+	}
+
+	if (pInputKeyboard->Trigger(DIK_BACKSPACE))
+	{
+		m_pIcon->SetDestroy(true);
+	}
+
+#endif // _DEBUG
+}
+
 
 //=============================================================================
 // 生成処理

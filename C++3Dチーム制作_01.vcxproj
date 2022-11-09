@@ -170,6 +170,7 @@
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="button_move_player.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="countdown.cpp" />
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="file.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="billboard.h" />
     <ClInclude Include="button_move_player.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="countdown.h" />
     <ClInclude Include="DirectInput.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="file.h" />

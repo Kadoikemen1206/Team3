@@ -73,6 +73,39 @@ void CMotion::Init(void)
 }
 
 //=============================================================================
+// 終了
+// Author : 唐﨑結斗
+// 概要 : メモリの解放
+//=============================================================================
+void CMotion::Uninit(void)
+{
+	if (m_motion != nullptr)
+	{// メモリの解放
+		delete[] m_motion;
+		m_motion = nullptr;
+	}
+
+	//if (m_pParent != nullptr)
+	//{// メモリの解放
+	//	for (int i = 0; i < sizeof(m_pParent, m_pParent);i++)
+	//	{
+	//	}
+	//	delete[] m_pParent;
+	//	m_pParent = nullptr;
+	//}
+
+	if (m_pParts != nullptr)
+	{// メモリの解放
+		for (int i = 0; i < m_nMaxParts; i++)
+		{
+			m_pParts[i]->Uninit();
+		}
+		delete[] m_pParts;
+		m_pParts = nullptr;
+	}
+}
+
+//=============================================================================
 // 更新
 // Author : 唐﨑結斗
 // 概要 : モーションの更新
@@ -382,6 +415,7 @@ void CMotion::LoodSetMotion(const char *pFileName)
 					// メモリの解放
 					m_pParts = new CParts*[m_nMaxParts];
 					m_motion = new MyMotion[MAX_MOTION];
+
 					assert(m_pParts != nullptr && m_motion != nullptr);
 
 					for (int i = 0; i < m_nMaxParts; i++)
@@ -554,19 +588,6 @@ void CMotion::LoodSetMotion(const char *pFileName)
 	Init();
 }
 
-//=============================================================================
-// 終了
-// Author : 唐﨑結斗
-// 概要 : メモリの解放
-//=============================================================================
-void CMotion::Uninit(void)
-{
-	if (m_motion != nullptr)
-	{// メモリの解放
-		delete[] m_motion;
-		m_motion = nullptr;
-	}
-}
 //=============================================================================
 // パーツの位置をもとの位置に戻す
 // Author : 唐﨑結斗

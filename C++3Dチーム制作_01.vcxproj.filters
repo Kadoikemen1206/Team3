@@ -404,9 +404,6 @@
     <Filter Include="00_Code\00_Main">
       <UniqueIdentifier>{388a96ed-7995-4cde-bf47-a56b5ad7da09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00_Code\01_Input">
-      <UniqueIdentifier>{b3005089-dc57-4a61-b48f-04d188ed6f85}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00_Code\02_Object">
       <UniqueIdentifier>{dc2400f5-5992-4521-9008-4d2fbbe57262}</UniqueIdentifier>
     </Filter>
@@ -451,6 +448,9 @@
     </Filter>
     <Filter Include="00_Code\00_Main\01_Mode\01_TITLE">
       <UniqueIdentifier>{0909a915-ca1d-48b0-a674-139b622055ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Code\01_Input">
+      <UniqueIdentifier>{b3005089-dc57-4a61-b48f-04d188ed6f85}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
