@@ -362,6 +362,59 @@ void CBillboard::SetAnimation(const int U, const int V, const int Speed, const i
 		, 1.0f / m_DivisionY * (m_PatternAnimY % (m_DivisionY)+1.0f / m_DivisionY* m_DivisionY));
 }
 
+void CBillboard::SetStopAnim(const int X, const int Y)
+{
+	m_bAnimation = false;
+
+	m_PatternAnimX = X;
+	m_PatternAnimY = Y;
+
+	float U = 1.0f / (m_DivisionX);
+	float V = 1.0f / (m_DivisionY);
+
+	SetUV(U * (m_PatternAnimX)
+		, U *(m_PatternAnimX)+U
+		, V * (m_PatternAnimY)
+		, V * (m_PatternAnimY)+V);
+}
+
+void CBillboard::SetFlip(EFlip flip)
+{
+	//頂点情報へのポインタ
+	VERTEX_3D*pVtx;
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//テクスチャ座標の更新
+	switch (flip)
+	{
+	case FLIP_VERTICAL:
+		pVtx[0].tex.y = -pVtx[0].tex.y;
+		pVtx[1].tex.y = -pVtx[1].tex.y;
+		pVtx[2].tex.y = -pVtx[2].tex.y;
+		pVtx[3].tex.y = -pVtx[3].tex.y;
+		break;
+
+	case FLIP_HORIZON:
+		pVtx[0].tex.x = -pVtx[0].tex.x;
+		pVtx[1].tex.x = -pVtx[1].tex.x;
+		pVtx[2].tex.x = -pVtx[2].tex.x;
+		pVtx[3].tex.x = -pVtx[3].tex.x;
+		break;
+
+	default:
+		pVtx[0].tex = -pVtx[0].tex;
+		pVtx[1].tex = -pVtx[1].tex;
+		pVtx[2].tex = -pVtx[2].tex;
+		pVtx[3].tex = -pVtx[3].tex;
+		break;
+	}
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
+}
+
 //=============================================================================
 // 生成処理
 //=============================================================================

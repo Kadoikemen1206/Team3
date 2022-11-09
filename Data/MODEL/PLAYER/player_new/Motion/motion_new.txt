@@ -39,7 +39,7 @@ CHARACTERSET
 	PARTSSET
 		INDEX = 0					# 体
 		PARENT = -1					# (親)NULL
-		POS = 0.0 44.0 0.0
+		POS = 0.0 51.0 0.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET				
 
@@ -73,8 +73,8 @@ CHARACTERSET
 	
 	PARTSSET
 		INDEX = 5					# 左腿
-		PARENT = 0					# (親)体
-		POS = 2.5 0.0 3.5
+		PARENT = -1					# (親)体
+		POS = 2.5 45.0 3.5
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 
@@ -108,8 +108,8 @@ CHARACTERSET
 
 	PARTSSET
 		INDEX = 10					# 右腿
-		PARENT = 0					# (親)体
-		POS = -2.5 0.0 3.5
+		PARENT = -1					# (親)体
+		POS = -2.5 45.0 3.5
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 
@@ -618,7 +618,7 @@ MOTIONSET
 
 		KEY	# ----- [ 12 ] -----
 			POS = 0.00 0.00 0.00
-			ROT = 0.45 0.00 0.00
+			ROT = 0.29 -0.31 -0.06
 		END_KEY
 	END_KEYSET
 
@@ -686,7 +686,7 @@ MOTIONSET
 
 		KEY	# ----- [ 12 ] -----
 			POS = 0.00 0.00 0.00
-			ROT = 0.45 0.00 0.00
+			ROT = 0.26 0.60 0.03
 		END_KEY
 	END_KEYSET
 END_MOTIONSET

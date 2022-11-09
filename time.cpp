@@ -2,13 +2,20 @@
 //
 // タイム処理 [time.cpp]
 // Author : kubota yuuki
+// Author : kado takuma
 //
 //=============================================================================
 #include "number.h"
+#include "object2D.h"
 #include "time.h"
 #include <time.h>
 #include <math.h>
+
+//=============================================================================
+// 静的メンバ変数宣言
+//=============================================================================
 CNumber *CTime::m_apNumBer[5] = {};
+CObject2D *CTime::m_apObject2D[2] = {};
 
 //=============================================================================
 // コンストラクタ
@@ -40,9 +47,13 @@ HRESULT CTime::Init()
 	//テクスチャ座標の設定
 	for (int nCntScore = 0; nCntScore < 5; nCntScore++)
 	{
-		m_apNumBer[nCntScore] = CNumber::Create(D3DXVECTOR3(100.0f + (100.0f * nCntScore), 100.0f, 0.0f),D3DXVECTOR3(100.0f, 100.0f, 0.0f));
+		m_apNumBer[nCntScore] = CNumber::Create(D3DXVECTOR3(100.0f + (80.0f * nCntScore), 80.0f, 0.0f),D3DXVECTOR3(60.0f, 90.0f, 0.0f));
 	}
 
+	m_apObject2D[0] = CObject2D::Create("TIMER_DOT", D3DXVECTOR3(135.0f, 90.0f, 0.0f), D3DXVECTOR3(20.0f, 20.0f, 0.0f), CObject::PRIORITY_LEVEL5);
+	m_apObject2D[1] = CObject2D::Create("TIMER_DOT", D3DXVECTOR3(295.0f, 90.0f, 0.0f), D3DXVECTOR3(20.0f, 20.0f, 0.0f), CObject::PRIORITY_LEVEL5);
+
+	// ミリ秒設定
 	m_nTime = timeGetTime();
 
 	return S_OK;
@@ -61,7 +72,7 @@ void CTime::Uninit()
 void CTime::Update()
 {
 	//経過時間の更新
-	AddTime(0 - 1);
+	AddTime(1);
 }
 
 //=============================================================================
@@ -104,16 +115,16 @@ void CTime::SetTime(int nScore)
 	int time;
 	time = nScore;
 
-	for (int nCnt = 0; nCnt < 5; nCnt++)
-	{
-		nNumber[nCnt] = time % (int)powf(10, (5 - nCnt) + 1) / (int)powf(10, (5 - nCnt));
-	}
+	//for (int nCnt = 0; nCnt < 5; nCnt++)
+	//{
+	//	nNumber[nCnt] = time % (int)powf(10, (5 - nCnt) + 1) / (int)powf(10, (5 - nCnt));
+	//}
 
-	/*nNumber[0] = time % 1000000 / 100000;
+	nNumber[0] = time % 1000000 / 100000;
 	nNumber[1] = time % 100000 / 10000;
 	nNumber[2] = time % 10000 / 1000;
 	nNumber[3] = time % 1000 / 100;
-	nNumber[4] = time % 100 / 10;*/
+	nNumber[4] = time % 100 / 10;
 
 	//テクスチャ座標の設定
 	for (int nCntTime = 0; nCntTime < 5; nCntTime++)
