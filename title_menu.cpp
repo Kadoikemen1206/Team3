@@ -186,7 +186,7 @@ void CTitleMenu::SelectMenu(void)
 		if (m_bGameMenu == false)
 		{
 			// メニュー選択
-			if (pInput->Trigger(DIK_A))
+			if (pInput->Trigger(KEY_LEFT))
 			{//Wキーが入力されたとき
 				m_eMenu--;
 				if (m_eMenu < 0)
@@ -194,7 +194,7 @@ void CTitleMenu::SelectMenu(void)
 					m_eMenu = 2;
 				}
 			}
-			else if (pInput->Trigger(DIK_D))
+			else if (pInput->Trigger(KEY_RIGHT))
 			{//Sキーが入力されたとき
 				m_eMenu++;
 				if (m_eMenu >= 3)
@@ -210,7 +210,7 @@ void CTitleMenu::SelectMenu(void)
 				m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 				m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 
-				if (pInput->Trigger(DIK_RETURN))
+				if (pInput->Trigger(KEY_DECISION))
 				{
 					m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
 					m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
@@ -226,7 +226,7 @@ void CTitleMenu::SelectMenu(void)
 
 				if (m_pFade->GetFade() == CFade::FADE_NONE)
 				{
-					if (pInput->Trigger(DIK_RETURN))
+					if (pInput->Trigger(KEY_DECISION))
 					{
 						// フェード生成
 						CFade::SetFade(CApplication::MODE_TUTORIAL);
@@ -241,7 +241,7 @@ void CTitleMenu::SelectMenu(void)
 
 				if (m_pFade->GetFade() == CFade::FADE_NONE)
 				{
-					if (pInput->Trigger(DIK_RETURN))
+					if (pInput->Trigger(KEY_DECISION))
 					{
 						// フェード生成
 						CFade::SetFade(CApplication::MODE_RANKING);
@@ -253,7 +253,7 @@ void CTitleMenu::SelectMenu(void)
 		else
 		{
 			// メニュー選択
-			if (pInput->Trigger(DIK_A))
+			if (pInput->Trigger(KEY_LEFT))
 			{//Wキーが入力されたとき
 				m_eGameMenu--;
 				if (m_eGameMenu < 0)
@@ -261,7 +261,7 @@ void CTitleMenu::SelectMenu(void)
 					m_eGameMenu = 1;
 				}
 			}
-			else if (pInput->Trigger(DIK_D))
+			else if (pInput->Trigger(KEY_RIGHT))
 			{//Sキーが入力されたとき
 				m_eGameMenu++;
 				if (m_eGameMenu >= 2)
@@ -276,11 +276,11 @@ void CTitleMenu::SelectMenu(void)
 				m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 				m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 
-				if (pInput->Trigger(DIK_RETURN))
+				if (pInput->Trigger(KEY_DECISION))
 				{
 					if (m_pFade->GetFade() == CFade::FADE_NONE)
 					{
-						if (pInput->Trigger(DIK_RETURN))
+						if (pInput->Trigger(KEY_DECISION))
 						{
 							// フェード生成
 							CFade::SetFade(CApplication::MODE_GAME_SOLO);
@@ -293,11 +293,11 @@ void CTitleMenu::SelectMenu(void)
 				m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 				m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-				if (pInput->Trigger(DIK_RETURN))
+				if (pInput->Trigger(KEY_DECISION))
 				{
 					if (m_pFade->GetFade() == CFade::FADE_NONE)
 					{
-						if (pInput->Trigger(DIK_RETURN))
+						if (pInput->Trigger(KEY_DECISION))
 						{
 							// フェード生成
 							CFade::SetFade(CApplication::MODE_GAME_VS);
@@ -306,7 +306,7 @@ void CTitleMenu::SelectMenu(void)
 				}
 			}
 
-			if (pInput->Trigger(DIK_BACKSPACE))
+			if (pInput->Trigger(KEY_BACK))
 			{
 				m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
 				m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
@@ -317,7 +317,7 @@ void CTitleMenu::SelectMenu(void)
 
 	else
 	{
-		if (pInput->Trigger(DIK_RETURN))
+		if (pInput->Trigger(KEY_DECISION))
 		{
 			for (int nCnt = 0; nCnt < m_nTextureMax - 2; nCnt++)
 			{

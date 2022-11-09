@@ -51,10 +51,10 @@ CPauseSelect * CPauseSelect::Create(ESelect inSelect)
 		case CPauseSelect::RETRY:
 		{
 			pLogo->m_pText.resize(5);
-			pLogo->m_pText[0] = TextCreate("RETRY_R", (float)SCREEN_WIDTH_HALF);
+			pLogo->m_pText[0] = TextCreate("RETRY_R1", (float)SCREEN_WIDTH_HALF);
 			pLogo->m_pText[1] = TextCreate("RETRY_E", (float)SCREEN_WIDTH_HALF);
 			pLogo->m_pText[2] = TextCreate("RETRY_T", (float)SCREEN_WIDTH_HALF);
-			pLogo->m_pText[3] = TextCreate("RETRY_R", (float)SCREEN_WIDTH_HALF);
+			pLogo->m_pText[3] = TextCreate("RETRY_R2", (float)SCREEN_WIDTH_HALF);
 			pLogo->m_pText[4] = TextCreate("RETRY_Y", (float)SCREEN_WIDTH_HALF);
 		}
 		break;
