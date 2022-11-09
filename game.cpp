@@ -93,7 +93,7 @@ HRESULT CGame::Init(void)
 	// ギミックの生成(ボタンをしたら少しずつ進むギミック)
 	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2000.0f));
 	// ギミックの生成(当たったら止まるギミック)
-	CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	//CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
 
 	int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
 

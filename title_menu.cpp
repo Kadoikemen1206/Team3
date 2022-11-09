@@ -276,15 +276,12 @@ void CTitleMenu::SelectMenu(void)
 				m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 				m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 
-				if (pInput->Trigger(KEY_DECISION))
+				if (m_pFade->GetFade() == CFade::FADE_NONE)
 				{
-					if (m_pFade->GetFade() == CFade::FADE_NONE)
+					if (pInput->Trigger(KEY_DECISION))
 					{
-						if (pInput->Trigger(KEY_DECISION))
-						{
-							// フェード生成
-							CFade::SetFade(CApplication::MODE_GAME_SOLO);
-						}
+						// フェード生成
+						CFade::SetFade(CApplication::MODE_GAME_SOLO);
 					}
 				}
 			}
@@ -293,15 +290,12 @@ void CTitleMenu::SelectMenu(void)
 				m_apObject2D[4]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 				m_apObject2D[5]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-				if (pInput->Trigger(KEY_DECISION))
+				if (m_pFade->GetFade() == CFade::FADE_NONE)
 				{
-					if (m_pFade->GetFade() == CFade::FADE_NONE)
+					if (pInput->Trigger(KEY_DECISION))
 					{
-						if (pInput->Trigger(KEY_DECISION))
-						{
-							// フェード生成
-							CFade::SetFade(CApplication::MODE_GAME_VS);
-						}
+						// フェード生成
+						CFade::SetFade(CApplication::MODE_GAME_VS);
 					}
 				}
 			}

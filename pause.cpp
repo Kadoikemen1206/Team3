@@ -179,7 +179,7 @@ void CPause::SelectUpdate()
 		break;
 	}
 
-	if (pInput->Trigger(KEY_PAUSE))
+	if (pInput->Trigger(KEY_PAUSE) || pInput->Trigger(KEY_BACK))
 	{
 		m_select = QUIT;
 		m_isEndFlag = true;
