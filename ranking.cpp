@@ -133,7 +133,7 @@ void CRanking::Load(void)
 	FILE*pFile;
 
 	//ファイルを開く
-	pFile = fopen("Data\\SAVE\\ranking.txt", "r");
+	pFile = fopen("Data\\FILE\\ranking.txt", "r");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合
@@ -160,7 +160,7 @@ void CRanking::Save(void)
 	FILE*pFile;
 
 	//ファイルを開く
-	pFile = fopen("data\\ranking.txt", "w");
+	pFile = fopen("Data\\FILE\\ranking.txt", "w");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合
