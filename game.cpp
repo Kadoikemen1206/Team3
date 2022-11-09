@@ -32,6 +32,7 @@
 #include "push_move_wall.h"
 #include "pause.h"
 #include "button_move_player.h"
+#include "stop_gimmick.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -72,7 +73,7 @@ HRESULT CGame::Init(void)
 	m_pLight = CLight::Create();
 
 	// タイマーの生成
-	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL4);
+	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 3,CObject::PRIORITY_LEVEL4);
 
 	// メッシュフィールドの生成
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
@@ -84,7 +85,9 @@ HRESULT CGame::Init(void)
 	// ギミックの生成(押すギミック)
 	//CPushMoveWall::Create(D3DXVECTOR3(-700.0f,0.0f,2000.0f));
 	// ギミックの生成(ボタンをしたら少しずつ進むギミック)
-	CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2000.0f));
+	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2000.0f));
+	// ギミックの生成(当たったら止まるギミック)
+	CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
 
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
