@@ -54,6 +54,7 @@ public:
 	void SetGimmickType(GIMMICKTYPE type);						// ギミックの種類の設定
 
 	bool Collision(CPlayer* inPlayer);							// プレイヤーが接触
+	bool CollisionGimmick(CPlayer* inPlayer);					// プレイヤーがギミックに接触
 
 	virtual void ConstOperate() = 0;		// 一定の操作(連打、回転)
 
