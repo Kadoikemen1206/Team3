@@ -32,6 +32,7 @@
 #include "push_move_wall.h"
 #include "pause.h"
 #include "button_move_player.h"
+#include "countdown.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -72,10 +73,13 @@ HRESULT CGame::Init(void)
 	m_pLight = CLight::Create();
 
 	// タイマーの生成
-	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0, CObject::PRIORITY_LEVEL4);
+	m_pTime = CTime::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 500.0f, 0.0f), 0, CObject::PRIORITY_LEVEL4);
 
 	// メッシュフィールドの生成
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
+
+	// カウントダウンの生成
+	CCountDown::Create(D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f));
 
 	// ギミックの生成(連打ギミック)
 	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 1500.0f));

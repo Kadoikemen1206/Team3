@@ -179,6 +179,9 @@
     <ClCompile Include="icon.cpp">
       <Filter>00_Code\02_Object\01_3D</Filter>
     </ClCompile>
+    <ClCompile Include="countdown.cpp">
+      <Filter>00_Code\02_Object\00_2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -367,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="icon.h">
       <Filter>00_Code\02_Object\01_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="countdown.h">
+      <Filter>00_Code\02_Object\00_2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

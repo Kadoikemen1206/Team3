@@ -2,6 +2,7 @@
 //
 // タイム処理 [time.h]
 // Author : kubota yuuki
+// Author : kado takuma
 //
 //=============================================================================
 #ifndef _TIME_H_
@@ -59,6 +60,8 @@ private:
 	// メンバー変数
 	//-------------------------------------------------------------------------
 	static CNumber *m_apNumBer[5];
+	static	CObject2D *	m_apObject2D[2];
+
 	D3DXVECTOR3 m_pos;							// 座標
 	D3DXVECTOR3 m_size;							// サイズ
 	int  m_nDigit;								// 使用する桁数
