@@ -175,6 +175,7 @@
     <ClCompile Include="file.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gimmick.cpp" />
+    <ClCompile Include="goal.cpp" />
     <ClCompile Include="icon.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="inputjoypad.cpp" />
@@ -208,6 +209,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="push_move_wall.cpp" />
+    <ClCompile Include="random_door.cpp" />
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="ranking_rogo.cpp" />
     <ClCompile Include="renderer.cpp" />
@@ -233,6 +235,7 @@
     <ClInclude Include="file.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gimmick.h" />
+    <ClInclude Include="goal.h" />
     <ClInclude Include="icon.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="inputjoypad.h" />
@@ -262,6 +265,7 @@
     <ClInclude Include="pause.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="push_move_wall.h" />
+    <ClInclude Include="random_door.h" />
     <ClInclude Include="ranking.h" />
     <ClInclude Include="ranking_rogo.h" />
     <ClInclude Include="renderer.h" />
