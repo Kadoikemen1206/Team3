@@ -191,7 +191,7 @@ void CAlternateMoveWall::ConstOperate()
 		m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
 	}
 
-	if (pInputKeyboard->Trigger(DIK_Z) && !m_nAlternateFlag)
+	if (pInputKeyboard->Trigger(KEY_LEFT_ACTION) && !m_nAlternateFlag)
 	{// Zキーを押したら実行
 		m_nTriggerCount++;
 		GetHitPlayer()->SetUpdateStop(false);
@@ -202,9 +202,9 @@ void CAlternateMoveWall::ConstOperate()
 		{
 			// 移動量
 			D3DXVECTOR3 move;
-			move.x = sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
-			move.y = sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
-			move.z = cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
+			move.x = sinf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
+			move.y = sinf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180))) * cosf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
+			move.z = cosf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
 
 			// 色
 			D3DXCOLOR color((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f);
@@ -214,7 +214,7 @@ void CAlternateMoveWall::ConstOperate()
 		}
 	}
 
-	if (pInputKeyboard->Trigger(DIK_C) && m_nAlternateFlag)
+	if (pInputKeyboard->Trigger(KEY_RIGHT_ACTION) && m_nAlternateFlag)
 	{// Cキーを押したら実行
 		m_nTriggerCount++;
 		GetHitPlayer()->SetUpdateStop(false);
@@ -224,9 +224,9 @@ void CAlternateMoveWall::ConstOperate()
 		for (int i = 0; i < 2; i++)
 		{
 			D3DXVECTOR3 move;
-			move.x = sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
-			move.y = sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
-			move.z = cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))));
+			move.x = sinf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
+			move.y = sinf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180))) * cosf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
+			move.z = cosf(rand() % 50 * ((360 / 50) * (D3DX_PI / 180)));
 
 			D3DXCOLOR color((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f);
 

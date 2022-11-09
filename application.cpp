@@ -68,7 +68,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	}
 
 	//インプットクラスの生成
-	m_pInput = CInput::Create();
+	m_pInput = new CInput;
 	//インプットの初期化処理
 	if (FAILED(m_pInput->Init(hInstance, hWnd)))
 	{ //初期化処理が失敗した場合

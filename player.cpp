@@ -103,15 +103,15 @@ void CPlayer::Update()
 	// 1P‚Ìê‡‰º‹L‚ÌˆÚ“®ˆ—‚ðŽÀs
 	if (m_nType == EPLAYER_1P)
 	{
-		if (pInputKeyboard->Press(DIK_W))
+		if (pInputKeyboard->Press(KEY_UP))
 		{// ã‚ÉˆÚ“®
-			if (pInputKeyboard->Press(DIK_A))
+			if (pInputKeyboard->Press(KEY_LEFT))
 			{
 				move.x = sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.75f;
 			}
-			else if (pInputKeyboard->Press(DIK_D))
+			else if (pInputKeyboard->Press(KEY_RIGHT))
 			{
 				move.x = sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
@@ -125,15 +125,15 @@ void CPlayer::Update()
 			}
 		}
 
-		else if (pInputKeyboard->Press(DIK_S))
+		else if (pInputKeyboard->Press(KEY_DOWN))
 		{// ‰º‚ÉˆÚ“®
-			if (pInputKeyboard->Press(DIK_A))
+			if (pInputKeyboard->Press(KEY_LEFT))
 			{
 				move.x = sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.25f;
 			}
-			else if (pInputKeyboard->Press(DIK_D))
+			else if (pInputKeyboard->Press(KEY_RIGHT))
 			{
 				move.x = sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
@@ -147,13 +147,13 @@ void CPlayer::Update()
 			}
 
 		}
-		else if (pInputKeyboard->Press(DIK_A))
+		else if (pInputKeyboard->Press(KEY_LEFT))
 		{// ¶‚ÉˆÚ“®
 			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
 			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
 			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.5f;
 		}
-		else if (pInputKeyboard->Press(DIK_D))
+		else if (pInputKeyboard->Press(KEY_RIGHT))
 		{// ‰E‚ÉˆÚ“®
 			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
