@@ -27,7 +27,7 @@ CParticle::CParticle(int nPriority) :
 	m_bBounce(false),				// バウンドさせる
 	m_bTransition(false),			// 色の変化
 	m_bPosSpecify(false),			// 位置の指定
-	m_behavior(BEHAVIOR_FLY)
+	m_behavior(BEHAVIOR_FIREWORKS)
 {
 }
 
@@ -83,7 +83,7 @@ void CParticle::Update()
 
 	if (m_bPosSpecify)
 	{// 位置の指定をする場合
-		for (int i = 0; i < m_data.size(); i++)
+		for (int i = 0; i < (int)m_data.size(); i++)
 		{
 			if (m_data.at(i).frame != m_nTime)
 			{
@@ -157,6 +157,9 @@ CParticle * CParticle::Create(const D3DXVECTOR3 pos, EBehaviorType type, int nPr
 	return pParticle;
 }
 
+//=============================================================================
+// 生成処理
+//=============================================================================
 CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, const std::string url, int nPriority)
 {
 	CParticle *pParticle = new CParticle(nPriority);
@@ -177,8 +180,10 @@ CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, con
 	return pParticle;
 }
 
+//=============================================================================
 //詳細設定
-void CParticle::DetailSetting()
+//=============================================================================
+inline void CParticle::DetailSetting()
 {
 	D3DXVECTOR3 move = CBillboard::GetMove();
 	D3DXVECTOR3 scale = CBillboard::GetSize();
@@ -252,7 +257,9 @@ void CParticle::DetailSetting()
 	CBillboard::SetCol(m_col);
 }
 
+//=============================================================================
 //挙動の設定
+//=============================================================================
 void CParticle::Preset()
 {
 	switch (m_behavior)
@@ -277,11 +284,13 @@ void CParticle::Preset()
 		break;
 
 	case BEHAVIOR_FIREWORKS:	//for文50回くらいが限界
-		SetCol(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+		m_path = "PARTICLE_FLARE";
+		//SetCol(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
 		m_bGravity = true;
 		m_bFade = true;
 		m_bScaling = true;
 		m_bTransition = true;
+		m_bLocus = true;
 		m_nDelay = 100;
 		m_fFallSpeed = 0.001f;
 		m_fFadeValue = -0.006f;

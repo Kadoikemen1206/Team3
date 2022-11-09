@@ -17,6 +17,7 @@
 //=============================================================================
 class CShadow;
 class CParticle;
+class CIcon;
 
 //=============================================================================
 // クラスの定義
@@ -41,6 +42,20 @@ public:
 	};
 
 	//-------------------------------------------------------------------------
+	// 列挙型
+	//-------------------------------------------------------------------------
+	enum EMotion
+	{
+		MOTION_NONE = 0,
+		MOTION_MOVE,
+		MOTION_SCREW,
+		MOTION_JUMP,
+		MOTION_LANDING,
+		MOTION_PUSH,
+		MOTION_MAX
+	};
+
+	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
 	explicit CPlayer(int nPriority = PRIORITY_LEVEL3);
@@ -56,6 +71,7 @@ public:
 	// Setter
 	void SetType(EPLAYER type);							// タイプ設定処理
 	void SetSpeed(float speed);							// プレイヤー移動スピード設定処理
+	void SetMotionType(EMotion inMotion);							// プレイヤー移動スピード設定処理
 
 	// Getter
 	EPLAYER GetPlayerType(void) { return m_nType; }		// プレイヤータイプ取得処理
@@ -76,8 +92,9 @@ private:
 	bool m_bIsLanding;					// モデルとの当たり判定フラグ(左右,奥,手前)
 	bool m_bIsLandingUp;				// モデルとの当たり判定フラグ(上側)
 
-	int m_moutionType;
+	EMotion m_moutionType;
 
 	CParticle *m_pParticle;				// パーティクルのポインタ
+	CIcon *m_pIcon;
 };
 #endif

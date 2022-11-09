@@ -23,6 +23,8 @@
 #include "particle.h"
 #include "motion.h"
 
+#include "icon.h"
+
 //=============================================================================
 // 定数定義
 //=============================================================================
@@ -86,6 +88,9 @@ void CPlayer::Update()
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
+	// 前回の位置を保存
+	m_posOld = pos;
+
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
@@ -95,21 +100,18 @@ void CPlayer::Update()
 	// 重力設定
 	move.y -= GRAVITY_POWER;
 
-	// 前回の位置を保存
-	m_posOld = pos;
-
 	// 1Pの場合下記の移動処理を実行
 	if (m_nType == EPLAYER_1P)
 	{
-		if (pInputKeyboard->Press(DIK_W))
+		if (pInputKeyboard->Press(KEY_UP))
 		{// 上に移動
-			if (pInputKeyboard->Press(DIK_A))
+			if (pInputKeyboard->Press(KEY_LEFT))
 			{
 				move.x = sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.75f;
 			}
-			else if (pInputKeyboard->Press(DIK_D))
+			else if (pInputKeyboard->Press(KEY_RIGHT))
 			{
 				move.x = sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
@@ -123,15 +125,15 @@ void CPlayer::Update()
 			}
 		}
 
-		else if (pInputKeyboard->Press(DIK_S))
+		else if (pInputKeyboard->Press(KEY_DOWN))
 		{// 下に移動
-			if (pInputKeyboard->Press(DIK_A))
+			if (pInputKeyboard->Press(KEY_LEFT))
 			{
 				move.x = sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.25f;
 			}
-			else if (pInputKeyboard->Press(DIK_D))
+			else if (pInputKeyboard->Press(KEY_RIGHT))
 			{
 				move.x = sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
@@ -145,13 +147,13 @@ void CPlayer::Update()
 			}
 
 		}
-		else if (pInputKeyboard->Press(DIK_A))
+		else if (pInputKeyboard->Press(KEY_LEFT))
 		{// 左に移動
 			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
 			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
 			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.5f;
 		}
-		else if (pInputKeyboard->Press(DIK_D))
+		else if (pInputKeyboard->Press(KEY_RIGHT))
 		{// 右に移動
 			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
@@ -233,10 +235,9 @@ void CPlayer::Update()
 
 	if (move.x == 0.0f && move.z == 0.0f)
 	{
-		if (m_moutionType != 0)
+		if (m_moutionType != MOTION_NONE && m_moutionType != MOTION_SCREW)
 		{
-			m_moutionType = 0;
-			GetMotion()->SetNumMotion(m_moutionType);
+			SetMotionType(MOTION_NONE);
 		}
 	}
 	else
@@ -250,10 +251,9 @@ void CPlayer::Update()
 			move.z = 0.0f;
 		}
 
-		if (m_moutionType != 1)
+		if (m_moutionType != MOTION_MOVE)
 		{
-			m_moutionType = 1;
-			GetMotion()->SetNumMotion(m_moutionType);
+			SetMotionType(MOTION_MOVE);
 		}
 	}
 
@@ -277,15 +277,31 @@ void CPlayer::Update()
 	//テスト用
 	if (pInputKeyboard->Trigger(DIK_PERIOD))
 	{
-		for (int i = 0; i < 10; i++)
+		int max = 100;
+		for (int i = 0; i < max; i++)
 		{
-			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 10.0f, pos.z),
-				D3DXVECTOR3(sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), sinf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))) * cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180)))), cosf((rand() % 50 * ((360 / 50) * (D3DX_PI / 180))))),
+			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 180.0f, pos.z),
+				D3DXVECTOR3(sinf((rand() % max * ((360 / max) * (D3DX_PI / 180)))), sinf((rand() % max * ((360 / max) * (D3DX_PI / 180)))) * cosf((rand() % max * ((360 / max) * (D3DX_PI / 180)))), cosf((rand() % max * ((360 / max) * (D3DX_PI / 180))))),
 				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
 				"PARTICLE_FLARE",
 				PRIORITY_LEVEL3);
-			m_pParticle->SetLower(pos);
+			//m_pParticle->SetLower(pos);
 		}
+
+		//テスト用
+		{
+			m_pIcon = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z), D3DXVECTOR3(40.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+			m_pIcon->SetScaling(true);
+			m_pIcon->SetAnimation(1, 1, 12, 1, true);
+
+			m_pIcon = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z), D3DXVECTOR3(15.0f, 15.0f, 0.0f), "BUTTON_Y", PRIORITY_LEVEL3);
+			m_pIcon->SetAnimation(2, 1, 12, 1, true);
+		}
+	}
+
+	if (pInputKeyboard->Trigger(DIK_BACKSPACE))
+	{
+		m_pIcon->SetDestroy(true);
 	}
 
 	//角度の正規化(目的の角度)
@@ -433,4 +449,16 @@ void CPlayer::SetType(EPLAYER type)
 void CPlayer::SetSpeed(float speed)
 {
 	m_nSpeed = speed;
+}
+
+void CPlayer::SetMotionType(EMotion inMotion)
+{
+	// 同じモーションには遷移しない。
+	if (m_moutionType == inMotion)
+	{
+		return;
+	}
+
+	m_moutionType = inMotion;
+	GetMotion()->SetNumMotion(m_moutionType);
 }
