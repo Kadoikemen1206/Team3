@@ -24,10 +24,24 @@ public:
 	{
 		LABEL_NONE = -1,
 		LABEL_BGM_TITLE = 0,	// タイトル
-		LABEL_SE_SHOT,			// 射撃音
-		LABEL_SE_DEAD,			// 死亡音
-		LABEL_SE_DECISION,		// 決定音
-		LABEL_SE_SELECT,		// 選択音
+		LABEL_BGM_GAME,			// ゲーム
+		LABEL_BGM_RESULT,		// リザルト
+		LABEL_SE_CHAKUCHI_01,	// 着地音_01
+		LABEL_SE_CHAKUCHI_02,	// 着地音_02
+		LABEL_SE_COUNTDOWN,		// カウントダウン
+		LABEL_SE_ENTER_KEY_01,	// 決定ボタン_01
+		LABEL_SE_ENTER_KEY_02,	// 決定ボタン_02
+		LABEL_SE_ENTER_KEY_03,	// 決定ボタン_03
+		LABEL_SE_GAMECLEAR,		// ゲームクリア
+		LABEL_SE_GIMIKKU_CLEAR,	// ギミッククリア
+		LABEL_SE_HAGURUMA_KAITEN,	// 歯車と回転
+		LABEL_SE_HASHIRI,		// 走る音
+		LABEL_SE_HIKIZURI,		// 引きずり音
+		LABEL_SE_JUMP_01,		// ジャンプ音_01
+		LABEL_SE_JUMP_02,		// ジャンプ音_02
+		LABEL_SE_NEGIMAKI,		// ねじ巻き音
+		LABEL_SE_RAKKA,			// 落下音
+		LABEL_SE_RESPAWN,		// リスポーン音
 		LABEL_MAX,
 	};
 

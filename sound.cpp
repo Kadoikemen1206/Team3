@@ -16,11 +16,25 @@
 //==================================================
 const CSound::SParam CSound::PARAM[] =
 {// 各音素材のパラメータ
-	{ "data/SOUND/BGM/title.wav", -1},	// タイトル
-	{ "data/SOUND/SE/Shot01.wav", 0 },	// 決定音
-	{ "data/SOUND/SE/Dead1.wav", 0 },	// 死亡音
-	{ "data/SOUND/SE/Decision.wav", 0 },	// 決定音
-	{ "data/SOUND/SE/Serect.wav", 0 },	// 選択音
+	{ "Data/SOUND/BGM/TITLE.wav", -1 },	// タイトル
+	{ "Data/SOUND/BGM/GAME.wav", -1 },	// ゲーム
+	{ "Data/SOUND/BGM/RESULT.wav", -1 },	// リザルト
+	{ "Data/SOUND/SE/chakuchi_01.wav", -1 },	// 着地音_01
+	{ "Data/SOUND/SE/chakuchi_02.wav", -1 },	// 着地音_02
+	{ "Data/SOUND/SE/COUNTDOWN.wav", -1 },	// カウントダウン
+	{ "Data/SOUND/SE/ENTER_KEY_01.wav", -1 },	// 決定音_01
+	{ "Data/SOUND/SE/ENTER_KEY_02.wav", -1 },	// 決定音_02
+	{ "Data/SOUND/SE/ENTER_KEY_03.wav", -1 },	// 決定音_03
+	{ "Data/SOUND/SE/GAMECLEAR.wav", -1 },	// ゲームクリア音
+	{ "Data/SOUND/SE/gimikku_clear.wav", -1 },	// ギミッククリア音
+	{ "Data/SOUND/SE/haguruma_kaiten.wav", -1 },	// 歯車と回転音
+	{ "Data/SOUND/SE/hashiri.wav", -1 },	// 走る音
+	{ "Data/SOUND/SE/hikizuri.wav", -1 },	// 引きずり音
+	{ "Data/SOUND/SE/JUMP_01.wav", -1 },	// ジャンプ_01
+	{ "Data/SOUND/SE/JUMP_02.wav", -1 },	// ジャンプ_02
+	{ "Data/SOUND/SE/negimakioto.wav", -1 },	// ねじ巻き音
+	{ "Data/SOUND/SE/rakka.wav", -1 },	// 落下音
+	{ "Data/SOUND/SE/respawn.wav", -1 },	// リスポーン音
 };
 
 static_assert(sizeof(CSound::PARAM) / sizeof(CSound::PARAM[0]) == CSound::LABEL_MAX, "aho");

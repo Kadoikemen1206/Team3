@@ -88,6 +88,9 @@ void CPlayer::Update()
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
+	// 前回の位置を保存
+	m_posOld = pos;
+
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
@@ -97,21 +100,18 @@ void CPlayer::Update()
 	// 重力設定
 	move.y -= GRAVITY_POWER;
 
-	// 前回の位置を保存
-	m_posOld = pos;
-
 	// 1Pの場合下記の移動処理を実行
 	if (m_nType == EPLAYER_1P)
 	{
-		if (pInputKeyboard->Press(DIK_W))
+		if (pInputKeyboard->Press(KEY_UP))
 		{// 上に移動
-			if (pInputKeyboard->Press(DIK_A))
+			if (pInputKeyboard->Press(KEY_LEFT))
 			{
 				move.x = sinf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * -0.25f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.75f;
 			}
-			else if (pInputKeyboard->Press(DIK_D))
+			else if (pInputKeyboard->Press(KEY_RIGHT))
 			{
 				move.x = sinf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * 0.25f + pCameraRot.y) * m_nSpeed;
@@ -125,15 +125,15 @@ void CPlayer::Update()
 			}
 		}
 
-		else if (pInputKeyboard->Press(DIK_S))
+		else if (pInputKeyboard->Press(KEY_DOWN))
 		{// 下に移動
-			if (pInputKeyboard->Press(DIK_A))
+			if (pInputKeyboard->Press(KEY_LEFT))
 			{
 				move.x = sinf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * -0.75f + pCameraRot.y) * m_nSpeed;
 				m_rotDest.y = pCameraRot.y + D3DX_PI * 0.25f;
 			}
-			else if (pInputKeyboard->Press(DIK_D))
+			else if (pInputKeyboard->Press(KEY_RIGHT))
 			{
 				move.x = sinf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
 				move.z = cosf(D3DX_PI * 0.75f + pCameraRot.y) * m_nSpeed;
@@ -147,13 +147,13 @@ void CPlayer::Update()
 			}
 
 		}
-		else if (pInputKeyboard->Press(DIK_A))
+		else if (pInputKeyboard->Press(KEY_LEFT))
 		{// 左に移動
 			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
 			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * -m_nSpeed;
 			m_rotDest.y = pCameraRot.y + D3DX_PI * 0.5f;
 		}
-		else if (pInputKeyboard->Press(DIK_D))
+		else if (pInputKeyboard->Press(KEY_RIGHT))
 		{// 右に移動
 			move.x = sinf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
 			move.z = cosf(D3DX_PI * 0.5f + pCameraRot.y) * m_nSpeed;
@@ -235,10 +235,9 @@ void CPlayer::Update()
 
 	if (move.x == 0.0f && move.z == 0.0f)
 	{
-		if (m_moutionType != 0)
+		if (m_moutionType != MOTION_NONE && m_moutionType != MOTION_SCREW)
 		{
-			m_moutionType = MOTION_NONE;
-			GetMotion()->SetNumMotion(m_moutionType);
+			SetMotionType(MOTION_NONE);
 		}
 	}
 	else
@@ -252,10 +251,9 @@ void CPlayer::Update()
 			move.z = 0.0f;
 		}
 
-		if (m_moutionType != 1)
+		if (m_moutionType != MOTION_MOVE)
 		{
-			m_moutionType = MOTION_MOVE;
-			GetMotion()->SetNumMotion(m_moutionType);
+			SetMotionType(MOTION_MOVE);
 		}
 	}
 
@@ -451,4 +449,16 @@ void CPlayer::SetType(EPLAYER type)
 void CPlayer::SetSpeed(float speed)
 {
 	m_nSpeed = speed;
+}
+
+void CPlayer::SetMotionType(EMotion inMotion)
+{
+	// 同じモーションには遷移しない。
+	if (m_moutionType == inMotion)
+	{
+		return;
+	}
+
+	m_moutionType = inMotion;
+	GetMotion()->SetNumMotion(m_moutionType);
 }

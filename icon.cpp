@@ -1,3 +1,9 @@
+//=============================================================================
+//
+// ビルボードでアイコンの表示 [icon.cpp]
+// Author : Tanaka Kouta
+//
+//=============================================================================
 #include "application.h"
 #include "renderer.h"
 #include "icon.h"
@@ -7,7 +13,9 @@
 //=============================================================================
 CIcon::CIcon(int nPriority) : 
 	m_bDestroy(false),
-	m_bScaling(false)
+	m_bScaling(false),
+	m_bLimit(false),
+	m_bFade(false)
 {
 }
 
@@ -39,6 +47,7 @@ HRESULT CIcon::Init(void)
 //=============================================================================
 void CIcon::Uninit(void)
 {
+	CBillboard::Uninit();
 }
 
 //=============================================================================
@@ -50,18 +59,36 @@ void CIcon::Update(void)
 
 	if (m_bScaling)
 	{
-		auto scale = CBillboard::GetSize();
+		D3DXVECTOR3 scale = CBillboard::GetSize();
 
 		scale.x += 0.5f;
 		scale.y += 0.5f;
 
-		if (scale.x >= m_beginScale.x + 15.0f && scale.y >= m_beginScale.y + 15.0f)
+		if (m_bLimit)
 		{
-			scale.x -= 10.5f;
-			scale.y -= 10.5f;
+			if (scale.x >= m_beginScale.x + 15.0f && scale.y >= m_beginScale.y + 15.0f)
+			{
+				scale.x -= 10.5f;
+				scale.y -= 10.5f;
+			}
 		}
 
 		CBillboard::SetSize(scale);
+	}
+
+	if (m_bFade)
+	{
+		auto col = CBillboard::GetCol();
+
+		col.a -= 0.05f;
+
+		CBillboard::SetCol(col);
+
+		if (col.a <= 0.0f)
+		{
+			CBillboard::Uninit();
+			return;
+		}
 	}
 
 	if (m_bDestroy)
@@ -97,4 +124,10 @@ CIcon *CIcon::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size, std::string 
 	}
 
 	return pIcon;
+}
+
+void CIcon::SwapTexture(std::string url)
+{
+	//テクスチャの読み込み
+	BindTexture(url);
 }

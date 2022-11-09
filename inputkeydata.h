@@ -19,16 +19,14 @@ enum STAN_DART_INPUT_KEY
 	KEY_DOWN,			//下			 S  & Down						スティック下　＆　十字キー下
 	KEY_LEFT,			//左			 A  &  Left						スティック左　＆　十字キー左
 	KEY_RIGHT,			//右			 D  &  Right					スティック右　＆　十字キー右
-	KEY_MOVE_UP,		//上(移動)		 W & UP							スティック上　＆　十字キー上
-	KEY_MOVE_DOWN,		//下(移動)		 W & UP							スティック上　＆　十字キー上
-	KEY_MOVE_LEFT,		//左(移動)		 W & UP							スティック上　＆　十字キー上
-	KEY_MOVE_RIGHT,		//右(移動)		 W & UP							スティック上　＆　十字キー上
-	KEY_SHOT_UP,		//上(射撃)		 W & UP							スティック上　＆　十字キー上
-	KEY_SHOT_DOWN,		//下(射撃)		 W & UP							スティック上　＆　十字キー上
-	KEY_SHOT_LEFT,		//左(射撃)		 W & UP							スティック上　＆　十字キー上
-	KEY_SHOT_RIGHT,		//右(射撃)		 W & UP							スティック上　＆　十字キー上
 	KEY_DECISION,		//決定			 エンターキー								A
-	KEY_SHOT,			//スペース		 スペースキー								R1
+	KEY_LEFT_ACTION,	//スペース		 スペースキー								R1
+	KEY_RIGHT_ACTION,	//スペース		 スペースキー								R1
+	KEY_SPACE_ACTION,	//スペース		 スペースキー								R1
+	KEY_UP_BUTTON,		//上			 W & UP							スティック上　＆　十字キー上
+	KEY_DOWN_BUTTON,	//下			 S  & Down						スティック下　＆　十字キー下
+	KEY_LEFT_BUTTON,	//スペース		 スペースキー								R1
+	KEY_RIGHT_BUTTON,	//スペース		 スペースキー								R1
 	KEY_BACK,			//バック		 バックスペースキー & B						B
 	KEY_SHIFT,			//シフト		 シフト左右									L1
 	KEY_MOVE,			//移動系すべて

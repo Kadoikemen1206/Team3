@@ -16,6 +16,14 @@ public:
 		BLEND_MAX
 	};
 
+	enum EFlip
+	{
+		FLIP_NONE = 0,
+		FLIP_HORIZON,
+		FLIP_VERTICAL,
+		FLIP_MAX
+	};
+
 	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
@@ -38,8 +46,10 @@ public:
 	void BindTexture(std::string inPath);						// 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 	void SetUV(float x_1, float x_2, float y_1, float y_2);		// テクスチャ座標更新処理
 	void SetAnimation(const int U, const int V, const int Speed, const int Drawtimer, const bool loop);
+	void SetFlip(EFlip flip);
 	void SetRotate(bool set) { m_bIsRotate = set; }
 	void SetBlend(EAlphaBlend blend) { m_blend = blend; }
+	void SetStopAnim(const int X, const int Y);
 
 	D3DXVECTOR3 GetPos(void) override { return m_pos; }			// 座標取得処理
 	D3DXVECTOR3 GetSize(void) override { return m_size; }		// サイズ取得処理
@@ -75,6 +85,7 @@ private:
 	bool m_bLoop;
 	EObjType m_type;						// オブジェクトのタイプ
 	EAlphaBlend m_blend;
+	EFlip m_flip;
 	D3DXMATRIX m_mtxWorld;					// ワールドマトリックス
 };
 

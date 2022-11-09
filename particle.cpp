@@ -83,7 +83,7 @@ void CParticle::Update()
 
 	if (m_bPosSpecify)
 	{// ˆÊ’u‚Ìw’è‚ğ‚·‚éê‡
-		for (int i = 0; i < m_data.size(); i++)
+		for (int i = 0; i < (int)m_data.size(); i++)
 		{
 			if (m_data.at(i).frame != m_nTime)
 			{
@@ -157,6 +157,9 @@ CParticle * CParticle::Create(const D3DXVECTOR3 pos, EBehaviorType type, int nPr
 	return pParticle;
 }
 
+//=============================================================================
+// ¶¬ˆ—
+//=============================================================================
 CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, const std::string url, int nPriority)
 {
 	CParticle *pParticle = new CParticle(nPriority);
@@ -177,7 +180,9 @@ CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, con
 	return pParticle;
 }
 
+//=============================================================================
 //Ú×İ’è
+//=============================================================================
 inline void CParticle::DetailSetting()
 {
 	D3DXVECTOR3 move = CBillboard::GetMove();
@@ -252,7 +257,9 @@ inline void CParticle::DetailSetting()
 	CBillboard::SetCol(m_col);
 }
 
+//=============================================================================
 //‹““®‚Ìİ’è
+//=============================================================================
 void CParticle::Preset()
 {
 	switch (m_behavior)

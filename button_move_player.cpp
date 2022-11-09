@@ -159,26 +159,33 @@ void CButtonMovePlayer::ButtonPush()
 	// ƒ‰ƒ“ƒ_ƒ€‚Å‰Ÿ‚·ƒL[‚ªŒˆ‚Ü‚é
 	if (m_RandFlag == false)
 	{
-		m_RandNumber = rand() % 3 + 1;
+		m_RandNumber = rand() % 4 + 1;
 		m_RandFlag = true;
 	}
 	else if (m_RandFlag == true && m_RandNumber == 1)
 	{
-		if (pInputKeyboard->Trigger(DIK_B))
+		if (pInputKeyboard->Trigger(KEY_RIGHT_BUTTON))
 		{
 			m_RandFlag = false;
 		}
 	}
 	else if (m_RandFlag == true && m_RandNumber == 2)
 	{
-		if (pInputKeyboard->Trigger(DIK_N))
+		if (pInputKeyboard->Trigger(KEY_LEFT_BUTTON))
 		{
 			m_RandFlag = false;
 		}
 	}
 	else if (m_RandFlag == true && m_RandNumber == 3)
 	{
-		if (pInputKeyboard->Trigger(DIK_M))
+		if (pInputKeyboard->Trigger(KEY_DOWN_BUTTON))
+		{
+			m_RandFlag = false;
+		}
+	}
+	else if (m_RandFlag == true && m_RandNumber == 4)
+	{
+		if (pInputKeyboard->Trigger(KEY_UP_BUTTON))
 		{
 			m_RandFlag = false;
 		}

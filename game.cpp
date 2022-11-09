@@ -33,6 +33,7 @@
 #include "pause.h"
 #include "button_move_player.h"
 #include "countdown.h"
+#include "stop_gimmick.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -69,6 +70,8 @@ CGame::~CGame()
 //=============================================================================
 HRESULT CGame::Init(void)
 {
+	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
+
 	// ライトの生成
 	m_pLight = CLight::Create();
 
@@ -89,16 +92,22 @@ HRESULT CGame::Init(void)
 	//CPushMoveWall::Create(D3DXVECTOR3(-700.0f,0.0f,2000.0f));
 	// ギミックの生成(ボタンをしたら少しずつ進むギミック)
 	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2000.0f));
+	// ギミックの生成(当たったら止まるギミック)
+	CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
 
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+	
+	// ステージのロード
 	CLoadStage::LoadAll(m_pPlayer1P->GetPos());
-	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
-	CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2000.0f));
-	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2800.0f));
+
+	// ギミックの設置
+	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 20.0f, 2000.0f));
+	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 45.0f, 2800.0f));
 	CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 3600.0f));
 	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4000.0f));
 	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4300.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
 
 	if (m_mode == EMode::VS)
 	{
@@ -156,7 +165,7 @@ void CGame::Update(void)
 	{
 		if (m_pPause == nullptr)
 		{
-			if (pInputKeyboard->Trigger(DIK_P))
+			if (pInputKeyboard->Trigger(KEY_PAUSE))
 			{
 				m_pPause = CPause::Create();
 			}
