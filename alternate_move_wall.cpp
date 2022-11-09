@@ -134,11 +134,11 @@ void CAlternateMoveWall::Update()
 			m_Screw->SetRot(rot);
 		}
 
-		hitPlayer->SetSpeed(0.0f);
+		hitPlayer->SetIsMove(false);
 		if (GetCompletion())
 		{// 操作が完了した時に実行
 		 // プレイヤーのスピードを元に戻す
-			hitPlayer->SetSpeed(5.0f);
+			hitPlayer->SetIsMove(true);
 		}
 
 		// ギミックの更新
@@ -193,6 +193,11 @@ void CAlternateMoveWall::ConstOperate()
 
 	if (pInputKeyboard->Trigger(KEY_LEFT_ACTION) && !m_nAlternateFlag)
 	{// Zキーを押したら実行
+
+		D3DXVECTOR3 pos = GetPos();
+		pos.y += 2.5f;
+		SetPos(pos);
+
 		m_nTriggerCount++;
 		GetHitPlayer()->SetUpdateStop(false);
 		m_buttonPushCount = 0;
@@ -216,6 +221,11 @@ void CAlternateMoveWall::ConstOperate()
 
 	if (pInputKeyboard->Trigger(KEY_RIGHT_ACTION) && m_nAlternateFlag)
 	{// Cキーを押したら実行
+
+		D3DXVECTOR3 pos = GetPos();
+		pos.y += 2.5f;
+		SetPos(pos);
+
 		m_nTriggerCount++;
 		GetHitPlayer()->SetUpdateStop(false);
 		m_buttonPushCount = 0;

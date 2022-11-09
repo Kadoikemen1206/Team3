@@ -15,20 +15,21 @@
 //総合キー一覧
 enum STAN_DART_INPUT_KEY
 {						//					キーボード						ジョイパッド
-	KEY_UP = 0,			//上			 W & UP							スティック上　＆　十字キー上
-	KEY_DOWN,			//下			 S  & Down						スティック下　＆　十字キー下
-	KEY_LEFT,			//左			 A  &  Left						スティック左　＆　十字キー左
-	KEY_RIGHT,			//右			 D  &  Right					スティック右　＆　十字キー右
-	KEY_DECISION,		//決定			 エンターキー								A
-	KEY_LEFT_ACTION,	//スペース		 スペースキー								R1
-	KEY_RIGHT_ACTION,	//スペース		 スペースキー								R1
-	KEY_SPACE_ACTION,	//スペース		 スペースキー								R1
-	KEY_UP_BUTTON,		//上			 W & UP							スティック上　＆　十字キー上
-	KEY_DOWN_BUTTON,	//下			 S  & Down						スティック下　＆　十字キー下
-	KEY_LEFT_BUTTON,	//スペース		 スペースキー								R1
-	KEY_RIGHT_BUTTON,	//スペース		 スペースキー								R1
-	KEY_BACK,			//バック		 バックスペースキー & B						B
-	KEY_SHIFT,			//シフト		 シフト左右									L1
+	KEY_UP = 0,			//上			W & UP							スティック上　＆　十字キー上
+	KEY_DOWN,			//下			S  & Down						スティック下　＆　十字キー下
+	KEY_LEFT,			//左			A  &  Left						スティック左　＆　十字キー左
+	KEY_RIGHT,			//右			D  &  Right					スティック右　＆　十字キー右
+	KEY_JUMP,			//ジャンプ		D  &  Right					スティック右　＆　十字キー右
+	KEY_DECISION,		//決定			エンターキー								A
+	KEY_LEFT_ACTION,	//スペース		スペースキー								R1
+	KEY_RIGHT_ACTION,	//スペース		スペースキー								R1
+	KEY_SPACE_ACTION,	//スペース		スペースキー								R1
+	KEY_UP_BUTTON,		//上			W & UP							スティック上　＆　十字キー上
+	KEY_DOWN_BUTTON,	//下			S  & Down						スティック下　＆　十字キー下
+	KEY_LEFT_BUTTON,	//スペース		スペースキー								R1
+	KEY_RIGHT_BUTTON,	//スペース		スペースキー								R1
+	KEY_BACK,			//バック		バックスペースキー & B						B
+	KEY_SHIFT,			//シフト		シフト左右									L1
 	KEY_MOVE,			//移動系すべて
 	KEY_PAUSE,			//ポーズボタン	 P											START
 	KEY_MAX

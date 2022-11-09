@@ -91,9 +91,12 @@ HRESULT CGame::Init(void)
 	// ギミックの生成(当たったら止まるギミック)
 	CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
 
+	int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
+
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
-	
+	m_pPlayer1P->SetKeyIndex(joyoadCount - 1);
+
 	// ステージのロード
 	CLoadStage::LoadAll(m_pPlayer1P->GetPos());
 
@@ -116,6 +119,7 @@ HRESULT CGame::Init(void)
 		CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 4300.0f));
 
 		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+		m_pPlayer2P->SetKeyIndex(joyoadCount - 2);
 		CLoadStage::LoadAll(m_pPlayer2P->GetPos());
 		CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TWO);
 	}

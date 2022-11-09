@@ -57,12 +57,15 @@ public:
 	std::vector<int> TriggerDevice(STAN_DART_INPUT_KEY key);	// 総合トリガー
 	std::vector<int> ReleaseDevice(STAN_DART_INPUT_KEY key);	// 総合リリース
 
-	bool Press(int nKey);								//キーボードプレス
-	bool Trigger(int nkey);								//キーボードトリガー
-	bool Release(int nkey);								//キーボードリリース
-	bool Press(DirectJoypad key, int nNum = 0);			//ジョイパットプレス
-	bool Trigger(DirectJoypad key, int nNum = 0);		//ジョイパットトリガー
-	bool Release(DirectJoypad key, int nNum = 0);		//ジョイパッドリリース
+	bool Press(int nKey);								// キーボードプレス
+	bool Trigger(int nkey);								// キーボードトリガー
+	bool Release(int nkey);								// キーボードリリース
+	bool Press(DirectJoypad key, int nNum = 0);			// ジョイパットプレス
+	bool Trigger(DirectJoypad key, int nNum = 0);		// ジョイパットトリガー
+	bool Release(DirectJoypad key, int nNum = 0);		// ジョイパッドリリース
+	bool PressAll(DirectJoypad key);					// ジョイパットプレス
+	bool TriggerAll(DirectJoypad key);					// ジョイパットトリガー
+	bool ReleaseAll(DirectJoypad key);					// ジョイパッドリリース
 
 	D3DXVECTOR3 VectorMoveKey();								//十字キー式のベクトル取得
 	D3DXVECTOR3 VectorMoveJoyStick(int nNum = 0, bool bleftandright = false); //ジョイスティックのベクトル取得
@@ -70,6 +73,7 @@ public:
 	
 	// Getter
 	int GetAcceptJoyPadCount();
+
 private:
 
 	CInputKeyboard *m_pKeyboard;	//キーボードの情報
