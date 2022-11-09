@@ -57,6 +57,7 @@ public:
 	void SetMotion(const char *pName);									// モーション情報の設定
 	void SetMove(D3DXVECTOR3 inMove) override { m_move = inMove; }
 	void SetCol(D3DXCOLOR) override {};
+	void SetUpdateStop(bool isStop) { m_isUpdateStop = isStop; }
 	void SetMaxMinVtx();
 
 	// Getter
@@ -87,6 +88,7 @@ private:
 	D3DXVECTOR3		m_posOld;				// 過去位置
 	D3DXVECTOR3		m_rot;					// 向き
 	D3DXVECTOR3		m_size;					// 大きさ
+	bool			m_isUpdateStop;			// 更新を停止させる。
 };
 
 #endif

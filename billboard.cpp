@@ -348,8 +348,8 @@ void CBillboard::SetAnimation(const int U, const int V, const int Speed, const i
 	m_DivisionY = V;
 	m_DivisionMAX = m_DivisionY*m_DivisionX;
 
-	m_PatternAnimX = 0;
-	m_PatternAnimY = 0;
+	m_PatternAnimX = 1;
+	m_PatternAnimY = 1;
 	m_AnimationSpeed = Speed;
 	m_Timer = Drawtimer;
 	m_bAnimation = true;

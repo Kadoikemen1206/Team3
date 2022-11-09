@@ -47,12 +47,12 @@ private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
-	int m_RandNumber;					// ランダムの数字
-	int m_MoveCount;					// ボタンを押したときに歩く時間
-	int m_TimeToMove;					// また動けるまでの時間
+	int m_RandNumber;	// ランダムの数字
+	int m_MoveCount;	// ボタンを押したときに歩く時間
+	int m_TimeToMove;	// また動けるまでの時間
 
-	bool m_MoveFlag;					// 歩いているかのフラグ
-	bool m_RandFlag;					// ランダムが実行されているか
+	bool m_MoveFlag;	// 歩いているかのフラグ
+	bool m_RandFlag;	// ランダムが実行されているか
 	bool m_PushFlag;					// Bキーを押しているか
 };
 #endif

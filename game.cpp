@@ -93,13 +93,21 @@ HRESULT CGame::Init(void)
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 	CLoadStage::LoadAll(m_pPlayer1P->GetPos());
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
+	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 20.0f, 2000.0f));
+	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 45.0f, 2800.0f));
+	CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 3600.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4000.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4300.0f));
 
 	if (m_mode == EMode::VS)
 	{
 		//CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
 		// ギミックの生成(押すギミック)
-		CPushMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
-		CPushMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
+		CButtonMovePlayer::Create(D3DXVECTOR3(700.0f, 0.0f, 2000.0f));
+		CAlternateMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 2800.0f));
+		CButtonMovePlayer::Create(D3DXVECTOR3(700.0f, 0.0f, 3600.0f));
+		CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 4000.0f));
+		CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 4300.0f));
 
 		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 		CLoadStage::LoadAll(m_pPlayer2P->GetPos());
@@ -143,20 +151,28 @@ void CGame::Update(void)
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 
-	if (m_pPause == nullptr)
-	{
-		if (pInputKeyboard->Trigger(DIK_P))
-		{
-			m_pPause = CPause::Create();
-		}
-	}
-
 	if (m_pFade->GetFade() == CFade::FADE_NONE)
 	{
-		if (pInputKeyboard->Trigger(DIK_RETURN))
+		if (m_pPause == nullptr)
 		{
-			// 遷移
-			CFade::SetFade(CApplication::MODE_TITLE);
+			if (pInputKeyboard->Trigger(DIK_P))
+			{
+				m_pPause = CPause::Create();
+			}
+		}
+		else
+		{
+			if (m_pPause->GetEndFlag())
+			{
+				static int count = 0;
+				count++;
+
+				if (count <= 20)
+				{
+					count = 0;
+					m_pPause = nullptr;
+				}
+			}
 		}
 	}
 }
