@@ -25,7 +25,6 @@ CTime::CTime(int nPriority) :
 	CObject(nPriority),
 	m_apnTime(0)
 {
-
 	for (int nCnt = 0; nCnt < 5; nCnt++)
 	{
 		m_apNumBer[nCnt] = nullptr;

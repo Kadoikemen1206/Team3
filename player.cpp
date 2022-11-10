@@ -92,21 +92,22 @@ void CPlayer::Update()
 
 		if (m_pRope == nullptr)
 		{
-			m_pRope = CBillboard::Create(D3DXVECTOR3(pos.x, pos.y + 145.0f, pos.z), PRIORITY_LEVEL3);
+			m_pRope = CBillboard::Create(D3DXVECTOR3(pos.x, pos.y + 140.0f, pos.z), PRIORITY_LEVEL3);
 			m_pRope->SetSize(D3DXVECTOR3(25.0f, 75.0f, 0.0f));
 			m_pRope->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			m_pRope->BindTexture("ROPE");
 		}
 
+		m_pRope->SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
+
 		if (count >= 240)
 		{
 			count = 0;
+			m_pRope->SetMove(D3DXVECTOR3(0.0f,2.5f,0.0f));
 			SetMotionType(MOTION_NONE);
 		}
 		return;
 	}
-
-	m_pRope->SetMove(D3DXVECTOR3(0.0f,2.5f,0.0f));
 
 	// ‘O‰ñ‚ÌˆÊ’u‚ð•Û‘¶
 	m_posOld = pos;
@@ -308,11 +309,14 @@ void CPlayer::Respawn(D3DXVECTOR3 &pos)
 	{
 		SetMotionType(MOTION_BURABURA);
 		pos = D3DXVECTOR3(-700.0f,80.0f,0.0f);
+		m_pRope->SetPos(D3DXVECTOR3(pos.x, pos.y + 140.0f, pos.z));
+
 	}
 	if (pos.y <= -100.0f && m_nType == EPLAYER_2P)
 	{
 		SetMotionType(MOTION_BURABURA);
 		pos = D3DXVECTOR3(700.0f, 80.0f, 0.0f);
+		m_pRope->SetPos(D3DXVECTOR3(pos.x, pos.y + 140.0f, pos.z));
 	}
 }
 

@@ -108,6 +108,8 @@ private:
 
 	CParticle *m_pParticle;				// パーティクルのポインタ
 	CIcon *m_pIcon;
+
+	int m_nRopeCnt;
 	CBillboard *m_pRope;
 };
 #endif
