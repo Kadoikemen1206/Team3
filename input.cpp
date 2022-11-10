@@ -514,7 +514,7 @@ bool CInput::Release(STAN_DART_INPUT_KEY key, int nNum)
 //*************************************************************************************
 bool CInput::Press(int nKey)
 {
-	return Press(nKey);
+	return m_pKeyboard->GetKeyboardPress(nKey);
 }
 
 //*************************************************************************************

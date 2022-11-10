@@ -59,6 +59,7 @@ public:
 	void SetRot(D3DXVECTOR3 rot) override;						// 向き設定処理
 	void BindTexture(std::string inPath);						// 派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 	void SetUV(float x_1, float x_2, float y_1, float y_2);		// テクスチャ座標更新処理
+	void SetRotate(bool set, int size) { m_bRotate = set, m_fSquareSize = size; }
 	D3DXVECTOR3 GetPos(void) override { return m_pos; }			// 座標取得処理
 	D3DXVECTOR3 GetSize(void) override { return m_size; }		// サイズ取得処理
 	D3DXVECTOR3 GetMove(void) override { return m_move; }		// 移動量取得処理
@@ -80,6 +81,18 @@ private:
 	float m_fLength;						// 対角線の長さ
 	float m_fAngle;							// 角度
 	EObjType m_type;						// オブジェクトのタイプ
+	bool m_bRotate;
+	int m_nTime;
+	float m_fSquareSize;
+	float m_fRotZ = 0.0f;
+
+	const D3DXVECTOR3 sVtx[4] =
+	{
+		D3DXVECTOR3(-1.0f, -1.0f, 0.0f),
+		D3DXVECTOR3(+1.0f, -1.0f, 0.0f),
+		D3DXVECTOR3(-1.0f, +1.0f, 0.0f),
+		D3DXVECTOR3(+1.0f, +1.0f, 0.0f),
+	};
 };
 
 #endif

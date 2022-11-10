@@ -25,6 +25,10 @@
       "Data\/TEXTURE\/Speech_Bubble.png"
     ],
     [
+      "ARROW",
+      "Data\/TEXTURE\/Arrow.png"
+    ],
+    [
       "PARTICLE_BRIGHT1",
       "Data\/TEXTURE\/Particles\/bright.png"
     ],
@@ -49,8 +53,24 @@
       "Data\/TEXTURE\/Buttons\/XButton.png"
     ],
     [
+      "BUTTON_LB",
+      "Data\/TEXTURE\/Buttons\/LBButton.png"
+    ],
+    [
+      "BUTTON_RB",
+      "Data\/TEXTURE\/Buttons\/RBButton.png"
+    ],
+    [
+      "BUTTON_CKEY",
+      "Data\/TEXTURE\/Buttons\/CKey.png"
+    ],
+    [
       "BUTTON_WKEY",
       "Data\/TEXTURE\/Buttons\/WKey.png"
+    ],
+    [
+      "BUTTON_ZKEY",
+      "Data\/TEXTURE\/Buttons\/ZKey.png"
     ],
     [
       "BUTTON_ENTER",
@@ -71,6 +91,10 @@
     [
       "PARTICLE_SMOKE",
       "Data\/TEXTURE\/Particles\/smoke.png"
+    ],
+    [
+      "BUTTON_EFFECT",
+      "Data\/TEXTURE\/Effects\/ButtonEffect.png"
     ],
     [
       "ANIMATION_EFFECTA",
@@ -183,6 +207,14 @@
     [
       "RANKING_BG",
       "Data\/TEXTURE\/Ranking\/ranking-bg.png"
+    ],
+    [
+      "COUNTFRAME",
+      "Data\/TEXTURE\/CountDown\/CountFrame.png"
+    ],
+    [
+      "COUNT_LOCUS",
+      "Data\/TEXTURE\/CountDown\/Locus.png"
     ],
     [
       "COUNTDOWN_3",

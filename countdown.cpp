@@ -49,6 +49,11 @@ HRESULT CCountDown::Init(void)
 	//派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 	BindTexture("COUNTDOWN_3");
 
+	m_pObject[0] = CObject2D::Create("COUNTFRAME", D3DXVECTOR3(640.0f,360.0f,0.0f), GetSize() * 1.1f, CObject::PRIORITY_LEVEL3);
+	m_pObject[1] = CObject2D::Create("COUNT_LOCUS", D3DXVECTOR3(640.0f, 360.0f, 0.0f), GetSize(), CObject::PRIORITY_LEVEL3);
+	m_pObject[1]->SetCol(D3DXCOLOR(1.0f,1.0f,1.0f,0.7f));
+	m_pObject[1]->SetRotate(true, 450);
+
 	return S_OK;
 }
 
@@ -66,8 +71,18 @@ void CCountDown::Uninit(void)
 //=============================================================================
 void CCountDown::Update(void)
 {
+	auto col = CObject2D::GetCol();
+	auto scale = CObject2D::GetSize();
+
 	//カウンター加算
 	m_nCounter++;
+
+	if (m_nCounter >= 180)
+	{
+		col.a -= 0.005f;
+		scale.x += 2.0f;
+		scale.y += 2.0f;
+	}
 
 	//カウントダウンに合わせて画像変更
 	if (m_nCounter == 60)
@@ -88,12 +103,16 @@ void CCountDown::Update(void)
 	else if (m_nCounter == 240)
 	{
 		//終了処理
+		m_pObject[0]->Uninit();
+		m_pObject[1]->Uninit();
 		Uninit();
 		return;
 	}
 
 	//オブジェクトの更新処理
 	CObject2D::Update();
+	CObject2D::SetCol(col);
+	CObject2D::SetSize(scale);
 }
 
 //=============================================================================
