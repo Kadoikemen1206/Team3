@@ -18,6 +18,7 @@
 class CShadow;
 class CParticle;
 class CIcon;
+class CBillboard;
 //=============================================================================
 // クラスの定義
 //=============================================================================
@@ -106,5 +107,6 @@ private:
 
 	CParticle *m_pParticle;				// パーティクルのポインタ
 	CIcon *m_pIcon;
+	CBillboard *m_pRope;
 };
 #endif

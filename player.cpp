@@ -81,10 +81,22 @@ void CPlayer::Update()
 {
 	CMotionModel3D::Update();
 
+	// 位置取得
+	D3DXVECTOR3 pos = GetPos();
+
 	static int count = 0;
 	if (m_moutionType == MOTION_BURABURA)
 	{
 		count++;
+
+		if (m_pRope == nullptr)
+		{
+			m_pRope = CBillboard::Create(D3DXVECTOR3(pos.x, pos.y + 145.0f, pos.z), PRIORITY_LEVEL3);
+			m_pRope->SetSize(D3DXVECTOR3(25.0f, 75.0f, 0.0f));
+			m_pRope->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			m_pRope->BindTexture("ROPE");
+		}
+
 		if (count >= 240)
 		{
 			count = 0;
@@ -93,8 +105,7 @@ void CPlayer::Update()
 		return;
 	}
 
-	// 位置取得
-	D3DXVECTOR3 pos = GetPos();
+	m_pRope->SetMove(D3DXVECTOR3(0.0f,2.5f,0.0f));
 
 	// 前回の位置を保存
 	m_posOld = pos;
@@ -441,7 +452,6 @@ void CPlayer::Move()
 
 	if (pInputKeyboard->Trigger(DIK_BACKSPACE))
 	{
-		m_pIcon->SetDestroy(true);
 	}
 
 #endif // _DEBUG
