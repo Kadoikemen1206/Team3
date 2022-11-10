@@ -100,8 +100,8 @@ void CMotion::Uninit(void)
 		{
 			m_pParts[i]->Uninit();
 		}
-		delete[] m_pParts;
-		m_pParts = nullptr;
+		//delete[] m_pParts;
+		//m_pParts = nullptr;
 	}
 }
 
