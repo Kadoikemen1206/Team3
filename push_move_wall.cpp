@@ -133,6 +133,7 @@ void CPushMoveWall::Update()
 
 	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
+	GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
 
 	// ギミックとプレイヤーが接触した時
 	if (bCollision1P || bCollision2P)
