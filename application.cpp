@@ -236,7 +236,7 @@ void CApplication::SetMode(MODE mode)
 		break;
 	case MODE_RANKING:
 		m_pMode = CRanking::Create();
-		//CRanking::SetRankingScore();
+		CRanking::SetRankingScore();
 		break;
 	case MODE_TUTORIAL:
 		m_pMode = CTutorial::Create();

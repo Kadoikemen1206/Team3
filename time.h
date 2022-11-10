@@ -22,6 +22,16 @@ class CTime : public CObject
 {
 public:
 	//-------------------------------------------------------------------------
+	// 列挙型
+	//-------------------------------------------------------------------------
+	enum EType
+	{
+		TYPE_TIMER = 0,
+		TYPE_RANKING,
+		TYPE_NONE
+	};
+
+	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
 	CTime(int nPriority = PRIORITY_LEVEL5);
@@ -42,6 +52,7 @@ public:
 	void SetCol(D3DXCOLOR col) override { D3DXCOLOR i = col; };			// 色設定処理
 	void SetRot(D3DXVECTOR3 rot) override { D3DXVECTOR3 i = rot; };		// 向き設定処理
 	void SetDigit(int nDigit) { m_nDigit = nDigit; }					// 桁数設定処理
+	void SetType(EType type) { m_Type = type; }							// タイプセット処理
 
 	D3DXVECTOR3 GetPos(void) override { return m_pos; }				// 座標取得処理
 	D3DXVECTOR3 GetSize(void) override { return m_size; }			// サイズ取得処理
@@ -49,7 +60,7 @@ public:
 	D3DXVECTOR3 GetRot(void) override { return D3DXVECTOR3(); }		// 向き取得処理
 	D3DXCOLOR GetCol(void) override { return D3DXCOLOR(); }			// 色取得処理
 
-	static CTime *Create(D3DXVECTOR3 pos,D3DXVECTOR3 size, int nScore, int nPriority);
+	static CTime *Create(EType type, D3DXVECTOR3 pos,D3DXVECTOR3 size, int nScore, int nPriority);
 	void SetTime(int nScore);
 	void AddTime(int nValue);
 	int GetTime();
@@ -66,6 +77,7 @@ private:
 	int  m_nDigit;								// 使用する桁数
 	int m_nTime;								// スタート時刻
 	int  m_apnTime;								// 情報格納変数
+	EType m_Type;								// タイプ
 };
 
 #endif

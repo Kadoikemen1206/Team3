@@ -84,7 +84,7 @@ public:
 	static void UpdateAll(void);						// 全てのインスタンスの更新処理
 	static void DrawAll(void);							// 全てのインスタンスの描画処理
 	static void ModeRelease();							// モード以外だったら破棄処理
-	void Death(void);								// オブジェクト破棄処理
+	void Death(void);									// オブジェクト破棄処理
 
 	static CObject* GetTop(int nPriority) { return m_pTop[nPriority]; }
 	static CObject* GetCurrent(int nPriority) { return m_pCurrent[nPriority]; }
