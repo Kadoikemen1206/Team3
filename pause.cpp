@@ -2,6 +2,7 @@
 #include "object2D.h"
 #include "input.h"
 #include "application.h"
+#include "sound.h"
 #include "pause_select.h"
 #include "fade.h"
 
@@ -188,6 +189,8 @@ void CPause::SelectUpdate()
 	if (pInput->Trigger(KEY_DECISION))
 	{
 		m_isEndFlag = true;
+		//BGM‚ÌÝ’è
+		CApplication::GetSound()->Play(CSound::LABEL_SE_ENTER_KEY_02);
 	}
 }
 

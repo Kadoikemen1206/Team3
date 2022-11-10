@@ -6,6 +6,7 @@
 //=============================================================================
 #include "countdown.h"
 #include "application.h"
+#include "sound.h"
 #include "renderer.h"
 #include "sound.h"
 
@@ -46,6 +47,9 @@ HRESULT CCountDown::Init(void)
 	//頂点サイズの設定
 	CObject2D::SetSize(D3DXVECTOR3(COUNTDOWN_WIDTH, COUNTDOWN_HEIGHT, 0.0f));
 
+	//BGMの設定
+	CApplication::GetSound()->Play(CSound::LABEL_SE_COUNTDOWN);
+
 	//派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 	BindTexture("COUNTDOWN_3");
 
@@ -63,6 +67,9 @@ void CCountDown::Uninit(void)
 {
 	//オブジェクトの終了処理
 	CObject2D::Uninit();
+
+	//BGMを止める設定
+	CApplication::GetSound()->Stop(CSound::LABEL_SE_COUNTDOWN);
 }
 
 //=============================================================================

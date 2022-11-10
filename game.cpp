@@ -75,8 +75,8 @@ HRESULT CGame::Init(void)
 {
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
 
-	////BGMの設定
-	//CApplication::GetSound()->Play(CSound::LABEL_BGM_GAME);
+	//BGMの設定
+	CApplication::GetSound()->Play(CSound::LABEL_BGM_GAME);
 
 	// ライトの生成
 	m_pLight = CLight::Create();
@@ -139,8 +139,8 @@ void CGame::Uninit(void)
 	// カメラの設定
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
 
-	////BGMの設定
-	//CApplication::GetSound()->Stop();
+	//BGMの設定
+	CApplication::GetSound()->Stop();
 
 	// ライトの解放・削除
 	if (m_pLight != nullptr)

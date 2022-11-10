@@ -17,6 +17,7 @@
 #include "game.h"
 #include "fade.h"
 #include "model.h"
+#include "sound.h"
 #include "billboard.h"
 
 //=============================================================================
@@ -141,6 +142,8 @@ void CPushMoveWall::Update()
 		// 位置更新
 		hitPlayer->SetSpeed(1.5f);
 		move = D3DXVECTOR3(0.0f, 0.0f, 1.5f);
+		//BGMの設定
+		CApplication::GetSound()->Play(CSound::LABEL_SE_HIKIZURI);
 	}
 	// ギミックとプレイヤーが離れた時
 	else
@@ -150,6 +153,8 @@ void CPushMoveWall::Update()
 		hitPlayer->SetSpeed(5.0f);
 		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		SetHitPlayer(nullptr);
+		//BGMを止める設定
+		CApplication::GetSound()->Stop(CSound::LABEL_SE_HIKIZURI);
 	}
 
 	// ギミックが下に落ちた時

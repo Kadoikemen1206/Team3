@@ -75,6 +75,15 @@ HRESULT CPlayer::Init()
 	return S_OK;
 }
 
+void CPlayer::Uninit()
+{
+	//オブジェクトの初期化
+	CMotionModel3D::Uninit();
+
+	//BGMの設定
+	CApplication::GetSound()->Stop();
+}
+
 //=============================================================================
 // 更新処理
 //=============================================================================
@@ -444,8 +453,8 @@ void CPlayer::Move()
 	{// ジャンプ
 		m_bJumpFlag = true;
 		move.y += JUMP_POWER;
-		////BGMの設定
-		//CApplication::GetSound()->Play(CSound::LABEL_SE_JUMP_01);
+		//BGMの設定
+		CApplication::GetSound()->Play(CSound::LABEL_SE_JUMP_01);
 	}
 	SetMove(move);
 
