@@ -51,7 +51,7 @@ HRESULT CGoal::Init()
 	CGimmick::Init();
 
 	//モデルのロード
-	LoadModel("BOX");
+	LoadModel("CAKE");
 
 	return S_OK;
 }
@@ -75,7 +75,7 @@ void CGoal::Update()
 
 	// 当たり判定のチェック
 	CollisionGimmick(CGame::GetPlayer1P());
-	if (CGame::GetPlayer2P == nullptr)
+	if (CGame::GetPlayer2P != nullptr)
 	{
 		CollisionGimmick(CGame::GetPlayer2P());
 	}
