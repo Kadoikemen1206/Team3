@@ -23,6 +23,7 @@ class CMeshfield;
 class CTime;
 class CTexture;
 class CObjectXGroup;
+class CSound;
 
 //=============================================================================
 // ƒNƒ‰ƒX‚Ì’è‹`
@@ -65,6 +66,7 @@ public:
 	static CCamera *GetCamera() { return m_pCamera; }
 	static CTexture *GetTexture() { return m_pTexture; }
 	static CObjectXGroup *GetObjectXGroup() { return m_pObjectXGroup; }
+	static CSound *GetSound() { return m_pSound; }
 
 private:
 	//-------------------------------------------------------------------------
@@ -77,6 +79,7 @@ private:
 	static CCamera *m_pCamera;
 	static CTexture *m_pTexture;
 	static CObjectXGroup *m_pObjectXGroup;
+	static CSound *m_pSound;
 };
 
 #endif
