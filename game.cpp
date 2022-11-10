@@ -86,7 +86,7 @@ HRESULT CGame::Init(void)
 
 	// カウントダウンの生成
 	CCountDown::Create(D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f));
-	m_isCoundDownNow = true;
+	m_isCountDownNow = true;
 
 	// ギミックの生成(連打ギミック)
 	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f,3700.0f));
@@ -101,14 +101,27 @@ HRESULT CGame::Init(void)
 	// ゴールの生成
 	CGoal::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
 
-	int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
-
-	//プレイヤーの生成
-	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
-	m_pPlayer1P->SetKeyIndex(joyoadCount - 1);
+	m_countDown = 0;
 
 	// ステージのロード
-	CLoadStage::LoadAll(m_pPlayer1P->GetPos());
+	CLoadStage::LoadAll(D3DXVECTOR3(-700.0f, 0.0f, 0.0f));
+
+	//プレイヤーの生成
+	{
+		int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
+		m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 50.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+		m_pPlayer1P->SetKeyIndex(joyoadCount - 1);
+		m_pPlayer1P->SetRot(D3DXVECTOR3(0.0f, D3DX_PI , 0.0f));
+		m_pPlayer1P->SetMotionType(CPlayer::MOTION_BURABURA);
+	}
+
+	if (m_mode == EMode::VS)
+	{
+		int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
+		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 50.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+		m_pPlayer2P->SetKeyIndex(joyoadCount - 2);
+		m_pPlayer1P->SetMotionType(CPlayer::MOTION_BURABURA);
+	}
 
 	// ギミックの設置
 	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 20.0f, 2000.0f));
@@ -127,9 +140,7 @@ HRESULT CGame::Init(void)
 		CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 4000.0f));
 		CBarrageMoveWall::Create(D3DXVECTOR3(700.0f, 0.0f, 4300.0f));
 
-		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
-		m_pPlayer2P->SetKeyIndex(joyoadCount - 2);
-		CLoadStage::LoadAll(m_pPlayer2P->GetPos());
+		CLoadStage::LoadAll(D3DXVECTOR3(700.0f, 0.0f, 0.0f));
 		CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TWO);
 	}
 
@@ -167,6 +178,18 @@ void CGame::Uninit(void)
 //=============================================================================
 void CGame::Update(void)
 {
+	if (!m_isCountDownNow)
+	{
+	}
+	else
+	{
+		m_countDown++;
+		if (m_countDown >= 240)
+		{
+			m_isCountDownNow = true;
+		}
+	}
+
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
 

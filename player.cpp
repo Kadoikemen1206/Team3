@@ -25,9 +25,9 @@
 //=============================================================================
 // 定数定義
 //=============================================================================
-const float CPlayer::SPEED_POWER = 5.0f;
+const float CPlayer::SPEED_POWER = 4.0f;
 const float CPlayer::JUMP_POWER = 12.0f;
-const float CPlayer::GRAVITY_POWER = 0.75f;
+const float CPlayer::GRAVITY_POWER = 0.775f;
 
 //=============================================================================
 // コンストラクタ
@@ -36,6 +36,7 @@ CPlayer::CPlayer(int nPriority) :
 	CMotionModel3D(nPriority),
 	m_rotDest(0.0f, 0.0f, 0.0f),
 	m_posOld(0.0f, 0.0f, 0.0f),
+	m_move(0.0f, 0.0f, 0.0f),
 	m_nType(EPLAYER_NONE),
 	m_nSmokeCnt(0),
 	m_keyIndex(-1),
@@ -68,6 +69,7 @@ HRESULT CPlayer::Init()
 	//モデルのロード
 	SetMotion("Data/MODEL/PLAYER/player_new/Motion/motion_new.txt");
 
+	m_bJumpFlag = true;
 	return S_OK;
 }
 
@@ -77,6 +79,18 @@ HRESULT CPlayer::Init()
 void CPlayer::Update()
 {
 	CMotionModel3D::Update();
+
+	static int count = 0;
+	if (m_moutionType == MOTION_BURABURA)
+	{
+		count++;
+		if (count >= 240)
+		{
+			count = 0;
+			SetMotionType(MOTION_NONE);
+		}
+		return;
+	}
 
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
@@ -94,47 +108,6 @@ void CPlayer::Update()
 
 	// 重力設定
 	move.y -= GRAVITY_POWER;
-
-	if (move.x == 0.0f && move.z == 0.0f)
-	{
-		if (m_moutionType != MOTION_NONE && m_moutionType != MOTION_SCREW)
-		{
-			SetMotionType(MOTION_NONE);
-		}
-	}
-	else
-	{
-		if (move.x < 0.5f && move.x > -0.5f)
-		{
-			move.x = 0.0f;
-		}
-		if (move.z < 0.5f && move.z > -0.5f)
-		{
-			move.z = 0.0f;
-		}
-
-		if (m_moutionType != MOTION_MOVE)
-		{
-			SetMotionType(MOTION_MOVE);
-		}
-	}
-
-	if (pos != m_posOld)
-	{
-		m_nSmokeCnt++;
-	}
-
-	if ((m_nSmokeCnt % 10) == 1)
-	{
-		for (int i = 0; i < 2; i++)
-		{
-			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 10.0f, pos.z),
-				CParticle::BEHAVIOR_SMOKE,
-				PRIORITY_LEVEL3);
-		}
-
-		m_nSmokeCnt++;
-	}
 
 	//角度の正規化(目的の角度)
 	if (m_rotDest.y - rot.y > D3DX_PI)
@@ -161,9 +134,30 @@ void CPlayer::Update()
 
 	// 移動量加算
 	pos += move;
+	move.x *= 0.75f;
+	move.z *= 0.75f;
+
+	if (pos != m_posOld)
+	{
+		m_nSmokeCnt++;
+	}
+
+	if ((m_nSmokeCnt % 10) == 1)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 5.0f, pos.z),
+				CParticle::BEHAVIOR_SMOKE,
+				PRIORITY_LEVEL3);
+		}
+
+		m_nSmokeCnt++;
+	}
 
 	// ポインタ宣言
 	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
+
+	m_bIsLandingUp = false;
 
 	// プレイヤーとモデルの当たり判定
 	while (pObject != nullptr)
@@ -190,7 +184,14 @@ void CPlayer::Update()
 			}
 
 			// y軸の当たり判定
-			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx(), &move);
+			if (m_bIsLandingUp)
+			{
+				pObjectX->UpCollision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx(), &move);
+			}
+			else
+			{
+ 				m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx(), &move);
+			}
 		}
 
 		//ポインタを次に進める
@@ -220,12 +221,54 @@ void CPlayer::Update()
 		// y軸が移動してなかった場合
 		if (pos.y == m_posOld.y)
 		{
-			move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			//move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 	}
 
 	// リスポーン処理
 	//Respawn(pos);
+
+	// モーションの設定
+	if (m_moutionType != MOTION_JUMP)
+	{
+		if (!m_bIsLandingUp)
+		{
+			SetMotionType(MOTION_JUMP);
+		}
+		else
+		{
+			if (move.x == 0.0f && move.z == 0.0f)
+			{
+				if (m_moutionType != MOTION_NONE && m_moutionType != MOTION_SCREW)
+				{
+					SetMotionType(MOTION_NONE);
+				}
+			}
+			else
+			{
+				if (move.x < 0.25f && move.x > -0.25f)
+				{
+					move.x = 0.0f;
+				}
+				if (move.z < 0.25f && move.z > -0.25f)
+				{
+					move.z = 0.0f;
+				}
+
+				if (m_moutionType != MOTION_MOVE)
+				{
+					SetMotionType(MOTION_MOVE);
+				}
+			}
+		}
+	}
+	else
+	{
+		if (m_bIsLandingUp)
+		{
+			SetMotionType(MOTION_LANDING);
+		}
+	}
 
 	// プレイヤーのposとrotとmoveの設定
 	SetPos(pos);

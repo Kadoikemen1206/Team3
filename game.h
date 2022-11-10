@@ -84,7 +84,8 @@ private:
 
 	float m_RandDoor;						// ランダムドアの位置の変数
 
-	bool m_isCoundDownNow;				// カウントダウン中か否か
+	bool m_isCountDownNow;				// カウントダウン中か否か
+	int m_countDown;
 };
 
 #endif
