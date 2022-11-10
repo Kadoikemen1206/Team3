@@ -9,7 +9,7 @@
 // インクルードファイル
 //=============================================================================
 #include <time.h>
-#include "push_move_wall.h"
+#include "random_door.h"
 #include "player.h"
 #include "input.h"
 #include "application.h"
@@ -26,13 +26,12 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CPushMoveWall::CPushMoveWall(int nPriority)
+CRandomDoor::CRandomDoor(int nPriority)
 {
-	m_PosOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_nTriggerCount = 0;
-	m_Completion = false;
-	m_bIsLanding = false;
-	m_bIsLandingUp = false;
+	m_DoorNumber = 1;
+	m_RandNumber = 0;
+	m_RandFlag = false;
+	m_RandNumberFlag = false;
 
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_GIMMICK);
@@ -41,22 +40,23 @@ CPushMoveWall::CPushMoveWall(int nPriority)
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CPushMoveWall::~CPushMoveWall()
+CRandomDoor::~CRandomDoor()
 {
 }
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CPushMoveWall::Init()
+HRESULT CRandomDoor::Init()
 {
 	// ギミックの初期化
 	CGimmick::Init();
 
-	m_PosOld = CObjectX::GetPos();
+	//乱数
+	srand((unsigned int)time(NULL));	//起動時に一回だけ行うため初期化に書く
 
 	//モデルのロード
-	LoadModel("BUGGY");
+	LoadModel("BOX");
 
 	return S_OK;
 }
@@ -64,7 +64,7 @@ HRESULT CPushMoveWall::Init()
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CPushMoveWall::Uninit()
+void CRandomDoor::Uninit()
 {
 	CGimmick::Uninit();
 }
@@ -72,56 +72,18 @@ void CPushMoveWall::Uninit()
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CPushMoveWall::Update()
+void CRandomDoor::Update()
 {
-	// ギミックの更新
-	CGimmick::Update();
-
 	// ギミックの座標,移動量取得
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 move = GetMove();
 
-	// 重力設定
-	move.y -= 2.5f;
-
-	// 前回の位置を保存
-	m_PosOld = pos;
-
-	// ポインタ宣言
-	CObject *pObject = CObject::GetTop(PRIORITY_LEVEL3);
-
-	// 位置更新
-	pos += move;
-
-	// ギミック(モデル)とモデルの当たり判定
-	while (pObject != nullptr)
-	{
-		if (pObject == this)
-		{
-			pObject = pObject->GetNext();
-			continue;
-		}
-
-		/* ↓Gimmickクリアしていない↓ */
-		CObject::EObjType objType;
-
-		// 当たり判定のチェック
-		objType = pObject->GetObjType();
-
-		if (objType == OBJTYPE_MODEL)
-		{
-			CObjectX *pObjectX = (CObjectX*)pObject;
-			m_bIsLanding = pObjectX->Collision(&pos, &m_PosOld, &GetSize());
-			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_PosOld, &GetSize(), &move);
-		}
-
-		// ギミック処理
-		pObject = pObject->GetNext();
-	}
+	D3DXVECTOR3 PlayerPos1P = CGame::GetPlayer1P()->GetPos();		//プレイヤーPOS情報の取得
+	//yD3DXVECTOR3 PlayerPos2P = CGame::GetPlayer2P()->GetPos();		//プレイヤーPOS情報の取得
 
 	// 当たり判定のチェック
-	bool bCollision1P = CollisionGimmick(CGame::GetPlayer1P());
-	bool bCollision2P = CollisionGimmick(CGame::GetPlayer2P());
+	CollisionGimmick(CGame::GetPlayer1P());
+	CollisionGimmick(CGame::GetPlayer2P());
 
 	if (GetHitPlayer() == nullptr)
 	{
@@ -131,62 +93,65 @@ void CPushMoveWall::Update()
 	// ギミック処理
 	ConstOperate();
 
-	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
-	// ギミックとプレイヤーが接触した時
-	if (bCollision1P || bCollision2P)
+	if (CollisionGimmick(CGame::GetPlayer1P()) == true)
 	{
-		// 位置更新
-		hitPlayer->SetSpeed(1.5f);
-		move = D3DXVECTOR3(0.0f, 0.0f, 1.5f);
-	}
-	// ギミックとプレイヤーが離れた時
-	else
-	{
-		// プレイヤーのスピードを5.0f、ギミックのスピードを0.0fに戻す
-		hitPlayer->SetSpeed(5.0f);
-		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		if (m_RandNumberFlag == false)
+		{// まだ番号が決まっていないときに実行
+			m_RandNumber = rand() % 9 + 1;
+			// 番号が決まった
+			m_RandNumberFlag = true;
+		}
+		if (m_RandNumber == 1 || m_RandNumber == 2 && m_RandNumberFlag == true)
+		{
+			if (m_RandNumber == m_DoorNumber)
+			{
+				m_RandFlag = true;
+			}
+		}
+		else
+		{
+			m_RandFlag = false;
+		}
+
+		if (m_RandFlag == true)
+		{
+			PlayerPos1P = D3DXVECTOR3(-700.0f,0.0f,2100.0f);
+		}
+		else
+		{
+			PlayerPos1P = D3DXVECTOR3(-700.0f, 0.0f, 1800.0f);
+		}
 	}
 
-	// ギミックが下に落ちた時
-	if (pos.y <= -100.0f)
-	{
-		// 移動量減衰
-		hitPlayer->SetSpeed(5.0f);
-		// ギミック削除
-		Uninit();
-		return;
-	}
-
-	// 移動量減衰
-	pos.x += (0.0f - move.x) * 0.1f;
-	pos.y += (0.0f - move.y) * 0.1f;
-	pos.z += (0.0f - move.z) * 0.1f;
-
-	SetPos(pos);	// 座標の設定
-	SetMove(move);	// 移動量の設定
+	CGame::GetPlayer1P()->SetPos(PlayerPos1P);
+	// ギミックの更新
+	CGimmick::Update();
 }
 
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CPushMoveWall::Draw()
+void CRandomDoor::Draw()
 {
 	CGimmick::Draw();
 }
 
 //=============================================================================
-// 操作処理
+// 生成処理
 //=============================================================================
-void CPushMoveWall::ConstOperate()
+void CRandomDoor::ConstOperate()
 {
-	if (GetHitPlayer())
+	// キーボードの情報取得
+	CInput *pInputKeyboard = CApplication::GetInput();
+
+	if (GetHitPlayer() == nullptr)
 	{
 		return;
 	}
 
-	/* ↓プレイヤーと接触した↓ */
+	/* ↓プレイヤーと接触してない↓ */
 
 	if (GetCompletion())
 	{
@@ -195,15 +160,15 @@ void CPushMoveWall::ConstOperate()
 }
 
 //=============================================================================
-// 生成処理
+// 操作処理
 //=============================================================================
-CPushMoveWall* CPushMoveWall::Create(const D3DXVECTOR3& pos)
+CRandomDoor* CRandomDoor::Create(const D3DXVECTOR3& pos)
 {
-	CPushMoveWall *pObstacle = new CPushMoveWall();
+	CRandomDoor *pObstacle = new CRandomDoor();
 
 	if (pObstacle != nullptr)
 	{
-		pObstacle->SetGimmickType(GIMMICKTYPE_PUSHMOVEWALL);
+		pObstacle->SetGimmickType(GIMMICKTYPE_BARRAGEMOVEWALL);
 		pObstacle->Init();
 		pObstacle->SetPos(pos);
 	}

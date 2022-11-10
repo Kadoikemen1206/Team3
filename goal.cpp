@@ -1,133 +1,165 @@
 //=============================================================================
 //
-// フェード処理 [fade.cpp]
-// Author : KADO TAKUMA
+// 障害物処理 [obstacle.cpp]
+// Author : saito shian
 //
 //=============================================================================
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
+#include <time.h>
+#include "goal.h"
+#include "player.h"
+#include "input.h"
 #include "application.h"
-#include "fade.h"
-#include "mode.h"
 #include "renderer.h"
-
-//=============================================================================
-// 静的メンバ変数宣言
-//=============================================================================
-CApplication::MODE CFade::m_ModeNext = {};	//次の画面(モード)
-CFade::FADE CFade::m_pfade = {};			//フェードの状態	
-D3DXCOLOR CFade::m_color = {};				//カラー
+#include "game.h"
+#include "fade.h"
+#include "model.h"
+#include "billboard.h"
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CFade::CFade(int nPriority) : CObject2D(nPriority)
+
+//=============================================================================
+// コンストラクタ
+//=============================================================================
+CGoal::CGoal(int nPriority)
 {
-	SetType(OBJTYPE_MODE);
+	m_GoalCount = MAX_REVERBERATION_TIME;
+	m_GoalFlag = false;
+
+	//オブジェクトのタイプセット処理
+	CObject::SetType(OBJTYPE_GIMMICK);
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CFade::~CFade()
+CGoal::~CGoal()
 {
 }
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-void CFade::Init(CApplication::MODE modeNext)
+HRESULT CGoal::Init()
 {
-	m_pfade = FADE_IN;		//フェードイン状態に
-	m_ModeNext = modeNext;
-	m_color = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
+	// ギミックの初期化
+	CGimmick::Init();
 
-	CObject2D::Init();
+	//モデルのロード
+	LoadModel("BOX");
 
-	SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f));
-	SetSize(D3DXVECTOR3((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, 0.0f));
-	SetCol(m_color);
-
-	//モードの設定
-	CApplication::SetMode(m_ModeNext);
+	return S_OK;
 }
 
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CFade::Uninit(void)
+void CGoal::Uninit()
 {
-	CObject2D::Release();
+	CGimmick::Uninit();
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CFade::Update(void)
+void CGoal::Update()
 {
-	CObject2D::Update();
+	// ギミックの座標,移動量取得
+	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 move = GetMove();
 
-	if (m_pfade != FADE_NONE)
+	// 当たり判定のチェック
+	CollisionGimmick(CGame::GetPlayer1P());
+	CollisionGimmick(CGame::GetPlayer2P());
+
+	if (GetHitPlayer() == nullptr)
 	{
-		if (m_pfade == FADE_IN)
-		{//フェードイン状態
-			m_color.a -= 0.02f;			//ポリゴンを透明にしていく
-			if (m_color.a <= 0.0f)
-			{
-				m_color.a = 0.0f;
-				m_pfade = FADE_NONE;	//何もしていない状態に
-			}
-		}
-
-		else if (m_pfade == FADE_OUT)
-		{ //フェードアウト状態
-			m_color.a += 0.02f;		//ポリゴンを不透明にしていく
-			if (m_color.a >= 1.0f)
-			{
-				m_color.a = 1.0f;
-				m_pfade = FADE_IN;		//フェードイン状態に
-
-				//モード設定(次の画面に移行)
-				CApplication::SetMode(m_ModeNext);
-			}
-		}
-
-		SetCol(m_color);
+		return;
 	}
+
+	// ギミック処理
+	ConstOperate();
+
+	CPlayer* hitPlayer = GetHitPlayer();
+
+	if (CollisionGimmick(CGame::GetPlayer1P()) == true)
+	{
+		hitPlayer->SetSpeed(0.0f);
+		m_GoalCount--;
+		if (m_GoalCount <= 0)
+		{
+			// フェード生成
+			CFade::SetFade(CApplication::MODE_RANKING);
+			m_GoalCount = MAX_REVERBERATION_TIME;
+		}
+	}
+	if (CollisionGimmick(CGame::GetPlayer2P()) == true)
+	{
+		hitPlayer->SetSpeed(0.0f);
+		m_GoalCount--;
+		if (m_GoalCount <= 0)
+		{
+			// フェード生成
+			CFade::SetFade(CApplication::MODE_RANKING);
+			m_GoalCount = MAX_REVERBERATION_TIME;
+		}
+	}
+
+	// ギミックの更新
+	CGimmick::Update();
 }
 
 //=============================================================================
-// フェードセット処理
+// 描画処理
 //=============================================================================
-void CFade::SetFade(CApplication::MODE modeNext)
+void CGoal::Draw()
 {
-	m_pfade = FADE_OUT;								//フェードアウト状態に
-
-	m_ModeNext = modeNext;							//次の画面(モード)を設定
-	m_color = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);	//黒いポリゴン(透明)にしておく
-}
-
-//=============================================================================
-// フェードの情報を取得する処理
-//=============================================================================
-CFade::FADE CFade::GetFade(void)
-{
-	return m_pfade;
+	CGimmick::Draw();
 }
 
 //=============================================================================
 // 生成処理
 //=============================================================================
-CFade * CFade::Create(CApplication::MODE modeNext)
+void CGoal::ConstOperate()
 {
-	CFade *pFade = new CFade;
+	// キーボードの情報取得
+	CInput *pInputKeyboard = CApplication::GetInput();
 
-	if (pFade != nullptr)
+	if (GetHitPlayer() == nullptr)
 	{
-		pFade->Init(modeNext);
+		return;
 	}
 
-	return pFade;
+	/* ↓プレイヤーと接触してない↓ */
+
+	if (GetCompletion())
+	{
+		return;
+	}
+}
+
+//=============================================================================
+// 操作処理
+//=============================================================================
+CGoal* CGoal::Create(const D3DXVECTOR3& pos)
+{
+	CGoal *pObstacle = new CGoal();
+
+	if (pObstacle != nullptr)
+	{
+		pObstacle->SetGimmickType(GIMMICKTYPE_BARRAGEMOVEWALL);
+		pObstacle->Init();
+		pObstacle->SetPos(pos);
+	}
+	else
+	{
+		assert(false);
+	}
+
+	return pObstacle;
 }

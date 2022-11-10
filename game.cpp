@@ -8,6 +8,7 @@
 //=============================================================================
 // インクルードファイル
 //=============================================================================
+#include <time.h>
 #include "application.h"
 #include "renderer.h"
 #include "objectX.h"
@@ -34,6 +35,8 @@
 #include "button_move_player.h"
 #include "countdown.h"
 #include "stop_gimmick.h"
+#include "goal.h"
+#include "random_door.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -85,15 +88,17 @@ HRESULT CGame::Init(void)
 	CCountDown::Create(D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f));
 
 	// ギミックの生成(連打ギミック)
-	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 1500.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f,3700.0f));
 	// ギミックの生成(交互連打ギミック)
-	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3000.0f));
+	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3000.0f));
 	// ギミックの生成(押すギミック)
-	//CPushMoveWall::Create(D3DXVECTOR3(-700.0f,0.0f,2000.0f));
+	CPushMoveWall::Create(D3DXVECTOR3(-700.0f,0.0f,3900.0f));
 	// ギミックの生成(ボタンをしたら少しずつ進むギミック)
-	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2000.0f));
+	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2500.0f));
 	// ギミックの生成(当たったら止まるギミック)
-	CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 1800.0f));
+	// ゴールの生成
+	CGoal::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
 
 	int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
 
@@ -105,11 +110,11 @@ HRESULT CGame::Init(void)
 	CLoadStage::LoadAll(m_pPlayer1P->GetPos());
 
 	// ギミックの設置
-	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 20.0f, 2000.0f));
-	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 45.0f, 2800.0f));
-	CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 3600.0f));
-	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4000.0f));
-	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4300.0f));
+	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 20.0f, 2000.0f));
+	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 45.0f, 2800.0f));
+	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 3600.0f));
+	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4000.0f));
+	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4300.0f));
 	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
 
 	if (m_mode == EMode::VS)
@@ -152,7 +157,6 @@ void CGame::Uninit(void)
 		delete m_pLight;
 		m_pLight = nullptr;
 	}
-
 	// インスタンスの解放処理
 	CObject::Release();
 }
