@@ -67,6 +67,7 @@ public:
 	HRESULT Init() override;							// 初期化処理
 	void Update() override;								// 更新処理
 	void Respawn(D3DXVECTOR3 &pos);						// リスポーン処理
+	void HalfWayPoint(D3DXVECTOR3 &pos);				// 中間地点処理
 
 	void Move();
 
@@ -95,6 +96,8 @@ private:
 	bool m_bJumpFlag;					// ジャンプしたかどうかのフラグ
 	bool m_bIsLanding;					// モデルとの当たり判定フラグ(左右,奥,手前)
 	bool m_bIsLandingUp;				// モデルとの当たり判定フラグ(上側)
+
+	bool m_HalfWayPointFlag;			// 中間地点まで到達したかフラグ
 
 	bool m_isMove;						// 移動を行うか否か
 
