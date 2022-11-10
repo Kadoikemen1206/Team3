@@ -20,6 +20,7 @@
 #include "camera.h"
 #include "light.h"
 #include "meshfield.h"
+#include "sound.h"
 #include "load_stage.h"
 #include "number.h"
 #include "time.h"
@@ -54,6 +55,9 @@ HRESULT CRanking::Init(void)
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TITLE);
 	CApplication::GetCamera()->Init();
 
+	//BGMの設定
+	CApplication::GetSound()->Play(CSound::LABEL_BGM_RESULT);
+
 	// ライトの生成
 	m_pLight = CLight::Create();
 
@@ -79,6 +83,9 @@ void CRanking::Uninit(void)
 {
 	// カメラの設定
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
+
+	//BGMを止める設定
+	CApplication::GetSound()->Stop();
 
 	// ライトの解放・削除
 	if (m_pLight != nullptr)
@@ -141,7 +148,7 @@ void CRanking::Load(void)
 	FILE*pFile;
 
 	//ファイルを開く
-	pFile = fopen("Data\\FILE\\ranking.txt", "r");
+	pFile = fopen("Data\\RANKING\\ranking.txt", "r");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合
@@ -168,7 +175,7 @@ void CRanking::Save(void)
 	FILE*pFile;
 
 	//ファイルを開く
-	pFile = fopen("Data\\FILE\\ranking.txt", "w");
+	pFile = fopen("Data\\RANKING\\ranking.txt", "w");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合
@@ -191,7 +198,7 @@ void CRanking::Save(void)
 //=============================================================================
 void CRanking::SetRankingScore()
 {
-	if (m_nRanking > aData[MAX_RANKINGRANK - 1])
+	if (m_nRanking < aData[MAX_RANKINGRANK - 1])
 	{
 		aData[MAX_RANKINGRANK - 1] = m_nRanking;
 	}
@@ -200,7 +207,7 @@ void CRanking::SetRankingScore()
 	{
 		for (int nCount2 = nCount + 1; nCount2 < MAX_RANKINGRANK; nCount2++)
 		{
-			if (aData[nCount] < aData[nCount2])
+			if (aData[nCount] > aData[nCount2])
 			{
 				int nMin = aData[nCount];
 				aData[nCount] = aData[nCount2];
@@ -209,7 +216,15 @@ void CRanking::SetRankingScore()
 		}
 	}
 
-	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 200.0f, 200.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[0], CObject::PRIORITY_LEVEL4);
+	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 200.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[0], CObject::PRIORITY_LEVEL4);
+
+	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 310.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[1], CObject::PRIORITY_LEVEL4);
+
+	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 420.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[2], CObject::PRIORITY_LEVEL4);
+
+	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 530.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[3], CObject::PRIORITY_LEVEL4);
+
+	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 640.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[4], CObject::PRIORITY_LEVEL4);
 
 	//for (int nCntScore = 0; nCntScore < MAX_RANKINGRANK; nCntScore++)
 	//{

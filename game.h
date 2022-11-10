@@ -21,6 +21,7 @@ class CPlayer;
 class CCamera;
 class CMeshfield;
 class CTime;
+class CSound;
 class CFade;
 class CObstacle;
 class CPause;
@@ -60,6 +61,7 @@ public:
 	static CPlayer *GetPlayer2P() { return m_pPlayer2P; }
 	static CCamera *GetCamera() { return m_pCamera; }
 	static CMeshfield *GetMeshfield() { return m_pMeshField; }
+	static CSound *GetSound() { return m_pSound; }
 
 private:
 
@@ -78,6 +80,7 @@ private:
 	static CMeshfield *m_pMeshField;		// メッシュフィールドのポインタ	
 	static CTime *m_pTime;					// タイムのポインタ
 
+	static CSound *m_pSound;				//サウンドのポインタ
 	CFade *m_pFade;							// フェードのポインタ
 
 	static CPause* m_pPause;				// ポーズ

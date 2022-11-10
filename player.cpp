@@ -19,6 +19,7 @@
 #include "meshfield.h"
 #include "game.h"
 #include "countdown.h"
+#include "sound.h"
 #include "particle.h"
 #include "icon.h"
 
@@ -197,7 +198,6 @@ void CPlayer::Update()
 				m_bJumpFlag = false;
 			}
 		}
-
 		//ポインタを次に進める
 		pObject = pObject->GetNext();
 	}
@@ -243,6 +243,8 @@ void CPlayer::Update()
 				{
 					SetMotionType(MOTION_NONE);
 				}
+				//BGMの設定
+				CApplication::GetSound()->Play(CSound::LABEL_SE_HASHIRI);
 			}
 			else
 			{
@@ -381,6 +383,8 @@ void CPlayer::Move()
 		}
 	}
 
+
+
 	else if (pInputKeyboard->Press(KEY_DOWN, m_keyIndex))
 	{// 下に移動
 		if (pInputKeyboard->Press(KEY_LEFT, m_keyIndex))
@@ -420,8 +424,9 @@ void CPlayer::Move()
 	{// ジャンプ
 		m_bJumpFlag = true;
 		move.y += JUMP_POWER;
+		////BGMの設定
+		//CApplication::GetSound()->Play(CSound::LABEL_SE_JUMP_01);
 	}
-
 	SetMove(move);
 
 	//テスト用
