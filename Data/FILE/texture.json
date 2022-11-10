@@ -56,6 +56,8 @@
     [ "COUNTDOWN_2", "Data\/TEXTURE\/CountDown\/CountDown_2.png" ],
     [ "COUNTDOWN_1", "Data\/TEXTURE\/CountDown\/CountDown_1.png" ],
     [ "COUNTDOWN_START", "Data\/TEXTURE\/CountDown\/CountDown_0.png" ],
+    [ "COUNTFRAME", "Data\/TEXTURE\/CountDown\/CountFrame.png" ],
+    [ "COUNT_LOCUS", "Data\/TEXTURE\/CountDown\/Locus.png"],
     [ "QUIT_Q", "Data\/TEXTURE\/Quit\/QUIT-Q.png" ],
     [ "QUIT_U", "Data\/TEXTURE\/Quit\/QUIT-U.png" ],
     [ "QUIT_I", "Data\/TEXTURE\/Quit\/QUIT-I.png" ],
