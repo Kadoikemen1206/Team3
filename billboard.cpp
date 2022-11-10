@@ -430,7 +430,6 @@ CBillboard * CBillboard::Create(D3DXVECTOR3 pos, int nPriority)
 	{//ポインタが存在したら実行
 		pBillboard->SetPos(pos);
 		pBillboard->SetSize(D3DXVECTOR3(25.0f, 25.0f, 0.0f));
-		pBillboard->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		pBillboard->Init();
 	}
 	else

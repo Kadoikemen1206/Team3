@@ -91,20 +91,32 @@ void CPlayer::Update()
 {
 	CMotionModel3D::Update();
 
+	// 位置取得
+	D3DXVECTOR3 pos = GetPos();
+
 	static int count = 0;
 	if (m_moutionType == MOTION_BURABURA)
 	{
 		count++;
+
+		if (m_pRope == nullptr)
+		{
+			m_pRope = CBillboard::Create(D3DXVECTOR3(pos.x, pos.y + 140.0f, pos.z), PRIORITY_LEVEL3);
+			m_pRope->SetSize(D3DXVECTOR3(25.0f, 75.0f, 0.0f));
+			m_pRope->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			m_pRope->BindTexture("ROPE");
+		}
+
+		m_pRope->SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
+
 		if (count >= 240)
 		{
 			count = 0;
+			m_pRope->SetMove(D3DXVECTOR3(0.0f,2.5f,0.0f));
 			SetMotionType(MOTION_NONE);
 		}
 		return;
 	}
-
-	// 位置取得
-	D3DXVECTOR3 pos = GetPos();
 
 	// 前回の位置を保存
 	m_posOld = pos;
@@ -204,7 +216,7 @@ void CPlayer::Update()
 			}
 			if (m_bIsLandingUp)
 			{
-			m_bJumpFlag = false;
+				m_bJumpFlag = false;
 			}
 		}
 		//ポインタを次に進める
@@ -237,14 +249,7 @@ void CPlayer::Update()
 			//move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 	}
-	if (m_HalfWayPointFlag == false)
-	{
-		// リスポーン処理
-		Respawn(pos);
-	}
 
-	// 中間地点
-	HalfWayPoint(pos);
 	if (m_moutionType != MOTION_JUMP)
 	{
 		if (!m_bIsLandingUp)
@@ -288,8 +293,14 @@ void CPlayer::Update()
 		}
 	}
 
-	// リスポーン処理
-	Respawn(pos);
+	if (m_HalfWayPointFlag == false)
+	{
+		// リスポーン処理
+		Respawn(pos);
+	}
+
+	// 中間地点
+	HalfWayPoint(pos);
 
 	// プレイヤーのposとrotとmoveの設定
 	SetPos(pos);
@@ -307,10 +318,14 @@ void CPlayer::Respawn(D3DXVECTOR3 &pos)
 	{
 		SetMotionType(MOTION_BURABURA);
 		pos = D3DXVECTOR3(-700.0f,80.0f,0.0f);
+		m_pRope->SetPos(D3DXVECTOR3(pos.x, pos.y + 140.0f, pos.z));
+
 	}
 	if (pos.y <= -100.0f && m_nType == EPLAYER_2P)
 	{
-		pos = D3DXVECTOR3(700.0f, 0.0f, 0.0f);
+		SetMotionType(MOTION_BURABURA);
+		pos = D3DXVECTOR3(700.0f, 80.0f, 0.0f);
+		m_pRope->SetPos(D3DXVECTOR3(pos.x, pos.y + 140.0f, pos.z));
 	}
 }
 
@@ -325,22 +340,26 @@ void CPlayer::HalfWayPoint(D3DXVECTOR3 & pos)
 		m_HalfWayPointFlag = true;
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_1P)
 		{
-			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
+			SetMotionType(MOTION_BURABURA);
+			pos = D3DXVECTOR3(-700.0f, 80.0f, 2800.0f);
 		}
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_2P)
 		{
-			pos = D3DXVECTOR3(700.0f, 0.0f, 2800.0f);
+			SetMotionType(MOTION_BURABURA);
+			pos = D3DXVECTOR3(700.0f, 80.0f, 2800.0f);
 		}
 	}
 	else
 	{
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_1P)
 		{
-			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
+			SetMotionType(MOTION_BURABURA);
+			pos = D3DXVECTOR3(-700.0f, 80.0f, 2800.0f);
 		}
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_2P)
 		{
-			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
+			SetMotionType(MOTION_BURABURA);
+			pos = D3DXVECTOR3(700.0f, 80.0f, 2800.0f);
 		}
 	}
 }
@@ -387,7 +406,6 @@ void CPlayer::Move()
 			m_rotDest.y = pCameraRot.y + D3DX_PI;
 		}
 	}
-
 	else if (pInputKeyboard->Press(KEY_DOWN, m_keyIndex))
 	{// 下に移動
 		if (pInputKeyboard->Press(KEY_LEFT, m_keyIndex))
@@ -453,7 +471,6 @@ void CPlayer::Move()
 
 	if (pInputKeyboard->Trigger(DIK_BACKSPACE))
 	{
-		m_pIcon->SetDestroy(true);
 	}
 
 #endif // _DEBUG

@@ -138,6 +138,7 @@ void CPushMoveWall::Update()
 	// ギミックとプレイヤーが接触した時
 	if (bCollision1P || bCollision2P)
 	{
+		GetHitPlayer()->SetMotionType(CPlayer::MOTION_PUSH);
 		// 位置更新
 		hitPlayer->SetSpeed(1.5f);
 		move = D3DXVECTOR3(0.0f, 0.0f, 1.5f);
@@ -147,9 +148,11 @@ void CPushMoveWall::Update()
 	// ギミックとプレイヤーが離れた時
 	else
 	{
+		GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
 		// プレイヤーのスピードを5.0f、ギミックのスピードを0.0fに戻す
 		hitPlayer->SetSpeed(5.0f);
 		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		SetHitPlayer(nullptr);
 		//BGMを止める設定
 		CApplication::GetSound()->Stop(CSound::LABEL_SE_HIKIZURI);
 	}
@@ -165,9 +168,9 @@ void CPushMoveWall::Update()
 	}
 
 	// 移動量減衰
-	pos.x += (0.0f - move.x) * 0.1f;
-	pos.y += (0.0f - move.y) * 0.1f;
-	pos.z += (0.0f - move.z) * 0.1f;
+	pos.x += move.x;
+	pos.y += move.y;
+	pos.z += move.z;
 
 	SetPos(pos);	// 座標の設定
 	SetMove(move);	// 移動量の設定

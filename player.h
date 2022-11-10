@@ -18,6 +18,7 @@
 class CShadow;
 class CParticle;
 class CIcon;
+class CBillboard;
 //=============================================================================
 // クラスの定義
 //=============================================================================
@@ -81,6 +82,7 @@ public:
 
 	// Getter
 	EPLAYER GetPlayerType(void) { return m_nType; }		// プレイヤータイプ取得処理
+	int GetKeyIndex() { return m_keyIndex; }
 
 	static CPlayer *Create(EPLAYER type, const D3DXVECTOR3 pos, int nPriority);	// 生成処理
 
@@ -107,5 +109,8 @@ private:
 
 	CParticle *m_pParticle;				// パーティクルのポインタ
 	CIcon *m_pIcon;
+
+	int m_nRopeCnt;
+	CBillboard *m_pRope;
 };
 #endif
