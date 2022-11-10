@@ -17,6 +17,7 @@
 #include "game.h"
 #include "fade.h"
 #include "model.h"
+#include "sound.h"
 #include "billboard.h"
 
 //=============================================================================
