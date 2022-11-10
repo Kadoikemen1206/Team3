@@ -321,6 +321,8 @@ void CPlayer::Move()
 		}
 	}
 
+
+
 	else if (pInputKeyboard->Press(KEY_DOWN, m_keyIndex))
 	{// ‰º‚ÉˆÚ“®
 		if (pInputKeyboard->Press(KEY_LEFT, m_keyIndex))
