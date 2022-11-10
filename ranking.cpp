@@ -20,6 +20,7 @@
 #include "camera.h"
 #include "light.h"
 #include "meshfield.h"
+#include "sound.h"
 #include "load_stage.h"
 #include "number.h"
 #include "time.h"
@@ -54,6 +55,9 @@ HRESULT CRanking::Init(void)
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TITLE);
 	CApplication::GetCamera()->Init();
 
+	//BGMの設定
+	CApplication::GetSound()->Play(CSound::LABEL_BGM_RESULT);
+
 	// ライトの生成
 	m_pLight = CLight::Create();
 
@@ -79,6 +83,9 @@ void CRanking::Uninit(void)
 {
 	// カメラの設定
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
+
+	//BGMを止める設定
+	CApplication::GetSound()->Stop();
 
 	// ライトの解放・削除
 	if (m_pLight != nullptr)

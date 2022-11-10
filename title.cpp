@@ -15,6 +15,7 @@
 #include "input.h"
 #include "fade.h"
 #include "camera.h"
+#include "sound.h"
 #include "meshfield.h"
 #include "light.h"
 #include "title_logo.h"
@@ -51,6 +52,9 @@ HRESULT CTitle::Init(void)
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TITLE);
 	CApplication::GetCamera()->Init();
 
+	//BGMの設定
+	CApplication::GetSound()->Play(CSound::LABEL_BGM_TITLE);
+
 	// ライトの生成
 	m_pLight = CLight::Create();
 
@@ -76,6 +80,9 @@ void CTitle::Uninit(void)
 {
 	// カメラの設定
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
+
+	//BGMを止める設定
+	CApplication::GetSound()->Stop();
 
 	// ライトの解放・削除
 	if (m_pLight != nullptr)
@@ -108,6 +115,11 @@ void CTitle::Update(void)
 	// 視点と注視点を設定
 	pCamera->SetPosV(posV);
 	pCamera->SetPosR(posR);
+
+	if (posR.z >= 5200.0f)
+	{
+		CFade::SetFade(CApplication::GetMode());
+	}
 }
 
 //=============================================================================

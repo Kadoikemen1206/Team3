@@ -18,6 +18,7 @@
 #include "fade.h"
 #include "model.h"
 #include "billboard.h"
+#include "sound.h"
 #include "particle.h"
 #include "icon.h"
 
@@ -208,6 +209,9 @@ void CAlternateMoveWall::ConstOperate()
 	if (pInputKeyboard->Trigger(KEY_LEFT_ACTION) && !m_nAlternateFlag)
 	{// Zキーを押したら実行
 
+		//BGMの設定
+		CApplication::GetSound()->Play(CSound::LABEL_SE_NEGIMAKI);
+
 		D3DXVECTOR3 pos = GetPos();
 		pos.y += 2.5f;
 		SetPos(pos);
@@ -250,6 +254,9 @@ void CAlternateMoveWall::ConstOperate()
 
 	if (pInputKeyboard->Trigger(KEY_RIGHT_ACTION) && m_nAlternateFlag)
 	{// Cキーを押したら実行
+
+		//BGMの設定
+		CApplication::GetSound()->Play(CSound::LABEL_SE_NEGIMAKI);
 
 		D3DXVECTOR3 pos = GetPos();
 		pos.y += 2.5f;
