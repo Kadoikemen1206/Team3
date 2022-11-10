@@ -56,7 +56,7 @@ HRESULT CPushMoveWall::Init()
 	m_PosOld = CObjectX::GetPos();
 
 	//モデルのロード
-	LoadModel("BUGGY");
+	LoadModel("SMALL BOTTLE");
 
 	return S_OK;
 }
@@ -120,8 +120,8 @@ void CPushMoveWall::Update()
 	}
 
 	// 当たり判定のチェック
-	bool bCollision1P = Collision(CGame::GetPlayer1P());
-	bool bCollision2P = Collision(CGame::GetPlayer2P());
+	bool bCollision1P = CollisionGimmick(CGame::GetPlayer1P());
+	bool bCollision2P = CollisionGimmick(CGame::GetPlayer2P());
 
 	if (GetHitPlayer() == nullptr)
 	{

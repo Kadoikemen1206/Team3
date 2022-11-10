@@ -88,24 +88,23 @@ HRESULT CGame::Init(void)
 	CCountDown::Create(D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f));
 
 	// ギミックの生成(連打ギミック)
-	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 1500.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3700.0f));
 	// ギミックの生成(交互連打ギミック)
-	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3000.0f));
+	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3000.0f));
 	// ギミックの生成(押すギミック)
-	//CPushMoveWall::Create(D3DXVECTOR3(-700.0f,0.0f,2000.0f));
+	CPushMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3900.0f));
 	// ギミックの生成(ボタンをしたら少しずつ進むギミック)
-	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2000.0f));
+	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2500.0f));
 	// ギミックの生成(当たったら止まるギミック)
-	//CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 1800.0f));
 	// ゴールの生成
-	CGoal::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
+	CGoal::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
 
 	int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
 
 	//プレイヤーの生成
 	m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 	m_pPlayer1P->SetKeyIndex(joyoadCount - 1);
-
 	// ステージのロード
 	CLoadStage::LoadAll(m_pPlayer1P->GetPos());
 
@@ -115,7 +114,7 @@ HRESULT CGame::Init(void)
 	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 3600.0f));
 	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4000.0f));
 	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4300.0f));
-	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
+	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
 
 	if (m_mode == EMode::VS)
 	{
