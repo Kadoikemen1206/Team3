@@ -317,12 +317,12 @@ void CPlayer::HalfWayPoint(D3DXVECTOR3 & pos)
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_1P)
 		{
 			SetMotionType(MOTION_BURABURA);
-			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
+			pos = D3DXVECTOR3(-700.0f, 80.0f, 2800.0f);
 		}
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_2P)
 		{
 			SetMotionType(MOTION_BURABURA);
-			pos = D3DXVECTOR3(700.0f, 0.0f, 2800.0f);
+			pos = D3DXVECTOR3(700.0f, 80.0f, 2800.0f);
 		}
 	}
 	else
@@ -330,12 +330,12 @@ void CPlayer::HalfWayPoint(D3DXVECTOR3 & pos)
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_1P)
 		{
 			SetMotionType(MOTION_BURABURA);
-			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
+			pos = D3DXVECTOR3(-700.0f, 80.0f, 2800.0f);
 		}
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_2P)
 		{
 			SetMotionType(MOTION_BURABURA);
-			pos = D3DXVECTOR3(700.0f, 0.0f, 2800.0f);
+			pos = D3DXVECTOR3(700.0f, 80.0f, 2800.0f);
 		}
 	}
 }
@@ -382,9 +382,6 @@ void CPlayer::Move()
 			m_rotDest.y = pCameraRot.y + D3DX_PI;
 		}
 	}
-
-
-
 	else if (pInputKeyboard->Press(KEY_DOWN, m_keyIndex))
 	{// ‰º‚ÉˆÚ“®
 		if (pInputKeyboard->Press(KEY_LEFT, m_keyIndex))
