@@ -249,9 +249,13 @@ void CPlayer::Update()
 void CPlayer::Respawn(D3DXVECTOR3 &pos)
 {
 	// à íuïœçX
-	if (pos.y <= -100.0f)
+	if (pos.y <= -100.0f && m_nType == EPLAYER_1P)
 	{
 		pos = D3DXVECTOR3(-700.0f,0.0f,0.0f);
+	}
+	if (pos.y <= -100.0f && m_nType == EPLAYER_2P)
+	{
+		pos = D3DXVECTOR3(700.0f, 0.0f, 0.0f);
 	}
 }
 
@@ -264,14 +268,22 @@ void CPlayer::HalfWayPoint(D3DXVECTOR3 & pos)
 	if (pos.z >= 2800.0f)
 	{
 		m_HalfWayPointFlag = true;
-		if (pos.y <= -100.0f && m_HalfWayPointFlag == true)
+		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_1P)
 		{
 			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
+		}
+		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_2P)
+		{
+			pos = D3DXVECTOR3(700.0f, 0.0f, 2800.0f);
 		}
 	}
 	else
 	{
-		if (pos.y <= -100.0f && m_HalfWayPointFlag == true)
+		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_1P)
+		{
+			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
+		}
+		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_2P)
 		{
 			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
 		}
