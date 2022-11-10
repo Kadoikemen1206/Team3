@@ -49,10 +49,9 @@ HRESULT CCountDown::Init(void)
 	//派生のテクスチャポインタを親のテクスチャポインタに代入する処理
 	BindTexture("COUNTDOWN_3");
 
-	m_pObject[0] = CObject2D::Create("COUNTFRAME", D3DXVECTOR3(640.0f,360.0f,0.0f), GetSize() * 1.1f, CObject::PRIORITY_LEVEL3);
-	m_pObject[1] = CObject2D::Create("COUNT_LOCUS", D3DXVECTOR3(640.0f, 360.0f, 0.0f), GetSize(), CObject::PRIORITY_LEVEL3);
-	m_pObject[1]->SetCol(D3DXCOLOR(1.0f,1.0f,1.0f,0.7f));
-	m_pObject[1]->SetRotate(true, 450);
+	m_pObject = CObject2D::Create("COUNT_LOCUS", D3DXVECTOR3(640.0f, 360.0f, 0.0f), GetSize(), CObject::PRIORITY_LEVEL3);
+	m_pObject->SetCol(D3DXCOLOR(1.0f,1.0f,1.0f,0.7f));
+	m_pObject->SetRotate(true, 475);
 
 	return S_OK;
 }
@@ -103,13 +102,9 @@ void CCountDown::Update(void)
 	else if (m_nCounter == 240)
 	{
 		//終了処理
-		for (int i = 0; i < 2; i++)
+		if (m_pObject != nullptr)
 		{
-			if (m_pObject[i] == nullptr)
-			{
-				continue;
-			}
-			m_pObject[i]->Uninit();
+			m_pObject->Uninit();
 		}
 
 		Uninit();
