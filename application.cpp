@@ -23,6 +23,7 @@
 #include "tutorial.h"
 #include "fade.h"
 #include "objectX_group.h"
+#include "sound.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -33,6 +34,7 @@ CObject *CApplication::m_pMode = nullptr;
 CCamera *CApplication::m_pCamera = nullptr;
 CTexture *CApplication::m_pTexture = nullptr;
 CObjectXGroup *CApplication::m_pObjectXGroup = nullptr;
+CSound *CApplication::m_pSound = nullptr;
 CApplication::MODE CApplication::m_mode = MODE_TITLE;
 
 //=============================================================================
@@ -85,6 +87,9 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	// モデルの生成
 	m_pObjectXGroup = new CObjectXGroup;
 	m_pObjectXGroup->LoadAll();
+
+	m_pSound = new CSound;
+	m_pSound->Init(hWnd);
 
 	//モード生成
 	CFade::Create(m_mode);
