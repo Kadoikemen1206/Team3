@@ -56,7 +56,7 @@ private:
 	int m_buttonPushCount;
 
 	CObjectX* m_Screw;	// ねじ
-	CIcon* m_pIcon[2];	// アイコン
-
+	CIcon* m_pIcon[4];	// アイコン
+	CIcon* m_pIconEffect;
 };
 #endif

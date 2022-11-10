@@ -187,6 +187,12 @@
     <ClCompile Include="stop_gimmick.cpp">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClCompile>
+    <ClCompile Include="goal.cpp">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="random_door.cpp">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -382,6 +388,12 @@
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClInclude>
     <ClInclude Include="stop_gimmick.h">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="goal.h">
+      <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="random_door.h">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClInclude>
   </ItemGroup>

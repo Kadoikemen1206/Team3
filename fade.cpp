@@ -104,6 +104,7 @@ void CFade::Update(void)
 void CFade::SetFade(CApplication::MODE modeNext)
 {
 	m_pfade = FADE_OUT;								//フェードアウト状態に
+
 	m_ModeNext = modeNext;							//次の画面(モード)を設定
 	m_color = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);	//黒いポリゴン(透明)にしておく
 }

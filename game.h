@@ -24,6 +24,7 @@ class CTime;
 class CFade;
 class CObstacle;
 class CPause;
+class CRandomDoor;
 
 //=============================================================================
 // クラスの定義
@@ -80,6 +81,8 @@ private:
 	CFade *m_pFade;							// フェードのポインタ
 
 	static CPause* m_pPause;				// ポーズ
+
+	float m_RandDoor;						// ランダムドアの位置の変数
 };
 
 #endif
