@@ -137,7 +137,7 @@ void CPlayer::Update()
 	move.x *= 0.75f;
 	move.z *= 0.75f;
 
-	if (pos != m_posOld)
+	if (pos.x != m_posOld.x && pos.z != m_posOld.z)
 	{
 		m_nSmokeCnt++;
 	}
@@ -227,8 +227,6 @@ void CPlayer::Update()
 			//move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 	}
-	// リスポーン処理
-	Respawn(pos);
 
 	// モーションの設定
 	if (m_moutionType != MOTION_JUMP)
@@ -272,6 +270,9 @@ void CPlayer::Update()
 		}
 	}
 
+	// リスポーン処理
+	Respawn(pos);
+
 	// プレイヤーのposとrotとmoveの設定
 	SetPos(pos);
 	SetRot(rot);
@@ -286,7 +287,8 @@ void CPlayer::Respawn(D3DXVECTOR3 &pos)
 	// 位置変更
 	if (pos.y <= -100.0f)
 	{
-		pos = D3DXVECTOR3(-700.0f,0.0f,0.0f);
+		SetMotionType(MOTION_BURABURA);
+		pos = D3DXVECTOR3(-700.0f,80.0f,0.0f);
 	}
 }
 
