@@ -81,6 +81,7 @@ public:
 
 	// Getter
 	EPLAYER GetPlayerType(void) { return m_nType; }		// プレイヤータイプ取得処理
+	int GetKeyIndex() { return m_keyIndex; }
 
 	static CPlayer *Create(EPLAYER type, const D3DXVECTOR3 pos, int nPriority);	// 生成処理
 
