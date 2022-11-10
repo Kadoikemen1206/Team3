@@ -194,7 +194,7 @@ void CPlayer::Update()
 			}
 			if (m_bIsLandingUp)
 			{
-			m_bJumpFlag = false;
+				m_bJumpFlag = false;
 			}
 		}
 
@@ -228,14 +228,7 @@ void CPlayer::Update()
 			//move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 	}
-	if (m_HalfWayPointFlag == false)
-	{
-		// リスポーン処理
-		Respawn(pos);
-	}
 
-	// 中間地点
-	HalfWayPoint(pos);
 	if (m_moutionType != MOTION_JUMP)
 	{
 		if (!m_bIsLandingUp)
@@ -277,8 +270,14 @@ void CPlayer::Update()
 		}
 	}
 
-	// リスポーン処理
-	Respawn(pos);
+	if (m_HalfWayPointFlag == false)
+	{
+		// リスポーン処理
+		Respawn(pos);
+	}
+
+	// 中間地点
+	HalfWayPoint(pos);
 
 	// プレイヤーのposとrotとmoveの設定
 	SetPos(pos);
@@ -299,7 +298,8 @@ void CPlayer::Respawn(D3DXVECTOR3 &pos)
 	}
 	if (pos.y <= -100.0f && m_nType == EPLAYER_2P)
 	{
-		pos = D3DXVECTOR3(700.0f, 0.0f, 0.0f);
+		SetMotionType(MOTION_BURABURA);
+		pos = D3DXVECTOR3(700.0f, 80.0f, 0.0f);
 	}
 }
 
@@ -314,10 +314,12 @@ void CPlayer::HalfWayPoint(D3DXVECTOR3 & pos)
 		m_HalfWayPointFlag = true;
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_1P)
 		{
+			SetMotionType(MOTION_BURABURA);
 			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
 		}
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_2P)
 		{
+			SetMotionType(MOTION_BURABURA);
 			pos = D3DXVECTOR3(700.0f, 0.0f, 2800.0f);
 		}
 	}
@@ -325,11 +327,13 @@ void CPlayer::HalfWayPoint(D3DXVECTOR3 & pos)
 	{
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_1P)
 		{
+			SetMotionType(MOTION_BURABURA);
 			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
 		}
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_2P)
 		{
-			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
+			SetMotionType(MOTION_BURABURA);
+			pos = D3DXVECTOR3(700.0f, 0.0f, 2800.0f);
 		}
 	}
 }
