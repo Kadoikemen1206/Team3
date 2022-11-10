@@ -77,11 +77,11 @@ void CCountDown::Update(void)
 	//カウンター加算
 	m_nCounter++;
 
-	if (m_nCounter >= 180)
+	if (m_nCounter >= 220)
 	{
-		col.a -= 0.005f;
-		scale.x += 2.0f;
-		scale.y += 2.0f;
+		col.a -= 0.05f;
+		scale.x += 25.0f;
+		scale.y += 25.0f;
 	}
 
 	//カウントダウンに合わせて画像変更
@@ -103,8 +103,15 @@ void CCountDown::Update(void)
 	else if (m_nCounter == 240)
 	{
 		//終了処理
-		m_pObject[0]->Uninit();
-		m_pObject[1]->Uninit();
+		for (int i = 0; i < 2; i++)
+		{
+			if (m_pObject[i] == nullptr)
+			{
+				continue;
+			}
+			m_pObject[i]->Uninit();
+		}
+
 		Uninit();
 		return;
 	}
