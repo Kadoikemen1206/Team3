@@ -10,6 +10,7 @@
 #include "time.h"
 #include <time.h>
 #include <math.h>
+#include "ranking.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -47,11 +48,11 @@ HRESULT CTime::Init()
 	//テクスチャ座標の設定
 	for (int nCntScore = 0; nCntScore < 5; nCntScore++)
 	{
-		m_apNumBer[nCntScore] = CNumber::Create(D3DXVECTOR3(100.0f + (80.0f * nCntScore), 80.0f, 0.0f),D3DXVECTOR3(60.0f, 90.0f, 0.0f));
+		m_apNumBer[nCntScore] = CNumber::Create(D3DXVECTOR3(m_pos.x + (103.0f * nCntScore), m_pos.y, 0.0f), m_size);
 	}
 
-	m_apObject2D[0] = CObject2D::Create("TIMER_DOT", D3DXVECTOR3(135.0f, 90.0f, 0.0f), D3DXVECTOR3(20.0f, 20.0f, 0.0f), CObject::PRIORITY_LEVEL5);
-	m_apObject2D[1] = CObject2D::Create("TIMER_DOT", D3DXVECTOR3(295.0f, 90.0f, 0.0f), D3DXVECTOR3(20.0f, 20.0f, 0.0f), CObject::PRIORITY_LEVEL5);
+	m_apObject2D[0] = CObject2D::Create("TIMER_DOT", D3DXVECTOR3(m_pos.x + 45.0f, m_pos.y, 0.0f), D3DXVECTOR3(40.0f, 60.0f, 0.0f), CObject::PRIORITY_LEVEL5);
+	m_apObject2D[1] = CObject2D::Create("TIMER_DOT", D3DXVECTOR3(m_pos.x + 255.0f, m_pos.y, 0.0f), D3DXVECTOR3(40.0f, 60.0f, 0.0f), CObject::PRIORITY_LEVEL5);
 
 	// ミリ秒設定
 	m_nTime = timeGetTime();
@@ -71,8 +72,14 @@ void CTime::Uninit()
 //=============================================================================
 void CTime::Update()
 {
-	//経過時間の更新
-	AddTime(1);
+	if (m_Type == TYPE_TIMER)
+	{
+		// 経過時間の更新
+		AddTime(1);
+
+		// ランキングにタイムセット
+		CRanking::GetRanking(m_nTime);
+	}
 }
 
 //=============================================================================
@@ -84,9 +91,9 @@ void CTime::Draw()
 }
 
 //=============================================================================
-//タイムのクリエイト
+// タイムのクリエイト
 //=============================================================================
-CTime *CTime::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int nScore, int nPriority)
+CTime *CTime::Create(EType type, D3DXVECTOR3 pos, D3DXVECTOR3 size, int nScore, int nPriority)
 {
 	CTime *pTime = nullptr;
 
@@ -94,9 +101,10 @@ CTime *CTime::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int nScore, int nPriorit
 
 	if (pTime != nullptr)
 	{
-		pTime->Init();
+		pTime->SetType(type);
 		pTime->SetPos(pos);
 		pTime->SetSize(size);
+		pTime->Init();
 		pTime->SetTime(nScore);
 	}
 
@@ -112,19 +120,21 @@ void CTime::SetTime(int nScore)
 	int nNumber[5];
 
 	//値格納
-	int time;
-	time = nScore;
+	int second;
+	int minute;
+	int millisecond;
+	int secondSave;
 
-	//for (int nCnt = 0; nCnt < 5; nCnt++)
-	//{
-	//	nNumber[nCnt] = time % (int)powf(10, (5 - nCnt) + 1) / (int)powf(10, (5 - nCnt));
-	//}
+	minute = nScore / 60000;
+	secondSave = nScore / 600;
+	second = nScore - (minute * 60000);
+	millisecond = nScore - (secondSave * 600);
 
-	nNumber[0] = time % 1000000 / 100000;
-	nNumber[1] = time % 100000 / 10000;
-	nNumber[2] = time % 10000 / 1000;
-	nNumber[3] = time % 1000 / 100;
-	nNumber[4] = time % 100 / 10;
+	nNumber[0] = minute;
+	nNumber[1] = second % 100000 / 10000;
+	nNumber[2] = second % 10000 / 1000;
+	nNumber[3] = millisecond % 1000 / 100;
+	nNumber[4] = millisecond % 100 / 10;
 
 	//テクスチャ座標の設定
 	for (int nCntTime = 0; nCntTime < 5; nCntTime++)
