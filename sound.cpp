@@ -18,6 +18,8 @@ const CSound::SParam CSound::PARAM[] =
 {// 各音素材のパラメータ
 	{ "Data/SOUND/BGM/TITLE.wav", -1 },	// タイトル
 	{ "Data/SOUND/BGM/GAME.wav", -1 },	// ゲーム
+	{ "Data/SOUND/BGM/GAME_01.wav", -1 },	// ゲーム
+	{ "Data/SOUND/BGM/GAME_02.wav", -1 },	// ゲーム
 	{ "Data/SOUND/BGM/RESULT.wav", -1 },	// リザルト
 	{ "Data/SOUND/SE/chakuchi_01.wav", -1 },	// 着地音_01
 	{ "Data/SOUND/SE/chakuchi_02.wav", -1 },	// 着地音_02
