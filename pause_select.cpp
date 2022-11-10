@@ -43,8 +43,8 @@ CPauseSelect * CPauseSelect::Create(ESelect inSelect)
 
 			pLogo->m_pText.resize(4);
 			pLogo->m_pText[0] = TextCreate("QUIT_Q", (float)SCREEN_WIDTH_HALF - 100.0f - 400.0f);
-			pLogo->m_pText[1] = TextCreate("QUIT_I", (float)SCREEN_WIDTH_HALF - 100.0f - 300.0f);
-			pLogo->m_pText[2] = TextCreate("QUIT_U", (float)SCREEN_WIDTH_HALF - 100.0f - 200.0f);
+			pLogo->m_pText[1] = TextCreate("QUIT_U", (float)SCREEN_WIDTH_HALF - 100.0f - 300.0f);
+			pLogo->m_pText[2] = TextCreate("QUIT_I", (float)SCREEN_WIDTH_HALF - 100.0f - 200.0f);
 			pLogo->m_pText[3] = TextCreate("QUIT_T", (float)SCREEN_WIDTH_HALF - 100.0f - 100.0f);
 		}
 			break;

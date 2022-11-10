@@ -66,10 +66,10 @@
     [ "EXIT_X", "Data\/TEXTURE\/Exit\/EXIT-X.png" ],
     [ "EXIT_I", "Data\/TEXTURE\/Exit\/EXIT-I.png" ],
     [ "EXIT_T", "Data\/TEXTURE\/Exit\/EXIT-T.png" ],
-    [ "RETRY_R1", "Data\/TEXTURE\/Retry\/RETRY-R1.png" ],
-    [ "RETRY_E", "Data\/TEXTURE\/Retry\/RETRY-E.png" ],
-    [ "RETRY_T", "Data\/TEXTURE\/Retry\/RETRY-T.png" ],
-    [ "RETRY_R2", "Data\/TEXTURE\/Retry\/RETRY-R2.png" ],
-    [ "RETRY_Y", "Data\/TEXTURE\/Retry\/RETRY-Y.png" ]
+    [ "RETRY_R1", "Data\/TEXTURE\/Retry\/RETRY_R.png" ],
+    [ "RETRY_E", "Data\/TEXTURE\/Retry\/RETRY_E.png" ],
+    [ "RETRY_T", "Data\/TEXTURE\/Retry\/RETRY_T.png" ],
+    [ "RETRY_R2", "Data\/TEXTURE\/Retry\/RETRY_R2.png" ],
+    [ "RETRY_Y", "Data\/TEXTURE\/Retry\/RETRY_Y.png" ]
   ]
 }
