@@ -32,7 +32,7 @@ const float CPlayer::GRAVITY_POWER = 0.75f;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CPlayer::CPlayer(int nPriority) : 
+CPlayer::CPlayer(int nPriority) :
 	CMotionModel3D(nPriority),
 	m_rotDest(0.0f, 0.0f, 0.0f),
 	m_posOld(0.0f, 0.0f, 0.0f),
@@ -44,7 +44,8 @@ CPlayer::CPlayer(int nPriority) :
 	m_bIsLanding(false),
 	m_bIsLandingUp(false),
 	m_pParticle(nullptr),
-	m_isMove(true)
+	m_isMove(true),
+	m_HalfWayPointFlag(false)
 {
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_PLAYER);
@@ -227,8 +228,14 @@ void CPlayer::Update()
 			move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 	}
-	// リスポーン処理
-	Respawn(pos);
+	if (m_HalfWayPointFlag == false)
+	{
+		// リスポーン処理
+		Respawn(pos);
+	}
+
+	// 中間地点
+	HalfWayPoint(pos);
 
 	// プレイヤーのposとrotとmoveの設定
 	SetPos(pos);
@@ -245,6 +252,29 @@ void CPlayer::Respawn(D3DXVECTOR3 &pos)
 	if (pos.y <= -100.0f)
 	{
 		pos = D3DXVECTOR3(-700.0f,0.0f,0.0f);
+	}
+}
+
+//=============================================================================
+// 中間地点処理
+//=============================================================================
+void CPlayer::HalfWayPoint(D3DXVECTOR3 & pos)
+{
+	// 位置変更
+	if (pos.z >= 2800.0f)
+	{
+		m_HalfWayPointFlag = true;
+		if (pos.y <= -100.0f && m_HalfWayPointFlag == true)
+		{
+			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
+		}
+	}
+	else
+	{
+		if (pos.y <= -100.0f && m_HalfWayPointFlag == true)
+		{
+			pos = D3DXVECTOR3(-700.0f, 0.0f, 2800.0f);
+		}
 	}
 }
 
