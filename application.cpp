@@ -106,6 +106,14 @@ void CApplication::Uninit(void)
 	CObject::UninitAll();
 
 	// テクスチャの削除
+	if (m_pSound != nullptr)
+	{
+		m_pSound->Uninit();
+		delete m_pSound;
+		m_pSound = nullptr;
+	}
+
+	// テクスチャの削除
 	if (m_pTexture != nullptr)
 	{
 		m_pTexture->UnloadAll();

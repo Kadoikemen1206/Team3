@@ -18,7 +18,7 @@
 #include "player.h"
 #include "meshfield.h"
 #include "game.h"
-
+#include "sound.h"
 #include "particle.h"
 #include "icon.h"
 
@@ -101,6 +101,8 @@ void CPlayer::Update()
 		{
 			SetMotionType(MOTION_NONE);
 		}
+		//BGMの設定
+		CApplication::GetSound()->Play(CSound::LABEL_SE_HASHIRI);
 	}
 	else
 	{
@@ -192,7 +194,6 @@ void CPlayer::Update()
 			// y軸の当たり判定
 			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx(), &move);
 		}
-
 		//ポインタを次に進める
 		pObject = pObject->GetNext();
 	}
@@ -327,8 +328,9 @@ void CPlayer::Move()
 	{// ジャンプ
 		m_bJumpFlag = true;
 		move.y += JUMP_POWER;
+		////BGMの設定
+		//CApplication::GetSound()->Play(CSound::LABEL_SE_JUMP_01);
 	}
-
 	SetMove(move);
 
 	//テスト用

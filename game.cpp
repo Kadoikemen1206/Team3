@@ -35,6 +35,7 @@
 #include "button_move_player.h"
 #include "countdown.h"
 #include "stop_gimmick.h"
+#include "sound.h"
 #include "goal.h"
 #include "random_door.h"
 
@@ -50,6 +51,7 @@ CTime *CGame::m_pTime = nullptr;
 CObstacle *CGame::m_pObstacle1P = nullptr;
 CObstacle *CGame::m_pObstacle2P = nullptr;
 CPause *CGame::m_pPause = nullptr;
+CSound *CGame::m_pSound = nullptr;
 CGame::EMode CGame::m_mode = CGame::EMode::SOLO;
 
 //=============================================================================
@@ -74,6 +76,9 @@ CGame::~CGame()
 HRESULT CGame::Init(void)
 {
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
+
+	////BGMの設定
+	//CApplication::GetSound()->Play(CSound::LABEL_BGM_GAME);
 
 	// ライトの生成
 	m_pLight = CLight::Create();
@@ -149,6 +154,9 @@ void CGame::Uninit(void)
 
 	// カメラの設定
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
+
+	////BGMの設定
+	//CApplication::GetSound()->Stop();
 
 	// ライトの解放・削除
 	if (m_pLight != nullptr)
