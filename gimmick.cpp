@@ -100,21 +100,21 @@ bool CGimmick::Collision(CPlayer* inPlayer)
 //=============================================================================
 // ギミックに当たったかどうかの判定
 //=============================================================================
-bool CGimmick::CollisionGimmick(CPlayer * inPlayer)
+bool CGimmick::CollisionGimmick(CPlayer* Player)
 {
-	if (inPlayer == nullptr)
+	if (Player == nullptr)
 	{
 		return false;
 	}
 
-	D3DXVECTOR3 playerPos = inPlayer->GetPos();
+	D3DXVECTOR3 PlayerPos = Player->GetPos();
 	D3DXVECTOR3 thisPos = GetPos();
 	D3DXVECTOR3 thisSize = GetSize();
 
-	if (((thisPos.x + thisSize.x - 10.0f) >= playerPos.x) && ((thisPos.z + thisSize.z - 10.0f) >= playerPos.z)
-		&& ((thisPos.x - thisSize.x + 10.0f) <= playerPos.x) && ((thisPos.z - thisSize.z + 10.0f) <= playerPos.z))
+	if (((thisPos.x + thisSize.x - 10.0f) >= PlayerPos.x) && ((thisPos.z + thisSize.z - 10.0f) >= PlayerPos.z)
+		&& ((thisPos.x - thisSize.x + 10.0f) <= PlayerPos.x) && ((thisPos.z - thisSize.z + 10.0f) <= PlayerPos.z))
 	{// プレイヤーを動かさないようにするフラグを有効にする
-		m_pHitPlayer = inPlayer;
+		m_pHitPlayer = Player;
 		return true;
 	}
 
