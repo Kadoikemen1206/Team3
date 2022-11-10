@@ -25,6 +25,8 @@ public:
 		LABEL_NONE = -1,
 		LABEL_BGM_TITLE = 0,	// タイトル
 		LABEL_BGM_GAME,			// ゲーム
+		LABEL_BGM_GAME_01,		// ゲーム_01
+		LABEL_BGM_GAME_02,		// ゲーム_02
 		LABEL_BGM_RESULT,		// リザルト
 		LABEL_SE_CHAKUCHI_01,	// 着地音_01
 		LABEL_SE_CHAKUCHI_02,	// 着地音_02
