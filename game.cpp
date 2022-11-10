@@ -86,6 +86,7 @@ HRESULT CGame::Init(void)
 
 	// カウントダウンの生成
 	CCountDown::Create(D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f));
+	m_isCoundDownNow = true;
 
 	// ギミックの生成(連打ギミック)
 	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f,3700.0f));
@@ -115,7 +116,6 @@ HRESULT CGame::Init(void)
 	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 3600.0f));
 	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4000.0f));
 	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4300.0f));
-	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
 
 	if (m_mode == EMode::VS)
 	{
@@ -157,6 +157,7 @@ void CGame::Uninit(void)
 		delete m_pLight;
 		m_pLight = nullptr;
 	}
+
 	// インスタンスの解放処理
 	CObject::Release();
 }

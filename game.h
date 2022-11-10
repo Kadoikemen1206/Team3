@@ -83,6 +83,8 @@ private:
 	static CPause* m_pPause;				// ポーズ
 
 	float m_RandDoor;						// ランダムドアの位置の変数
+
+	bool m_isCoundDownNow;				// カウントダウン中か否か
 };
 
 #endif

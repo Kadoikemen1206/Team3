@@ -108,6 +108,11 @@ void CTitle::Update(void)
 	// Ž‹“_‚Æ’Ž‹“_‚ðÝ’è
 	pCamera->SetPosV(posV);
 	pCamera->SetPosR(posR);
+
+	if (posR.z >= 5200.0f)
+	{
+		CFade::SetFade(CApplication::GetMode());
+	}
 }
 
 //=============================================================================
