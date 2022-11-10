@@ -121,6 +121,14 @@ void CApplication::Uninit(void)
 		m_pTexture = nullptr;
 	}
 
+	// サウンドの削除
+	if (m_pSound != nullptr)
+	{
+		m_pSound->Uninit();
+		delete m_pSound;
+		m_pSound = nullptr;
+	}
+
 	// Xモデルの削除
 	if (m_pObjectXGroup != nullptr)
 	{
@@ -236,7 +244,7 @@ void CApplication::SetMode(MODE mode)
 		break;
 	case MODE_RANKING:
 		m_pMode = CRanking::Create();
-		//CRanking::SetRankingScore();
+		CRanking::SetRankingScore();
 		break;
 	case MODE_TUTORIAL:
 		m_pMode = CTutorial::Create();

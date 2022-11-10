@@ -37,8 +37,8 @@ HRESULT CTutorial::Init(void)
 	// ライトの生成
 	m_pLight = CLight::Create();
 
-	// タイマーの生成
-	m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0,CObject::PRIORITY_LEVEL4);
+	//// タイマーの生成
+	//m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0,CObject::PRIORITY_LEVEL4);
 
 	// メッシュフィールドの生成
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);

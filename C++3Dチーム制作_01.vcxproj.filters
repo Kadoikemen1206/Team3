@@ -193,6 +193,7 @@
     <ClCompile Include="random_door.cpp">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClCompile>
+    <ClCompile Include="countdown.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectInput.h">
@@ -396,6 +397,7 @@
     <ClInclude Include="random_door.h">
       <Filter>00_Code\02_Object\01_3D\01_Gimmick</Filter>
     </ClInclude>
+    <ClInclude Include="countdown.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00_Code">

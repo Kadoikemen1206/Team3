@@ -115,6 +115,7 @@ bool CGimmick::CollisionGimmick(CPlayer * inPlayer)
 		&& ((thisPos.x - thisSize.x + 10.0f) <= playerPos.x) && ((thisPos.z - thisSize.z + 10.0f) <= playerPos.z))
 	{// プレイヤーを動かさないようにするフラグを有効にする
 		m_pHitPlayer = inPlayer;
+		playerPos.z = thisPos.z + 10.0f - thisSize.z / 2.0f;
 		return true;
 	}
 

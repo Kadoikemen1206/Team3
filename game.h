@@ -25,7 +25,6 @@ class CSound;
 class CFade;
 class CObstacle;
 class CPause;
-class CRandomDoor;
 
 //=============================================================================
 // クラスの定義
@@ -62,9 +61,11 @@ public:
 	static CPlayer *GetPlayer2P() { return m_pPlayer2P; }
 	static CCamera *GetCamera() { return m_pCamera; }
 	static CMeshfield *GetMeshfield() { return m_pMeshField; }
-	static CObstacle *GetObstacle1P() { return m_pObstacle1P; }
-	static CObstacle *GetObstacle2P() { return m_pObstacle2P; }
 	static CSound *GetSound() { return m_pSound; }
+
+private:
+
+	void SetGimmik(float x);
 
 private:
 	//-------------------------------------------------------------------------
@@ -78,14 +79,16 @@ private:
 	static CLight *m_pLight;				// ライトのポインタ
 	static CMeshfield *m_pMeshField;		// メッシュフィールドのポインタ	
 	static CTime *m_pTime;					// タイムのポインタ
-	static CObstacle *m_pObstacle1P;		// 1P障害物のポインタ
-	static CObstacle *m_pObstacle2P;		// 2P障害物のポインタ
+
 	static CSound *m_pSound;				//サウンドのポインタ
 	CFade *m_pFade;							// フェードのポインタ
 
 	static CPause* m_pPause;				// ポーズ
 
 	float m_RandDoor;						// ランダムドアの位置の変数
+
+	bool m_isCountDownNow;				// カウントダウン中か否か
+	int m_countDown;
 };
 
 #endif

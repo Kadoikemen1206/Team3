@@ -103,6 +103,11 @@ void CFade::Update(void)
 //=============================================================================
 void CFade::SetFade(CApplication::MODE modeNext)
 {
+	if (m_pfade == FADE_OUT)
+	{
+		return;
+	}
+
 	m_pfade = FADE_OUT;								//フェードアウト状態に
 
 	m_ModeNext = modeNext;							//次の画面(モード)を設定
