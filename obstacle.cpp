@@ -85,96 +85,96 @@ void CObstacle::Uninit()
 //=============================================================================
 void CObstacle::Update()
 {
-	// プレイヤー情報の取得
-	CPlayer * pPlayer1P = CGame::GetPlayer1P();
-	CPlayer * pPlayer2P = CGame::GetPlayer2P();
+	//// プレイヤー情報の取得
+	//CPlayer * pPlayer1P = CGame::GetPlayer1P();
+	//CPlayer * pPlayer2P = CGame::GetPlayer2P();
 
-	// ギミック情報の取得
-	CObstacle * pObstacle1P = CGame::GetObstacle1P();
-	CObstacle * pObstacle2P = CGame::GetObstacle2P();
+	//// ギミック情報の取得
+	//CObstacle * pObstacle1P = CGame::GetObstacle1P();
+	//CObstacle * pObstacle2P = CGame::GetObstacle2P();
 
-	// ギミック1Pの座標,移動量取得
-	D3DXVECTOR3 pos1P = pObstacle1P->GetPos();
-	D3DXVECTOR3 move1P = pObstacle1P->GetMove();
+	//// ギミック1Pの座標,移動量取得
+	//D3DXVECTOR3 pos1P = pObstacle1P->GetPos();
+	//D3DXVECTOR3 move1P = pObstacle1P->GetMove();
 
-	// ギミック2Pの座標,移動量取得
-	D3DXVECTOR3 pos2P = pObstacle2P->GetPos();
-	D3DXVECTOR3 move2P = pObstacle2P->GetMove();
+	//// ギミック2Pの座標,移動量取得
+	//D3DXVECTOR3 pos2P = pObstacle2P->GetPos();
+	//D3DXVECTOR3 move2P = pObstacle2P->GetMove();
 
-	// プレイヤーの座標取得
-	D3DXVECTOR3 PlayerPos1 = CGame::GetPlayer1P()->GetPos();
-	D3DXVECTOR3 PlayerPos2 = CGame::GetPlayer2P()->GetPos();
+	//// プレイヤーの座標取得
+	//D3DXVECTOR3 PlayerPos1 = CGame::GetPlayer1P()->GetPos();
+	//D3DXVECTOR3 PlayerPos2 = CGame::GetPlayer2P()->GetPos();
 
-	// 連打で動く壁の処理関数呼び出し
-	bool bFlag1P = pObstacle1P->BarrageMoveWall(pObstacle1P, pos1P, PlayerPos1);
-	bool bFlag2P = pObstacle2P->BarrageMoveWall(pObstacle2P, pos2P, PlayerPos2);
+	//// 連打で動く壁の処理関数呼び出し
+	//bool bFlag1P = pObstacle1P->BarrageMoveWall(pObstacle1P, pos1P, PlayerPos1);
+	//bool bFlag2P = pObstacle2P->BarrageMoveWall(pObstacle2P, pos2P, PlayerPos2);
 
-	// 押したら動く壁の処理関数呼び出し
-	/*bFlag1P = pObstacle1P->PushMoveObject(pObstacle1P, pos1P, PlayerPos1);
-	bFlag2P = pObstacle2P->PushMoveObject(pObstacle2P, pos2P, PlayerPos2);*/
+	//// 押したら動く壁の処理関数呼び出し
+	///*bFlag1P = pObstacle1P->PushMoveObject(pObstacle1P, pos1P, PlayerPos1);
+	//bFlag2P = pObstacle2P->PushMoveObject(pObstacle2P, pos2P, PlayerPos2);*/
 
-	if (bFlag1P)
-	{
-		move1P = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	//if (bFlag1P)
+	//{
+	//	move1P = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-		if (pObstacle1P->GetStopFlag())
-		{
-			move1P = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
-		}
-	}
-	else
-	{
-		pPlayer1P->SetSpeed(0.0f);
-	}
+	//	if (pObstacle1P->GetStopFlag())
+	//	{
+	//		move1P = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
+	//	}
+	//}
+	//else
+	//{
+	//	pPlayer1P->SetSpeed(0.0f);
+	//}
 
-	if (bFlag2P)
-	{
-		move2P = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	//if (bFlag2P)
+	//{
+	//	move2P = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-		if (pObstacle2P->GetStopFlag())
-		{
-			move2P = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
-		}
-	}
-	else
-	{
-		pPlayer2P->SetSpeed(0.0f);
-	}
+	//	if (pObstacle2P->GetStopFlag())
+	//	{
+	//		move2P = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
+	//	}
+	//}
+	//else
+	//{
+	//	pPlayer2P->SetSpeed(0.0f);
+	//}
 
-	if (pObstacle1P->GetCompletion() == true)
-	{// 操作が完了した時に実行
-		// プレイヤーのスピードを元に戻す
-		CGame::GetPlayer1P()->SetSpeed(5.0f);
-	}
-	if (pObstacle2P->GetCompletion() == true)
-	{// 操作が完了した時に実行
-	 // プレイヤーのスピードを元に戻す
-		CGame::GetPlayer2P()->SetSpeed(5.0f);
-	}
+	//if (pObstacle1P->GetCompletion() == true)
+	//{// 操作が完了した時に実行
+	//	// プレイヤーのスピードを元に戻す
+	//	CGame::GetPlayer1P()->SetSpeed(5.0f);
+	//}
+	//if (pObstacle2P->GetCompletion() == true)
+	//{// 操作が完了した時に実行
+	// // プレイヤーのスピードを元に戻す
+	//	CGame::GetPlayer2P()->SetSpeed(5.0f);
+	//}
 
-	// 位置更新
-	pos1P += move1P;
-	pos2P += move2P;
+	//// 位置更新
+	//pos1P += move1P;
+	//pos2P += move2P;
 
-	// 移動量減衰
-	pos1P.x += (0.0f - move1P.x) * 0.1f;
-	pos1P.y += (0.0f - move1P.y) * 0.1f;
-	pos1P.z += (0.0f - move1P.z) * 0.1f;
+	//// 移動量減衰
+	//pos1P.x += (0.0f - move1P.x) * 0.1f;
+	//pos1P.y += (0.0f - move1P.y) * 0.1f;
+	//pos1P.z += (0.0f - move1P.z) * 0.1f;
 
-	pos2P.x += (0.0f - move2P.x) * 0.1f;
-	pos2P.y += (0.0f - move2P.y) * 0.1f;
-	pos2P.z += (0.0f - move2P.z) * 0.1f;
+	//pos2P.x += (0.0f - move2P.x) * 0.1f;
+	//pos2P.y += (0.0f - move2P.y) * 0.1f;
+	//pos2P.z += (0.0f - move2P.z) * 0.1f;
 
-	// 座標の設定
-	pObstacle1P->SetPos(pos1P);
-	pObstacle2P->SetPos(pos2P);
+	//// 座標の設定
+	//pObstacle1P->SetPos(pos1P);
+	//pObstacle2P->SetPos(pos2P);
 
-	// 移動量の設定
-	pObstacle1P->SetMove(move1P);
-	pObstacle2P->SetMove(move2P);
+	//// 移動量の設定
+	//pObstacle1P->SetMove(move1P);
+	//pObstacle2P->SetMove(move2P);
 
-	// ギミックの更新
-	CGimmick::Update();
+	//// ギミックの更新
+	//CGimmick::Update();
 }
 
 //=============================================================================

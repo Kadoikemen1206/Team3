@@ -155,7 +155,7 @@ void CBarrageMoveWall::ConstOperate()
 
 	/* ↓操作が完了していない↓ */
 
-	if (pInputKeyboard->Trigger(DIK_SPACE))
+	if (pInputKeyboard->Trigger(KEY_DECISION))
 	{// SPACEキーを押したらカウントを増やす
 		m_nTriggerCount++;
 		if (m_nTriggerCount >= 20)
