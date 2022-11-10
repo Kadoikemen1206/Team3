@@ -21,8 +21,11 @@ CObject2D::CObject2D(int nPriority) :
 	CObject(nPriority),
 	m_pTexture(nullptr), 
 	m_pVtxBuff(nullptr), 
+	m_nTime(0),
 	m_fLength(0.0f),
 	m_fAngle(0.0f),
+	m_fSquareSize(10.0f),
+	m_bRotate(false),
 	m_pos(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_size(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
@@ -134,6 +137,35 @@ void CObject2D::Update()
 
 	//頂点座標更新処理
 	VtxUpdate();
+
+	if (m_bRotate)
+	{
+		m_nTime++;
+
+		D3DXVECTOR3 addPos[4];
+		D3DXMATRIX mtx;    // 計算用マトリックス
+
+		VERTEX_2D*pVtx;        //頂点情報へのポインタ
+
+		//頂点バッファをロックし、頂点情報へのポインタを取得
+		m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+		// マトリックスの生成
+		D3DXMatrixIdentity(&mtx);
+
+		// ヨー、ピッチ、ロールを指定してマトリックスを作成
+		D3DXMatrixRotationYawPitchRoll(&mtx, 0.0f, 0.0f, ((D3DX_PI * 1.5f) / 50.0f) * m_nTime);
+
+		// 頂点座標
+		for (int i = 0; i < 4; ++i)
+		{
+			D3DXVec3TransformCoord(&addPos[i], &sVtx[i], &mtx);
+			pVtx[i].pos = m_pos + addPos[i] * (m_fSquareSize);
+		}
+
+		//頂点バッファのアンロック
+		m_pVtxBuff->Unlock();
+	}
 }
 
 //=============================================================================
@@ -147,6 +179,11 @@ void CObject2D::Draw()
 	//頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
 
+	//アルファテスト
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
 	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
@@ -158,6 +195,9 @@ void CObject2D::Draw()
 
 	//テクスチャの解除
 	pDevice->SetTexture(0, NULL);
+
+	//アルファテストを無効
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 
 //=============================================================================

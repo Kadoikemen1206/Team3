@@ -61,6 +61,8 @@ private:
 	//--------------------------------
 	static LPDIRECT3DTEXTURE9 m_pTexture[COUNTDOWN_TEXTURE];		// テクスチャのポインタ
 	int m_nCounter;
+
+	CObject2D *m_pObject[2];
 };
 
 #endif

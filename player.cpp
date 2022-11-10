@@ -351,16 +351,6 @@ void CPlayer::Move()
 				PRIORITY_LEVEL3);
 			//m_pParticle->SetLower(pos);
 		}
-
-		//テスト用
-		{
-			m_pIcon = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z), D3DXVECTOR3(40.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
-			m_pIcon->SetScaling(true);
-			m_pIcon->SetAnimation(1, 1, 12, 1, true);
-
-			m_pIcon = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z), D3DXVECTOR3(15.0f, 15.0f, 0.0f), "BUTTON_Y", PRIORITY_LEVEL3);
-			m_pIcon->SetAnimation(2, 1, 12, 1, true);
-		}
 	}
 
 	if (pInputKeyboard->Trigger(DIK_BACKSPACE))
