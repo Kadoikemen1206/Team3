@@ -297,7 +297,7 @@ void CAlternateMoveWall::ConstOperate()
 			particle->SetGravity(true, 0.1f);
 			particle->SetDelay(15);
 			particle->SetBounce(true);
-			particle->SetLower(GetPos());
+			particle->SetLower(D3DXVECTOR3(GetPos().x, 0.0f, GetPos().z));
 		}
 
 		//ÉAÉCÉRÉì
