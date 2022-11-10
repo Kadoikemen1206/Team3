@@ -187,20 +187,41 @@ void CAlternateMoveWall::ConstOperate()
 		m_pIcon[0] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
 		m_pIcon[0]->SetScaling(true, true);
 		m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
+		//BGMの設定
+		CApplication::GetSound()->Play(CSound::LABEL_SE_NEGIMAKI);
 	}
 
-	if (m_pIcon[1] == nullptr)
+	if (GetHitPlayer()->GetKeyIndex() == -1)
 	{
-		m_pIcon[1] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ZKEY", PRIORITY_LEVEL3);
-		m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
-		m_pIcon[1]->SetStopAnim(0, 0);
-	}
+		if (m_pIcon[1] == nullptr)
+		{
+			m_pIcon[1] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ZKEY", PRIORITY_LEVEL3);
+			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+			m_pIcon[1]->SetStopAnim(0, 0);
+		}
 
-	if (m_pIcon[2] == nullptr)
+		if (m_pIcon[2] == nullptr)
+		{
+			m_pIcon[2] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_CKEY", PRIORITY_LEVEL3);
+			m_pIcon[2]->SetAnimation(2, 1, 12, 1, true);
+			m_pIcon[2]->SetStopAnim(1, 0);
+		}
+	}
+	else
 	{
-		m_pIcon[2] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_CKEY", PRIORITY_LEVEL3);
-		m_pIcon[2]->SetAnimation(2, 1, 12, 1, true);
-		m_pIcon[2]->SetStopAnim(1, 0);
+		if (m_pIcon[1] == nullptr)
+		{
+			m_pIcon[1] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_LB", PRIORITY_LEVEL3);
+			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+			m_pIcon[1]->SetStopAnim(0, 0);
+		}
+
+		if (m_pIcon[2] == nullptr)
+		{
+			m_pIcon[2] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_RB", PRIORITY_LEVEL3);
+			m_pIcon[2]->SetAnimation(2, 1, 12, 1, true);
+			m_pIcon[2]->SetStopAnim(1, 0);
+		}
 	}
 
 	if (m_pIcon[3] == nullptr)
@@ -211,9 +232,6 @@ void CAlternateMoveWall::ConstOperate()
 
 	if (pInputKeyboard->Trigger(KEY_LEFT_ACTION) && !m_nAlternateFlag)
 	{// Zキーを押したら実行
-
-		//BGMの設定
-		CApplication::GetSound()->Play(CSound::LABEL_SE_NEGIMAKI);
 
 		D3DXVECTOR3 pos = GetPos();
 		pos.y += 2.5f;
@@ -257,9 +275,6 @@ void CAlternateMoveWall::ConstOperate()
 
 	if (pInputKeyboard->Trigger(KEY_RIGHT_ACTION) && m_nAlternateFlag)
 	{// Cキーを押したら実行
-
-		//BGMの設定
-		CApplication::GetSound()->Play(CSound::LABEL_SE_NEGIMAKI);
 
 		D3DXVECTOR3 pos = GetPos();
 		pos.y += 2.5f;
@@ -309,6 +324,8 @@ void CAlternateMoveWall::ConstOperate()
 		m_pIcon[2]->Uninit();
 		m_pIcon[3]->Uninit();
 		CGimmick::SetCompletion(true);
+		//BGMを止める設定
+		CApplication::GetSound()->Stop(CSound::LABEL_SE_NEGIMAKI);
 	}
 }
 

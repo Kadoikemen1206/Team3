@@ -61,6 +61,7 @@ public:
 	void SetCompletion(bool flag) { m_Completion = flag; }		// Š®—¹‚µ‚½‚©‚ğİ’è
 	bool GetCompletion() { return m_Completion; }				// Š®—¹‚µ‚½‚©‚ğ’m‚ç‚¹‚é
 
+	void SetHitPlayer(CPlayer* inPlayer) { m_pHitPlayer = inPlayer; }
 	CPlayer* GetHitPlayer() { return m_pHitPlayer; }
 
 private:

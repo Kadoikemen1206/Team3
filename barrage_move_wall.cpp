@@ -17,7 +17,9 @@
 #include "game.h"
 #include "fade.h"
 #include "model.h"
+#include "sound.h"
 #include "billboard.h"
+#include "icon.h"
 
 //=============================================================================
 // コンストラクタ
@@ -156,6 +158,30 @@ void CBarrageMoveWall::ConstOperate()
 		return;
 	}
 
+	if (m_pIcon[0] == nullptr)
+	{
+		m_pIcon[0] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+		m_pIcon[0]->SetScaling(true, true);
+		m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
+	}
+
+	if (GetHitPlayer()->GetKeyIndex() == -1)
+	{
+		if (m_pIcon[1] == nullptr)
+		{
+			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
+			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+		}
+	}
+	else
+	{
+		if (m_pIcon[1] == nullptr)
+		{
+			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_B", PRIORITY_LEVEL3);
+			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+		}
+	}
+
 	/* ↓操作が完了していない↓ */
 
 	if (pInputKeyboard->Trigger(KEY_DECISION))
@@ -164,6 +190,8 @@ void CBarrageMoveWall::ConstOperate()
 		if (m_nTriggerCount >= 20)
 		{// カウントが20回以上行ったら実行
 		 // ギミック(壁)が上に移動
+			m_pIcon[0]->Uninit();
+			m_pIcon[1]->Uninit();
 			// 操作が完了した
 			SetCompletion(true);
 		}

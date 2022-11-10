@@ -75,8 +75,8 @@ HRESULT CGame::Init(void)
 {
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
 
-	////BGMの設定
-	//CApplication::GetSound()->Play(CSound::LABEL_BGM_GAME);
+	//BGMの設定
+	CApplication::GetSound()->Play(CSound::LABEL_BGM_GAME);
 
 	// ライトの生成
 	m_pLight = CLight::Create();
@@ -109,7 +109,8 @@ HRESULT CGame::Init(void)
 		int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
 		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 50.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 		m_pPlayer2P->SetKeyIndex(joyoadCount - 2);
-		m_pPlayer1P->SetMotionType(CPlayer::MOTION_BURABURA);
+		m_pPlayer2P->SetRot(D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
+		m_pPlayer2P->SetMotionType(CPlayer::MOTION_BURABURA);
 	}
 
 	SetGimmik(-700.0f);
@@ -138,8 +139,8 @@ void CGame::Uninit(void)
 	// カメラの設定
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
 
-	////BGMの設定
-	//CApplication::GetSound()->Stop();
+	//BGMの設定
+	CApplication::GetSound()->Stop();
 
 	// ライトの解放・削除
 	if (m_pLight != nullptr)
