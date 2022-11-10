@@ -18,7 +18,7 @@
 #include "player.h"
 #include "meshfield.h"
 #include "game.h"
-
+#include "countdown.h"
 #include "particle.h"
 #include "icon.h"
 
@@ -94,6 +94,7 @@ void CPlayer::Update()
 
 	// 重力設定
 	move.y -= GRAVITY_POWER;
+
 
 	if (move.x == 0.0f && move.z == 0.0f)
 	{
@@ -188,9 +189,12 @@ void CPlayer::Update()
 			{ // 当たった場合
 				move = D3DXVECTOR3(0.0f, move.y, 0.0f);
 			}
-
 			// y軸の当たり判定
 			m_bIsLandingUp = pObjectX->UpCollision(&pos, &m_posOld, &GetMaxVtx(), &GetMinVtx(), &move);
+			if (m_bIsLandingUp)
+			{
+			m_bJumpFlag = false;
+			}
 		}
 
 		//ポインタを次に進める
@@ -211,11 +215,11 @@ void CPlayer::Update()
 			m_bJumpFlag = false;
 		}
 
-		// メッシュフィールドとの当たり判定
-		if (m_bJumpFlag == false)
-		{
-			pMeshField->Collision(&pos);
-		}
+		//// メッシュフィールドとの当たり判定
+		//if (m_bJumpFlag == false)
+		//{
+		//	pMeshField->Collision(&pos);
+		//}
 
 		// y軸が移動してなかった場合
 		if (pos.y == m_posOld.y)
@@ -223,9 +227,8 @@ void CPlayer::Update()
 			move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 	}
-
 	// リスポーン処理
-	//Respawn(pos);
+	Respawn(pos);
 
 	// プレイヤーのposとrotとmoveの設定
 	SetPos(pos);
@@ -239,9 +242,9 @@ void CPlayer::Update()
 void CPlayer::Respawn(D3DXVECTOR3 &pos)
 {
 	// 位置変更
-	if (pos.y == 0.0f)
+	if (pos.y <= -100.0f)
 	{
-		pos.y = 30.0f;
+		pos = D3DXVECTOR3(-700.0f,0.0f,0.0f);
 	}
 }
 
@@ -323,7 +326,7 @@ void CPlayer::Move()
 		m_rotDest.y = pCameraRot.y + -D3DX_PI * 0.5f;
 	}
 
-	if (pInputKeyboard->Trigger(KEY_JUMP, m_keyIndex))
+	if (pInputKeyboard->Trigger(KEY_JUMP, m_keyIndex) && m_bJumpFlag == false)
 	{// ジャンプ
 		m_bJumpFlag = true;
 		move.y += JUMP_POWER;

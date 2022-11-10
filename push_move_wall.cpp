@@ -56,7 +56,7 @@ HRESULT CPushMoveWall::Init()
 	m_PosOld = CObjectX::GetPos();
 
 	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
-	LoadModel("BUGGY");
+	LoadModel("SMALL BOTTLE");
 
 	return S_OK;
 }
