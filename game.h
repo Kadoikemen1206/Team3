@@ -24,7 +24,6 @@ class CTime;
 class CFade;
 class CObstacle;
 class CPause;
-class CRandomDoor;
 
 //=============================================================================
 // クラスの定義
@@ -78,6 +77,7 @@ private:
 	static CTime *m_pTime;					// タイムのポインタ
 	static CObstacle *m_pObstacle1P;		// 1P障害物のポインタ
 	static CObstacle *m_pObstacle2P;		// 2P障害物のポインタ
+
 	CFade *m_pFade;							// フェードのポインタ
 
 	static CPause* m_pPause;				// ポーズ

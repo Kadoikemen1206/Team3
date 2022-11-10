@@ -42,10 +42,10 @@ CPauseSelect * CPauseSelect::Create(ESelect inSelect)
 		{
 
 			pLogo->m_pText.resize(4);
-			pLogo->m_pText[0] = TextCreate("QUIT_Q", (float)SCREEN_WIDTH_HALF - 100.0f - 400.0f);
-			pLogo->m_pText[1] = TextCreate("QUIT_I", (float)SCREEN_WIDTH_HALF - 100.0f - 300.0f);
-			pLogo->m_pText[2] = TextCreate("QUIT_U", (float)SCREEN_WIDTH_HALF - 100.0f - 200.0f);
-			pLogo->m_pText[3] = TextCreate("QUIT_T", (float)SCREEN_WIDTH_HALF - 100.0f - 100.0f);
+			pLogo->m_pText[0] = TextCreate("BACK_B", (float)SCREEN_WIDTH_HALF - 100.0f - 400.0f);
+			pLogo->m_pText[1] = TextCreate("BACK_A", (float)SCREEN_WIDTH_HALF - 100.0f - 300.0f);
+			pLogo->m_pText[2] = TextCreate("BACK_C", (float)SCREEN_WIDTH_HALF - 100.0f - 200.0f);
+			pLogo->m_pText[3] = TextCreate("BACK_K", (float)SCREEN_WIDTH_HALF - 100.0f - 100.0f);
 		}
 			break;
 		case CPauseSelect::RETRY:
@@ -61,10 +61,10 @@ CPauseSelect * CPauseSelect::Create(ESelect inSelect)
 		case CPauseSelect::EXIT:
 		{
 			pLogo->m_pText.resize(4);
-			pLogo->m_pText[0] = TextCreate("EXIT_E",(float)SCREEN_WIDTH_HALF + 200.0f);
-			pLogo->m_pText[1] = TextCreate("EXIT_X",(float)SCREEN_WIDTH_HALF + 200.0f);
-			pLogo->m_pText[2] = TextCreate("EXIT_I",(float)SCREEN_WIDTH_HALF + 200.0f);
-			pLogo->m_pText[3] = TextCreate("EXIT_T",(float)SCREEN_WIDTH_HALF + 200.0f);
+			pLogo->m_pText[0] = TextCreate("QUIT_Q", (float)SCREEN_WIDTH_HALF + 200.0f);
+			pLogo->m_pText[1] = TextCreate("QUIT_U", (float)SCREEN_WIDTH_HALF + 200.0f);
+			pLogo->m_pText[2] = TextCreate("QUIT_I", (float)SCREEN_WIDTH_HALF + 200.0f);
+			pLogo->m_pText[3] = TextCreate("QUIT_T",(float)SCREEN_WIDTH_HALF + 200.0f);
 		}
 		break;
 		default:

@@ -89,11 +89,11 @@ HRESULT CGame::Init(void)
 	m_isCountDownNow = true;
 
 	// ギミックの生成(連打ギミック)
-	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f,3700.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3700.0f));
 	// ギミックの生成(交互連打ギミック)
 	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3000.0f));
 	// ギミックの生成(押すギミック)
-	CPushMoveWall::Create(D3DXVECTOR3(-700.0f,0.0f,3900.0f));
+	CPushMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3900.0f));
 	// ギミックの生成(ボタンをしたら少しずつ進むギミック)
 	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2500.0f));
 	// ギミックの生成(当たったら止まるギミック)
@@ -105,7 +105,6 @@ HRESULT CGame::Init(void)
 
 	// ステージのロード
 	CLoadStage::LoadAll(D3DXVECTOR3(-700.0f, 0.0f, 0.0f));
-
 	//プレイヤーの生成
 	{
 		int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
@@ -129,6 +128,7 @@ HRESULT CGame::Init(void)
 	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 3600.0f));
 	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4000.0f));
 	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 4300.0f));
+	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
 
 	if (m_mode == EMode::VS)
 	{
