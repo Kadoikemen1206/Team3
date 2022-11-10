@@ -101,7 +101,10 @@ void CBarrageMoveWall::Update()
 
 		// 当たり判定のチェック
 		Collision(CGame::GetPlayer1P());
-		Collision(CGame::GetPlayer2P());
+		if (CGame::GetPlayer2P == nullptr)
+		{
+			Collision(CGame::GetPlayer2P());
+		}
 
 		if (GetHitPlayer() == nullptr)
 		{

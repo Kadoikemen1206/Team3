@@ -77,7 +77,7 @@ void CPushMoveWall::Update()
 	// ギミックの更新
 	CGimmick::Update();
 
-	// ギミックの座標,移動量取得
+	// ギミックの座標,移動量取得/
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 move = GetMove();
 
@@ -121,7 +121,11 @@ void CPushMoveWall::Update()
 
 	// 当たり判定のチェック
 	bool bCollision1P = CollisionGimmick(CGame::GetPlayer1P());
-	bool bCollision2P = CollisionGimmick(CGame::GetPlayer2P());
+	bool bCollision2P = false;
+	if (CGame::GetPlayer2P == nullptr)
+	{
+		bCollision2P = CollisionGimmick(CGame::GetPlayer2P());
+	}
 
 	if (GetHitPlayer() == nullptr)
 	{
@@ -160,9 +164,9 @@ void CPushMoveWall::Update()
 	}
 
 	// 移動量減衰
-	pos.x += (0.0f - move.x) * 0.1f;
-	pos.y += (0.0f - move.y) * 0.1f;
-	pos.z += (0.0f - move.z) * 0.1f;
+	pos.x += move.x;
+	pos.y += move.y;
+	pos.z += move.z;
 
 	SetPos(pos);	// 座標の設定
 	SetMove(move);	// 移動量の設定
