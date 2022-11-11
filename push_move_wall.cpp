@@ -139,9 +139,11 @@ void CPushMoveWall::Update()
 	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
+	static int count = 0;
 	// ギミックとプレイヤーが接触した時
 	if (bCollision1P || bCollision2P)
 	{
+		count = 0;
 		GetHitPlayer()->SetMotionType(CPlayer::MOTION_PUSH);
 		// 位置更新
 		hitPlayer->SetSpeed(1.5f);
@@ -152,11 +154,15 @@ void CPushMoveWall::Update()
 	// ギミックとプレイヤーが離れた時
 	else
 	{
-		GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
+		count++;
+		if (count == 25)
+		{
+			GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
+			SetHitPlayer(nullptr);
+		}
 		// プレイヤーのスピードを5.0f、ギミックのスピードを0.0fに戻す
 		hitPlayer->SetSpeed(5.0f);
 		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		SetHitPlayer(nullptr);
 		//BGMを止める設定
 		CApplication::GetSound()->Stop(CSound::LABEL_SE_HIKIZURI);
 	}

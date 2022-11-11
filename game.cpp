@@ -98,6 +98,7 @@ HRESULT CGame::Init(void)
 
 	m_pPlayer1P = nullptr;
 	m_pPlayer2P = nullptr;
+
 	//ƒvƒŒƒCƒ„[‚Ì¶¬
 	{
 		int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
