@@ -166,7 +166,7 @@ void CBarrageMoveWall::ConstOperate()
 		return;
 	}
 
-	if (GetHitPlayer()->GetPos().z >= this->GetPos().z - 60.0f)
+	if (GetWallClearFlag())
 	{
 		if (m_pIcon[0] == nullptr)
 		{
