@@ -56,7 +56,6 @@ CMotionModel3D::CMotionModel3D(int nPriority) :
 	m_size(D3DXVECTOR3()),										// ‘å‚«‚³
 	m_isUpdateStop(false)
 {
-	
 }
 
 //=============================================================================
@@ -66,7 +65,7 @@ CMotionModel3D::CMotionModel3D(int nPriority) :
 //=============================================================================
 CMotionModel3D::~CMotionModel3D()
 {
-
+	assert(m_pMotion == nullptr);
 }
 
 //=============================================================================

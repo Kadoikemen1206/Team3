@@ -73,13 +73,16 @@ void CStopGimmick::Update()
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 move = GetMove();
 
-	// 当たり判定のチェック
-	CollisionGimmick(CGame::GetPlayer1P());
-	//CollisionGimmick(CGame::GetPlayer2P());
-
 	if (GetHitPlayer() == nullptr)
 	{
 		return;
+	}
+
+	// 当たり判定のチェック
+	CollisionGimmick(CGame::GetPlayer1P());
+	if (CGame::GetPlayer2P != nullptr)
+	{
+		CollisionGimmick(CGame::GetPlayer2P());
 	}
 
 	// ギミック処理

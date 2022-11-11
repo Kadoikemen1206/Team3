@@ -57,6 +57,7 @@ CMotion::CMotion(const char * pFileName)
 //=============================================================================
 CMotion::~CMotion()
 {
+	assert(m_pParent == nullptr);
 }
 
 //=============================================================================
@@ -85,23 +86,14 @@ void CMotion::Uninit(void)
 		m_motion = nullptr;
 	}
 
-	//if (m_pParent != nullptr)
-	//{// ÉÅÉÇÉäÇÃâï˙
-	//	for (int i = 0; i < sizeof(m_pParent, m_pParent);i++)
-	//	{
-	//	}
-	//	delete[] m_pParent;
-	//	m_pParent = nullptr;
-	//}
-
 	if (m_pParts != nullptr)
 	{// ÉÅÉÇÉäÇÃâï˙
 		for (int i = 0; i < m_nMaxParts; i++)
 		{
 			m_pParts[i]->Uninit();
 		}
-		//delete[] m_pParts;
-		//m_pParts = nullptr;
+		delete[] m_pParts;
+		m_pParts = nullptr;
 	}
 }
 

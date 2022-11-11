@@ -100,13 +100,16 @@ void CAlternateMoveWall::Update()
 	{
 		/* ↓Gimmickクリアしていない↓ */
 
-		// 当たり判定のチェック
-		Collision(CGame::GetPlayer1P());
-		Collision(CGame::GetPlayer2P());
-
 		if (GetHitPlayer() == nullptr)
 		{
 			return;
+		}
+
+		// 当たり判定のチェック
+		Collision(CGame::GetPlayer1P());
+		if (CGame::GetPlayer2P != nullptr)
+		{
+			Collision(CGame::GetPlayer2P());
 		}
 
 		CPlayer* hitPlayer = GetHitPlayer();
