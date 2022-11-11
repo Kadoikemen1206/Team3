@@ -96,23 +96,27 @@ void CButtonMovePlayer::Update()
 	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
-	// ギミックとプレイヤーが接触した時
-	if (bCollision1P || bCollision2P)
+	if (GetHitPlayer() != nullptr)
 	{
-		hitPlayer->SetSpeed(0.0f);
-		ButtonPush();
-	}
-	else
-	{
-		hitPlayer->SetSpeed(5.0f);
-		Uninit();
-		return;
-	}
 
-	// 移動量減衰
-	pos.x += (0.0f - move.x) * 0.1f;
-	pos.y += (0.0f - move.y) * 0.1f;
-	pos.z += (0.0f - move.z) * 0.1f;
+		// ギミックとプレイヤーが接触した時
+		if (bCollision1P || bCollision2P)
+		{
+			hitPlayer->SetSpeed(0.0f);
+			ButtonPush();
+		}
+		else
+		{
+			hitPlayer->SetSpeed(5.0f);
+			Uninit();
+			return;
+		}
+
+		// 移動量減衰
+		pos.x += (0.0f - move.x) * 0.1f;
+		pos.y += (0.0f - move.y) * 0.1f;
+		pos.z += (0.0f - move.z) * 0.1f;
+	}
 
 	SetPos(pos);	// 座標の設定
 	SetMove(move);	// 移動量の設定
