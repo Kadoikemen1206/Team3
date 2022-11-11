@@ -95,6 +95,10 @@ HRESULT CGame::Init(void)
 
 	// ステージのロード
 	CLoadStage::LoadAll(D3DXVECTOR3(-700.0f, 0.0f, 0.0f));
+
+	m_pPlayer1P = nullptr;
+	m_pPlayer2P = nullptr;
+
 	//プレイヤーの生成
 	{
 		int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
