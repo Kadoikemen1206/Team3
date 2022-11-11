@@ -18,6 +18,7 @@
 #include "fade.h"
 #include "model.h"
 #include "billboard.h"
+#include "icon.h"
 
 //=============================================================================
 // コンストラクタ
@@ -84,11 +85,10 @@ void CButtonMovePlayer::Update()
 
 	// 当たり判定のチェック
 	bool bCollision1P = Collision(CGame::GetPlayer1P());
-	bool bCollision2P = Collision(CGame::GetPlayer2P());
-
-	if (GetHitPlayer() == nullptr)
+	bool bCollision2P = false;
+	if (CGame::GetPlayer2P() != nullptr)
 	{
-		return;
+		bCollision2P = Collision(CGame::GetPlayer2P());
 	}
 
 	// ギミック処理
@@ -97,23 +97,30 @@ void CButtonMovePlayer::Update()
 	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
-	// ギミックとプレイヤーが接触した時
-	if (bCollision1P || bCollision2P)
+	if (GetHitPlayer() != nullptr)
 	{
+		if (m_pIcon[0] == nullptr)
+		{
+			m_pIcon[0] = CIcon::Create(D3DXVECTOR3(hitPlayer->GetPos().x, hitPlayer->GetPos().y + 150.0f, hitPlayer->GetPos().z), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+		}
 		hitPlayer->SetSpeed(0.0f);
 		ButtonPush();
 	}
 	else
 	{
 		hitPlayer->SetSpeed(5.0f);
+		SetCompletion(true);
+
+		for (int i = 0; i < 2; i++)
+		{
+			if (m_pIcon[i] != nullptr)
+			{
+				m_pIcon[i]->Uninit();
+			}
+		}
 		Uninit();
 		return;
 	}
-
-	// 移動量減衰
-	pos.x += (0.0f - move.x) * 0.1f;
-	pos.y += (0.0f - move.y) * 0.1f;
-	pos.z += (0.0f - move.z) * 0.1f;
 
 	SetPos(pos);	// 座標の設定
 	SetMove(move);	// 移動量の設定
@@ -164,31 +171,53 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 1)
 	{
-		if (pInputKeyboard->Trigger(KEY_RIGHT_BUTTON))
+		str = "BUTTON_MKEY";
+
+		if (pInputKeyboard->Trigger(KEY_RIGHT_BUTTON)) //M
 		{
 			m_RandFlag = false;
 		}
 	}
 	else if (m_RandFlag == true && m_RandNumber == 2)
 	{
-		if (pInputKeyboard->Trigger(KEY_LEFT_BUTTON))
+		str = "BUTTON_VKEY";
+
+		if (pInputKeyboard->Trigger(KEY_LEFT_BUTTON)) //V
 		{
 			m_RandFlag = false;
 		}
 	}
 	else if (m_RandFlag == true && m_RandNumber == 3)
 	{
-		if (pInputKeyboard->Trigger(KEY_DOWN_BUTTON))
+		str = "BUTTON_BKEY";
+
+		if (pInputKeyboard->Trigger(KEY_DOWN_BUTTON)) //B
 		{
 			m_RandFlag = false;
 		}
 	}
 	else if (m_RandFlag == true && m_RandNumber == 4)
 	{
-		if (pInputKeyboard->Trigger(KEY_UP_BUTTON))
+		str = "BUTTON_NKEY";
+
+		if (pInputKeyboard->Trigger(KEY_UP_BUTTON)) //N
 		{
 			m_RandFlag = false;
 		}
+	}
+
+	auto pos = hitPlayer->GetPos();
+
+	if (m_pIcon[1] == nullptr)
+	{
+		m_pIcon[1] = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 150.0f, pos.z - 10.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), str, PRIORITY_LEVEL3);
+		m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+	}
+	else
+	{
+		m_pIcon[0]->SetPos(D3DXVECTOR3(pos.x, pos.y + 150.0f, pos.z));
+		m_pIcon[1]->SetPos(D3DXVECTOR3(pos.x, pos.y + 150.0f, pos.z));
+		m_pIcon[1]->BindTexture(str);
 	}
 
 	if (m_RandFlag == false && m_MoveFlag == false)

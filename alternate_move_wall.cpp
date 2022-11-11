@@ -102,12 +102,18 @@ void CAlternateMoveWall::Update()
 
 		// 当たり判定のチェック
 		Collision(CGame::GetPlayer1P());
-		Collision(CGame::GetPlayer2P());
+		if (CGame::GetPlayer2P() != nullptr)
+		{
+			Collision(CGame::GetPlayer2P());
+		}
 
 		if (GetHitPlayer() == nullptr)
 		{
 			return;
 		}
+
+		// ギミック処理
+		ConstOperate();
 
 		CPlayer* hitPlayer = GetHitPlayer();
 
@@ -118,9 +124,6 @@ void CAlternateMoveWall::Update()
 			hitPlayer->SetPos(pos);
 		}
 		hitPlayer->SetMotionType(CPlayer::MOTION_SCREW);
-
-		// ギミック処理
-		ConstOperate();
 
 		m_buttonPushCount++;
 
@@ -297,7 +300,7 @@ void CAlternateMoveWall::ConstOperate()
 			particle->SetGravity(true, 0.1f);
 			particle->SetDelay(15);
 			particle->SetBounce(true);
-			particle->SetLower(GetPos());
+			particle->SetLower(D3DXVECTOR3(GetPos().x, 0.0f, GetPos().z));
 		}
 
 		//アイコン
@@ -312,7 +315,7 @@ void CAlternateMoveWall::ConstOperate()
 	}
 
 	// 指定回数のボタンを押した場合
-	if (m_nTriggerCount >= 40)
+	if (m_nTriggerCount >= 10)
 	{
 		// 操作が完了した
 		GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);

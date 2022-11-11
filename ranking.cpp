@@ -207,7 +207,7 @@ void CRanking::SetRankingScore()
 	{
 		for (int nCount2 = nCount + 1; nCount2 < MAX_RANKINGRANK; nCount2++)
 		{
-			if (aData[nCount] < aData[nCount2])
+			if (aData[nCount] > aData[nCount2])
 			{
 				int nMin = aData[nCount];
 				aData[nCount] = aData[nCount2];
@@ -216,34 +216,15 @@ void CRanking::SetRankingScore()
 		}
 	}
 
-	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 200.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[4], CObject::PRIORITY_LEVEL4);
+	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 200.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[0], CObject::PRIORITY_LEVEL4);
 
-	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 310.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[3], CObject::PRIORITY_LEVEL4);
+	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 310.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[1], CObject::PRIORITY_LEVEL4);
 
 	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 420.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[2], CObject::PRIORITY_LEVEL4);
 
-	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 530.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[1], CObject::PRIORITY_LEVEL4);
+	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 530.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[3], CObject::PRIORITY_LEVEL4);
 
-	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 640.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[0], CObject::PRIORITY_LEVEL4);
-
-	//for (int nCntScore = 0; nCntScore < MAX_RANKINGRANK; nCntScore++)
-	//{
-	//	aPosTexU[nCntScore][0] = aData[nCntScore] % 100000 / 10000;
-	//	aPosTexU[nCntScore][1] = aData[nCntScore] % 10000 / 1000;
-	//	aPosTexU[nCntScore][2] = aData[nCntScore] % 1000 / 100;
-	//	aPosTexU[nCntScore][3] = aData[nCntScore] % 100 / 10;
-	//	aPosTexU[nCntScore][4] = aData[nCntScore] % 10 / 1;
-	//}
-
-	////テクスチャ座標の設定
-	//for (int nCnt = 0; nCnt < MAX_RANKINGRANK; nCnt++)
-	//{
-	//	for (int nCntScore = 0; nCntScore < MAX_RANKING; nCntScore++)
-	//	{
-	//		float fShiftWidth = 1.0f / 10;
-	//		m_apNumber[nCnt][nCntScore]->SetUV((float)aPosTexU[nCnt][nCntScore] * fShiftWidth, (fShiftWidth + (float)aPosTexU[nCnt][nCntScore] * fShiftWidth), 0.0f, 1.0f);
-	//	}
-	//}
+	CTime::Create(CTime::TYPE_RANKING, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 640.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), aData[4], CObject::PRIORITY_LEVEL4);
 }
 
 //=============================================================================

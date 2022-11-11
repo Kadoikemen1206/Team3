@@ -103,7 +103,10 @@ void CBarrageMoveWall::Update()
 
 		// 当たり判定のチェック
 		Collision(CGame::GetPlayer1P());
-		Collision(CGame::GetPlayer2P());
+		if (CGame::GetPlayer2P() != nullptr)
+		{
+			Collision(CGame::GetPlayer2P());
+		}
 
 		if (GetHitPlayer() == nullptr)
 		{
@@ -120,6 +123,17 @@ void CBarrageMoveWall::Update()
 		{// 操作が完了した時に実行
 		 // プレイヤーのスピードを元に戻す
 			hitPlayer->SetSpeed(5.0f);
+		}
+
+		auto pos = hitPlayer->GetPos();
+
+		if (m_pIcon[0] != nullptr)
+		{
+			m_pIcon[0]->SetPos(D3DXVECTOR3(pos.x, pos.y + 150.0f, pos.z));
+		}
+		if (m_pIcon[1] != nullptr)
+		{
+			m_pIcon[1]->SetPos(D3DXVECTOR3(pos.x, pos.y + 150.0f, pos.z));
 		}
 
 		// ギミックの更新
@@ -155,27 +169,30 @@ void CBarrageMoveWall::ConstOperate()
 		return;
 	}
 
-	if (m_pIcon[0] == nullptr)
+	if (GetHitPlayer()->GetPos().z >= this->GetPos().z - 60.0f)
 	{
-		m_pIcon[0] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
-		m_pIcon[0]->SetScaling(true, true);
-		m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
-	}
-
-	if (GetHitPlayer()->GetKeyIndex() == -1)
-	{
-		if (m_pIcon[1] == nullptr)
+		if (m_pIcon[0] == nullptr)
 		{
-			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
-			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+			m_pIcon[0] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+			m_pIcon[0]->SetScaling(true, true);
+			m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
 		}
-	}
-	else
-	{
-		if (m_pIcon[1] == nullptr)
+
+		if (GetHitPlayer()->GetKeyIndex() == -1)
 		{
-			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_B", PRIORITY_LEVEL3);
-			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+			if (m_pIcon[1] == nullptr)
+			{
+				m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
+				m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+			}
+		}
+		else
+		{
+			if (m_pIcon[1] == nullptr)
+			{
+				m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
+				m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
+			}
 		}
 	}
 

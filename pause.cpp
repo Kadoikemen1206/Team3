@@ -49,7 +49,7 @@ CPause * CPause::Create()
 //=============================================================================
 HRESULT CPause::Init(void)
 {
-	m_pBg = CObject2D::Create("NONE", D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), PRIORITY_LEVEL4);
+	m_pBg = CObject2D::Create("NONE", D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), PRIORITY_LEVEL5);
 	m_pBg->SetCanPoseUpdate();
 	m_pBg->SetCol(D3DXCOLOR(0.0f,0.0f,0.0f,0.5f));
 	m_quit = CPauseSelect::Create(CPauseSelect::QUIT);
