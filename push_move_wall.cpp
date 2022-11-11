@@ -123,43 +123,41 @@ void CPushMoveWall::Update()
 	bool bCollision1P = CollisionGimmick(CGame::GetPlayer1P());
 	bool bCollision2P = CollisionGimmick(CGame::GetPlayer2P());
 
-	if (GetHitPlayer() == nullptr)
-	{
-		return;
-	}
-
 	// ギミック処理
 	ConstOperate();
 
-	// プレイヤーが接触したかのポインタ
-	CPlayer* hitPlayer = GetHitPlayer();
+	if (GetHitPlayer() != nullptr)
+	{
+		// プレイヤーが接触したかのポインタ
+		CPlayer* hitPlayer = GetHitPlayer();
 
-	// ギミックとプレイヤーが接触した時
-	if (bCollision1P || bCollision2P)
-	{
-		GetHitPlayer()->SetMotionType(CPlayer::MOTION_PUSH);
-		// 位置更新
-		hitPlayer->SetSpeed(1.5f);
-		move = D3DXVECTOR3(0.0f, 0.0f, 1.5f);
-	}
-	// ギミックとプレイヤーが離れた時
-	else
-	{
-		GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
-		// プレイヤーのスピードを5.0f、ギミックのスピードを0.0fに戻す
-		hitPlayer->SetSpeed(5.0f);
-		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		SetHitPlayer(nullptr);
-	}
+		// ギミックとプレイヤーが接触した時
+		if (bCollision1P || bCollision2P)
+		{
+			GetHitPlayer()->SetMotionType(CPlayer::MOTION_PUSH);
+			// 位置更新
+			hitPlayer->SetSpeed(1.5f);
+			move = D3DXVECTOR3(0.0f, 0.0f, 1.5f);
+		}
+		// ギミックとプレイヤーが離れた時
+		else
+		{
+			GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
+			// プレイヤーのスピードを5.0f、ギミックのスピードを0.0fに戻す
+			hitPlayer->SetSpeed(5.0f);
+			move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			SetHitPlayer(nullptr);
+		}
 
-	// ギミックが下に落ちた時
-	if (pos.y <= -100.0f)
-	{
-		// 移動量減衰
-		hitPlayer->SetSpeed(5.0f);
-		// ギミック削除
-		Uninit();
-		return;
+		// ギミックが下に落ちた時
+		if (pos.y <= -100.0f)
+		{
+			// 移動量減衰
+			hitPlayer->SetSpeed(5.0f);
+			// ギミック削除
+			Uninit();
+			return;
+		}
 	}
 
 	// 移動量減衰
