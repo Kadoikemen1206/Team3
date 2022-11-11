@@ -173,7 +173,14 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 1)
 	{
-		str = "BUTTON_MKEY";
+		if (hitPlayer->GetKeyIndex() == -1)
+		{
+			str = "BUTTON_MKEY";
+		}
+		else
+		{
+			str = "BUTTON_B";
+		}
 
 		if (pInputKeyboard->Trigger(KEY_RIGHT_BUTTON)) //M
 		{
@@ -182,7 +189,14 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 2)
 	{
-		str = "BUTTON_VKEY";
+		if (hitPlayer->GetKeyIndex() == -1)
+		{
+			str = "BUTTON_VKEY";
+		}
+		else
+		{
+			str = "BUTTON_X";
+		}
 
 		if (pInputKeyboard->Trigger(KEY_LEFT_BUTTON)) //V
 		{
@@ -191,7 +205,14 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 3)
 	{
-		str = "BUTTON_BKEY";
+		if (hitPlayer->GetKeyIndex() == -1)
+		{
+			str = "BUTTON_BKEY";
+		}
+		else
+		{
+			str = "BUTTON_A";
+		}
 
 		if (pInputKeyboard->Trigger(KEY_DOWN_BUTTON)) //B
 		{
@@ -200,7 +221,14 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 4)
 	{
-		str = "BUTTON_NKEY";
+		if (hitPlayer->GetKeyIndex() == -1)
+		{
+			str = "BUTTON_NKEY";
+		}
+		else
+		{
+			str = "BUTTON_Y";
+		}
 
 		if (pInputKeyboard->Trigger(KEY_UP_BUTTON)) //N
 		{
