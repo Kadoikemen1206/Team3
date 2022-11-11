@@ -97,29 +97,32 @@ void CButtonMovePlayer::Update()
 	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
-	if (GetHitPlayer() != nullptr)
+	if (hitPlayer != nullptr)
 	{
-		if (m_pIcon[0] == nullptr)
+		if (GetHitPlayer() != nullptr)
 		{
-			m_pIcon[0] = CIcon::Create(D3DXVECTOR3(hitPlayer->GetPos().x, hitPlayer->GetPos().y + 150.0f, hitPlayer->GetPos().z), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
-		}
-		hitPlayer->SetSpeed(0.0f);
-		ButtonPush();
-	}
-	else
-	{
-		hitPlayer->SetSpeed(5.0f);
-		SetCompletion(true);
-
-		for (int i = 0; i < 2; i++)
-		{
-			if (m_pIcon[i] != nullptr)
+			if (m_pIcon[0] == nullptr)
 			{
-				m_pIcon[i]->Uninit();
+				m_pIcon[0] = CIcon::Create(D3DXVECTOR3(hitPlayer->GetPos().x, hitPlayer->GetPos().y + 150.0f, hitPlayer->GetPos().z), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
 			}
+			hitPlayer->SetSpeed(0.0f);
+			ButtonPush();
 		}
-		Uninit();
-		return;
+		else
+		{
+			hitPlayer->SetSpeed(5.0f);
+			SetCompletion(true);
+
+			for (int i = 0; i < 2; i++)
+			{
+				if (m_pIcon[i] != nullptr)
+				{
+					m_pIcon[i]->Uninit();
+				}
+			}
+			Uninit();
+			return;
+		}
 	}
 
 	SetPos(pos);	// 座標の設定
