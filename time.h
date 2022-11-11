@@ -64,6 +64,7 @@ public:
 	void SetTime(int nScore);
 	void AddTime(int nValue);
 	int GetTime();
+	static void SetCounter(int Counter) { m_nCounter = Counter; }
 
 private:
 	//-------------------------------------------------------------------------
@@ -78,6 +79,8 @@ private:
 	int m_nTime;								// スタート時刻
 	int  m_apnTime;								// 情報格納変数
 	EType m_Type;								// タイプ
+
+	static int m_nCounter;						// カウンター
 };
 
 #endif

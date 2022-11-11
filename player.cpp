@@ -81,7 +81,7 @@ void CPlayer::Uninit()
 	CMotionModel3D::Uninit();
 
 	//BGM‚ÌÝ’è
-	CApplication::GetSound()->Stop();
+	CApplication::GetSound()->Stop(CSound::LABEL_SE_HASHIRI);
 }
 
 //=============================================================================

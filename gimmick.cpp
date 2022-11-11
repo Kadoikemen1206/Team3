@@ -20,6 +20,7 @@
 //=============================================================================
 CGimmick::CGimmick(int nPriority) 
 {
+	m_pHitPlayer = nullptr;
 }
 
 //=============================================================================
@@ -35,6 +36,8 @@ CGimmick::~CGimmick()
 HRESULT CGimmick::Init()
 {
 	CObjectX::Init();
+
+	SetType(OBJTYPE_GIMMICK);
 
 	//ÉÇÉfÉãÇÃÉçÅ[Éh
 	LoadModel("TRIANGLE");

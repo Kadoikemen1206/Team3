@@ -54,6 +54,7 @@ public:
 	static CCountDown *Create(D3DXVECTOR3 pos);		// アイテムの生成関数
 	static HRESULT Load(void);						// テクスチャの読み込み関数
 	static void UnLoad(void);						// テクスチャの破棄関数
+	static bool GetEndFlag(void) { return m_bCountDownEnd; }
 
 private:
 	//--------------------------------
@@ -61,6 +62,7 @@ private:
 	//--------------------------------
 	static LPDIRECT3DTEXTURE9 m_pTexture[COUNTDOWN_TEXTURE];		// テクスチャのポインタ
 	int m_nCounter;
+	static bool m_bCountDownEnd;
 
 	CObject2D *m_pObject;
 };
