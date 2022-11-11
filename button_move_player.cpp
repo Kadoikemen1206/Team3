@@ -85,11 +85,10 @@ void CButtonMovePlayer::Update()
 
 	// 当たり判定のチェック
 	bool bCollision1P = Collision(CGame::GetPlayer1P());
-	bool bCollision2P = Collision(CGame::GetPlayer2P());
-	
-	if (GetHitPlayer() == nullptr)
+	bool bCollision2P = false;
+	if (CGame::GetPlayer2P() != nullptr)
 	{
-		return;
+		bCollision2P = Collision(CGame::GetPlayer2P());
 	}
 
 	// ギミック処理
@@ -98,19 +97,21 @@ void CButtonMovePlayer::Update()
 	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
-	// ギミックとプレイヤーが接触した時
-	if (bCollision1P || bCollision2P)
+	if (GetHitPlayer() != nullptr)
 	{
 		if (m_pIcon[0] == nullptr)
 		{
 			m_pIcon[0] = CIcon::Create(D3DXVECTOR3(hitPlayer->GetPos().x, hitPlayer->GetPos().y + 150.0f, hitPlayer->GetPos().z), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
 		}
 		hitPlayer->SetSpeed(0.0f);
+		hitPlayer->SetIsMove(false);
 		ButtonPush();
 	}
 	else
 	{
+		hitPlayer->SetIsMove(true);
 		hitPlayer->SetSpeed(5.0f);
+		hitPlayer = nullptr;
 		SetCompletion(true);
 		SetWallClearFlag(true);
 		for (int i = 0; i < 2; i++)
@@ -123,11 +124,6 @@ void CButtonMovePlayer::Update()
 		Uninit();
 		return;
 	}
-
-	// 移動量減衰
-	pos.x += (0.0f - move.x) * 0.1f;
-	pos.y += (0.0f - move.y) * 0.1f;
-	pos.z += (0.0f - move.z) * 0.1f;
 
 	SetPos(pos);	// 座標の設定
 	SetMove(move);	// 移動量の設定

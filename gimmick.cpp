@@ -24,6 +24,7 @@ bool CGimmick::m_bWallClear = false;
 CGimmick::CGimmick(int nPriority) 
 {
 	m_bWallClear = false;
+	m_pHitPlayer = nullptr;
 }
 
 //=============================================================================

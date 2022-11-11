@@ -21,8 +21,9 @@
 #include "particle.h"
 
 //=============================================================================
-// コンストラクタ
+// 静的メンバ変数宣言
 //=============================================================================
+bool CGoal::m_GoalFlag = false;
 
 //=============================================================================
 // コンストラクタ
@@ -74,16 +75,16 @@ void CGoal::Update()
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 move = GetMove();
 
-	if (GetHitPlayer() == nullptr)
-	{
-		return;
-	}
-
 	// 当たり判定のチェック
-	CollisionGimmick(CGame::GetPlayer1P());
+	m_GoalFlag = CollisionGimmick(CGame::GetPlayer1P());
 	if (CGame::GetPlayer2P() != nullptr)
 	{
 		CollisionGimmick(CGame::GetPlayer2P());
+	}
+
+	if (GetHitPlayer() == nullptr)
+	{
+		return;
 	}
 
 	// ギミック処理

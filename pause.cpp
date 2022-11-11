@@ -5,6 +5,7 @@
 #include "sound.h"
 #include "pause_select.h"
 #include "fade.h"
+#include "time.h"
 
 //=============================================================================
 // コンストラクタ
