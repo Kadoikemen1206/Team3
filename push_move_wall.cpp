@@ -120,22 +120,24 @@ void CPushMoveWall::Update()
 		pObject = pObject->GetNext();
 	}
 
+	// 当たり判定のチェック
+	bool bCollision1P = CollisionGimmick(CGame::GetPlayer1P());
+	bool bCollision2P = false;
+	if (CGame::GetPlayer2P() != nullptr)
+	{
+		bCollision2P = CollisionGimmick(CGame::GetPlayer2P());
+	}
 
 	if (GetHitPlayer() == nullptr)
 	{
 		return;
 	}
 
-	// 当たり判定のチェック
-	bool bCollision1P = CollisionGimmick(CGame::GetPlayer1P());
-	bool bCollision2P = false;
-	if (CGame::GetPlayer2P != nullptr)
-	{
-		bCollision2P = CollisionGimmick(CGame::GetPlayer2P());
-	}
-
 	// ギミック処理
 	ConstOperate();
+
+	// プレイヤーが接触したかのポインタ
+	CPlayer* hitPlayer = GetHitPlayer();
 
 	if (GetHitPlayer() != nullptr)
 	{
@@ -157,15 +159,14 @@ void CPushMoveWall::Update()
 		CApplication::GetSound()->Stop(CSound::LABEL_SE_HIKIZURI);
 	}
 
-		// ギミックが下に落ちた時
-		if (pos.y <= -100.0f)
-		{
-			// 移動量減衰
-			hitPlayer->SetSpeed(5.0f);
-			// ギミック削除
-			Uninit();
-			return;
-		}
+	// ギミックが下に落ちた時
+	if (pos.y <= -100.0f)
+	{
+		// 移動量減衰
+		hitPlayer->SetSpeed(5.0f);
+		// ギミック削除
+		Uninit();
+		return;
 	}
 
 	// 移動量減衰

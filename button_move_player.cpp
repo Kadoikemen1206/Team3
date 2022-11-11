@@ -82,17 +82,13 @@ void CButtonMovePlayer::Update()
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 move = GetMove();
 
+	// 当たり判定のチェック
+	bool bCollision1P = Collision(CGame::GetPlayer1P());
+	bool bCollision2P = Collision(CGame::GetPlayer2P());
+	
 	if (GetHitPlayer() == nullptr)
 	{
 		return;
-	}
-
-	// 当たり判定のチェック
-	bool bCollision1P = Collision(CGame::GetPlayer1P());
-	bool bCollision2P = false;
-	if (CGame::GetPlayer2P != nullptr)
-	{
-		bCollision2P = Collision(CGame::GetPlayer2P());
 	}
 
 	// ギミック処理
