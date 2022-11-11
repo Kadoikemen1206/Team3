@@ -473,7 +473,6 @@ void CPlayer::Move()
 				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
 				"PARTICLE_FLARE",
 				PRIORITY_LEVEL3);
-			//m_pParticle->SetLower(pos);
 		}
 	}
 

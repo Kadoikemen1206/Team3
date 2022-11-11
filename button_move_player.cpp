@@ -94,11 +94,16 @@ void CButtonMovePlayer::Update()
 	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
-	if (GetHitPlayer() != nullptr)
+	if (hitPlayer != nullptr)
 	{
-		if (m_pIcon[0] == nullptr)
+		if (GetHitPlayer() != nullptr)
 		{
-			m_pIcon[0] = CIcon::Create(D3DXVECTOR3(hitPlayer->GetPos().x, hitPlayer->GetPos().y + 150.0f, hitPlayer->GetPos().z), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+			if (m_pIcon[0] == nullptr)
+			{
+				m_pIcon[0] = CIcon::Create(D3DXVECTOR3(hitPlayer->GetPos().x, hitPlayer->GetPos().y + 150.0f, hitPlayer->GetPos().z), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+			}
+			hitPlayer->SetSpeed(0.0f);
+			ButtonPush();
 		}
 		hitPlayer->SetSpeed(0.0f);
 		hitPlayer->SetIsMove(false);

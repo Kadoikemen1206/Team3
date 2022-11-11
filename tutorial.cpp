@@ -34,46 +34,13 @@ CTutorial::~CTutorial()
 
 HRESULT CTutorial::Init(void)
 {
-	// ライトの生成
-	m_pLight = CLight::Create();
-
-	//// タイマーの生成
-	//m_pTime = CTime::Create(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 0.0f), 0,CObject::PRIORITY_LEVEL4);
-
-	// メッシュフィールドの生成
-	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
-
-	// ギミックの生成(連打ギミック)
-	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
-	// ギミックの生成(交互連打ギミック)
-	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 2000.0f));
-	// ギミックの生成(押すギミック)
-	//CPushMoveWall::Create(D3DXVECTOR3(-700.0f,0.0f,2000.0f));
-
-	//プレイヤーの生成
-	//m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 0.0f, 0.0f), CObject::PRIORITY_LEVEL3);
-	//CLoadStage::LoadAll(m_pPlayer1P->GetPos());
-	//CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
-
-	// カメラの設定
-	CApplication::GetCamera()->Init();
+	m_pObject2D[0] = CObject2D::Create("TUTORIAL", D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f), D3DXVECTOR3((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, 0.0f), PRIORITY_LEVEL3);
 
 	return S_OK;
 }
 
 void CTutorial::Uninit(void)
 {
-	// カメラの設定
-	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
-
-	// ライトの解放・削除
-	if (m_pLight != nullptr)
-	{
-		m_pLight->Uninit();
-		delete m_pLight;
-		m_pLight = nullptr;
-	}
-
 	// インスタンスの解放処理
 	CObject::Release();
 }
@@ -82,6 +49,12 @@ void CTutorial::Update(void)
 {
 	// キーボードの情報取得
 	CInput *pInputKeyboard = CApplication::GetInput();
+
+	if (m_pObject2D != nullptr)
+	{
+		m_pObject2D[0]->Update();
+		m_pObject2D[0]->Draw();
+	}
 
 	if (m_pFade->GetFade() == CFade::FADE_NONE)
 	{
@@ -95,7 +68,6 @@ void CTutorial::Update(void)
 
 void CTutorial::Draw(void)
 {
-
 }
 
 CTutorial * CTutorial::Create()

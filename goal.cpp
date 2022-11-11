@@ -18,6 +18,7 @@
 #include "fade.h"
 #include "model.h"
 #include "billboard.h"
+#include "particle.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -93,6 +94,21 @@ void CGoal::Update()
 
 	hitPlayer->SetSpeed(0.0f);
 	m_GoalCount--;
+	if ((m_GoalCount % 20) == 0)
+	{
+		int max = 50;
+		int minPosZ = -(rand() % 350);
+		int maxPosZ = rand() % 350;
+
+		for (int i = 0; i < max; i++)
+		{
+			m_pParticle = CParticle::Create(D3DXVECTOR3(pos.x, pos.y + 180.0f, (rand() % maxPosZ) - minPosZ),
+				D3DXVECTOR3(sinf((rand() % max * ((360 / max) * (D3DX_PI / 180)))), sinf((rand() % max * ((360 / max) * (D3DX_PI / 180)))) * cosf((rand() % max * ((360 / max) * (D3DX_PI / 180)))), cosf((rand() % max * ((360 / max) * (D3DX_PI / 180))))),
+				D3DXCOLOR((rand() % 100) * 0.01f, (rand() % 100) * 0.01f, (rand() % 100) * 0.01f, 1.0f),
+				"PARTICLE_FLARE",
+				PRIORITY_LEVEL3);
+		}
+	}
 	if (m_GoalCount <= 0)
 	{
 		// フェード生成

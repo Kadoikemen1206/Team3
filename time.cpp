@@ -85,7 +85,7 @@ void CTime::Update()
 			// カウンター加算
 			m_nCounter++;
 		}
-		else if (CCountDown::GetEndFlag() && m_nCounter > 0)
+		else if (CCountDown::GetEndFlag() && m_nCounter > 0 && CGoal::GetGoalFlag() == false)
 		{
 			// タイム加算
 			AddTime(1);

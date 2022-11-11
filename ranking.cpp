@@ -198,9 +198,9 @@ void CRanking::Save(void)
 //=============================================================================
 void CRanking::SetRankingScore()
 {
-	if (m_nRanking > aData[MAX_RANKINGRANK - 1])
+	if (m_nRanking < aData[MAX_RANKINGRANK - 1] || m_nRanking > aData[0])
 	{
-		aData[MAX_RANKINGRANK - 1] = m_nRanking;
+		aData[0] = m_nRanking;
 	}
 
 	for (int nCount = 0; nCount < MAX_RANKINGRANK - 1; nCount++)
