@@ -27,6 +27,7 @@ CParticle::CParticle(int nPriority) :
 	m_bBounce(false),				// バウンドさせる
 	m_bTransition(false),			// 色の変化
 	m_bPosSpecify(false),			// 位置の指定
+	m_destCol(D3DXCOLOR(1.0f,0.0f,0.0f,1.0f)),
 	m_behavior(BEHAVIOR_FIREWORKS)
 {
 }
@@ -53,7 +54,6 @@ HRESULT CParticle::Init()
 
 	m_beginPos = CBillboard::GetPos();
 	m_destPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_destCol = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 
 	//位置の指定テスト
 	//m_effect.destPos = m_beginPos + D3DXVECTOR3(0.0f,30.0f, 0.0f);
@@ -236,9 +236,9 @@ inline void CParticle::DetailSetting()
 
 	if (m_bTransition)
 	{// 色の変化をつける場合
-		m_col.r += (m_destCol.r - m_col.r) / (m_nDestroyTime * 0.3f);
-		m_col.g += (m_destCol.g - m_col.g) / (m_nDestroyTime * 0.3f);
-		m_col.b += (m_destCol.b - m_col.b) / (m_nDestroyTime * 0.3f);
+		m_col.r += (m_destCol.r - m_col.r) / (m_nDestroyTime * 0.8f);
+		m_col.g += (m_destCol.g - m_col.g) / (m_nDestroyTime * 0.8f);
+		m_col.b += (m_destCol.b - m_col.b) / (m_nDestroyTime * 0.8f);
 	}
 
 	if (m_bLocus && (m_nTime % 3) == 0 && m_col.a >= 0.2f)
@@ -285,7 +285,7 @@ void CParticle::Preset()
 
 	case BEHAVIOR_FIREWORKS:	//for文50回くらいが限界
 		m_path = "PARTICLE_FLARE";
-		//SetCol(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+		SetDestCol(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
 		m_bGravity = true;
 		m_bFade = true;
 		m_bScaling = true;
