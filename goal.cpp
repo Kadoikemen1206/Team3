@@ -51,7 +51,7 @@ HRESULT CGoal::Init()
 	CGimmick::Init();
 
 	//モデルのロード
-	LoadModel("BOX");
+	LoadModel("CROWN");
 
 	return S_OK;
 }
@@ -73,13 +73,16 @@ void CGoal::Update()
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 move = GetMove();
 
-	// 当たり判定のチェック
-	CollisionGimmick(CGame::GetPlayer1P());
-	CollisionGimmick(CGame::GetPlayer2P());
-
 	if (GetHitPlayer() == nullptr)
 	{
 		return;
+	}
+
+	// 当たり判定のチェック
+	CollisionGimmick(CGame::GetPlayer1P());
+	if (CGame::GetPlayer2P() != nullptr)
+	{
+		CollisionGimmick(CGame::GetPlayer2P());
 	}
 
 	// ギミック処理
@@ -87,27 +90,13 @@ void CGoal::Update()
 
 	CPlayer* hitPlayer = GetHitPlayer();
 
-	if (CollisionGimmick(CGame::GetPlayer1P()) == true)
+	hitPlayer->SetSpeed(0.0f);
+	m_GoalCount--;
+	if (m_GoalCount <= 0)
 	{
-		hitPlayer->SetSpeed(0.0f);
-		m_GoalCount--;
-		if (m_GoalCount <= 0)
-		{
-			// フェード生成
-			CFade::SetFade(CApplication::MODE_RANKING);
-			m_GoalCount = MAX_REVERBERATION_TIME;
-		}
-	}
-	if (CollisionGimmick(CGame::GetPlayer2P()) == true)
-	{
-		hitPlayer->SetSpeed(0.0f);
-		m_GoalCount--;
-		if (m_GoalCount <= 0)
-		{
-			// フェード生成
-			CFade::SetFade(CApplication::MODE_RANKING);
-			m_GoalCount = MAX_REVERBERATION_TIME;
-		}
+		// フェード生成
+		CFade::SetFade(CApplication::MODE_RANKING);
+		m_GoalCount = MAX_REVERBERATION_TIME;
 	}
 
 	// ギミックの更新

@@ -75,7 +75,10 @@ void CStopGimmick::Update()
 
 	// 当たり判定のチェック
 	CollisionGimmick(CGame::GetPlayer1P());
-	//CollisionGimmick(CGame::GetPlayer2P());
+	if (CGame::GetPlayer2P() != nullptr)
+	{
+		CollisionGimmick(CGame::GetPlayer2P());
+	}
 
 	if (GetHitPlayer() == nullptr)
 	{

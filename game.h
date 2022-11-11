@@ -25,6 +25,7 @@ class CSound;
 class CFade;
 class CObstacle;
 class CPause;
+class CPushMoveWall;
 
 //=============================================================================
 // クラスの定義
@@ -82,7 +83,7 @@ private:
 
 	static CSound *m_pSound;				//サウンドのポインタ
 	CFade *m_pFade;							// フェードのポインタ
-
+	CPushMoveWall *m_pPushWall[2];			// 押すギミックのポインタ
 	static CPause* m_pPause;				// ポーズ
 
 	float m_RandDoor;						// ランダムドアの位置の変数

@@ -66,6 +66,7 @@ public:
 	// メンバー関数
 	//-------------------------------------------------------------------------
 	HRESULT Init() override;							// 初期化処理
+	void Uninit() override;
 	void Update() override;								// 更新処理
 	void Respawn(D3DXVECTOR3 &pos);						// リスポーン処理
 	void HalfWayPoint(D3DXVECTOR3 &pos);				// 中間地点処理

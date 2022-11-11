@@ -184,6 +184,8 @@ void CAlternateMoveWall::ConstOperate()
 		m_pIcon[0] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
 		m_pIcon[0]->SetScaling(true, true);
 		m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
+		//BGMの設定
+		CApplication::GetSound()->Play(CSound::LABEL_SE_NEGIMAKI);
 	}
 
 	if (GetHitPlayer()->GetKeyIndex() == -1)
@@ -228,9 +230,6 @@ void CAlternateMoveWall::ConstOperate()
 	if (pInputKeyboard->Trigger(KEY_LEFT_ACTION) && !m_nAlternateFlag)
 	{// Zキーを押したら実行
 
-		//BGMの設定
-		CApplication::GetSound()->Play(CSound::LABEL_SE_NEGIMAKI);
-
 		D3DXVECTOR3 pos = GetPos();
 		pos.y += 2.5f;
 		SetPos(pos);
@@ -274,9 +273,6 @@ void CAlternateMoveWall::ConstOperate()
 	if (pInputKeyboard->Trigger(KEY_RIGHT_ACTION) && m_nAlternateFlag)
 	{// Cキーを押したら実行
 
-		//BGMの設定
-		CApplication::GetSound()->Play(CSound::LABEL_SE_NEGIMAKI);
-
 		D3DXVECTOR3 pos = GetPos();
 		pos.y += 2.5f;
 		SetPos(pos);
@@ -301,7 +297,7 @@ void CAlternateMoveWall::ConstOperate()
 			particle->SetGravity(true, 0.1f);
 			particle->SetDelay(15);
 			particle->SetBounce(true);
-			particle->SetLower(GetPos());
+			particle->SetLower(D3DXVECTOR3(GetPos().x, 0.0f, GetPos().z));
 		}
 
 		//アイコン
@@ -325,6 +321,8 @@ void CAlternateMoveWall::ConstOperate()
 		m_pIcon[2]->Uninit();
 		m_pIcon[3]->Uninit();
 		CGimmick::SetCompletion(true);
+		//BGMを止める設定
+		CApplication::GetSound()->Stop(CSound::LABEL_SE_NEGIMAKI);
 	}
 }
 

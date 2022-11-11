@@ -2,6 +2,7 @@
 #include "object2D.h"
 #include "input.h"
 #include "application.h"
+#include "sound.h"
 #include "pause_select.h"
 #include "fade.h"
 
@@ -48,7 +49,7 @@ CPause * CPause::Create()
 //=============================================================================
 HRESULT CPause::Init(void)
 {
-	m_pBg = CObject2D::Create("NONE", D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), PRIORITY_LEVEL4);
+	m_pBg = CObject2D::Create("NONE", D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), PRIORITY_LEVEL5);
 	m_pBg->SetCanPoseUpdate();
 	m_pBg->SetCol(D3DXCOLOR(0.0f,0.0f,0.0f,0.5f));
 	m_quit = CPauseSelect::Create(CPauseSelect::QUIT);
@@ -188,6 +189,8 @@ void CPause::SelectUpdate()
 	if (pInput->Trigger(KEY_DECISION))
 	{
 		m_isEndFlag = true;
+		//BGM‚ÌÝ’è
+		CApplication::GetSound()->Play(CSound::LABEL_SE_ENTER_KEY_02);
 	}
 }
 

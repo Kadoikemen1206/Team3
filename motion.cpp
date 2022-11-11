@@ -57,6 +57,7 @@ CMotion::CMotion(const char * pFileName)
 //=============================================================================
 CMotion::~CMotion()
 {
+	assert(m_pParent == nullptr);
 }
 
 //=============================================================================
@@ -79,29 +80,44 @@ void CMotion::Init(void)
 //=============================================================================
 void CMotion::Uninit(void)
 {
+	for (int i = 0; i < MAX_MOTION; i++)
+	{
+		if (&m_motion[i] != nullptr)
+		{// ÉÅÉÇÉäÇÃâï˙
+			if (m_motion[i].pKeySet != nullptr)
+			{
+				for (int j = 0; j < m_motion[i].nNumKey; j++)
+				{
+					if (m_motion[i].pKeySet[j].pKey != nullptr)
+					{
+						delete[] m_motion[i].pKeySet[j].pKey;
+						m_motion[i].pKeySet[j].pKey = nullptr;
+					}
+				}
+				delete[] m_motion[i].pKeySet;
+				m_motion[i].pKeySet = nullptr;
+			}
+		}
+	}
 	if (m_motion != nullptr)
 	{// ÉÅÉÇÉäÇÃâï˙
 		delete[] m_motion;
 		m_motion = nullptr;
 	}
 
-	//if (m_pParent != nullptr)
-	//{// ÉÅÉÇÉäÇÃâï˙
-	//	for (int i = 0; i < sizeof(m_pParent, m_pParent);i++)
-	//	{
-	//	}
-	//	delete[] m_pParent;
-	//	m_pParent = nullptr;
-	//}
-
-	if (m_pParts != nullptr)
-	{// ÉÅÉÇÉäÇÃâï˙
-		for (int i = 0; i < m_nMaxParts; i++)
+	for (int i = 0; i < m_nMaxParts; i++)
+	{
+		if (m_pParts[i] != NULL)
 		{
 			m_pParts[i]->Uninit();
+			m_pParts[i] = nullptr;
 		}
-		//delete[] m_pParts;
-		//m_pParts = nullptr;
+	}
+
+	if (m_pParts != nullptr)
+	{
+		delete[] m_pParts;
+		m_pParts = nullptr;
 	}
 }
 
@@ -415,6 +431,10 @@ void CMotion::LoodSetMotion(const char *pFileName)
 					// ÉÅÉÇÉäÇÃâï˙
 					m_pParts = new CParts*[m_nMaxParts];
 					m_motion = new MyMotion[MAX_MOTION];
+					for (int i = 0; i < MAX_MOTION; i++)
+					{
+						m_motion[i].pKeySet = nullptr;
+					}
 
 					assert(m_pParts != nullptr && m_motion != nullptr);
 

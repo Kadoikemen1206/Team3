@@ -12,6 +12,7 @@
 #include "title_logo.h"
 #include "application.h"
 #include "input.h"
+#include "sound.h"
 #include "fade.h"
 
 //=============================================================================
@@ -216,6 +217,9 @@ void CTitleMenu::SelectMenu(void)
 					m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
 					m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
 					m_bGameMenu = true;
+					//BGMの設定
+					CApplication::GetSound()->Play(CSound::LABEL_SE_ENTER_KEY_02);
+
 				}
 			}
 			else if (m_eMenu == MENU_TUTORIAL)
@@ -230,6 +234,8 @@ void CTitleMenu::SelectMenu(void)
 					{
 						// フェード生成
 						CFade::SetFade(CApplication::MODE_TUTORIAL);
+						//BGMの設定
+						CApplication::GetSound()->Play(CSound::LABEL_SE_ENTER_KEY_02);
 					}
 				}
 			}
@@ -245,6 +251,8 @@ void CTitleMenu::SelectMenu(void)
 					{
 						// フェード生成
 						CFade::SetFade(CApplication::MODE_RANKING);
+						//BGMの設定
+						CApplication::GetSound()->Play(CSound::LABEL_SE_ENTER_KEY_02);
 					}
 				}
 			}
@@ -282,6 +290,8 @@ void CTitleMenu::SelectMenu(void)
 					{
 						// フェード生成
 						CFade::SetFade(CApplication::MODE_GAME_SOLO);
+						//BGMの設定
+						CApplication::GetSound()->Play(CSound::LABEL_SE_ENTER_KEY_02);
 					}
 				}
 			}
@@ -296,6 +306,8 @@ void CTitleMenu::SelectMenu(void)
 					{
 						// フェード生成
 						CFade::SetFade(CApplication::MODE_GAME_VS);
+						//BGMの設定
+						CApplication::GetSound()->Play(CSound::LABEL_SE_ENTER_KEY_02);
 					}
 				}
 			}

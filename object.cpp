@@ -77,8 +77,10 @@ void CObject::UninitAll(void)
 
 		pObject = m_pTop[nPriority];
 
+		static int a = 0;
 		while (pObject != nullptr)
 		{
+			a++;
 			//pNext‚Ì•Û‘¶
 			CObject *pObjectNext = pObject->m_pNext;	//Update()‚Åíœ‚³‚ê‚é‚ÆApNext‚àÁ‚¦‚é‚Ì‚Å–‘O‚É•Û‘¶‚µ‚Ä‚¨‚­
 
@@ -90,6 +92,7 @@ void CObject::UninitAll(void)
 			//pObject‚ÉpObject‚ÌpNext‚ğ‘ã“ü
 			pObject = pObjectNext;
 		}
+		a = 0;
 	}
 }
 

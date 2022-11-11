@@ -75,8 +75,8 @@ HRESULT CGame::Init(void)
 {
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_ONE);
 
-	////BGMの設定
-	//CApplication::GetSound()->Play(CSound::LABEL_BGM_GAME);
+	//BGMの設定
+	CApplication::GetSound()->Play(CSound::LABEL_BGM_GAME);
 
 	// ライトの生成
 	m_pLight = CLight::Create();
@@ -95,6 +95,10 @@ HRESULT CGame::Init(void)
 
 	// ステージのロード
 	CLoadStage::LoadAll(D3DXVECTOR3(-700.0f, 0.0f, 0.0f));
+
+	m_pPlayer1P = nullptr;
+	m_pPlayer2P = nullptr;
+
 	//プレイヤーの生成
 	{
 		int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
@@ -139,8 +143,8 @@ void CGame::Uninit(void)
 	// カメラの設定
 	CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_NONE);
 
-	////BGMの設定
-	//CApplication::GetSound()->Stop();
+	//BGMの設定
+	CApplication::GetSound()->Stop();
 
 	// ライトの解放・削除
 	if (m_pLight != nullptr)
@@ -234,26 +238,31 @@ CGame * CGame::Create()
 
 void CGame::SetGimmik(float x)
 {
-	// ギミックの生成(連打ギミック)
-	CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3700.0f));
-	// ギミックの生成(交互連打ギミック)
-	CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3000.0f));
-	// ギミックの生成(押すギミック)
-	CPushMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3900.0f));
-	// ギミックの生成(ボタンをしたら少しずつ進むギミック)
-	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2500.0f));
-	// ギミックの生成(当たったら止まるギミック)
-	CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 1800.0f));
-	// ゴールの生成
-	CGoal::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
+	//// ギミックの生成(連打ギミック)
+	//CBarrageMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3700.0f));
+	//// ギミックの生成(交互連打ギミック)
+	//CAlternateMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3000.0f));
+	//// ギミックの生成(押すギミック)
+	//m_pPushWall[0] = CPushMoveWall::Create(D3DXVECTOR3(-700.0f, 0.0f, 3900.0f));
+	//m_pPushWall[1] = CPushMoveWall::Create(D3DXVECTOR3(-750.0f, 0.0f, 3900.0f));
+	//// ギミックの生成(ボタンをしたら少しずつ進むギミック)
+	//CButtonMovePlayer::Create(D3DXVECTOR3(-700.0f, -200.0f, 2000.0f));
+	//// ギミックの生成(当たったら止まるギミック)
+	//CStopGimmick::Create(D3DXVECTOR3(-700.0f, 0.0f, 1800.0f));
+	// //ゴールの生成
+	//CGoal::Create(D3DXVECTOR3(-700.0f, 0.0f, 5000.0f));
+	// //ゴールの生成
+	//CGoal::Create(D3DXVECTOR3(700.0f, 0.0f, 5000.0f));
 
 	// ギミックの設置
 	CAlternateMoveWall::Create(D3DXVECTOR3(x, 20.0f, 2000.0f));
 	CAlternateMoveWall::Create(D3DXVECTOR3(x, 45.0f, 2800.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(x, 20.0f, 3800.0f));
 	CButtonMovePlayer::Create(D3DXVECTOR3(x, -200.0f, 3600.0f));
 	CPushMoveWall::Create(D3DXVECTOR3(x, 0.0f, 3900.0f));
 	CPushMoveWall::Create(D3DXVECTOR3(x - 70.0f, 0.0f, 3900.0f));
 	CPushMoveWall::Create(D3DXVECTOR3(x - 140.0f, 0.0f, 3900.0f));
 	CPushMoveWall::Create(D3DXVECTOR3(x + 70.0f, 0.0f, 3900.0f));
 	CPushMoveWall::Create(D3DXVECTOR3(x + 140.0f, 0.0f, 3900.0f));
+	CGoal::Create(D3DXVECTOR3(x + 0.0f, 0.0f, 5000.0f));
 }
