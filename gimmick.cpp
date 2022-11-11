@@ -15,11 +15,15 @@
 #include "gimmick.h"
 #include "player.h"
 
+//応急処置
+bool CGimmick::m_bWallClear = false;
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CGimmick::CGimmick(int nPriority) 
 {
+	m_bWallClear = false;
 	m_pHitPlayer = nullptr;
 }
 

@@ -108,11 +108,17 @@ void CButtonMovePlayer::Update()
 			hitPlayer->SetSpeed(0.0f);
 			ButtonPush();
 		}
-		else
-		{
-			hitPlayer->SetSpeed(5.0f);
-			SetCompletion(true);
-
+		hitPlayer->SetSpeed(0.0f);
+		hitPlayer->SetIsMove(false);
+		ButtonPush();
+	}
+	else
+	{
+		hitPlayer->SetIsMove(true);
+		hitPlayer->SetSpeed(5.0f);
+		hitPlayer = nullptr;
+		SetCompletion(true);
+		SetWallClearFlag(true);
 			for (int i = 0; i < 2; i++)
 			{
 				if (m_pIcon[i] != nullptr)

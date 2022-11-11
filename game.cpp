@@ -96,13 +96,13 @@ HRESULT CGame::Init(void)
 	m_pPlayer1P = nullptr;
 	m_pPlayer2P = nullptr;
 
-	// ステージのロード
+	//プレイヤーの生成
 	CLoadStage::LoadAll(D3DXVECTOR3(-700.0f, 0.0f, 0.0f));
 
 	//プレイヤーの生成
 	{
 		int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
-		m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-700.0f, 50.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+		m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-800.0f, 50.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 		m_pPlayer1P->SetKeyIndex(joyoadCount - 1);
 		m_pPlayer1P->SetRot(D3DXVECTOR3(0.0f, D3DX_PI , 0.0f));
 		m_pPlayer1P->SetMotionType(CPlayer::MOTION_BURABURA);
@@ -111,18 +111,20 @@ HRESULT CGame::Init(void)
 	if (m_mode == EMode::VS)
 	{
 		int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
-		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(700.0f, 50.0f, 0.0f), CObject::PRIORITY_LEVEL3);
+		m_pPlayer2P = CPlayer::Create(CPlayer::EPLAYER_2P, D3DXVECTOR3(800.0f, 50.0f, 0.0f), CObject::PRIORITY_LEVEL3);
 		m_pPlayer2P->SetKeyIndex(joyoadCount - 2);
 		m_pPlayer2P->SetRot(D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 		m_pPlayer2P->SetMotionType(CPlayer::MOTION_BURABURA);
 	}
 
-	SetGimmik(-700.0f);
+	// ステージのロード
+	CLoadStage::LoadAll(D3DXVECTOR3(-800.0f, 0.0f, 0.0f));
+	SetGimmik(-800.0f);
 
 	if (m_mode == EMode::VS)
 	{
-		SetGimmik(700.0f);
-		CLoadStage::LoadAll(D3DXVECTOR3(700.0f, 0.0f, 0.0f));
+		SetGimmik(800.0f);
+		CLoadStage::LoadAll(D3DXVECTOR3(800.0f, 0.0f, 0.0f));
 		CApplication::GetCamera()->SetCameraType(CCamera::CAMERATYPE_TWO);
 	}
 
@@ -255,14 +257,21 @@ void CGame::SetGimmik(float x)
 	//CGoal::Create(D3DXVECTOR3(700.0f, 0.0f, 5000.0f));
 
 	// ギミックの設置
-	CAlternateMoveWall::Create(D3DXVECTOR3(x, 20.0f, 2000.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(x, 100.0f, 1500.0f));
+	CAlternateMoveWall::Create(D3DXVECTOR3(x, 25.0f, 2000.0f));
 	CAlternateMoveWall::Create(D3DXVECTOR3(x, 45.0f, 2800.0f));
 	CBarrageMoveWall::Create(D3DXVECTOR3(x, 20.0f, 3800.0f));
 	CButtonMovePlayer::Create(D3DXVECTOR3(x, -200.0f, 3600.0f));
-	CPushMoveWall::Create(D3DXVECTOR3(x, 0.0f, 3900.0f));
-	CPushMoveWall::Create(D3DXVECTOR3(x - 70.0f, 0.0f, 3900.0f));
-	CPushMoveWall::Create(D3DXVECTOR3(x - 140.0f, 0.0f, 3900.0f));
-	CPushMoveWall::Create(D3DXVECTOR3(x + 70.0f, 0.0f, 3900.0f));
-	CPushMoveWall::Create(D3DXVECTOR3(x + 140.0f, 0.0f, 3900.0f));
+
+	// 瓶列
+	CPushMoveWall::Create(D3DXVECTOR3(x, 0.0f, 4200.0f));
+	CPushMoveWall::Create(D3DXVECTOR3(x - 70.0f, 0.0f, 4200.0f));
+	CPushMoveWall::Create(D3DXVECTOR3(x - 140.0f, 0.0f, 4200.0f));
+	CPushMoveWall::Create(D3DXVECTOR3(x - 210.0f, 0.0f, 4200.0f));
+	CPushMoveWall::Create(D3DXVECTOR3(x + 70.0f, 0.0f, 4200.0f));
+	CPushMoveWall::Create(D3DXVECTOR3(x + 140.0f, 0.0f, 4200.0f));
+	CPushMoveWall::Create(D3DXVECTOR3(x + 210.0f, 0.0f, 4200.0f));
+
+	// ゴール
 	CGoal::Create(D3DXVECTOR3(x + 0.0f, 0.0f, 5000.0f));
 }
