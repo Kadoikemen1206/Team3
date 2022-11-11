@@ -37,6 +37,8 @@ HRESULT CGimmick::Init()
 {
 	CObjectX::Init();
 
+	SetType(OBJTYPE_GIMMICK);
+
 	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
 	LoadModel("TRIANGLE");
 

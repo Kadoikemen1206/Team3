@@ -315,7 +315,7 @@ void CAlternateMoveWall::ConstOperate()
 	}
 
 	// Žw’è‰ñ”‚Ìƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½ê‡
-	if (m_nTriggerCount >= 40)
+	if (m_nTriggerCount >= 10)
 	{
 		// ‘€ì‚ªŠ®—¹‚µ‚½
 		GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);

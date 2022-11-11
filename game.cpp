@@ -257,7 +257,7 @@ void CGame::SetGimmik(float x)
 	// ギミックの設置
 	CAlternateMoveWall::Create(D3DXVECTOR3(x, 20.0f, 2000.0f));
 	CAlternateMoveWall::Create(D3DXVECTOR3(x, 45.0f, 2800.0f));
-	CBarrageMoveWall::Create(D3DXVECTOR3(x, 20.0f, 3650.0f));
+	CBarrageMoveWall::Create(D3DXVECTOR3(x, 20.0f, 3800.0f));
 	CButtonMovePlayer::Create(D3DXVECTOR3(x, -200.0f, 3600.0f));
 	CPushMoveWall::Create(D3DXVECTOR3(x, 0.0f, 3900.0f));
 	CPushMoveWall::Create(D3DXVECTOR3(x - 70.0f, 0.0f, 3900.0f));
