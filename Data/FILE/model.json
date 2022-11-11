@@ -21,6 +21,7 @@
     [ "CHAIR", "Data\/MODEL\/chair.x" ],
     [ "CHAIR1", "Data\/MODEL\/chair1.x" ],
     [ "CIRCLE", "Data\/MODEL\/circle.x" ],
+    [ "CROWN", "Data\/MODEL\/crown.x" ],
     [ "CUP", "Data\/MODEL\/cup.x" ],
     [ "FLOOR LAMP", "Data\/MODEL\/Floor Lamp.x" ],
     [ "GEAR01", "Data\/MODEL\/Gear01.x" ],
