@@ -103,7 +103,7 @@ void CButtonMovePlayer::Update()
 	{
 		if (m_pIcon[0] == nullptr)
 		{
-			m_pIcon[0] = CIcon::Create(hitPlayer->GetPos(), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+			m_pIcon[0] = CIcon::Create(D3DXVECTOR3(hitPlayer->GetPos().x, hitPlayer->GetPos().y + 150.0f, hitPlayer->GetPos().z), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
 		}
 		hitPlayer->SetSpeed(0.0f);
 		ButtonPush();
@@ -111,6 +111,15 @@ void CButtonMovePlayer::Update()
 	else
 	{
 		hitPlayer->SetSpeed(5.0f);
+		SetCompletion(true);
+
+		for (int i = 0; i < 2; i++)
+		{
+			if (m_pIcon[i] != nullptr)
+			{
+				m_pIcon[i]->Uninit();
+			}
+		}
 		Uninit();
 		return;
 	}
@@ -169,47 +178,52 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 1)
 	{
-		str = "BUTTON_SPACE";
+		str = "BUTTON_MKEY";
 
-		if (pInputKeyboard->Trigger(KEY_RIGHT_BUTTON))
+		if (pInputKeyboard->Trigger(KEY_RIGHT_BUTTON)) //M
 		{
 			m_RandFlag = false;
 		}
 	}
 	else if (m_RandFlag == true && m_RandNumber == 2)
 	{
-		str = "BUTTON_SPACE";
+		str = "BUTTON_VKEY";
 
-		if (pInputKeyboard->Trigger(KEY_LEFT_BUTTON))
+		if (pInputKeyboard->Trigger(KEY_LEFT_BUTTON)) //V
 		{
 			m_RandFlag = false;
 		}
 	}
 	else if (m_RandFlag == true && m_RandNumber == 3)
 	{
-		str = "BUTTON_SKEY";
+		str = "BUTTON_BKEY";
 
-		if (pInputKeyboard->Trigger(KEY_DOWN_BUTTON))
+		if (pInputKeyboard->Trigger(KEY_DOWN_BUTTON)) //B
 		{
 			m_RandFlag = false;
 		}
 	}
 	else if (m_RandFlag == true && m_RandNumber == 4)
 	{
-		str = "BUTTON_WKEY";
+		str = "BUTTON_NKEY";
 
-		if (pInputKeyboard->Trigger(KEY_UP_BUTTON))
+		if (pInputKeyboard->Trigger(KEY_UP_BUTTON)) //N
 		{
 			m_RandFlag = false;
 		}
 	}
 
+	auto pos = hitPlayer->GetPos();
+
 	if (m_pIcon[1] == nullptr)
 	{
-		m_pIcon[1] = CIcon::Create(hitPlayer->GetPos(), D3DXVECTOR3(12.0f, 12.0f, 0.0f), str, PRIORITY_LEVEL3);
+		m_pIcon[1] = CIcon::Create(D3DXVECTOR3(pos.x, pos.y + 150.0f, pos.z - 10.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), str, PRIORITY_LEVEL3);
+		m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
 	}
 	else
 	{
+		m_pIcon[0]->SetPos(D3DXVECTOR3(pos.x, pos.y + 150.0f, pos.z));
+		m_pIcon[1]->SetPos(D3DXVECTOR3(pos.x, pos.y + 150.0f, pos.z));
 		m_pIcon[1]->BindTexture(str);
 	}
 
