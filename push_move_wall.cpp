@@ -128,12 +128,22 @@ void CPushMoveWall::Update()
 		bCollision2P = CollisionGimmick(CGame::GetPlayer2P());
 	}
 
+	if (GetHitPlayer() == nullptr)
+	{
+		return;
+	}
+
 	// ギミック処理
 	ConstOperate();
 
-	if (GetHitPlayer() != nullptr)
+	// プレイヤーが接触したかのポインタ
+	CPlayer* hitPlayer = GetHitPlayer();
+
+	// ギミックとプレイヤーが接触した時
+	if (bCollision1P || bCollision2P)
 	{
-		// プレイヤーが接触したかのポインタ
+		GetHitPlayer()->SetMotionType(CPlayer::MOTION_PUSH);
+		// 位置更新
 		hitPlayer->SetSpeed(1.5f);
 		move = D3DXVECTOR3(0.0f, 0.0f, 1.5f);
 		//BGMの設定
@@ -143,7 +153,7 @@ void CPushMoveWall::Update()
 	else
 	{
 		GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
-		// ギミックとプレイヤーが接触した時
+		// プレイヤーのスピードを5.0f、ギミックのスピードを0.0fに戻す
 		hitPlayer->SetSpeed(5.0f);
 		move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		SetHitPlayer(nullptr);
@@ -151,15 +161,14 @@ void CPushMoveWall::Update()
 		CApplication::GetSound()->Stop(CSound::LABEL_SE_HIKIZURI);
 	}
 
-		// ギミックが下に落ちた時
-		if (pos.y <= -100.0f)
-		{
-			// 移動量減衰
-			hitPlayer->SetSpeed(5.0f);
-			// ギミック削除
-			Uninit();
-			return;
-		}
+	// ギミックが下に落ちた時
+	if (pos.y <= -100.0f)
+	{
+		// 移動量減衰
+		hitPlayer->SetSpeed(5.0f);
+		// ギミック削除
+		Uninit();
+		return;
 	}
 
 	// 移動量減衰
