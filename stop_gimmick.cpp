@@ -80,8 +80,9 @@ void CStopGimmick::Update()
 		CollisionGimmick(CGame::GetPlayer2P());
 	}
 
-	if (GetHitPlayer() == nullptr)
+	if (CGame::GetPlayer2P() == nullptr)
 	{
+		CGame::GetPlayer2P()->Death();
 		return;
 	}
 

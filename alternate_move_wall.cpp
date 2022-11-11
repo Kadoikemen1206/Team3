@@ -102,12 +102,18 @@ void CAlternateMoveWall::Update()
 
 		// 当たり判定のチェック
 		Collision(CGame::GetPlayer1P());
-		Collision(CGame::GetPlayer2P());
+		if (CGame::GetPlayer2P() != nullptr)
+		{
+			Collision(CGame::GetPlayer2P());
+		}
 
 		if (GetHitPlayer() == nullptr)
 		{
 			return;
 		}
+
+		// ギミック処理
+		ConstOperate();
 
 		CPlayer* hitPlayer = GetHitPlayer();
 
@@ -118,9 +124,6 @@ void CAlternateMoveWall::Update()
 			hitPlayer->SetPos(pos);
 		}
 		hitPlayer->SetMotionType(CPlayer::MOTION_SCREW);
-
-		// ギミック処理
-		ConstOperate();
 
 		m_buttonPushCount++;
 

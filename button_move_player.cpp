@@ -84,11 +84,10 @@ void CButtonMovePlayer::Update()
 
 	// 当たり判定のチェック
 	bool bCollision1P = Collision(CGame::GetPlayer1P());
-	bool bCollision2P = Collision(CGame::GetPlayer2P());
-	
-	if (GetHitPlayer() == nullptr)
+	bool bCollision2P = false;
+	if (CGame::GetPlayer2P() != nullptr)
 	{
-		return;
+		bCollision2P = Collision(CGame::GetPlayer2P());
 	}
 
 	// ギミック処理
