@@ -30,7 +30,7 @@ public:
 	static CObstacle *GetObstacle1P() { return m_pObstacle; }
 
 private:
-	CObject2D *m_pObject2D;					// オブジェクト2Dのポインタ
+	CObject2D *m_pObject2D[1];					// オブジェクト2Dのポインタ
 	static CPlayer *m_pPlayer;			// 1Pプレイヤーのポインタ
 	static CCamera *m_pCamera;				// カメラのポインタ
 	static CLight *m_pLight;				// ライトのポインタ
