@@ -93,11 +93,11 @@ HRESULT CGame::Init(void)
 
 	m_countDown = 0;
 
-	// ステージのロード
-	CLoadStage::LoadAll(D3DXVECTOR3(-700.0f, 0.0f, 0.0f));
-
 	m_pPlayer1P = nullptr;
 	m_pPlayer2P = nullptr;
+
+	// ステージのロード
+	CLoadStage::LoadAll(D3DXVECTOR3(-700.0f, 0.0f, 0.0f));
 
 	//プレイヤーの生成
 	{

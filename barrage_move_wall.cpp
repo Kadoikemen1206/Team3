@@ -103,7 +103,10 @@ void CBarrageMoveWall::Update()
 
 		// 当たり判定のチェック
 		Collision(CGame::GetPlayer1P());
-		Collision(CGame::GetPlayer2P());
+		if (CGame::GetPlayer2P() != nullptr)
+		{
+			Collision(CGame::GetPlayer2P());
+		}
 
 		if (GetHitPlayer() == nullptr)
 		{
@@ -166,7 +169,7 @@ void CBarrageMoveWall::ConstOperate()
 		return;
 	}
 
-	if (GetHitPlayer()->GetPos().z >= this->GetPos().z - 75.0f)
+	if (GetHitPlayer()->GetPos().z >= this->GetPos().z - 60.0f)
 	{
 		if (m_pIcon[0] == nullptr)
 		{
