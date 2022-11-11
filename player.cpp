@@ -75,6 +75,15 @@ HRESULT CPlayer::Init()
 	return S_OK;
 }
 
+void CPlayer::Uninit()
+{
+	//オブジェクトの初期化
+	CMotionModel3D::Uninit();
+
+	//BGMの設定
+	CApplication::GetSound()->Stop();
+}
+
 //=============================================================================
 // 更新処理
 //=============================================================================
@@ -98,11 +107,17 @@ void CPlayer::Update()
 			m_pRope->BindTexture("ROPE");
 		}
 
+		//BGMの設定
+		CApplication::GetSound()->Stop(CSound::LABEL_SE_HASHIRI);
 		m_pRope->SetMove(D3DXVECTOR3(0.0f,0.0f,0.0f));
 
 		if (count >= 240)
 		{
 			count = 0;
+
+			//BGMの設定
+			CApplication::GetSound()->Play(CSound::LABEL_SE_HASHIRI);
+
 			m_pRope->SetMove(D3DXVECTOR3(0.0f,2.5f,0.0f));
 			SetMotionType(MOTION_NONE);
 		}
@@ -333,11 +348,13 @@ void CPlayer::HalfWayPoint(D3DXVECTOR3 & pos)
 		{
 			SetMotionType(MOTION_BURABURA);
 			pos = D3DXVECTOR3(-700.0f, 80.0f, 2800.0f);
+			m_pRope->SetPos(D3DXVECTOR3(pos.x, pos.y + 140.0f, pos.z));
 		}
 		if (pos.y <= -100.0f && m_HalfWayPointFlag == true && m_nType == EPLAYER_2P)
 		{
 			SetMotionType(MOTION_BURABURA);
 			pos = D3DXVECTOR3(700.0f, 80.0f, 2800.0f);
+			m_pRope->SetPos(D3DXVECTOR3(pos.x, pos.y + 140.0f, pos.z));
 		}
 	}
 	else
@@ -436,8 +453,8 @@ void CPlayer::Move()
 	{// ジャンプ
 		m_bJumpFlag = true;
 		move.y += JUMP_POWER;
-		////BGMの設定
-		//CApplication::GetSound()->Play(CSound::LABEL_SE_JUMP_01);
+		//BGMの設定
+		CApplication::GetSound()->Play(CSound::LABEL_SE_JUMP_01);
 	}
 	SetMove(move);
 

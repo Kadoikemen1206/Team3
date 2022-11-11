@@ -48,6 +48,7 @@
     [ "WALL02", "Data\/MODEL\/Wall02.x" ],
     [ "WALL03", "Data\/MODEL\/Wall03.x" ],
     [ "SPOON", "Data\/MODEL\/Spoon.x" ],
-    [ "POCKET_WATCH", "Data\/MODEL\/Clock.x" ]
+    [ "POCKET_WATCH", "Data\/MODEL\/Clock.x" ],
+      [ "CAKE", "Data\/MODEL\/Cake.x" ]
   ]
 }
