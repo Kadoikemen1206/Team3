@@ -51,7 +51,7 @@ HRESULT CGoal::Init()
 	CGimmick::Init();
 
 	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
-	LoadModel("CAKE");
+	LoadModel("CROWN");
 
 	return S_OK;
 }
