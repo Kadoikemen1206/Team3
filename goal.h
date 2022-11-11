@@ -42,12 +42,14 @@ public:
 
 	void ConstOperate() override;	// 一定の操作(連打、回転)
 
+	static bool GetGoalFlag(void) { return m_GoalFlag; }
+
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
 	//-------------------------------------------------------------------------
 	int m_GoalCount;				// リザルト画面に行くまでの時間
-	bool m_GoalFlag;				// ゴールしたかフラグ
+	static bool m_GoalFlag;				// ゴールしたかフラグ
 };
 #endif
 

@@ -82,7 +82,7 @@ HRESULT CGame::Init(void)
 	m_pLight = CLight::Create();
 
 	// タイマーの生成
-	m_pTime = CTime::Create(CTime::TYPE_TIMER, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 40.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), 0, CObject::PRIORITY_LEVEL4);
+	m_pTime = CTime::Create(CTime::TYPE_TIMER, D3DXVECTOR3(SCREEN_WIDTH_HALF - 190.0f, 60.0f, 0.0f), D3DXVECTOR3(100.0f, 170.0f, 0.0f), 0, CObject::PRIORITY_LEVEL4);
 
 	// メッシュフィールドの生成
 	m_pMeshField = CMeshfield::Create(D3DXVECTOR3(-1500.0f, -210.0f, 14000.0f), CObject::PRIORITY_LEVEL2);
