@@ -125,6 +125,9 @@ void CBarrageMoveWall::Update()
 			hitPlayer->SetSpeed(5.0f);
 		}
 
+		m_pIcon[0]->SetPos(hitPlayer->GetPos());
+		m_pIcon[1]->SetPos(hitPlayer->GetPos());
+
 		// ギミックの更新
 		CGimmick::Update();
 	}

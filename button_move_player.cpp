@@ -18,6 +18,7 @@
 #include "fade.h"
 #include "model.h"
 #include "billboard.h"
+#include "icon.h"
 
 //=============================================================================
 // コンストラクタ
@@ -104,6 +105,10 @@ void CButtonMovePlayer::Update()
 	// ギミックとプレイヤーが接触した時
 	if (bCollision1P || bCollision2P)
 	{
+		if (m_pIcon[0] == nullptr)
+		{
+			m_pIcon[0] = CIcon::Create(hitPlayer->GetPos(), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+		}
 		hitPlayer->SetSpeed(0.0f);
 		ButtonPush();
 	}
@@ -168,6 +173,8 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 1)
 	{
+		str = "BUTTON_SPACE";
+
 		if (pInputKeyboard->Trigger(KEY_RIGHT_BUTTON))
 		{
 			m_RandFlag = false;
@@ -175,6 +182,8 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 2)
 	{
+		str = "BUTTON_SPACE";
+
 		if (pInputKeyboard->Trigger(KEY_LEFT_BUTTON))
 		{
 			m_RandFlag = false;
@@ -182,6 +191,8 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 3)
 	{
+		str = "BUTTON_SKEY";
+
 		if (pInputKeyboard->Trigger(KEY_DOWN_BUTTON))
 		{
 			m_RandFlag = false;
@@ -189,10 +200,21 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 4)
 	{
+		str = "BUTTON_WKEY";
+
 		if (pInputKeyboard->Trigger(KEY_UP_BUTTON))
 		{
 			m_RandFlag = false;
 		}
+	}
+
+	if (m_pIcon[1] == nullptr)
+	{
+		m_pIcon[1] = CIcon::Create(hitPlayer->GetPos(), D3DXVECTOR3(12.0f, 12.0f, 0.0f), str, PRIORITY_LEVEL3);
+	}
+	else
+	{
+		m_pIcon[1]->BindTexture(str);
 	}
 
 	if (m_RandFlag == false && m_MoveFlag == false)
