@@ -101,11 +101,14 @@ void CButtonMovePlayer::Update()
 	if (bCollision1P || bCollision2P)
 	{
 		hitPlayer->SetSpeed(0.0f);
+		hitPlayer->SetIsMove(false);
 		ButtonPush();
 	}
 	else
 	{
+		hitPlayer->SetIsMove(true);
 		hitPlayer->SetSpeed(5.0f);
+		hitPlayer = nullptr;
 		Uninit();
 		return;
 	}

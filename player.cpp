@@ -266,7 +266,7 @@ void CPlayer::Update()
 		{
 			if (move.x == 0.0f && move.z == 0.0f)
 			{
-				if (m_moutionType != MOTION_NONE && m_moutionType != MOTION_SCREW)
+				if (m_moutionType != MOTION_NONE && m_moutionType != MOTION_SCREW && m_moutionType != MOTION_PUSH)
 				{
 					SetMotionType(MOTION_NONE);
 				}

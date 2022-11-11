@@ -115,7 +115,9 @@ void CAlternateMoveWall::Update()
 		{
 			D3DXVECTOR3 pos = hitPlayer->GetPos();
 			pos.x = GetPos().x;
+			pos.z = m_Screw->GetPos().z - 20.0f;
 			hitPlayer->SetPos(pos);
+			hitPlayer->SetRot(D3DXVECTOR3(0.0f, D3DX_PI,0.0f));
 		}
 		hitPlayer->SetMotionType(CPlayer::MOTION_SCREW);
 

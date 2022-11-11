@@ -58,7 +58,7 @@ HRESULT CBarrageMoveWall::Init()
 	//モデルのロード
 	LoadModel("BOOK04");
 	SetRot(D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
-	SetPos(GetPos() + D3DXVECTOR3(0.0f, GetMaxVtx().z, 0.0f));
+	SetPos(GetPos() + D3DXVECTOR3(50.0f, 0.0f, 0.0f));
 
 	return S_OK;
 }
@@ -81,21 +81,24 @@ void CBarrageMoveWall::Update()
 		/* ↓Gimmickクリアしている↓ */
 
 		// ギミックの座標,移動量取得
-		D3DXVECTOR3 pos = GetPos();
+		D3DXVECTOR3 rot = GetRot();
 		D3DXVECTOR3 move = GetMove();
 
-		move = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
+		if (rot.y <= D3DX_PI * 0.5f)
+		{
+			move = D3DXVECTOR3(0.0f, 0.01f, 0.0f);
 
-		// 位置更新
-		pos += move;
+			// 位置更新
+			rot += move;
 
-		// 移動量減衰
-		pos.x += (0.0f - move.x) * 0.1f;
-		pos.y += (0.0f - move.y) * 0.1f;
-		pos.z += (0.0f - move.z) * 0.1f;
+			// 移動量減衰
+			rot.x += (0.0f - move.x) * 0.1f;
+			rot.y += (0.0f - move.y) * 0.1f;
+			rot.z += (0.0f - move.z) * 0.1f;
 
-		SetPos(pos);	// 座標の設定
-		SetMove(move);	// 移動量の設定
+			SetRot(rot);	// 座標の設定
+			SetMove(move);	// 移動量の設定
+		}
 	}
 	else
 	{
@@ -116,9 +119,11 @@ void CBarrageMoveWall::Update()
 		CPlayer* hitPlayer = GetHitPlayer();
 
 		hitPlayer->SetSpeed(0.0f);
+		hitPlayer->SetMotionType(CPlayer::MOTION_PUSH);
 		if (GetCompletion())
 		{// 操作が完了した時に実行
 		 // プレイヤーのスピードを元に戻す
+			hitPlayer->SetMotionType(CPlayer::MOTION_NONE);
 			hitPlayer->SetSpeed(5.0f);
 		}
 
