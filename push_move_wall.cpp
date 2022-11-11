@@ -120,17 +120,18 @@ void CPushMoveWall::Update()
 		pObject = pObject->GetNext();
 	}
 
+
+	if (GetHitPlayer() == nullptr)
+	{
+		return;
+	}
+
 	// 当たり判定のチェック
 	bool bCollision1P = CollisionGimmick(CGame::GetPlayer1P());
 	bool bCollision2P = false;
 	if (CGame::GetPlayer2P != nullptr)
 	{
 		bCollision2P = CollisionGimmick(CGame::GetPlayer2P());
-	}
-
-	if (GetHitPlayer() == nullptr)
-	{
-		return;
 	}
 
 	// ギミック処理
