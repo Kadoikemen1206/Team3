@@ -71,6 +71,10 @@ HRESULT CBarrageMoveWall::Init()
 	pos -= D3DXVECTOR3(100.0f, 0.0f, 0.0f);
 	m_Door->SetPos(pos);
 	m_Door->SetRot(D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
+
+	m_pIcon[0] = nullptr;
+	m_pIcon[1] = nullptr;
+
 	return S_OK;
 }
 
@@ -186,30 +190,27 @@ void CBarrageMoveWall::ConstOperate()
 		return;
 	}
 
-	if (GetHitPlayer()->GetPos().z >= this->GetPos().z - 60.0f)
+	if (m_pIcon[0] == nullptr)
 	{
-		if (m_pIcon[0] == nullptr)
-		{
-			m_pIcon[0] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
-			m_pIcon[0]->SetScaling(true, true);
-			m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
-		}
+		m_pIcon[0] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+		m_pIcon[0]->SetScaling(true, true);
+		m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
+	}
 
-		if (GetHitPlayer()->GetKeyIndex() == -1)
+	if (GetHitPlayer()->GetKeyIndex() == -1)
+	{
+		if (m_pIcon[1] == nullptr)
 		{
-			if (m_pIcon[1] == nullptr)
-			{
-				m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
-				m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
-			}
+			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
+			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
 		}
-		else
+	}
+	else
+	{
+		if (m_pIcon[1] == nullptr)
 		{
-			if (m_pIcon[1] == nullptr)
-			{
-				m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
-				m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
-			}
+			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
+			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
 		}
 	}
 

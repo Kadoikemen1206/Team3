@@ -91,9 +91,6 @@ void CButtonMovePlayer::Update()
 		bCollision2P = Collision(CGame::GetPlayer2P());
 	}
 
-	// ギミック処理
-	ConstOperate();
-
 	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
@@ -107,23 +104,9 @@ void CButtonMovePlayer::Update()
 		hitPlayer->SetIsMove(false);
 		ButtonPush();
 	}
-	else
-	{
-		hitPlayer->SetIsMove(true);
-		hitPlayer->SetSpeed(5.0f);
-		hitPlayer = nullptr;
-		SetCompletion(true);
 
-		for (int i = 0; i < 2; i++)
-		{
-			if (m_pIcon[i] != nullptr)
-			{
-				m_pIcon[i]->Uninit();
-			}
-		}
-		Uninit();
-		return;
-	}
+	// ギミック処理
+	ConstOperate();
 
 	SetPos(pos);	// 座標の設定
 	SetMove(move);	// 移動量の設定
@@ -142,15 +125,31 @@ void CButtonMovePlayer::Draw()
 //=============================================================================
 void CButtonMovePlayer::ConstOperate()
 {
-	if (GetHitPlayer())
+	if (GetHitPlayer() == nullptr)
 	{
 		return;
 	}
 
 	/* ↓プレイヤーと接触した↓ */
 
-	if (GetCompletion())
+	if (!Collision(GetHitPlayer()))
 	{
+		// プレイヤーが接触したかのポインタ
+		CPlayer* hitPlayer = GetHitPlayer();
+
+		hitPlayer->SetIsMove(true);
+		hitPlayer->SetSpeed(5.0f);
+		hitPlayer = nullptr;
+		SetCompletion(true);
+
+		for (int i = 0; i < 2; i++)
+		{
+			if (m_pIcon[i] != nullptr)
+			{
+				m_pIcon[i]->Uninit();
+			}
+		}
+		Uninit();
 		return;
 	}
 }

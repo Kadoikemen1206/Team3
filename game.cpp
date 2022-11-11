@@ -97,9 +97,6 @@ HRESULT CGame::Init(void)
 	m_pPlayer2P = nullptr;
 
 	//プレイヤーの生成
-	CLoadStage::LoadAll(D3DXVECTOR3(-700.0f, 0.0f, 0.0f));
-
-	//プレイヤーの生成
 	{
 		int joyoadCount = CApplication::GetInput()->GetAcceptJoyPadCount();
 		m_pPlayer1P = CPlayer::Create(CPlayer::EPLAYER_1P, D3DXVECTOR3(-800.0f, 50.0f, 0.0f), CObject::PRIORITY_LEVEL3);
@@ -260,7 +257,7 @@ void CGame::SetGimmik(float x)
 	CBarrageMoveWall::Create(D3DXVECTOR3(x, 100.0f, 1500.0f));
 	CAlternateMoveWall::Create(D3DXVECTOR3(x, 25.0f, 2000.0f));
 	CAlternateMoveWall::Create(D3DXVECTOR3(x, 45.0f, 2800.0f));
-	CBarrageMoveWall::Create(D3DXVECTOR3(x, 20.0f, 3800.0f));
+	//CBarrageMoveWall::Create(D3DXVECTOR3(x, 20.0f, 3800.0f));
 	CButtonMovePlayer::Create(D3DXVECTOR3(x, -200.0f, 3600.0f));
 
 	// 瓶列
