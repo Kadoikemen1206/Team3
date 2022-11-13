@@ -51,7 +51,6 @@ private:
 	// メンバー変数
 	//-------------------------------------------------------------------------
 	int m_GoalCount;				// リザルト画面に行くまでの時間
-	bool m_GoalFlag;				// ゴールしたかフラグ
 
 	CParticle *m_pParticle;				// パーティクルのポインタ
 	static bool m_GoalFlag;				// ゴールしたかフラグ

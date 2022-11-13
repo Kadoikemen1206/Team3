@@ -129,7 +129,7 @@ void CAlternateMoveWall::Update()
 
 		m_buttonPushCount++;
 
-		if (m_buttonPushCount >= 10)
+		if (m_buttonPushCount >= 26)
 		{
 			hitPlayer->SetUpdateStop(true);
 		}
@@ -317,7 +317,7 @@ void CAlternateMoveWall::ConstOperate()
 	}
 
 	// Žw’è‰ñ”‚Ìƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½ê‡
-	if (m_nTriggerCount >= 10)
+	if (m_nTriggerCount >= 26)
 	{
 		// ‘€ì‚ªŠ®—¹‚µ‚½
 		GetHitPlayer()->SetMotionType(CPlayer::MOTION_NONE);
