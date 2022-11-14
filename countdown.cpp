@@ -9,11 +9,13 @@
 #include "sound.h"
 #include "renderer.h"
 #include "sound.h"
+#include "time.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
 //=============================================================================
 LPDIRECT3DTEXTURE9 CCountDown::m_pTexture[4] = {};
+bool CCountDown::m_bCountDownEnd = false;
 
 //=============================================================================
 // コンストラクタ
@@ -108,6 +110,9 @@ void CCountDown::Update(void)
 	}
 	else if (m_nCounter == 240)
 	{
+		// フラグを有効にする
+		m_bCountDownEnd = true;
+
 		//終了処理
 		if (m_pObject != nullptr)
 		{
@@ -116,6 +121,11 @@ void CCountDown::Update(void)
 
 		Uninit();
 		return;
+	}
+
+	if (m_nCounter <= 240)
+	{
+		CTime::SetCounter(0);
 	}
 
 	//オブジェクトの更新処理

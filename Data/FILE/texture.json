@@ -22,6 +22,7 @@
     [ "TITLEMENU_SOLO", "Data\/TEXTURE\/TitleMenu\/TitleMenu_solo.png" ],
     [ "TITLEMENU_VS", "Data\/TEXTURE\/TitleMenu\/TitleMenu_vs.png" ],
     [ "TIMER_DOT", "Data\/TEXTURE\/number002.png" ],
+    [ "TUTORIAL", "Data\/TEXTURE\/Tutorial.png" ],
     [ "FLOOR0", "Data\/TEXTURE\/woos2.jpg" ],
     [ "FLOOR2", "Data\/TEXTURE\/yuka002.jpg" ],
     [ "VS_MODE", "Data\/TEXTURE\/vs.png" ],

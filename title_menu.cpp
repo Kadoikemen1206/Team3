@@ -228,15 +228,15 @@ void CTitleMenu::SelectMenu(void)
 				m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 				m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
 
-				if (m_pFade->GetFade() == CFade::FADE_NONE)
+				if (pInput->Trigger(KEY_DECISION))
 				{
-					if (pInput->Trigger(KEY_DECISION))
-					{
-						// フェード生成
-						CFade::SetFade(CApplication::MODE_TUTORIAL);
-						//BGMの設定
-						CApplication::GetSound()->Play(CSound::LABEL_SE_ENTER_KEY_02);
-					}
+					m_apObject2D[1]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+					m_apObject2D[2]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+					m_apObject2D[3]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+					m_bGameMenu = true;
+					//BGMの設定
+					CApplication::GetSound()->Play(CSound::LABEL_SE_ENTER_KEY_02);
+
 				}
 			}
 			else

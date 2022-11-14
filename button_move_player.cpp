@@ -91,9 +91,6 @@ void CButtonMovePlayer::Update()
 		bCollision2P = Collision(CGame::GetPlayer2P());
 	}
 
-	// ギミック処理
-	ConstOperate();
-
 	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
@@ -108,22 +105,13 @@ void CButtonMovePlayer::Update()
 			hitPlayer->SetSpeed(0.0f);
 			ButtonPush();
 		}
-		else
-		{
-			hitPlayer->SetSpeed(5.0f);
-			SetCompletion(true);
-
-			for (int i = 0; i < 2; i++)
-			{
-				if (m_pIcon[i] != nullptr)
-				{
-					m_pIcon[i]->Uninit();
-				}
-			}
-			Uninit();
-			return;
-		}
+		hitPlayer->SetSpeed(0.0f);
+		hitPlayer->SetIsMove(false);
+		ButtonPush();
 	}
+
+	// ギミック処理
+	ConstOperate();
 
 	SetPos(pos);	// 座標の設定
 	SetMove(move);	// 移動量の設定
@@ -142,15 +130,31 @@ void CButtonMovePlayer::Draw()
 //=============================================================================
 void CButtonMovePlayer::ConstOperate()
 {
-	if (GetHitPlayer())
+	if (GetHitPlayer() == nullptr)
 	{
 		return;
 	}
 
 	/* ↓プレイヤーと接触した↓ */
 
-	if (GetCompletion())
+	if (!Collision(GetHitPlayer()))
 	{
+		// プレイヤーが接触したかのポインタ
+		CPlayer* hitPlayer = GetHitPlayer();
+
+		hitPlayer->SetIsMove(true);
+		hitPlayer->SetSpeed(5.0f);
+		hitPlayer = nullptr;
+		SetCompletion(true);
+
+		for (int i = 0; i < 2; i++)
+		{
+			if (m_pIcon[i] != nullptr)
+			{
+				m_pIcon[i]->Uninit();
+			}
+		}
+		Uninit();
 		return;
 	}
 }
@@ -174,7 +178,14 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 1)
 	{
-		str = "BUTTON_MKEY";
+		if (hitPlayer->GetKeyIndex() == -1)
+		{
+			str = "BUTTON_MKEY";
+		}
+		else
+		{
+			str = "BUTTON_B";
+		}
 
 		if (pInputKeyboard->Trigger(KEY_RIGHT_BUTTON)) //M
 		{
@@ -183,7 +194,14 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 2)
 	{
-		str = "BUTTON_VKEY";
+		if (hitPlayer->GetKeyIndex() == -1)
+		{
+			str = "BUTTON_VKEY";
+		}
+		else
+		{
+			str = "BUTTON_X";
+		}
 
 		if (pInputKeyboard->Trigger(KEY_LEFT_BUTTON)) //V
 		{
@@ -192,7 +210,14 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 3)
 	{
-		str = "BUTTON_BKEY";
+		if (hitPlayer->GetKeyIndex() == -1)
+		{
+			str = "BUTTON_BKEY";
+		}
+		else
+		{
+			str = "BUTTON_A";
+		}
 
 		if (pInputKeyboard->Trigger(KEY_DOWN_BUTTON)) //B
 		{
@@ -201,7 +226,14 @@ void CButtonMovePlayer::ButtonPush()
 	}
 	else if (m_RandFlag == true && m_RandNumber == 4)
 	{
-		str = "BUTTON_NKEY";
+		if (hitPlayer->GetKeyIndex() == -1)
+		{
+			str = "BUTTON_NKEY";
+		}
+		else
+		{
+			str = "BUTTON_Y";
+		}
 
 		if (pInputKeyboard->Trigger(KEY_UP_BUTTON)) //N
 		{

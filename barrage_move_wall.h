@@ -48,7 +48,8 @@ private:
 	D3DXVECTOR3 m_PosOld;			// 前回の位置
 	int m_nTriggerCount;			// キーを押した回数
 
-	CIcon* m_pIcon[2];	// アイコン
-	bool m_Completion;				// Gimmickが完了したか否かフラグ
+	CIcon* m_pIcon[2];		// アイコン
+	CObjectX* m_Door;		// ドア
+	bool m_Completion;		// Gimmickが完了したか否かフラグ
 };
 #endif

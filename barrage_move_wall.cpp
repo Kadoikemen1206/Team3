@@ -58,7 +58,22 @@ HRESULT CBarrageMoveWall::Init()
 	//モデルのロード
 	LoadModel("BOOK04");
 	SetRot(D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
-	SetPos(GetPos() + D3DXVECTOR3(0.0f, GetMaxVtx().z, 0.0f));
+	D3DXVECTOR3 pos = GetPos();
+	pos += D3DXVECTOR3(50.0f, 0.0f, 0.0f);
+	SetPos(pos);
+
+	//モデルのロード
+	m_Door = CObjectX::Create(GetPos() - D3DXVECTOR3(200.0f, 0.0f, 0.0f),PRIORITY_LEVEL3);
+	m_Door->Init();
+	m_Door->LoadModel("BOOK04");
+	//m_Door->SetPos(GetPos() - D3DXVECTOR3(50.0f, 0.0f, 130.0f));
+	pos = GetPos();
+	pos -= D3DXVECTOR3(100.0f, 0.0f, 0.0f);
+	m_Door->SetPos(pos);
+	m_Door->SetRot(D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
+
+	m_pIcon[0] = nullptr;
+	m_pIcon[1] = nullptr;
 
 	return S_OK;
 }
@@ -81,21 +96,22 @@ void CBarrageMoveWall::Update()
 		/* ↓Gimmickクリアしている↓ */
 
 		// ギミックの座標,移動量取得
-		D3DXVECTOR3 pos = GetPos();
+		D3DXVECTOR3 rot = GetRot();
 		D3DXVECTOR3 move = GetMove();
 
-		move = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
-
-		// 位置更新
-		pos += move;
-
-		// 移動量減衰
-		pos.x += (0.0f - move.x) * 0.1f;
-		pos.y += (0.0f - move.y) * 0.1f;
-		pos.z += (0.0f - move.z) * 0.1f;
-
-		SetPos(pos);	// 座標の設定
-		SetMove(move);	// 移動量の設定
+		if (rot.y <= D3DX_PI * 0.5f)
+		{
+			move = D3DXVECTOR3(0.0f, -0.01f, 0.0f);
+			rot = m_Door->GetRot();
+			rot += move;
+			m_Door->SetRot(rot);
+			
+			move = D3DXVECTOR3(0.0f, 0.01f, 0.0f);
+			// 位置更新
+			rot = GetRot();
+			rot += move;
+			SetRot(rot);
+		}
 	}
 	else
 	{
@@ -119,9 +135,12 @@ void CBarrageMoveWall::Update()
 		CPlayer* hitPlayer = GetHitPlayer();
 
 		hitPlayer->SetSpeed(0.0f);
+		hitPlayer->SetMotionType(CPlayer::MOTION_PUSH);
+
 		if (GetCompletion())
 		{// 操作が完了した時に実行
 		 // プレイヤーのスピードを元に戻す
+			hitPlayer->SetMotionType(CPlayer::MOTION_NONE);
 			hitPlayer->SetSpeed(5.0f);
 		}
 
@@ -138,6 +157,7 @@ void CBarrageMoveWall::Update()
 
 		// ギミックの更新
 		CGimmick::Update();
+		m_Door->Update();
 	}
 }
 
@@ -147,6 +167,7 @@ void CBarrageMoveWall::Update()
 void CBarrageMoveWall::Draw()
 {
 	CGimmick::Draw();
+	m_Door->Draw();
 }
 
 //=============================================================================
@@ -169,30 +190,27 @@ void CBarrageMoveWall::ConstOperate()
 		return;
 	}
 
-	if (GetHitPlayer()->GetPos().z >= this->GetPos().z - 60.0f)
+	if (m_pIcon[0] == nullptr)
 	{
-		if (m_pIcon[0] == nullptr)
-		{
-			m_pIcon[0] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
-			m_pIcon[0]->SetScaling(true, true);
-			m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
-		}
+		m_pIcon[0] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+		m_pIcon[0]->SetScaling(true, true);
+		m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
+	}
 
-		if (GetHitPlayer()->GetKeyIndex() == -1)
+	if (GetHitPlayer()->GetKeyIndex() == -1)
+	{
+		if (m_pIcon[1] == nullptr)
 		{
-			if (m_pIcon[1] == nullptr)
-			{
-				m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
-				m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
-			}
+			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
+			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
 		}
-		else
+	}
+	else
+	{
+		if (m_pIcon[1] == nullptr)
 		{
-			if (m_pIcon[1] == nullptr)
-			{
-				m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
-				m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
-			}
+			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_B", PRIORITY_LEVEL3);
+			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
 		}
 	}
 
@@ -230,8 +248,8 @@ CBarrageMoveWall* CBarrageMoveWall::Create(const D3DXVECTOR3& pos)
 	if (pObstacle != nullptr)
 	{
 		pObstacle->SetGimmickType(GIMMICKTYPE_BARRAGEMOVEWALL);
-		pObstacle->Init();
 		pObstacle->SetPos(pos);
+		pObstacle->Init();
 	}
 	else
 	{

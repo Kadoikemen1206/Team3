@@ -11,19 +11,23 @@
 #include <time.h>
 #include <math.h>
 #include "ranking.h"
+#include "countdown.h"
+#include "goal.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
 //=============================================================================
 CNumber *CTime::m_apNumBer[5] = {};
 CObject2D *CTime::m_apObject2D[2] = {};
+int CTime::m_nCounter = 0;
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CTime::CTime(int nPriority) :
 	CObject(nPriority),
-	m_apnTime(0)
+	m_apnTime(0),
+	m_nTime(0)
 {
 	for (int nCnt = 0; nCnt < 5; nCnt++)
 	{
@@ -53,12 +57,6 @@ HRESULT CTime::Init()
 	m_apObject2D[0] = CObject2D::Create("TIMER_DOT", D3DXVECTOR3(m_pos.x + 45.0f, m_pos.y, 0.0f), D3DXVECTOR3(40.0f, 60.0f, 0.0f), CObject::PRIORITY_LEVEL5);
 	m_apObject2D[1] = CObject2D::Create("TIMER_DOT", D3DXVECTOR3(m_pos.x + 255.0f, m_pos.y, 0.0f), D3DXVECTOR3(40.0f, 60.0f, 0.0f), CObject::PRIORITY_LEVEL5);
 
-	if (m_Type == TYPE_TIMER)
-	{
-		// ミリ秒設定
-		m_nTime = timeGetTime();
-	}
-
 	return S_OK;
 }
 
@@ -76,8 +74,22 @@ void CTime::Update()
 {
 	if (m_Type == TYPE_TIMER)
 	{
-		// 経過時間の更新
-		AddTime(1);
+		if (CCountDown::GetEndFlag() && m_nCounter == 0)
+		{
+			// ミリ秒設定
+			m_nTime = timeGetTime();
+
+			// タイムセット
+			SetTime(0);
+
+			// カウンター加算
+			m_nCounter++;
+		}
+		else if (CCountDown::GetEndFlag() && m_nCounter > 0 && CGoal::GetGoalFlag() == false)
+		{
+			// タイム加算
+			AddTime(1);
+		}
 	}
 }
 

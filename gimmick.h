@@ -64,6 +64,9 @@ public:
 	void SetHitPlayer(CPlayer* inPlayer) { m_pHitPlayer = inPlayer; }
 	CPlayer* GetHitPlayer() { return m_pHitPlayer; }
 
+	void SetWallClearFlag(bool flag) { m_bWallClear = flag; }
+	bool GetWallClearFlag() { return m_bWallClear; }
+
 private:
 	//-------------------------------------------------------------------------
 	// メンバー変数
@@ -72,5 +75,8 @@ private:
 	GIMMICKTYPE m_GimmickType;		// ギミックの種類
 	CPlayer* m_pHitPlayer;			// 当たったプレイヤー
 	bool m_Completion;				// 完了したか否かフラグ
+
+	//応急処置
+	static bool m_bWallClear;
 };
 #endif
