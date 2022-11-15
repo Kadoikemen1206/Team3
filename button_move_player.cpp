@@ -29,8 +29,8 @@
 //=============================================================================
 CButtonMovePlayer::CButtonMovePlayer(int nPriority)
 {
+	// メンバ変数のクリア
 	m_MoveCount = MAX_WALK_COUNT;
-	m_TimeToMove = 0;
 	m_RandNumber = 0;
 	m_MoveFlag = false;
 	m_RandFlag = false;
@@ -68,6 +68,7 @@ HRESULT CButtonMovePlayer::Init()
 //=============================================================================
 void CButtonMovePlayer::Uninit()
 {
+	// ギミックの終了処理
 	CGimmick::Uninit();
 }
 
@@ -122,6 +123,7 @@ void CButtonMovePlayer::Update()
 //=============================================================================
 void CButtonMovePlayer::Draw()
 {
+	// ギミックの描画処理
 	CGimmick::Draw();
 }
 

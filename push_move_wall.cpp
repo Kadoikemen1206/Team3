@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 障害物処理 [obstacle.cpp]
+// 押すと動く壁ギミック
 // Author : saito shian
 //
 //=============================================================================
@@ -29,9 +29,8 @@
 //=============================================================================
 CPushMoveWall::CPushMoveWall(int nPriority)
 {
+	// メンバ変数のクリア
 	m_PosOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_nTriggerCount = 0;
-	m_Completion = false;
 	m_bIsLanding = false;
 	m_bIsLandingUp = false;
 
@@ -54,6 +53,7 @@ HRESULT CPushMoveWall::Init()
 	// ギミックの初期化
 	CGimmick::Init();
 
+	// Pos取得
 	m_PosOld = CObjectX::GetPos();
 
 	//モデルのロード
@@ -67,6 +67,7 @@ HRESULT CPushMoveWall::Init()
 //=============================================================================
 void CPushMoveWall::Uninit()
 {
+	// ギミックの終了処理
 	CGimmick::Uninit();
 }
 
@@ -191,6 +192,7 @@ void CPushMoveWall::Update()
 //=============================================================================
 void CPushMoveWall::Draw()
 {
+	// ギミックの描画処理
 	CGimmick::Draw();
 }
 
