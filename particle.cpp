@@ -1,3 +1,13 @@
+//=============================================================================
+//
+// パーティクル処理 [particle.cpp]
+// Author : TANAKA KOTA
+//
+//=============================================================================
+
+//=============================================================================
+// インクルードファイル
+//=============================================================================
 #include <assert.h>
 #include "application.h"
 #include "input.h"
@@ -12,23 +22,23 @@
 // コンストラクタ
 //=============================================================================
 CParticle::CParticle(int nPriority) :
-	m_nTime(0),
-	m_nDelay(50),
-	m_nDestroyTime(200),
-	m_fAngle(0.0f),
-	m_fRadius(0.0f),
-	m_fAttenuation(0.05f),
-	m_fSpeed(5.0f),
-	m_bGravity(false),				// 重力
-	m_bFade(false),					// アルファ値増減
-	m_bRotate(true),				// ビルボードの回転
-	m_bScaling(false),				// 拡縮
-	m_bLocus(false),				// パーティクルに軌跡をつける（激重です）
-	m_bBounce(false),				// バウンドさせる
-	m_bTransition(false),			// 色の変化
-	m_bPosSpecify(false),			// 位置の指定
-	m_destCol(D3DXCOLOR(1.0f,0.0f,0.0f,1.0f)),
-	m_behavior(BEHAVIOR_FIREWORKS)
+	m_nTime(0),									// 時間
+	m_nDelay(50),								// 遅延
+	m_nDestroyTime(200),						// 消滅までの時間
+	m_fAngle(0.0f),								// 角度
+	m_fRadius(0.0f),							// 半径
+	m_fAttenuation(0.05f),						// 減衰量
+	m_fSpeed(5.0f),								// 速度
+	m_bGravity(false),							// 重力
+	m_bFade(false),								// アルファ値増減
+	m_bRotate(true),							// ビルボードの回転
+	m_bScaling(false),							// 拡縮
+	m_bLocus(false),							// パーティクルに軌跡をつける（激重です）
+	m_bBounce(false),							// バウンドさせる
+	m_bTransition(false),						// 色の変化
+	m_bPosSpecify(false),						// 位置の指定
+	m_destCol(D3DXCOLOR(1.0f,0.0f,0.0f,1.0f)),	// 目的の色
+	m_behavior(BEHAVIOR_FIREWORKS)				// 挙動
 {
 }
 
@@ -94,6 +104,7 @@ void CParticle::Update()
 			m_bPosOperate = true;
 		}
 
+		//指定した位置までの移動
 		if (m_bPosOperate)
 		{
 			m_moveTransition = (m_destPos - m_pos) * m_fAttenuation;
@@ -102,6 +113,7 @@ void CParticle::Update()
 
 	m_pos += m_moveTransition;
 
+	//詳細設定
 	DetailSetting();
 
 	CBillboard::SetPos(m_pos);
