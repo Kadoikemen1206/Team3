@@ -58,7 +58,7 @@ void CIcon::Update(void)
 	CBillboard::Update();
 
 	if (m_bScaling)
-	{
+	{	//拡縮
 		D3DXVECTOR3 scale = CBillboard::GetSize();
 
 		scale.x += 0.5f;
@@ -77,7 +77,7 @@ void CIcon::Update(void)
 	}
 
 	if (m_bFade)
-	{
+	{	//フェード
 		auto col = CBillboard::GetCol();
 
 		col.a -= 0.05f;
@@ -92,7 +92,7 @@ void CIcon::Update(void)
 	}
 
 	if (m_bDestroy)
-	{
+	{	//アイコンを消すかどうか
 		CBillboard::Uninit();
 	}
 }
@@ -124,10 +124,4 @@ CIcon *CIcon::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size, std::string 
 	}
 
 	return pIcon;
-}
-
-void CIcon::SwapTexture(std::string url)
-{
-	//テクスチャの読み込み
-	BindTexture(url);
 }

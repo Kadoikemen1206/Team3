@@ -85,6 +85,7 @@ void CCountDown::Update(void)
 	//カウンター加算
 	m_nCounter++;
 
+	// 一定のカウントを過ぎたらテクスチャの動作を変更
 	if (m_nCounter >= 220)
 	{
 		col.a -= 0.05f;

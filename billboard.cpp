@@ -362,6 +362,9 @@ void CBillboard::SetAnimation(const int U, const int V, const int Speed, const i
 		, 1.0f / m_DivisionY * (m_PatternAnimY % (m_DivisionY)+1.0f / m_DivisionY* m_DivisionY));
 }
 
+//=============================================================================
+// アニメーションを指定のタイミングで止める処理
+//=============================================================================
 void CBillboard::SetStopAnim(const int X, const int Y)
 {
 	m_bAnimation = false;
@@ -378,6 +381,9 @@ void CBillboard::SetStopAnim(const int X, const int Y)
 		, V * (m_PatternAnimY)+V);
 }
 
+//=============================================================================
+// テクスチャの反転処理
+//=============================================================================
 void CBillboard::SetFlip(EFlip flip)
 {
 	//頂点情報へのポインタ
