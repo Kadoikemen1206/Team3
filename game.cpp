@@ -37,7 +37,6 @@
 #include "stop_gimmick.h"
 #include "sound.h"
 #include "goal.h"
-#include "random_door.h"
 
 //=============================================================================
 // Ã“Iƒƒ“ƒo•Ï”éŒ¾

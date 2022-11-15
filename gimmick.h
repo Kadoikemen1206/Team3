@@ -50,22 +50,18 @@ public:
 	void Update() override;				// 更新処理
 	void Draw() override;				// 描画処理
 
-	GIMMICKTYPE GetGimmickType(void) { return m_GimmickType; }	// ギミックの種類の取得
-	void SetGimmickType(GIMMICKTYPE type);						// ギミックの種類の設定
+	void SetGimmickType(GIMMICKTYPE type);								// ギミックの種類の設定
+	void SetCompletion(bool flag) { m_Completion = flag; }				// 完了したかを設定
+	void SetHitPlayer(CPlayer* inPlayer) { m_pHitPlayer = inPlayer; }	// プレイヤーがギミックに当たったかの設定処理
 
-	bool Collision(CPlayer* inPlayer);							// プレイヤーが接触
-	bool CollisionGimmick(CPlayer* inPlayer);					// プレイヤーがギミックに接触
+	bool Collision(CPlayer* inPlayer);									// プレイヤーが接触
+	bool CollisionGimmick(CPlayer* inPlayer);							// プレイヤーがギミックに接触
+	bool GetCompletion() { return m_Completion; }						// 完了したかを知らせる
 
-	virtual void ConstOperate() = 0;		// 一定の操作(連打、回転)
+	GIMMICKTYPE GetGimmickType(void) { return m_GimmickType; }			// ギミックの種類の取得
+	CPlayer* GetHitPlayer() { return m_pHitPlayer; }					// プレイヤーがギミックに当たったかの取得処理
 
-	void SetCompletion(bool flag) { m_Completion = flag; }		// 完了したかを設定
-	bool GetCompletion() { return m_Completion; }				// 完了したかを知らせる
-
-	void SetHitPlayer(CPlayer* inPlayer) { m_pHitPlayer = inPlayer; }
-	CPlayer* GetHitPlayer() { return m_pHitPlayer; }
-
-	void SetWallClearFlag(bool flag) { m_bWallClear = flag; }
-	bool GetWallClearFlag() { return m_bWallClear; }
+	virtual void ConstOperate() = 0;									// 一定の操作(連打、回転)
 
 private:
 	//-------------------------------------------------------------------------
@@ -74,9 +70,7 @@ private:
 	D3DXVECTOR3 m_Pos;				// ギミックの位置
 	GIMMICKTYPE m_GimmickType;		// ギミックの種類
 	CPlayer* m_pHitPlayer;			// 当たったプレイヤー
-	bool m_Completion;				// 完了したか否かフラグ
 
-	//応急処置
-	static bool m_bWallClear;
+	bool m_Completion;				// 完了したか否かフラグ 
 };
 #endif

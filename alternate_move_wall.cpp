@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 障害物処理 [obstacle.cpp]
+// 交互に連打すると動く壁ギミック
 // Author : saito shian
 //
 //=============================================================================
@@ -29,8 +29,7 @@ CAlternateMoveWall::CAlternateMoveWall(int nPriority) :
 	m_Screw(nullptr),
 	m_buttonPushCount(0)
 {
-	m_PosOld = {};
-	m_nTriggerCount = 0;
+	m_nTriggerCount = 0;	// キーを押した回数のクリア
 
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_GIMMICK);
@@ -51,8 +50,6 @@ HRESULT CAlternateMoveWall::Init()
 	// ギミックの初期化
 	CGimmick::Init();
 
-	m_PosOld = CObjectX::GetPos();
-
 	//モデルのロード
 	LoadModel("POCKET_WATCH");
 
@@ -64,6 +61,7 @@ HRESULT CAlternateMoveWall::Init()
 //=============================================================================
 void CAlternateMoveWall::Uninit()
 {
+	// ギミックの終了処理
 	CGimmick::Uninit();
 }
 
@@ -78,7 +76,6 @@ void CAlternateMoveWall::Update()
 
 		// ギミックの座標,移動量取得
 		D3DXVECTOR3 pos = GetPos();
-
 		D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 2.5f, 0.0f);
 
 		// 位置更新
@@ -111,10 +108,13 @@ void CAlternateMoveWall::Update()
 		// ギミック処理
 		ConstOperate();
 
+		// プレイヤーがギミックに当たった時の変数
 		CPlayer* hitPlayer = GetHitPlayer();
 
+		// プレイヤーの位置が0.0fではなかったら
 		if (hitPlayer->GetPos().x != 0.0f)
 		{
+			// プレイヤーのPos取得
 			D3DXVECTOR3 pos = hitPlayer->GetPos();
 			pos.x = GetPos().x;
 			pos.z = m_Screw->GetPos().z - 20.0f;
@@ -123,14 +123,15 @@ void CAlternateMoveWall::Update()
 		}
 		hitPlayer->SetMotionType(CPlayer::MOTION_SCREW);
 
+		// ボタンを押した回数をインクリメント
 		m_buttonPushCount++;
 
 		if (m_buttonPushCount >= 26)
-		{
+		{// 26回以上ボタンを押したときに実行
 			hitPlayer->SetUpdateStop(true);
 		}
 		else
-		{
+		{// 26回押していないとき実行
 			D3DXVECTOR3 rot = m_Screw->GetRot();
 			rot.y += 0.04f;
 			m_Screw->SetRot(rot);
@@ -154,6 +155,7 @@ void CAlternateMoveWall::Update()
 //=============================================================================
 void CAlternateMoveWall::Draw()
 {
+	// ギミックの描画処理
 	CGimmick::Draw();
 	m_Screw->Draw();
 }

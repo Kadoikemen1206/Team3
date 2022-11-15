@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 障害物処理 [obstacle.cpp]
+// 当たったら一時停止するギミック
 // Author : saito shian
 //
 //=============================================================================
@@ -24,8 +24,8 @@
 //=============================================================================
 CStopGimmick::CStopGimmick(int nPriority)
 {
+	// メンバ変数のクリア
 	m_StopCount = 100;
-	m_StopFlag = false;
 
 	//オブジェクトのタイプセット処理
 	CObject::SetType(OBJTYPE_GIMMICK);
@@ -57,6 +57,7 @@ HRESULT CStopGimmick::Init()
 //=============================================================================
 void CStopGimmick::Uninit()
 {
+	// ギミックの終了処理
 	CGimmick::Uninit();
 }
 
@@ -85,10 +86,11 @@ void CStopGimmick::Update()
 	// ギミック処理
 	ConstOperate();
 
+	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
 	if (CollisionGimmick(CGame::GetPlayer1P()) == true)
-	{
+	{ // 1Pがギミックに当たった時実行
 		hitPlayer->SetSpeed(0.0f);
 		m_StopCount--;
 		if (m_StopCount <= 0)
@@ -114,7 +116,7 @@ void CStopGimmick::Update()
 	SetPos(pos);	// 座標の設定
 	SetMove(move);	// 移動量の設定
 
-					// ギミックの更新
+	// ギミックの更新
 	CGimmick::Update();
 }
 
@@ -123,6 +125,7 @@ void CStopGimmick::Update()
 //=============================================================================
 void CStopGimmick::Draw()
 {
+	// ギミックの描画処理
 	CGimmick::Draw();
 }
 

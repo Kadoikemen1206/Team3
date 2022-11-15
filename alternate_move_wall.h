@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 連打すると動く壁ギミック
+// 交互に連打すると動く壁ギミック
 // Author : saito shian
 // Author : Yuda Kaito
 //
@@ -49,14 +49,12 @@ private:
 	// メンバー変数
 	//-------------------------------------------------------------------------
 	D3DXVECTOR3 m_PosOld;			// 前回の位置
+	int m_buttonPushCount;			// ボタンを押した回数
 	int m_nTriggerCount;			// キーを押した回数
+	bool m_nAlternateFlag;			// 交互連打ギミックが使われているか
 
-	bool m_nAlternateFlag;
-
-	int m_buttonPushCount;
-
-	CObjectX* m_Screw;	// ねじ
-	CIcon* m_pIcon[4];	// アイコン
-	CIcon* m_pIconEffect;
+	CObjectX* m_Screw;				// ねじ
+	CIcon* m_pIcon[4];				// アイコン
+	CIcon* m_pIconEffect;			// エフェクト
 };
 #endif

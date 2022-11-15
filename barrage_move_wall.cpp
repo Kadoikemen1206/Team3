@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 障害物処理 [obstacle.cpp]
+// 連打すると動く壁ギミック
 // Author : saito shian
 //
 //=============================================================================
@@ -26,6 +26,7 @@
 //=============================================================================
 CBarrageMoveWall::CBarrageMoveWall(int nPriority)
 {
+	// メンバ変数のクリア
 	m_PosOld = {};
 	m_nTriggerCount = 0;
 	m_Completion = false;
@@ -49,6 +50,7 @@ HRESULT CBarrageMoveWall::Init()
 	// ギミックの初期化
 	CGimmick::Init();
 
+	// Pos取得
 	m_PosOld = CObjectX::GetPos();
 
 	//モデルのロード
@@ -79,6 +81,7 @@ HRESULT CBarrageMoveWall::Init()
 //=============================================================================
 void CBarrageMoveWall::Uninit()
 {
+	// ギミックの終了処理
 	CGimmick::Uninit();
 }
 
@@ -128,8 +131,10 @@ void CBarrageMoveWall::Update()
 		// ギミック処理
 		ConstOperate();
 
+		// プレイヤーがギミックに当たった時の変数
 		CPlayer* hitPlayer = GetHitPlayer();
 
+		// プレイヤーのスピードをなくす
 		hitPlayer->SetSpeed(0.0f);
 		hitPlayer->SetMotionType(CPlayer::MOTION_PUSH);
 
@@ -162,6 +167,7 @@ void CBarrageMoveWall::Update()
 //=============================================================================
 void CBarrageMoveWall::Draw()
 {
+	// ギミックの描画処理
 	CGimmick::Draw();
 	m_Door->Draw();
 }

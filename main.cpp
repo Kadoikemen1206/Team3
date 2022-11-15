@@ -81,7 +81,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpC
 	srand((unsigned int)time(NULL));	//‹N“®‚Éˆê‰ñ‚¾‚¯s‚¤‚½‚ß‰Šú‰»‚É‘‚­
 
 	// ‰Šú‰»ˆ—
-	if (FAILED(pApplication->Init(hInstance, hWnd, false)))
+	if (FAILED(pApplication->Init(hInstance, hWnd, true)))
 	{ //‰Šú‰»ˆ—‚ª¸”s‚µ‚½ê‡a
 		return -1;
 	}
