@@ -33,15 +33,6 @@ public:
 	};
 
 	//-------------------------------------------------------------------------
-	// 構造体
-	//-------------------------------------------------------------------------
-	struct SData
-	{
-		D3DXVECTOR3 destPos;	//目的の位置
-		int frame;
-	};
-
-	//-------------------------------------------------------------------------
 	// コンストラクタとデストラクタ
 	//-------------------------------------------------------------------------
 	explicit CParticle(int nPriority = PRIORITY_LEVEL3);
@@ -68,7 +59,6 @@ public:
 	void SetScaling(bool set, float value) { m_bScaling = set, m_fScalingValue = value; }
 	void SetLocus(bool set) { m_bLocus = set; }													// 軌跡の設定
 	void SetBounce(bool set) { m_bBounce = set; }												// バウンドの設定
-	void SetPosSpecify(bool set) { m_bPosSpecify = set; }										// 位置の指定の設定
 	void SetTransitionColor(bool set, D3DXCOLOR col) { m_bTransition = set, m_destCol = col; }	// 色の変移の設定
 
 	//ゲッター
@@ -89,24 +79,16 @@ private:
 	//-------------------------------------------------------------------------
 	D3DXVECTOR3 m_pos;					// 位置
 	D3DXVECTOR3 m_beginPos;				// 開始時の位置
-	D3DXVECTOR3 m_posOld;				// 前回の位置
-	D3DXVECTOR3 m_destPos;				// 目的の位置
 	D3DXVECTOR3 m_lowerPos;				// １番下の位置（プレイヤーの足のY座標）
 	D3DXVECTOR3 m_moveTransition;		// 徐々に移動する用
 	D3DXCOLOR m_col;					// 色
 	D3DXCOLOR m_destCol;				// 目的の色
 	CParticle *m_pParticle;				// 子のパーティクル（軌跡用）
-	std::vector<SData> m_data;			// 指定した時間と位置に移動
 	std::string m_path;					// テクスチャのパス
-	SData m_effect;						// エフェクトの移動に関する構造体
 	EBehaviorType m_behavior;			// 挙動の種類
 	int m_nTime;						// 時間
 	int m_nDelay;						// 遅延
 	int m_nDestroyTime;					// エフェクトを消す時間
-	float m_fAngle;						// 角度 未使用
-	float m_fRadius;					// 半径 未使用
-	float m_fAttenuation;				// 減衰
-	float m_fSpeed;						// スピード
 	float m_fFadeValue;					// エフェクトがフェードする数値
 	float m_fFallSpeed;					// 落下速度
 	float m_fRotateSpeed;				// 回転速度
@@ -119,7 +101,5 @@ private:
 	bool m_bLocus;						// パーティクルに軌跡をつけるかどうか
 	bool m_bBounce;						// バウンドをさせるかどうか
 	bool m_bTransition;					// 色の変化をつけるかどうか
-	bool m_bPosSpecify;					// 位置の指定をするかどうか
-	bool m_bPosOperate = false;			// 位置の操作用
 };
 #endif
