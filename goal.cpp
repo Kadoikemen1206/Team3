@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 障害物処理 [obstacle.cpp]
+// ゴール処理
 // Author : saito shian
 //
 //=============================================================================
@@ -30,6 +30,7 @@ bool CGoal::m_GoalFlag = false;
 //=============================================================================
 CGoal::CGoal(int nPriority)
 {
+	// メンバ変数のクリア
 	m_GoalCount = MAX_REVERBERATION_TIME;
 	m_GoalFlag = false;
 
@@ -63,6 +64,7 @@ HRESULT CGoal::Init()
 //=============================================================================
 void CGoal::Uninit()
 {
+	// ギミックの終了処理
 	CGimmick::Uninit();
 }
 
@@ -90,8 +92,10 @@ void CGoal::Update()
 	// ギミック処理
 	ConstOperate();
 
+	// プレイヤーが接触したかのポインタ
 	CPlayer* hitPlayer = GetHitPlayer();
 
+	// プレイヤーのスピードをなくす
 	hitPlayer->SetSpeed(0.0f);
 	m_GoalCount--;
 	if ((m_GoalCount % 20) == 0)
@@ -125,6 +129,7 @@ void CGoal::Update()
 //=============================================================================
 void CGoal::Draw()
 {
+	// ギミックの描画処理
 	CGimmick::Draw();
 }
 

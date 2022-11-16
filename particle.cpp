@@ -1,3 +1,13 @@
+//=============================================================================
+//
+// パーティクル処理 [particle.cpp]
+// Author : TANAKA KOTA
+//
+//=============================================================================
+
+//=============================================================================
+// インクルードファイル
+//=============================================================================
 #include <assert.h>
 #include "application.h"
 #include "input.h"
@@ -12,23 +22,19 @@
 // コンストラクタ
 //=============================================================================
 CParticle::CParticle(int nPriority) :
-	m_nTime(0),
-	m_nDelay(50),
-	m_nDestroyTime(200),
-	m_fAngle(0.0f),
-	m_fRadius(0.0f),
-	m_fAttenuation(0.05f),
-	m_fSpeed(5.0f),
-	m_bGravity(false),				// 重力
-	m_bFade(false),					// アルファ値増減
-	m_bRotate(true),				// ビルボードの回転
-	m_bScaling(false),				// 拡縮
-	m_bLocus(false),				// パーティクルに軌跡をつける（激重です）
-	m_bBounce(false),				// バウンドさせる
-	m_bTransition(false),			// 色の変化
-	m_bPosSpecify(false),			// 位置の指定
-	m_destCol(D3DXCOLOR(1.0f,0.0f,0.0f,1.0f)),
-	m_behavior(BEHAVIOR_FIREWORKS)
+	m_nTime(0),									// 時間
+	m_nDelay(50),								// 遅延
+	m_nDestroyTime(200),						// 消滅までの時間
+	m_fRotateSpeed(0.1f),						// 回転速度
+	m_bGravity(false),							// 重力
+	m_bFade(false),								// アルファ値増減
+	m_bRotate(true),							// ビルボードの回転
+	m_bScaling(false),							// 拡縮
+	m_bLocus(false),							// パーティクルに軌跡をつける（激重です）
+	m_bBounce(false),							// バウンドさせる
+	m_bTransition(false),						// 色の変化
+	m_destCol(D3DXCOLOR(1.0f,0.0f,0.0f,1.0f)),	// 目的の色
+	m_behavior(BEHAVIOR_FIREWORKS)				// 挙動
 {
 }
 
@@ -53,12 +59,6 @@ HRESULT CParticle::Init()
 	BindTexture(m_path);
 
 	m_beginPos = CBillboard::GetPos();
-	m_destPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	//位置の指定テスト
-	//m_effect.destPos = m_beginPos + D3DXVECTOR3(0.0f,30.0f, 0.0f);
-	//m_effect.frame = 100;
-	//m_data.push_back(m_effect);
 
 	//オブジェクトの初期化
 	CBillboard::Init();
@@ -75,59 +75,17 @@ void CParticle::Update()
 {
 	CBillboard::Update();
 
-	// 前回の位置を保存
-	m_posOld = m_pos;
-
 	m_pos = CBillboard::GetPos();
 	m_col = CBillboard::GetCol();
 
-	if (m_bPosSpecify)
-	{// 位置の指定をする場合
-		for (int i = 0; i < (int)m_data.size(); i++)
-		{
-			if (m_data.at(i).frame != m_nTime)
-			{
-				continue;
-			}
-
-			m_destPos = m_data.at(i).destPos;
-			m_bPosOperate = true;
-		}
-
-		if (m_bPosOperate)
-		{
-			m_moveTransition = (m_destPos - m_pos) * m_fAttenuation;
-		}
-	}
-
 	m_pos += m_moveTransition;
 
+	//詳細設定
 	DetailSetting();
 
 	CBillboard::SetPos(m_pos);
 
 	m_nTime++;
-
-	// ======================
-	// 正規化
-	// ======================
-	if (m_fRadius > D3DX_PI)
-	{
-		m_fRadius -= D3DX_PI * 2;
-	}
-	else if (m_fRadius < -D3DX_PI)
-	{
-		m_fRadius += D3DX_PI * 2;
-	}
-
-	if (m_fAngle > D3DX_PI)
-	{
-		m_fAngle -= D3DX_PI * 2;
-	}
-	else if (m_fAngle < -D3DX_PI)
-	{
-		m_fAngle += D3DX_PI * 2;
-	}
 
 	if (m_nTime >= m_nDestroyTime || m_col.a <= 0.0f)
 	{
@@ -183,7 +141,7 @@ CParticle * CParticle::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, con
 //=============================================================================
 //詳細設定
 //=============================================================================
-inline void CParticle::DetailSetting()
+void CParticle::DetailSetting()
 {
 	D3DXVECTOR3 move = CBillboard::GetMove();
 	D3DXVECTOR3 scale = CBillboard::GetSize();
@@ -249,7 +207,6 @@ inline void CParticle::DetailSetting()
 		m_pParticle->SetFade(true, -0.09f);
 		m_pParticle->SetGravity(false);
 		m_pParticle->SetLocus(false);
-		m_pParticle->SetPosSpecify(false);
 	}
 
 	CBillboard::SetMove(move);
@@ -264,10 +221,7 @@ void CParticle::Preset()
 {
 	switch (m_behavior)
 	{
-	case BEHAVIOR_NONE:
-		break;
-
-	case BEHAVIOR_FLY:			//for文100回くらいが限界
+	case BEHAVIOR_FLY:			//飛んで落ちる挙動
 		m_path = "PARTICLE_FLARE";
 		SetCol(D3DXCOLOR(1.0f,1.0f,0.0f,1.0f));
 		m_bGravity = true;
@@ -278,12 +232,10 @@ void CParticle::Preset()
 		m_bTransition = true;
 		m_fFadeValue = -0.005f;
 		m_fFallSpeed = 0.1f;
-		m_fRotateSpeed = 0.1f;
 		m_fScalingValue = 0.05f;
-		m_fAttenuation = 0.08f;
 		break;
 
-	case BEHAVIOR_FIREWORKS:	//for文50回くらいが限界
+	case BEHAVIOR_FIREWORKS:	//たくさん出すと花火みたいな挙動
 		m_path = "PARTICLE_FLARE";
 		SetDestCol(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
 		m_bGravity = true;
@@ -295,10 +247,9 @@ void CParticle::Preset()
 		m_fFallSpeed = 0.001f;
 		m_fFadeValue = -0.006f;
 		m_fScalingValue = 0.1f;
-		m_fAttenuation = 0.1f;
 		break;
 
-	case BEHAVIOR_SMOKE:		//for文3回くらいが良
+	case BEHAVIOR_SMOKE:		//歩く時の煙
 		m_path = "PARTICLE_SMOKE";
 		SetMove(D3DXVECTOR3((rand() % 100) * 0.01f, (rand() % 100) * 0.005f, (rand() % 100) * 0.01f));
 		SetCol(D3DXCOLOR(0.4f, 0.4f, 0.4f, 1.0f));
@@ -306,8 +257,10 @@ void CParticle::Preset()
 		m_bScaling = true;
 		m_bRotate = true;
 		m_fFadeValue = -0.03f;
-		m_fRotateSpeed = 0.1f;
 		m_fScalingValue = 0.1f;
+		break;
+
+	default:
 		break;
 	}
 }

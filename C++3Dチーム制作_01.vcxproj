@@ -155,6 +155,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>precompile.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -210,7 +211,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="push_move_wall.cpp" />
-    <ClCompile Include="random_door.cpp" />
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="ranking_rogo.cpp" />
     <ClCompile Include="renderer.cpp" />
@@ -267,7 +267,6 @@
     <ClInclude Include="pause.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="push_move_wall.h" />
-    <ClInclude Include="random_door.h" />
     <ClInclude Include="ranking.h" />
     <ClInclude Include="ranking_rogo.h" />
     <ClInclude Include="renderer.h" />

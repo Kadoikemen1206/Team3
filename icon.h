@@ -32,8 +32,8 @@ public:
 	void Uninit(void) override;		// 終了処理
 	void Update(void) override;		// 更新処理
 	void Draw(void) override;		// 描画処理
-	void SwapTexture(std::string url);
 
+	//セッター
 	void SetPath(std::string path) { m_path = path; }
 	void SetDestroy(bool set) { m_bDestroy = set; }
 	void SetScaling(bool set) { m_bScaling = set; }
@@ -43,13 +43,16 @@ public:
 	static CIcon *Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size, std::string url, int nPriority);    // 生成
 
 private:
-	D3DXVECTOR3 m_beginScale;
-	std::string m_path;
-	bool m_bScaling;
-	bool m_bFade;
-	bool m_bLimit;
-	bool m_bDestroy;
-	bool m_bAnim;
+	//-------------------------------------------------------------------------
+	// メンバ変数
+	//-------------------------------------------------------------------------
+	D3DXVECTOR3 m_beginScale;		//最初の大きさ
+	std::string m_path;				//テクスチャのパス
+	bool m_bScaling;				//拡大をするかどうか
+	bool m_bFade;					//フェードをさせるかどうか
+	bool m_bLimit;					//一定数拡大させたら縮小するかどうか
+	bool m_bDestroy;				//アイコンを消すかどうか
+	bool m_bAnim;					//アニメーションをするかどうか
 };
 
 #endif

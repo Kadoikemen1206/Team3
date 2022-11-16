@@ -1,15 +1,27 @@
 //=============================================================================
-// particle.h
+//
+// パーティクルを出す処理 [particle.h]
+// Author : Tanaka Kouta
+//
 //=============================================================================
 #ifndef _PARTICLE_H_
 #define _PARTICLE_H_
 
+//=============================================================================
+// インクルードファイル
+//=============================================================================
 #include "billboard.h"
 #include <vector>
 
+//=============================================================================
+// クラスの定義
+//=============================================================================
 class CParticle : public CBillboard
 {
 public:
+	//-------------------------------------------------------------------------
+	// 列挙型
+	//-------------------------------------------------------------------------
 	enum EBehaviorType
 	{
 		BEHAVIOR_NONE = 0,
@@ -20,35 +32,34 @@ public:
 		BEHAVIOR_INVALID
 	};
 
-	struct SData
-	{
-		D3DXVECTOR3 destPos;	//目的の位置
-		int frame;
-	};
-
+	//-------------------------------------------------------------------------
+	// コンストラクタとデストラクタ
+	//-------------------------------------------------------------------------
 	explicit CParticle(int nPriority = PRIORITY_LEVEL3);
 	~CParticle() override;
 
+	//-------------------------------------------------------------------------
+	// メンバー関数
+	//-------------------------------------------------------------------------
 	HRESULT Init() override;			// 初期化処理
 	void Update() override;				// 更新処理
 
 	//セッター
-	void SetPath(std::string url) { m_path = url; }
-	void SetBehavior(EBehaviorType behavior) { m_behavior = behavior; }
-	void SetLower(D3DXVECTOR3 pos) { m_lowerPos = pos; }
-	void SetDestCol(D3DXCOLOR col) { m_destCol = col; }
-	void SetDelay(int time) { m_nDelay = time; }
-	void SetGravity(bool set) { m_bGravity = set; }
+	void SetPath(std::string url) { m_path = url; }												// テクスチャパスの設定
+	void SetBehavior(EBehaviorType behavior) { m_behavior = behavior; }							// 挙動の設定
+	void SetLower(D3DXVECTOR3 pos) { m_lowerPos = pos; }										// Y座標の下限の設定
+	void SetDestCol(D3DXCOLOR col) { m_destCol = col; }											// 目的の色の設定
+	void SetDelay(int time) { m_nDelay = time; }												// 遅延の設定
+	void SetGravity(bool set) { m_bGravity = set; }												// 重力の設定
 	void SetGravity(bool set, float value) { m_bGravity = set, m_fFallSpeed = value; }
-	void SetFade(bool set) { m_bFade = set; }
+	void SetFade(bool set) { m_bFade = set; }													// フェードの設定
 	void SetFade(bool set, float value) { m_bFade = set, m_fFadeValue = value; }
-	void SetRotation(bool set, float value) { m_bRotate = set, m_fRotateSpeed = value; }
-	void SetScaling(bool set) { m_bScaling = set; }
+	void SetRotation(bool set, float value) { m_bRotate = set, m_fRotateSpeed = value; }		// 回転の設定
+	void SetScaling(bool set) { m_bScaling = set; }												// 拡縮の設定
 	void SetScaling(bool set, float value) { m_bScaling = set, m_fScalingValue = value; }
-	void SetLocus(bool set) { m_bLocus = set; }
-	void SetBounce(bool set) { m_bBounce = set; }
-	void SetPosSpecify(bool set) { m_bPosSpecify = set; }
-	void SetTransitionColor(bool set, D3DXCOLOR col) { m_bTransition = set, m_destCol = col; }
+	void SetLocus(bool set) { m_bLocus = set; }													// 軌跡の設定
+	void SetBounce(bool set) { m_bBounce = set; }												// バウンドの設定
+	void SetTransitionColor(bool set, D3DXCOLOR col) { m_bTransition = set, m_destCol = col; }	// 色の変移の設定
 
 	//ゲッター
 	D3DXVECTOR3 GetPos(void) { return m_pos; }
@@ -57,29 +68,27 @@ public:
 	static CParticle *Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 move, const D3DXCOLOR col, const std::string url, int nPriority);	// 生成処理
 
 private:
+	//-------------------------------------------------------------------------
+	// メンバ関数
+	//-------------------------------------------------------------------------
 	void DetailSetting();
 	void Preset();
 
+	//-------------------------------------------------------------------------
+	// メンバ変数
+	//-------------------------------------------------------------------------
 	D3DXVECTOR3 m_pos;					// 位置
 	D3DXVECTOR3 m_beginPos;				// 開始時の位置
-	D3DXVECTOR3 m_posOld;				// 前回の位置
-	D3DXVECTOR3 m_destPos;				// 目的の位置
-	D3DXVECTOR3 m_lowerPos;
-	D3DXVECTOR3 m_moveTransition;
+	D3DXVECTOR3 m_lowerPos;				// １番下の位置（プレイヤーの足のY座標）
+	D3DXVECTOR3 m_moveTransition;		// 徐々に移動する用
 	D3DXCOLOR m_col;					// 色
 	D3DXCOLOR m_destCol;				// 目的の色
-	CParticle *m_pParticle;
-	std::vector<SData> m_data;
-	std::string m_path;
-	SData m_effect;
-	EBehaviorType m_behavior;
+	CParticle *m_pParticle;				// 子のパーティクル（軌跡用）
+	std::string m_path;					// テクスチャのパス
+	EBehaviorType m_behavior;			// 挙動の種類
 	int m_nTime;						// 時間
 	int m_nDelay;						// 遅延
 	int m_nDestroyTime;					// エフェクトを消す時間
-	float m_fAngle;						// 角度 未使用
-	float m_fRadius;					// 半径 未使用
-	float m_fAttenuation;				// 減衰
-	float m_fSpeed;						// スピード
 	float m_fFadeValue;					// エフェクトがフェードする数値
 	float m_fFallSpeed;					// 落下速度
 	float m_fRotateSpeed;				// 回転速度
@@ -92,7 +101,5 @@ private:
 	bool m_bLocus;						// パーティクルに軌跡をつけるかどうか
 	bool m_bBounce;						// バウンドをさせるかどうか
 	bool m_bTransition;					// 色の変化をつけるかどうか
-	bool m_bPosSpecify;					// 位置の指定をするかどうか
-	bool m_bPosOperate = false;			// 位置の操作用
 };
 #endif

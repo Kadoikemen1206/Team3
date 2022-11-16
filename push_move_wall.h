@@ -42,9 +42,7 @@ private:
 	// メンバー変数
 	//-------------------------------------------------------------------------
 	D3DXVECTOR3 m_PosOld;			// 前回の位置
-	int m_nTriggerCount;			// キーを押した回数
 
-	bool m_Completion;				// Gimmickが完了したか否かフラグ
 	bool m_bIsLanding;				// モデルとの当たり判定フラグ(左右,奥,手前)
 	bool m_bIsLandingUp;			// モデルとの当たり判定フラグ(上側)
 };
