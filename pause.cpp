@@ -50,13 +50,19 @@ CPause * CPause::Create()
 //=============================================================================
 HRESULT CPause::Init(void)
 {
+	// 背景の作成
 	m_pBg = CObject2D::Create("NONE", D3DXVECTOR3(SCREEN_WIDTH_HALF, SCREEN_HEIGHT_HALF, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), PRIORITY_LEVEL5);
 	m_pBg->SetCanPoseUpdate();
 	m_pBg->SetCol(D3DXCOLOR(0.0f,0.0f,0.0f,0.5f));
+
+	// 選択肢の表示
 	m_quit = CPauseSelect::Create(CPauseSelect::QUIT);
 	m_retry = CPauseSelect::Create(CPauseSelect::RETRY);
 	m_exit = CPauseSelect::Create(CPauseSelect::EXIT);
+
+	// 選択中を決定
 	m_select = QUIT;
+
 	m_isBeginFlag = true;
 	m_isEndFlag = false;
 	return S_OK;
@@ -67,6 +73,7 @@ HRESULT CPause::Init(void)
 //=============================================================================
 void CPause::Uninit(void)
 {
+	// 終了処理
 	m_quit->Uninit();
 	m_retry->Uninit();
 	m_exit->Uninit();
@@ -125,6 +132,7 @@ void CPause::SelectUpdate()
 	// キーボードの情報取得
 	CInput *pInput = CApplication::GetInput();
 
+	// 選択処理
 	if (pInput->Trigger(KEY_LEFT))
 	{
 		switch (m_select)
@@ -160,6 +168,7 @@ void CPause::SelectUpdate()
 		}
 	}
 
+	// 選択されている項目に合わせて更新
 	switch (m_select)
 	{
 	case CPause::QUIT:
@@ -181,12 +190,14 @@ void CPause::SelectUpdate()
 		break;
 	}
 
+	// ポーズを戻るように終了
 	if (pInput->Trigger(KEY_PAUSE) || pInput->Trigger(KEY_BACK))
 	{
 		m_select = QUIT;
 		m_isEndFlag = true;
 	}
 
+	// ポーズの選択項目を決定して終了
 	if (pInput->Trigger(KEY_DECISION))
 	{
 		m_isEndFlag = true;

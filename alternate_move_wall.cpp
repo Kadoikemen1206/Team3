@@ -186,7 +186,7 @@ void CAlternateMoveWall::ConstOperate()
 
 	if (m_pIcon[0] == nullptr)
 	{
-		m_pIcon[0] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+		m_pIcon[0] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 100.0f, 0.0f), D3DXVECTOR3(50.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
 		m_pIcon[0]->SetScaling(true, true);
 		m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
 		//BGMの設定
@@ -197,14 +197,14 @@ void CAlternateMoveWall::ConstOperate()
 	{
 		if (m_pIcon[1] == nullptr)
 		{
-			m_pIcon[1] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ZKEY", PRIORITY_LEVEL3);
+			m_pIcon[1] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 100.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ZKEY", PRIORITY_LEVEL3);
 			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
 			m_pIcon[1]->SetStopAnim(0, 0);
 		}
 
 		if (m_pIcon[2] == nullptr)
 		{
-			m_pIcon[2] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_CKEY", PRIORITY_LEVEL3);
+			m_pIcon[2] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 100.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_CKEY", PRIORITY_LEVEL3);
 			m_pIcon[2]->SetAnimation(2, 1, 12, 1, true);
 			m_pIcon[2]->SetStopAnim(1, 0);
 		}
@@ -213,14 +213,14 @@ void CAlternateMoveWall::ConstOperate()
 	{
 		if (m_pIcon[1] == nullptr)
 		{
-			m_pIcon[1] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_LB", PRIORITY_LEVEL3);
+			m_pIcon[1] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 100.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_LB", PRIORITY_LEVEL3);
 			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
 			m_pIcon[1]->SetStopAnim(0, 0);
 		}
 
 		if (m_pIcon[2] == nullptr)
 		{
-			m_pIcon[2] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_RB", PRIORITY_LEVEL3);
+			m_pIcon[2] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 100.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_RB", PRIORITY_LEVEL3);
 			m_pIcon[2]->SetAnimation(2, 1, 12, 1, true);
 			m_pIcon[2]->SetStopAnim(1, 0);
 		}
@@ -228,7 +228,7 @@ void CAlternateMoveWall::ConstOperate()
 
 	if (m_pIcon[3] == nullptr)
 	{
-		m_pIcon[3] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(5.0f, 5.0f, 0.0f), "ARROW", PRIORITY_LEVEL3);
+		m_pIcon[3] = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(0.0f, 100.0f, 0.0f), D3DXVECTOR3(5.0f, 5.0f, 0.0f), "ARROW", PRIORITY_LEVEL3);
 		m_pIcon[3]->SetFlip(CIcon::FLIP_HORIZON);
 	}
 
@@ -265,7 +265,7 @@ void CAlternateMoveWall::ConstOperate()
 		}
 
 		//アイコン
-		m_pIconEffect = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_EFFECT", PRIORITY_LEVEL4);
+		m_pIconEffect = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(-15.0f, 100.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_EFFECT", PRIORITY_LEVEL4);
 		m_pIconEffect->SetCol(D3DXCOLOR(1.0f,0.5f,0.0f,1.0f));
 		m_pIconEffect->SetFade(true);
 		m_pIconEffect->SetScaling(true);
@@ -306,7 +306,7 @@ void CAlternateMoveWall::ConstOperate()
 		}
 
 		//アイコン
-		m_pIconEffect = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_EFFECT", PRIORITY_LEVEL4);
+		m_pIconEffect = CIcon::Create(m_Screw->GetPos() + D3DXVECTOR3(15.0f, 100.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_EFFECT", PRIORITY_LEVEL4);
 		m_pIconEffect->SetCol(D3DXCOLOR(1.0f, 0.5f, 0.0f, 1.0f));
 		m_pIconEffect->SetFade(true);
 		m_pIconEffect->SetScaling(true);

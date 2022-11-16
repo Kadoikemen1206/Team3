@@ -66,7 +66,7 @@ HRESULT CBarrageMoveWall::Init()
 	m_Door = CObjectX::Create(GetPos() - D3DXVECTOR3(200.0f, 0.0f, 0.0f),PRIORITY_LEVEL3);
 	m_Door->Init();
 	m_Door->LoadModel("BOOK04");
-	//m_Door->SetPos(GetPos() - D3DXVECTOR3(50.0f, 0.0f, 130.0f));
+	//m_Door->SetPos(GetPos() - D3DXVECTOR3(50.0f, 0.0f, 100.0f));
 	pos = GetPos();
 	pos -= D3DXVECTOR3(100.0f, 0.0f, 0.0f);
 	m_Door->SetPos(pos);
@@ -192,7 +192,7 @@ void CBarrageMoveWall::ConstOperate()
 
 	if (m_pIcon[0] == nullptr)
 	{
-		m_pIcon[0] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
+		m_pIcon[0] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 100.0f, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f), "SPEECH_BUBBLE", PRIORITY_LEVEL3);
 		m_pIcon[0]->SetScaling(true, true);
 		m_pIcon[0]->SetAnimation(1, 1, 12, 1, true);
 	}
@@ -201,7 +201,7 @@ void CBarrageMoveWall::ConstOperate()
 	{
 		if (m_pIcon[1] == nullptr)
 		{
-			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
+			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 100.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_ENTER", PRIORITY_LEVEL3);
 			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
 		}
 	}
@@ -209,7 +209,7 @@ void CBarrageMoveWall::ConstOperate()
 	{
 		if (m_pIcon[1] == nullptr)
 		{
-			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 130.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_B", PRIORITY_LEVEL3);
+			m_pIcon[1] = CIcon::Create(GetHitPlayer()->GetPos() + D3DXVECTOR3(0.0f, 100.0f, 0.0f), D3DXVECTOR3(12.0f, 12.0f, 0.0f), "BUTTON_B", PRIORITY_LEVEL3);
 			m_pIcon[1]->SetAnimation(2, 1, 12, 1, true);
 		}
 	}
